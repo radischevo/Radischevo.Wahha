@@ -1,0 +1,779 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Radischevo.Wahha.Core</name>
+    </assembly>
+    <members>
+        <member name="M:Radischevo.Wahha.Core.PropertyAccessor.#ctor(System.Reflection.PropertyInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Core.PropertyAccessor"/> class
+            </summary>
+            <param name="property">The property to build accessor for</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.PropertyAccessor.GetValue(System.Object)">
+            <summary>
+            Gets the value of a property supported by 
+            the specified object instance
+            </summary>
+            <param name="instance">An object whose property value will be returned</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.PropertyAccessor.GetValue``2(``0)">
+            <summary>
+            Gets the typed value of a property supported by 
+            the specified object instance.
+            </summary>
+            <param name="instance">An object whose property value will be returned.</param>
+            <typeparam name="T">The type of an instance.</typeparam>
+            <typeparam name="V">The type of the property.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.PropertyAccessor.SetValue(System.Object,System.Object)">
+            <summary>
+            Sets the value of a property supported by 
+            the specified object instance
+            </summary>
+            <param name="instance">An object whose property value will be set</param>
+            <param name="value">The value to assign to the property</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.DynamicAccessor`2">
+            <summary>
+            Provides methods to get or set 
+            field or property value
+            </summary>
+            <typeparam name="T">The type of object, 
+            that owns the member</typeparam>
+            <typeparam name="V">The member type</typeparam>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.DynamicAccessor">
+            <summary>
+            Provides methods to get or set 
+            field or property value
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.DynamicAccessor.GetBoxedValue(System.Object)">
+            <summary>
+            Gets the value of the instance member
+            </summary>
+            <param name="instance">The object instance, 
+            whose member value will be retrieved</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.DynamicAccessor.SetBoxedValue(System.Object,System.Object)">
+            <summary>
+            Sets the value of the instance member
+            </summary>
+            <param name="instance">The object instance, 
+            whose member value will be set</param>
+            <param name="value">A value to set</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.DynamicAccessor`2.GetBoxedValue(System.Object)">
+            <summary>
+            Gets the boxed value of the object member
+            </summary>
+            <param name="instance">The object, whose member value 
+            will be retrieved</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.DynamicAccessor`2.SetBoxedValue(System.Object,System.Object)">
+            <summary>
+            Sets the boxed value of the object member
+            </summary>
+            <param name="instance">The object, whose member value 
+            will be set</param>
+            <param name="value">A value to set</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.DynamicAccessor`2.GetValue(`0)">
+            <summary>
+            Gets the value of the instance member
+            </summary>
+            <param name="instance">The object instance, 
+            whose member value will be retrieved</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.DynamicAccessor`2.SetValue(`0,`1)">
+            <summary>
+            Sets the value of the instance member
+            </summary>
+            <param name="instance">The object instance, 
+            whose member value will be set</param>
+            <param name="value">A value to set</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.PropertyAccessor.Accessor`2.GetValue(`0)">
+            <summary>
+            Gets the value of the property of the 
+            supplied instance
+            </summary>
+            <param name="instance">An object instance, whose 
+            property value will be retrieved</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.PropertyAccessor.Accessor`2.SetValue(`0,`1)">
+            <summary>
+            Sets the value of the property of the 
+            supplied instance
+            </summary>
+            <param name="instance">An object instance, whose 
+            property value will be set</param>
+            <param name="value">A value to set</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Link`1">
+            <summary>
+            Provide a delegated 
+            lazy link to an object.
+            </summary>
+            <typeparam name="T">The type of linked object.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Link`1.#ctor">
+            <summary>
+            Initializes a new instance 
+            of the <see cref="!:Radischevo.Wahha.Core.Link"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Link`1.#ctor(System.Func{`0})">
+            <summary>
+            Initializes a new instance 
+            of the <see cref="!:Radischevo.Wahha.Core.Link"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Link`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance 
+            of the <see cref="!:Radischevo.Wahha.Core.Link"/> class.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Radischevo.Wahha.Core.Link`1.op_Equality(Radischevo.Wahha.Core.Link{`0},Radischevo.Wahha.Core.Link{`0})" -->
+        <!-- Badly formed XML comment ignored for member "M:Radischevo.Wahha.Core.Link`1.op_Inequality(Radischevo.Wahha.Core.Link{`0},Radischevo.Wahha.Core.Link{`0})" -->
+        <member name="M:Radischevo.Wahha.Core.Link`1.Load">
+            <summary>
+            Explicitly loads the linked object 
+            into the link.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Link`1.Equals(Radischevo.Wahha.Core.Link{`0})">
+            <summary>
+            Determines whether the specified 
+            <see cref="!:Radischevo.Wahha.Core.Link"/> 
+            is equal to the current instance.
+            </summary>
+            <param name="other">A <see cref="!:Radischevo.Wahha.Core.Link"/> 
+            to compare with the current instance.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Link`1.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> 
+            is equal to the current instance.
+            </summary>
+            <param name="obj">An <see cref="T:System.Object"/> 
+            to compare with the current instance.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Link`1.GetHashCode">
+            <summary>
+            Serves as a hash function for a 
+            <see cref="!:Radischevo.Wahha.Core.Link"/> type.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Link`1.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents 
+            the current <see cref="!:Radischevo.Wahha.Core.Link"/>.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Link`1.HasValue">
+            <summary>
+            Gets a value, indicating 
+            whether a linked object 
+            is loaded into the link.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Link`1.Source">
+            <summary>
+            Gets or sets a delegate function, 
+            which will be used to load the 
+            linked object.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Link`1.Tag">
+            <summary>
+            Gets or sets the specific 
+            tag that can help to determine the 
+            linked object without loading.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Link`1.Value">
+            <summary>
+            Gets or sets a linked object 
+            for this instance.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Expressions.ExpressionFingerprint">
+            <summary>
+            Contains information used for generalizing, 
+            comparing, and recreating Expression instances.
+            </summary>
+            <remarks>Since Expression objects are immutable and are 
+            recreated for every invocation of an expression helper method, 
+            they can't be compared directly. Fingerprinting Expression objects 
+            allows information about them to be abstracted away, and the 
+            fingerprints can be directly compared. Consider the process of 
+            fingerprinting that all values (parameters, constants, etc.) are hoisted
+            and replaced with dummies. What remains can be decomposed into a sequence 
+            of operations on specific types and specific inputs.</remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Expressions.ExpressionFingerprint.#ctor(System.Linq.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.Expressions.ExpressionFingerprint"/> class.
+            </summary>
+            <param name="expression">An expression to create fingerprint for.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Expressions.ExpressionFingerprint.NodeType">
+            <summary>
+            Gets the type of the 
+            expression node.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Expressions.ExpressionFingerprint.Type">
+            <summary>
+            Gets the static type of the 
+            expression.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Expressions.BinaryExpressionFingerprint">
+            <summary>
+            Class, useful for interpreting things like array[index].
+            This particular fingerprint doesn't support the 
+            BinaryExpression.Conversion property, which is used 
+            in some coalescing operations.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.FieldAccessor.#ctor(System.Reflection.FieldInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Core.FieldAccessor"/> class
+            </summary>
+            <param name="field">The field to build accessor for</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.FieldAccessor.GetValue(System.Object)">
+            <summary>
+            Gets the value of a field supported by 
+            the specified object instance
+            </summary>
+            <param name="instance">An object whose field value will be returned</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.FieldAccessor.GetValue``2(``0)">
+            <summary>
+            Gets the typed value of a field supported by 
+            the specified object instance.
+            </summary>
+            <param name="instance">An object whose field value will be returned.</param>
+            <typeparam name="T">The type of an instance.</typeparam>
+            <typeparam name="V">The type of the field.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.FieldAccessor.SetValue(System.Object,System.Object)">
+            <summary>
+            Sets the value of a field supported by 
+            the specified object instance
+            </summary>
+            <param name="instance">An object whose field value will be set</param>
+            <param name="value">The value to assign to the field</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.MemberInfoExtensions.GetCustomAttributes``1(System.Reflection.MemberInfo)">
+            <summary>
+            Helper method used to find attributes of type <typeparamref name="TAttribute"/>, 
+            associated with the specified member.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.MemberInfoExtensions.GetCustomAttributes``1(System.Reflection.MemberInfo,System.Boolean)">
+            <summary>
+            Helper method used to find attributes of type <typeparamref name="TAttribute"/>, 
+            associated with the specified member.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.MemberInfoExtensions.GetCustomAttributes(System.Reflection.MemberInfo,System.Boolean,System.Type[])">
+            <summary>
+            Helper method used to find attributes 
+            associated with the specified member.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.IValueSet.GetValue``1(System.String)">
+            <summary>
+            Gets the typed value with the specified key
+            </summary>
+            <typeparam name="TValue">The type of value</typeparam>
+            <param name="key">The key to find</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.IValueSet.GetValue``1(System.String,``0)">
+            <summary>
+            Gets the typed value with the specified key
+            </summary>
+            <typeparam name="TValue">The type of value</typeparam>
+            <param name="key">The key to find</param>
+            <param name="defaultValue">The default value of the variable</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.EnumerableLink`1">
+            <summary>
+            Provide a delegated lazy link 
+            to a collection of objects.
+            </summary>
+            <typeparam name="T">The element type 
+            of the linked collection.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.EnumerableLink`1.#ctor">
+            <summary>
+            Initializes a new instance 
+            of the <see cref="!:Radischevo.Wahha.Core.EnumerableLink"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.EnumerableLink`1.#ctor(System.Func{System.Collections.Generic.IEnumerable{`0}})">
+            <summary>
+            Initializes a new instance 
+            of the <see cref="!:Radischevo.Wahha.Core.EnumerableLink"/> class 
+            using the specified delegate, which is used to load the 
+            linked collection into a link.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.EnumerableLink`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initializes a new instance 
+            of the <see cref="!:Radischevo.Wahha.Core.EnumerableLink"/> class 
+            using the specified collection.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.EnumerableLink`1.Load">
+            <summary>
+            Explicitly loads the linked collection 
+            into the link.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.EnumerableLink`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates 
+            through the collection.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.EnumerableLink`1.HasValue">
+            <summary>
+            Gets a value, indicating 
+            whether a linked collection 
+            is loaded into the link.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.EnumerableLink`1.Tag">
+            <summary>
+            Gets or sets the specific 
+            tag that can help to determine the 
+            linked object without loading.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.EnumerableLink`1.Source">
+            <summary>
+            Gets or sets a delegate function, 
+            which will be used to load the 
+            linked object.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.EnumerableLink`1.Count">
+            <summary>
+            Gets or sets a number of elements in a sequence 
+            or a maximum number of elements, that can be 
+            retrieved from the collection.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.ValueDictionary">
+            <summary>
+            Represents a collection of 
+            keys and values
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> class
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.#ctor(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> class
+            </summary>
+            <param name="dictionary">The collection, which keys and values 
+            should be copied into a new dictionary</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> class with serialized data
+            </summary>
+            <param name="info">An object containing the information required to 
+            serialize the dictionary</param>
+            <param name="context">A structure containing the source and destination 
+            of the serialized stream associated with the dictionary</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.#ctor(Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> class
+            </summary>
+            <param name="values">A value set, which keys and values 
+            will be used to populate the dictionary</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> class
+            </summary>
+            <param name="values">An object, whose property values 
+            will be used to populate the dictionary</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.GetValue``1(System.String)">
+            <summary>
+            Gets the typed value with the 
+            specified key
+            </summary>
+            <typeparam name="TValue">The type of value</typeparam>
+            <param name="key">The key to find</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.GetValue``1(System.String,``0)">
+            <summary>
+            Gets the typed value with the 
+            specified key
+            </summary>
+            <typeparam name="TValue">The type of value</typeparam>
+            <param name="key">The key to find</param>
+            <param name="defaultValue">The default value of the variable</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.Merge(System.Object)">
+            <summary>
+            Merges two collections and returns a result
+            </summary>
+            <param name="values">An object, whose property values 
+            will be used to populate the dictionary</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.Merge(System.Object,System.Boolean)">
+            <summary>
+            Merges two collections and returns a result
+            </summary>
+            <param name="values">An object, whose property values 
+            will be used to populate the dictionary</param>
+            <param name="replace">True to replace existing values</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.Merge(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Merges two collections and returns the result.
+            </summary>
+            <param name="dictionary">The collection, which keys and values 
+            should be merged with the dictionary</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.Merge(System.Collections.Generic.IDictionary{System.String,System.Object},System.Boolean)">
+            <summary>
+            Merges two collections and returns the result.
+            </summary>
+            <param name="dictionary">The collection, which keys and values 
+            should be merged with the dictionary.</param>
+            <param name="replace">True to replace existing values.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.Merge(Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Merges two collections and returns the result.
+            </summary>
+            <param name="values">The collection, which keys and values 
+            should be merged with the dictionary.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.Merge(Radischevo.Wahha.Core.IValueSet,System.Boolean)">
+            <summary>
+            Merges two collections and returns the result.
+            </summary>
+            <param name="values">The collection, which keys and values 
+            should be merged with the dictionary</param>
+            <param name="replace">True to replace existing values.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Resources.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_CouldNotConvertType">
+            <summary>
+              Looks up a localized string similar to Could not convert the &apos;{0}&apos; argument to the specified type &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_CouldNotCreateAccessorForIndexer">
+            <summary>
+              Looks up a localized string similar to Could not create a dynamic accessor for property &apos;{0}&apos; of type &apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_CouldNotCreateDynamicConverter">
+            <summary>
+              Looks up a localized string similar to Could not create a dynamic converter for the specified object of type &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_CouldNotCreateTryGetValueDelegateForType">
+            <summary>
+              Looks up a localized string similar to Could not create a TryGetValue delegate fot the &apos;{0}&apos; type..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_EncodedStringLengthMustBeOdd">
+            <summary>
+              Looks up a localized string similar to The length of the base-16 encoded string must be an odd number..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_InvalidBindingExpressionFormat">
+            <summary>
+              Looks up a localized string similar to Specified binding expression is invalid..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_InvalidIndexerExpressionFormat">
+            <summary>
+              Looks up a localized string similar to Specified indexer expression is invalid..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_LinkSourceIsNotInitialized">
+            <summary>
+              Looks up a localized string similar to Unable to load a linked object since its source is not initialized..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_MemberBindingExpressionIsEmpty">
+            <summary>
+              Looks up a localized string similar to Member binding expression cannot be empty..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_MethodCouldNotBeGenericDefinition">
+            <summary>
+              Looks up a localized string similar to Could not perform the argument check for the specified method &apos;{0}&apos; of type &apos;{1}&apos;. Type arguments for the method must be set before checking..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_MissingIndexer">
+            <summary>
+              Looks up a localized string similar to Default indexer could not be found at the type &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_MissingMember">
+            <summary>
+              Looks up a localized string similar to Field or property with the name &apos;{1}&apos; could not be found at the type &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_OffsetMustBeLessThanArrayLength">
+            <summary>
+              Looks up a localized string similar to The offset in the array should be less than its length..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_ParameterMustBeGreaterThan">
+            <summary>
+              Looks up a localized string similar to The value of the &apos;{0}&apos; parameter should be greater than {1}..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_ParameterMustBeGreaterThanOrEqual">
+            <summary>
+              Looks up a localized string similar to The value of the &apos;{0}&apos; parameter should be greater than or equal to {1}..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_PropertyIsReadOnly">
+            <summary>
+              Looks up a localized string similar to Unable to assign value to readonly property &apos;{0}&apos; of type &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_PropertyIsWriteOnly">
+            <summary>
+              Looks up a localized string similar to Unable to get the value of the property &apos;{0}&apos; of type &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_TargetTypeIsNotNullable">
+            <summary>
+              Looks up a localized string similar to Could not convert the &apos;{0}&apos; argument to the specified type. Type&apos;{1}&apos; does not allow null values..
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Precondition">
+            <summary>
+            This helper class is used throughout the framework. It provides assertion methods,
+            standardized error reporting and automatic exception creation. 
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Precondition.Fail(System.Exception)">
+            <summary>
+            Internal method performing throwing of exceptions.
+            </summary>
+            <param name="error">The exception leading to this error (if any).</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.DelegateExtensions.InvokeAndForget(System.Delegate,System.Object[])">
+            <summary>
+            Dynamically invokes (using fire-and-forget strategy) 
+            the method represented by the current delegate in the seperate thread.
+            </summary>
+            <param name="d">The delegate containing the method to invoke.</param>
+            <param name="args">The argument list of a method.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Async.SingleEntryGate">
+            <summary>
+            This class is used to synchronize access 
+            to a single-use consumable resource.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Converter">
+            <summary>
+            Converts a base data type to another base data type.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[])">
+            <summary>
+            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
+            representation encoded with hex digits. 
+            </summary>
+            <param name="array">An array of 8-bit unsigned integers</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[],System.Boolean)">
+            <summary>
+            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
+            representation encoded with hex digits. 
+            </summary>
+            <param name="array">An array of 8-bit unsigned integers</param>
+            <param name="lowerCase">If set to true, produces a lowercase string.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
+            representation encoded with hex digits. Parameters specify the subset as an offset in the input array and  
+            the number of elements in the array to convert.
+            </summary>
+            <param name="array">An array of 8-bit unsigned integers</param>
+            <param name="startIndex">An offset in the <paramref name="array"/></param>
+            <param name="length">The number of elements of <paramref name="array"/> to convert.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[],System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
+            representation encoded with hex digits. Parameters specify the subset as an offset in the input array and  
+            the number of elements in the array to convert.
+            </summary>
+            <param name="array">An array of 8-bit unsigned integers</param>
+            <param name="startIndex">An offset in the <paramref name="array"/></param>
+            <param name="length">The number of elements of <paramref name="array"/> to convert.</param>
+            <param name="lowerCase">If set to true, produces a lowercase string.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.FromBase16String(System.String)">
+            <summary>
+            Converts the specified <see cref="T:System.String"/>, which encodes 
+            binary data as hex digits, to an equivalent 8-bit 
+            unsigned integer array.
+            </summary>
+            <param name="str">A <see cref="T:System.String"/></param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToDictionary(System.Object)">
+            <summary>
+            Copies all readable public property values from the 
+            source object to the dictionary.
+            </summary>
+            <param name="argument">An object to convert</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            <typeparamref name="T"/> type
+            </summary>
+            <typeparam name="T">A type to convert to</typeparam>
+            <param name="value">A value to convert</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,System.IFormatProvider)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            <typeparamref name="T"/> type
+            </summary>
+            <typeparam name="T">A type to convert to</typeparam>
+            <param name="value">A value to convert</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,``0)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            <typeparamref name="T"/> type
+            </summary>
+            <typeparam name="T">A type to convert to</typeparam>
+            <param name="value">A value to convert</param>
+            <param name="defaultValue">The default value of the parameter</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,``0,System.IFormatProvider)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            <typeparamref name="T"/> type
+            </summary>
+            <typeparam name="T">A type to convert to</typeparam>
+            <param name="value">A value to convert</param>
+            <param name="defaultValue">The default value of the parameter</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ParameterInfoExtensions.GetCustomAttributes``1(System.Reflection.ParameterInfo)">
+            <summary>
+            Helper method used to find attributes of type <typeparamref name="TAttribute"/>, 
+            associated with the specified member.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ParameterInfoExtensions.GetCustomAttributes``1(System.Reflection.ParameterInfo,System.Boolean)">
+            <summary>
+            Helper method used to find attributes of type <typeparamref name="TAttribute"/>, 
+            associated with the specified member.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Expressions.UnaryExpressionFingerprint">
+            <summary>
+            The most common appearance of a UnaryExpression 
+            is a cast or other conversion operator.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Expressions.ConstantExpressionFingerprint">
+            <summary>
+            A ConstantExpression might represent a captured local variable, so we can't compile
+            the value directly into the cached function. Instead, a placeholder is generated
+            and the value is hoisted into a local variables array. This placeholder can then
+            be compiled and cached, and the array lookup happens at runtime.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Expressions.CachedExpressionCompiler.Compile``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            This is the entry point to the cached expression tree compiler. 
+            The processor will perform a series of checks and optimizations 
+            in order to return a fully-compiled func as quickly as possible 
+            to the caller. If the input expression is particularly obscure, 
+            the system will fall back to a slow but correct compilation step.
+            </summary>
+            <typeparam name="TClass">The type of the container instance.</typeparam>
+            <typeparam name="TMember">The type of the instance member, the expression 
+            should get value for.</typeparam>
+            <param name="expression">An expression to process.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Expressions.CachedExpressionCompiler.Evaluate(System.Linq.Expressions.Expression)">
+            <summary>
+            Evaluates an expression (not a LambdaExpression), e.g. 2 + 2.
+            </summary>
+            <param name="arg">The expression to be evaluated.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringExtensions.Left(System.String,System.Int32)">
+            <summary>
+            Returns the first few characters of the string with a length
+            specified by the given parameter. If the string's length is less than the 
+            given length the complete string is returned.
+            </summary>
+            <param name="str">The string to process</param>
+            <param name="count">A number of characters to return</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringExtensions.Right(System.String,System.Int32)">
+            <summary>
+            Returns the last few characters of the string with a length
+            specified by the given parameter. If the string's length is less than the 
+            given length the complete string is returned. 
+            </summary>
+            <param name="str">The string to process</param>
+            <param name="count">A number of characters to return</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Async.Trigger">
+            <summary>
+            Provides a trigger for the <see cref="T:Radischevo.Wahha.Core.Async.TriggerListener"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>

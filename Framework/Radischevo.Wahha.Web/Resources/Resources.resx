@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Error_ArrayTypeIsNotSupported" xml:space="preserve">
+    <value>Array type '{0}' is not supported.</value>
+  </data>
+  <data name="Error_AttributeListReferencesToAnUndefinedElement" xml:space="preserve">
+    <value>ATTLIST references undefined ELEMENT {0}.</value>
+  </data>
+  <data name="Error_CircularReferenceFoundAtType" xml:space="preserve">
+    <value>Circular reference found at type '{0}'.</value>
+  </data>
+  <data name="Error_CommaWasExpectedInArrayDeclaration" xml:space="preserve">
+    <value>Comma symbol was expected in the array declaration.</value>
+  </data>
+  <data name="Error_ContentModelWasNotClosed" xml:space="preserve">
+    <value>Content Model was not closed.</value>
+  </data>
+  <data name="Error_CouldNotConvertObjectToType" xml:space="preserve">
+    <value>Could not convert the object to the specified type '{0}'.</value>
+  </data>
+  <data name="Error_CouldNotCreateListType" xml:space="preserve">
+    <value>Could not create the necessary list type '{0}'.</value>
+  </data>
+  <data name="Error_CouldNotParseConditionalSection" xml:space="preserve">
+    <value>Expecting '[' but found {0}.</value>
+  </data>
+  <data name="Error_CouldNotParseEntityReference" xml:space="preserve">
+    <value>Premature {0} parsing entity reference.</value>
+  </data>
+  <data name="Error_CouldNotParseNestedTemplate" xml:space="preserve">
+    <value>Could not parse the nested template referenced through the include directive.</value>
+  </data>
+  <data name="Error_CouldNotResolveType" xml:space="preserve">
+    <value>Could not resolve type '{0}'.</value>
+  </data>
+  <data name="Error_DepthLimitExceeded" xml:space="preserve">
+    <value>Depth limit exceeded.</value>
+  </data>
+  <data name="Error_DeserializerTypeMismatch" xml:space="preserve">
+    <value>Deserializer type mismatch.</value>
+  </data>
+  <data name="Error_DtdDoesNotMatchDocumentType" xml:space="preserve">
+    <value>DTD does not match the document type.</value>
+  </data>
+  <data name="Error_DuplicateMainDirective" xml:space="preserve">
+    <value>Duplicate main directive '{0}' found.</value>
+  </data>
+  <data name="Error_EmptyCodeRenderExpression" xml:space="preserve">
+    <value>The code render expression cannot be empty.</value>
+  </data>
+  <data name="Error_ExpectingComment" xml:space="preserve">
+    <value>Expecting comment '&lt;!--' but found '{0}'.</value>
+  </data>
+  <data name="Error_ExpectingCommentDelimiter" xml:space="preserve">
+    <value>Expecting comment delimiter '--' but found {0}.</value>
+  </data>
+  <data name="Error_ExpectingDeclaration" xml:space="preserve">
+    <value>Found '{0}', but expecting declaration starting with '&lt;!'.</value>
+  </data>
+  <data name="Error_ExpectingEndOfElementDeclaration" xml:space="preserve">
+    <value>Expecting end of ELEMENT declaration '&gt;' but found '{0}'.</value>
+  </data>
+  <data name="Error_ExpectingEndOfEntityDeclaration" xml:space="preserve">
+    <value>Expecting end of entity declaration '&gt;' but found '{0}'.</value>
+  </data>
+  <data name="Error_ExpectingInclusionsNameGroup" xml:space="preserve">
+    <value>Expecting inclusions name group.</value>
+  </data>
+  <data name="Error_ExpectingNameGroup" xml:space="preserve">
+    <value>Expecting name group '(', but found '{0}'.</value>
+  </data>
+  <data name="Error_ExpectingPublicIdentifierLiteral" xml:space="preserve">
+    <value>Expecting public identifier literal but found '{0}'.</value>
+  </data>
+  <data name="Error_ExpectingSystemIdentifierLiteral" xml:space="preserve">
+    <value>Expecting system identifier literal but found '{0}'.</value>
+  </data>
+  <data name="Error_ExtraCommaAtArrayEndingFound" xml:space="preserve">
+    <value>Extra comma at array ending found.</value>
+  </data>
+  <data name="Error_IllegalArrayStartingSymbol" xml:space="preserve">
+    <value>Invalid array starting symbol.</value>
+  </data>
+  <data name="Error_IllegalJavaScriptPrimitive" xml:space="preserve">
+    <value>Illegal JavaScript primitive.</value>
+  </data>
+  <data name="Error_InconsistentConnector" xml:space="preserve">
+    <value>Connector '{0}' is inconsistent with {1} group.</value>
+  </data>
+  <data name="Error_InputStreamIsUndefined" xml:space="preserve">
+    <value>You must specify input either via Href or InputStream properties.</value>
+  </data>
+  <data name="Error_InvalidArrayEndingSymbol" xml:space="preserve">
+    <value>Invalid array ending symbol.</value>
+  </data>
+  <data name="Error_InvalidAttributeDefinitionPresenceValue" xml:space="preserve">
+    <value>Attribute value '{0}' not supported.</value>
+  </data>
+  <data name="Error_InvalidAttributeDefinitionType" xml:space="preserve">
+    <value>AttributeType {0} is not valid for an attribute definition with an enumerated value.</value>
+  </data>
+  <data name="Error_InvalidAttributeDefinitionTypeValue" xml:space="preserve">
+    <value>Attribute type '{0}' is not supported.</value>
+  </data>
+  <data name="Error_InvalidCharacterInEncoding" xml:space="preserve">
+    <value>Invalid character 0x{0} in encoding.</value>
+  </data>
+  <data name="Error_InvalidDeclaration" xml:space="preserve">
+    <value>Invalid declaration '&lt;!{0}'.  Expecting 'ENTITY', 'ELEMENT' or 'ATTLIST'.</value>
+  </data>
+  <data name="Error_InvalidDeclarationSyntax" xml:space="preserve">
+    <value>Invalid syntax at '{0}'.</value>
+  </data>
+  <data name="Error_InvalidDeclaredContentTypeValue" xml:space="preserve">
+    <value>Declared content type '{0}' is not supported.</value>
+  </data>
+  <data name="Error_InvalidEnumType" xml:space="preserve">
+    <value>Invalid enum type '{0}'.</value>
+  </data>
+  <data name="Error_InvalidEscapeSequence" xml:space="preserve">
+    <value>Invalid escape sequence.</value>
+  </data>
+  <data name="Error_InvalidExternalIdentifierLiteral" xml:space="preserve">
+    <value>Invalid external identifier '{0}'.  Expecing 'PUBLIC' or 'SYSTEM'.</value>
+  </data>
+  <data name="Error_InvalidLiteralTypeValue" xml:space="preserve">
+    <value>Literal content type '{0}' is not supported.</value>
+  </data>
+  <data name="Error_InvalidMarkedSectionType" xml:space="preserve">
+    <value>Unsupported marked section type '{0}'.</value>
+  </data>
+  <data name="Error_InvalidMemberName" xml:space="preserve">
+    <value>Invalid member name.</value>
+  </data>
+  <data name="Error_InvalidNameCharacter" xml:space="preserve">
+    <value>Invalid name character '{0}'.</value>
+  </data>
+  <data name="Error_InvalidNameStartCharacter" xml:space="preserve">
+    <value>Invalid name start character '{0}'.</value>
+  </data>
+  <data name="Error_InvalidObjectDefinition" xml:space="preserve">
+    <value>Invalid object definition.</value>
+  </data>
+  <data name="Error_MaximumJsonStringLengthExceeded" xml:space="preserve">
+    <value>Maximum JSON string length exceeded.</value>
+  </data>
+  <data name="Error_MaximumRecursionDepthExceeded" xml:space="preserve">
+    <value>Maximum recursion depth exceeded.</value>
+  </data>
+  <data name="Error_MissingTokenBeforeConnector" xml:space="preserve">
+    <value>Missing token before connector '{0}'.</value>
+  </data>
+  <data name="Error_NotOnAnAttribute" xml:space="preserve">
+    <value>Not on an attribute.</value>
+  </data>
+  <data name="Error_NotOnAnEntityReference" xml:space="preserve">
+    <value>Not on an entity reference.</value>
+  </data>
+  <data name="Error_OpeningBraceExpected" xml:space="preserve">
+    <value>Opening brace expected.</value>
+  </data>
+  <data name="Error_ParameterEntityClosedOutsideTheScope" xml:space="preserve">
+    <value>Parameter entity cannot close a paren outside it's own scope.</value>
+  </data>
+  <data name="Error_ParameterMustBeGreaterThan" xml:space="preserve">
+    <value>The value of the '{0}' parameter should be greater than {1}.</value>
+  </data>
+  <data name="Error_ParameterMustBeGreaterThanOrEqual" xml:space="preserve">
+    <value>The value of the '{0}' parameter should be greater than or equal to {1}.</value>
+  </data>
+  <data name="Error_StringIsNotQuoted" xml:space="preserve">
+    <value>String is not quoted.</value>
+  </data>
+  <data name="Error_SuppliedDictionaryTypeIsNotSupported" xml:space="preserve">
+    <value>Supplied dictionary type is not supported.</value>
+  </data>
+  <data name="Error_TemplateDirectiveCannotBeEmpty" xml:space="preserve">
+    <value>Template directive must have non-empty name.</value>
+  </data>
+  <data name="Error_TypeMustHaveParameterlessConstructor" xml:space="preserve">
+    <value>Type '{0}' must have a parameterless constructor.</value>
+  </data>
+  <data name="Error_UnclosedElement" xml:space="preserve">
+    <value>{0} starting on line {0} was never closed.</value>
+  </data>
+  <data name="Error_UndefinedParameterEntityReference" xml:space="preserve">
+    <value>Reference to undefined parameter entity '{0}'.</value>
+  </data>
+  <data name="Error_UnexpectedCharacter" xml:space="preserve">
+    <value>Unexpected character '{0}'.</value>
+  </data>
+  <data name="Error_UnexpectedEndOfFileParsingStartTag" xml:space="preserve">
+    <value>Unexpected EOF parsing start tag '{0}'.</value>
+  </data>
+  <data name="Error_UnresolvableSgmlEntity" xml:space="preserve">
+    <value>Unresolvable entity '{0}'.</value>
+  </data>
+  <data name="Error_UnsupportedElementRule" xml:space="preserve">
+    <value>The type on the element rule, returned by '{0}' parameter, is not supported.</value>
+  </data>
+  <data name="Error_UnsupportedExternalParameterEntityResolution" xml:space="preserve">
+    <value>External parameter entity resolution.</value>
+  </data>
+  <data name="Error_UnterminatedStringConstant" xml:space="preserve">
+    <value>Unterminated string constant.</value>
+  </data>
+</root>

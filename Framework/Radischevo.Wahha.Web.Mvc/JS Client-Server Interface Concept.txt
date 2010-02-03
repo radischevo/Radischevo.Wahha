@@ -1,0 +1,64 @@
+Идея - в классе AjaxHelper реализовать несколько методов, генерирующих JS-обертки для сервер-сайда, и метод, позволяющий 
+через JS запустить серверный метод. 
+
+Выглядит (у энд-юзера) примерно так: 
+
+1. 	серверсайд: 
+	<script type="text/javascript">
+	
+	<%= Ajax.CreateWrapper<MyClass>() %>;
+
+	</script>
+
+	на выходе
+1.1	если MyClass - статический, то
+	<script type="text/javascript">
+	
+	var MyClass = 
+	{ 
+		__type: "MyNamespace.MyClass,MyAssembly",
+		MyMethod: function(myParam1, myParam2)
+		{
+			return $SW.InvokeMethod(this.__type, "MyMethod", { myParam1: arguments[0], myParam2: arguments[1] });
+		}
+		// ...
+		// Вопрос дня: генерировать ли обертки для свойств?
+	};
+	
+	</script>
+	
+1.2	если MyClass - нестатический, то все делаем почти так же, за исключением некоторых деталей. 
+	В частности, надо генерить все через prototype. 
+	Вопрос дня - как действуем в отношении свойств и полей? И вообще - нестатических классов? 
+	Нужны ли они нам, все равно же в качестве объектов будут возвращаться JSON'ы. 
+
+	
+2. Обертка для вызова какого либо метода выглядит так...
+
+	Серверсайд:
+	
+	2.1. Сигнатуры:
+	Ajax.InvokeMethod<TController>(Expression<Action<TController>> action);
+	Ajax.InvokeMethod<TController, TResult>(Expression<Func<TController, TResult>> action);
+	
+	<script type="text/javascript">
+
+	var result = <%= Ajax.InvokeMethod<MyClass, string>(a => a.GenerateRandomTitle()) %>;
+
+	</script>
+	
+	2.2. На клиенте будет:
+	
+	<script type="text/javascript">
+
+	var result = $SW.InvokeMethod("MyNamespace.MyClass,MyAssembly", "GenerateRandomTitle", { });
+
+	</script>
+	
+	Минусы: 
+		- Мы работаем синхронно. Для асинхронности нужно вставлять какие-то костыли;
+		- Описанная методика работает исключительно с instance-методами. Хотя, вроде бы, 
+		  можно добиться и работы со статическими методами. 
+		  
+		  
+3. Вывод: думаем, SUKA, думаем. Штука полезная, нужно только ограничения ее пофиксить. Желательно - нативно.

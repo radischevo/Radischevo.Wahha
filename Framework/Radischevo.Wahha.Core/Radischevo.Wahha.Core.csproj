@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C4A83864-BF32-49D8-BC23-C69F025628EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Radischevo.Wahha.Core</RootNamespace>
+    <AssemblyName>Radischevo.Wahha.Core</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>Full</TargetFrameworkSubset>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Radischevo.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Builds\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Builds\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Builds\Release\Radischevo.Wahha.Core.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Async\BeginInvokeDelegate.cs" />
+    <Compile Include="Async\EndInvokeDelegate.cs" />
+    <Compile Include="Async\OperationCounter.cs" />
+    <Compile Include="Async\SingleEntryGate.cs" />
+    <Compile Include="Async\Trigger.cs" />
+    <Compile Include="Async\TriggerListener.cs" />
+    <Compile Include="EnumerableLink`1.cs" />
+    <Compile Include="Expressions\BinaryExpressionFingerprint.cs" />
+    <Compile Include="Expressions\CachedExpressionCompiler.cs" />
+    <Compile Include="Expressions\CompiledExpressionDelegate`2.cs" />
+    <Compile Include="Expressions\ConditionalExpressionFingerprint.cs" />
+    <Compile Include="Expressions\ConstantExpressionFingerprint.cs" />
+    <Compile Include="Expressions\ExpressionFingerprint.cs" />
+    <Compile Include="Expressions\ExpressionParser.cs" />
+    <Compile Include="Expressions\FastTrack`2.cs" />
+    <Compile Include="Expressions\HashCodeCombiner.cs" />
+    <Compile Include="Expressions\MemberExpressionFingerprint.cs" />
+    <Compile Include="Expressions\MethodCallExpressionFingerprint.cs" />
+    <Compile Include="Expressions\ParameterExpressionFingerprint.cs" />
+    <Compile Include="Expressions\ParserContext.cs" />
+    <Compile Include="Expressions\UnaryExpressionFingerprint.cs" />
+    <Compile Include="Extensions\IDictionaryExtensions.cs" />
+    <Compile Include="Extensions\SubsetWrapper.cs" />
+    <Compile Include="Extensions\TransformWrapper.cs" />
+    <Compile Include="Interfaces\IEnumerableLink`1.cs" />
+    <Compile Include="Interfaces\ILink`1.cs" />
+    <Compile Include="Link`1.cs" />
+    <Compile Include="Extensions\DelegateExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\ParameterInfoExtensions.cs" />
+    <Compile Include="Extensions\ValueSetExtensions.cs" />
+    <Compile Include="Interfaces\IHideObjectMembers.cs" />
+    <Compile Include="Indexable.cs" />
+    <Compile Include="Interfaces\IDynamicAccessor.cs" />
+    <Compile Include="Interval`1.cs" />
+    <Compile Include="Precondition.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Extensions\FormatExpression.cs" />
+    <Compile Include="Extensions\ITextExpression.cs" />
+    <Compile Include="Extensions\LiteralExpression.cs" />
+    <Compile Include="Extensions\MethodBaseExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Interfaces\IValueSet.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="Extensions\FieldInfoExtensions.cs" />
+    <Compile Include="Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\MethodInfoExtensions.cs" />
+    <Compile Include="Extensions\PropertyInfoExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="ReaderWriterCache.cs" />
+    <Compile Include="Reflection\ConstructorInvoker.cs" />
+    <Compile Include="Reflection\MethodInvoker.cs" />
+    <Compile Include="Resources\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Reflection\DynamicAccessor.cs" />
+    <Compile Include="Reflection\FieldAccessor.cs" />
+    <Compile Include="Reflection\PropertyAccessor.cs" />
+    <Compile Include="Tuple.cs" />
+    <Compile Include="ValueDictionary.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Radischevo.Wahha.Core.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Radischevo.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

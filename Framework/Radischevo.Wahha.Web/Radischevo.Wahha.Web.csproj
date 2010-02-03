@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2DEB7611-864B-48C4-9CE7-5100F314371D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Radischevo.Wahha.Web</RootNamespace>
+    <AssemblyName>Radischevo.Wahha.Web</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Radischevo.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Builds\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Builds\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Builds\Release\Radischevo.Wahha.Web.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstractions\HttpApplicationStateBase.cs" />
+    <Compile Include="Abstractions\HttpBrowserCapabilitiesBase.cs" />
+    <Compile Include="Abstractions\HttpCachePolicyBase.cs" />
+    <Compile Include="Abstractions\HttpContextBase.cs" />
+    <Compile Include="Abstractions\HttpFileCollectionBase.cs" />
+    <Compile Include="Abstractions\HttpPostedFileBase.cs" />
+    <Compile Include="Abstractions\HttpRequestBase.cs" />
+    <Compile Include="Abstractions\HttpResponseBase.cs" />
+    <Compile Include="Abstractions\HttpServerUtilityBase.cs" />
+    <Compile Include="Abstractions\HttpSessionStateBase.cs" />
+    <Compile Include="Abstractions\HttpStaticObjectsCollectionBase.cs" />
+    <Compile Include="Abstractions\Implementation\HttpApplicationStateWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpBrowserCapabilitiesWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpCachePolicyWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpContextWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpFileCollectionWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpPostedFileWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpRequestWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpResponseWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpServerUtilityWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpSessionStateWrapper.cs" />
+    <Compile Include="Abstractions\Implementation\HttpStaticObjectsCollectionWrapper.cs" />
+    <Compile Include="Caching\AspNetCacheProvider.cs" />
+    <Compile Include="Caching\CacheExtensions.cs" />
+    <Compile Include="Caching\CacheLockDictionary.cs" />
+    <Compile Include="Compilation\BuildManagerWrapper.cs" />
+    <Compile Include="Compilation\IBuildManager.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Hosting\AssemblyResourcePathProvider.cs" />
+    <Compile Include="IHttpValueSet.cs" />
+    <Compile Include="Modules\HttpCompressionModule.cs" />
+    <Compile Include="Hosting\AssemblyResourceVirtualFile.cs" />
+    <Compile Include="Resources\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="HttpParameters.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HttpMethod.cs" />
+    <Compile Include="Scripting\Serialization\JavaScriptConverter.cs" />
+    <Compile Include="Scripting\Serialization\JavaScriptObjectDeserializer.cs" />
+    <Compile Include="Scripting\Serialization\JavaScriptSerializer.cs" />
+    <Compile Include="Scripting\Serialization\JavaScriptString.cs" />
+    <Compile Include="Scripting\Serialization\JavaScriptTypeResolver.cs" />
+    <Compile Include="Scripting\Serialization\ObjectConverter.cs" />
+    <Compile Include="Scripting\Serialization\ScriptIgnoreAttribute.cs" />
+    <Compile Include="Scripting\Serialization\SimpleTypeResolver.cs" />
+    <Compile Include="Scripting\Templates\CodeBlockExpression.cs" />
+    <Compile Include="Scripting\Templates\CodeBlockType.cs" />
+    <Compile Include="Scripting\Templates\CompiledTemplate.cs" />
+    <Compile Include="Scripting\Templates\DirectiveExpression.cs" />
+    <Compile Include="Scripting\Templates\JavaScriptCompiledTemplate.cs" />
+    <Compile Include="Scripting\Templates\JavaScriptTemplateCompiler.cs" />
+    <Compile Include="Scripting\Handlers\JavaScriptTemplateHandler.cs" />
+    <Compile Include="Scripting\Templates\LiteralExpression.cs" />
+    <Compile Include="Scripting\Templates\ParsedTemplate.cs" />
+    <Compile Include="Scripting\Templates\TemplateCompiler.cs" />
+    <Compile Include="Scripting\Templates\TemplateExpression.cs" />
+    <Compile Include="Scripting\Templates\TemplateExpressionType.cs" />
+    <Compile Include="Scripting\Templates\TemplateParameter.cs" />
+    <Compile Include="Scripting\Templates\TemplateParser.cs" />
+    <Compile Include="Scripting\Templates\ParsedAttributeCollection.cs" />
+    <Compile Include="Text\HtmlAttributeDictionary.cs" />
+    <Compile Include="Text\HtmlAttributeFlags.cs" />
+    <Compile Include="Text\HtmlAttributeRule.cs" />
+    <Compile Include="Text\HtmlAttributeRuleCollection.cs" />
+    <Compile Include="Text\Delegates.cs" />
+    <Compile Include="Text\HtmlElementFlags.cs" />
+    <Compile Include="Text\HtmlElementRule.cs" />
+    <Compile Include="Text\HtmlElementRuleCollection.cs" />
+    <Compile Include="Text\HtmlProcessingMode.cs" />
+    <Compile Include="Text\HtmlProcessor.cs" />
+    <Compile Include="Text\HtmlStringParser.cs" />
+    <Compile Include="Text\HtmlStringTypographer.cs" />
+    <Compile Include="Text\HtmlElementBuilder.cs" />
+    <Compile Include="Text\Interfaces\IFluentAttributeRule.cs" />
+    <Compile Include="Text\Interfaces\IRuleAppender.cs" />
+    <Compile Include="Text\Interfaces\IFluentElementRule.cs" />
+    <Compile Include="Text\Interfaces\IRuleBuilder.cs" />
+    <Compile Include="Text\Interfaces\IRuleSelector.cs" />
+    <Compile Include="Text\Sgml\Attribute.cs" />
+    <Compile Include="Text\Sgml\AttributeDefinition.cs" />
+    <Compile Include="Text\Sgml\AttributeList.cs" />
+    <Compile Include="Text\Sgml\AttributePresence.cs" />
+    <Compile Include="Text\Sgml\AttributeType.cs" />
+    <Compile Include="Text\Sgml\CaseFolding.cs" />
+    <Compile Include="Text\Sgml\ContentModel.cs" />
+    <Compile Include="Text\Sgml\DeclaredContent.cs" />
+    <Compile Include="Text\Sgml\ElementDeclaration.cs" />
+    <Compile Include="Text\Sgml\Entity.cs" />
+    <Compile Include="Text\Sgml\Group.cs" />
+    <Compile Include="Text\Sgml\GroupType.cs" />
+    <Compile Include="Text\Sgml\HtmlStream.cs" />
+    <Compile Include="Text\Sgml\HWStack.cs" />
+    <Compile Include="Text\Sgml\LiteralType.cs" />
+    <Compile Include="Text\Sgml\SgmlNode.cs" />
+    <Compile Include="Text\Sgml\Occurrence.cs" />
+    <Compile Include="Text\Sgml\SgmlDtd.cs" />
+    <Compile Include="Text\Sgml\SgmlParseException.cs" />
+    <Compile Include="Text\Sgml\SgmlReader.cs" />
+    <Compile Include="Text\Sgml\State.cs" />
+    <Compile Include="Text\Sgml\Ucs4Decoder.cs" />
+    <Compile Include="Text\Sgml\Ucs4Decoders.cs" />
+    <Compile Include="Text\StringBuffer.cs" />
+    <Compile Include="Text\StringReplacementMode.cs" />
+    <Compile Include="Text\StringReplacementRule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">
+      <Project>{C4A83864-BF32-49D8-BC23-C69F025628EC}</Project>
+      <Name>Radischevo.Wahha.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Radischevo.Wahha.Data\Radischevo.Wahha.Data.csproj">
+      <Project>{C7346189-E495-4A61-9398-F90B69AB619A}</Project>
+      <Name>Radischevo.Wahha.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\html.dtd" />
+    <EmbeddedResource Include="Resources\loose.dtd" />
+    <EmbeddedResource Include="Resources\sloppy.dtd" />
+    <EmbeddedResource Include="Resources\strict.dtd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Radischevo.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

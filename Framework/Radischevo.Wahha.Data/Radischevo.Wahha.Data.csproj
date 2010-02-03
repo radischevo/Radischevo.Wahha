@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C7346189-E495-4A61-9398-F90B69AB619A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Radischevo.Wahha.Data</RootNamespace>
+    <AssemblyName>Radischevo.Wahha.Data</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Radischevo.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Builds\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Builds\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Builds\Release\Radischevo.Wahha.Data.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\CacheItemSelector.cs" />
+    <Compile Include="Caching\CacheProvider.cs" />
+    <Compile Include="Caching\ICacheProvider.cs" />
+    <Compile Include="Caching\ITaggedCacheProvider.cs" />
+    <Compile Include="Caching\NullCacheProvider.cs" />
+    <Compile Include="Configuration\CacheConfigurationElement.cs" />
+    <Compile Include="Configuration\CacheProviderConfigurationElement.cs" />
+    <Compile Include="Configuration\CacheSettings.cs" />
+    <Compile Include="Configuration\DbDataProviderFactoryConfigurationElement.cs" />
+    <Compile Include="Configuration\DbDataProviderConfigurationElement.cs" />
+    <Compile Include="Configuration\DbDataProviderMappingDictionary.cs" />
+    <Compile Include="Configuration\DbDataProviderSettings.cs" />
+    <Compile Include="Configuration\SettingsSection.cs" />
+    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Caching\TaggedCacheWrapper.cs" />
+    <Compile Include="DbCommandDescriptor.cs" />
+    <Compile Include="DbCommandResult.cs" />
+    <Compile Include="DbDataReader.cs" />
+    <Compile Include="DbDataRecordEnumerator.cs" />
+    <Compile Include="DbFieldLookup.cs" />
+    <Compile Include="DbParameterCollection.cs" />
+    <Compile Include="DbParameterDescriptor.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Interfaces\IDbDataReader.cs" />
+    <Compile Include="Interfaces\IDbDataRecord.cs" />
+    <Compile Include="Interfaces\IDbMaterializer.cs" />
+    <Compile Include="Interfaces\IDbQueryService.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISubset.cs" />
+    <Compile Include="KeyedDbRepository.cs" />
+    <Compile Include="DbDataProviderExtensions.cs" />
+    <Compile Include="Provider\OdbcDataProvider.cs" />
+    <Compile Include="Subset.cs" />
+    <Compile Include="Provider\DefaultDbDataProviderFactory.cs" />
+    <Compile Include="Extensions\DataRecordExtensions.cs" />
+    <Compile Include="Extensions\DbCommandExtensions.cs" />
+    <Compile Include="Extensions\DbConnectionExtensions.cs" />
+    <Compile Include="ObjectEnumerator.cs" />
+    <Compile Include="ObjectReader.cs" />
+    <Compile Include="Interfaces\IDbDataProviderFactory.cs" />
+    <Compile Include="DbRepository.cs" />
+    <Compile Include="Resources\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="DbDataRecord.cs" />
+    <Compile Include="DbDataProvider.cs" />
+    <Compile Include="Provider\OleDbDataProvider.cs" />
+    <Compile Include="Provider\SqlDbDataProvider.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Interfaces\IDbDataProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">
+      <Project>{C4A83864-BF32-49D8-BC23-C69F025628EC}</Project>
+      <Name>Radischevo.Wahha.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Radischevo.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

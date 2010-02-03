@@ -1,0 +1,2522 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Radischevo.Wahha.Data</name>
+    </assembly>
+    <members>
+        <member name="T:Radischevo.Wahha.Data.DbDataProvider">
+            <summary>
+            Defines the generic database 
+            connection provider.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.IDbDataProvider">
+            <summary>
+            Defines the database connection 
+            adapter interface.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Initialize(System.String,System.Boolean)">
+            <summary>
+            Initializes an instance of 
+            the <see cref="!:IDataProvider"/>
+            </summary>
+            <param name="connectionString">The database connection string</param>
+            <param name="useTransaction">True to use a transaction</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.BeginTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Starts the database transaction with the specified isolation level
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Commit">
+            <summary>
+            Commits the current transaction (if present)
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Rollback">
+            <summary>
+            Rolls back the current transaction
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Close">
+            <summary>
+            Closes the underlying database connection.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Rollback(System.String)">
+            <summary>
+            Restores the current transaction to 
+            the <paramref name="savePointName"/> savepoint
+            </summary>
+            <param name="savePointName">The savepoint name</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.CreateSavePoint(System.String)">
+            <summary>
+            Creates a savepoint with name <paramref name="savePointName"/>
+            </summary>
+            <param name="savePointName">The savepoint name</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Execute``1(System.Data.IDbCommand,System.Func{System.Data.IDbCommand,``0})">
+            <summary>
+            Executes the <paramref name="command"/> against the current data source 
+            and converts the result using the specified <paramref name="converter"/>.
+            </summary>
+            <param name="command">The <see cref="T:System.Data.IDbCommand"/> 
+            to execute.</param>
+            <param name="converter">The action to perform convertion with.</param>
+            <typeparam name="TR">The type of the returning value.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.CreateDataAdapter">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbDataAdapter"/> instance, 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.CreateCommand">
+            <summary>
+            Creates an <see cref="T:System.Data.IDbCommand"/> instance, 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.IDbDataProvider.UseTransaction">
+            <summary>
+            Gets or sets the value indicating 
+            whether the transaction will be used
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.IDbDataProvider.State">
+            <summary>
+            Gets the current connection state
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Resolve(System.String)">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class, which is registered 
+            in the provider name-to-type mapping table with a specified name.
+            </summary>
+            <param name="providerName">The mapped name of the provider.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Resolve(System.String,System.Boolean)">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class, which is registered 
+            in the provider name-to-type mapping table with a specified name.
+            </summary>
+            <param name="providerName">The mapped name of the provider.</param>
+            <param name="useTransaction">True to use a transaction.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Resolve(System.String,System.String)">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class, which is registered 
+            in the provider name-to-type mapping table with a specified name.
+            </summary>
+            <param name="providerName">The mapped name of the provider.</param>
+            <param name="connectionString">The database connection string.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Resolve(System.String,System.String,System.Boolean)">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class, which is registered 
+            in the provider name-to-type mapping table with a specified name.
+            </summary>
+            <param name="providerName">The mapped name of the provider.</param>
+            <param name="connectionString">The database connection string.</param>
+            <param name="useTransaction">True to use a transaction.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Create">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Create(System.Boolean)">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class.
+            </summary>
+            <param name="useTransaction">True to use a transaction.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Create(System.String)">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class.
+            </summary>
+            <param name="connectionString">The database connection string.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Create(System.String,System.Boolean)">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class.
+            </summary>
+            <param name="connectionString">The database connection string.</param>
+            <param name="useTransaction">True to use a transaction.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Create``1">
+            <summary>
+            Creates a new instance of 
+            the specified <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Create``1(System.Boolean)">
+            <summary>
+            Creates a new instance of 
+            the specified <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class.
+            </summary>
+            <param name="useTransaction">True to use a transaction.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Create``1(System.String)">
+            <summary>
+            Creates a new instance of 
+            the specified <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class.
+            </summary>
+            <param name="connectionString">The database connection string</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Create``1(System.String,System.Boolean)">
+            <summary>
+            Creates a new instance of 
+            the specified <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class.
+            </summary>
+            <param name="connectionString">The database connection string</param>
+            <param name="useTransaction">True to use a transaction</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.BeginTransaction">
+            <summary>
+            Starts the database transaction
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.BeginTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Starts the database transaction with the specified isolation level
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Commit">
+            <summary>
+            Commits the current transaction (if present)
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Rollback">
+            <summary>
+            Rolls back the current transaction
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Close">
+            <summary>
+            Closes the underlying database connection.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Rollback(System.String)">
+            <summary>
+            Restores the current transaction to 
+            the <paramref name="savePointName"/> savepoint
+            </summary>
+            <param name="savePointName">The savepoint name</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.CreateSavePoint(System.String)">
+            <summary>
+            Creates a savepoint with name <paramref name="savePointName"/>
+            </summary>
+            <param name="savePointName">The savepoint name</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.Exception"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.CreateDataAdapter">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbDataAdapter"/> instance, 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.CreateCommand">
+            <summary>
+            Creates an <see cref="T:System.Data.IDbCommand"/> instance, 
+            which is supported by the current provider
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Dispose">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProvider.CheckConnection(System.Data.IDbConnection)">
+            <summary>
+            Checks whether the <paramref name="connection"/> 
+            is available
+            </summary>
+            <param name="connection">A database connection object instance</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataProvider.UseTransaction">
+            <summary>
+            Gets or sets the value indicating 
+            whether the transaction will be used
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataProvider.State">
+            <summary>
+            Gets the current connection state
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.Resources.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_AmbiguousColumnName">
+            <summary>
+              Looks up a localized string similar to Ambiguous column name &apos;{0}&apos; found in the data record..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_CacheProviderDoesNotSupportTags">
+            <summary>
+              Looks up a localized string similar to The currently configured cache provider &apos;{0}&apos; does not support item tagging..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_CannotAddMoreThanOneDefaultProvider">
+            <summary>
+              Looks up a localized string similar to DbDataProvider collection cannot have more than one default provider. The DbDataProvider &apos;{0}&apos; was already marked as a default..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_CannotEnumerateMoreThanOnce">
+            <summary>
+              Looks up a localized string similar to Cannot enumerate the result set more than once..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_CaseShouldContainWhenStatements">
+            <summary>
+              Looks up a localized string similar to Case statement should contain at least one When statement..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ColumnNameDoesNotExistInResultSet">
+            <summary>
+              Looks up a localized string similar to Could not find a field with the specified name &apos;{0}&apos; in the result set..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ColumnOrdinalDoesNotExistInResultSet">
+            <summary>
+              Looks up a localized string similar to Could not find a field with the specified ordinal &apos;{0}&apos; in the result set..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_CommandIsNotInitialized">
+            <summary>
+              Looks up a localized string similar to The &apos;{0}&apos; property should be initialized with the System.Data.IDbCommand instance..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_CommandTextIsNull">
+            <summary>
+              Looks up a localized string similar to Command text cannot be null or an empty string..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ConnectionStringNotConfigured">
+            <summary>
+              Looks up a localized string similar to Couldn&apos;t find any connection strings in the configuration file..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ConnectionStringNotInitialized">
+            <summary>
+              Looks up a localized string similar to Connection string cannot be null or an empty string..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_FormatParameterMismatch">
+            <summary>
+              Looks up a localized string similar to Index (zero based) must be greater than or equal to zero and less than the size of the argument list..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_IncompatibleCacheProviderType">
+            <summary>
+              Looks up a localized string similar to The type &apos;{0}&apos; must implement the ICacheProvider or ITaggedCacheProvider interface and have a public parameterless constructor..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_IncompatibleProviderFactoryType">
+            <summary>
+              Looks up a localized string similar to The type &apos;{0}&apos; must implement the IDbDataProviderFactory interface and have a public parameterless constructor..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_IncompatibleProviderType">
+            <summary>
+              Looks up a localized string similar to The type &apos;{0}&apos; must implement the IDbDataProvider interface and have a public parameterless constructor..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ObjectDisposed">
+            <summary>
+              Looks up a localized string similar to Cannot access the &apos;{0}&apos;. The object is disposed..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ParameterMustBeGreaterThan">
+            <summary>
+              Looks up a localized string similar to The value of the &apos;{0}&apos; parameter should be greater than {1}..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ParameterMustBeGreaterThanOrEqual">
+            <summary>
+              Looks up a localized string similar to The value of the &apos;{0}&apos; parameter should be greater than or equal to {1}..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ProviderNotConfigured">
+            <summary>
+              Looks up a localized string similar to The default data provider is not set. Please check the configuration file..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ProviderTypeMappingNotConfigured">
+            <summary>
+              Looks up a localized string similar to Could not find a DbDataProvider type mapped to specified name &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ReaderIsEmpty">
+            <summary>
+              Looks up a localized string similar to Cannot read the result set from the closed data reader..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_UnableToConnect">
+            <summary>
+              Looks up a localized string similar to Data provider could not connect to the specified data source..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_UnableToLoadConfiguration">
+            <summary>
+              Looks up a localized string similar to Could not parse the configuration file. See the inner exception for details..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_UnsupportedCommandType">
+            <summary>
+              Looks up a localized string similar to The database command type &apos;{0}&apos; is not supported by the provider. The type &apos;{1}&apos; is required for this operation..
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbCommandExtensions">
+            <summary>
+            Provides additional extension methods 
+            for the <see cref="T:System.Data.IDbCommand"/> interface 
+            implementations.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandExtensions.ExecuteScalar``1(System.Data.IDbCommand)">
+            <summary>
+            Executes the query, captures the first 
+            column of the first row in the resultset returned 
+            by the query, and then converts the result to the 
+            <typeparamref name="TResult"/> type. 
+            If conversion is not possible, a default value is returned.
+            </summary>
+            <param name="command">An <see cref="T:System.Data.IDbCommand"/> 
+            command instance</param>
+            <typeparam name="TResult">The type of the return value</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandExtensions.AddParameter(System.Data.IDbCommand,System.String,System.Object)">
+            <summary>
+            Creates a new instance of an <see cref="T:System.Data.IDbDataParameter"/> object 
+            with specified name and value and appends it to the parameter list.
+            </summary>
+            <param name="command">The command</param>
+            <param name="parameterName">Specifies the name of the parameter</param>
+            <param name="value">Specifies the value of the parameter. If a null value is provided, 
+            parameter value will be set to <see cref="F:System.DBNull.Value"/>.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandExtensions.AddParameter(System.Data.IDbCommand,System.String,System.Object,System.Data.ParameterDirection)">
+            <summary>
+            Creates a new instance of an <see cref="T:System.Data.IDbDataParameter"/> object 
+            with specified name and value and appends it to the parameter list.
+            </summary>
+            <param name="command">The command</param>
+            <param name="parameterName">Specifies the name of the parameter</param>
+            <param name="value">Specifies the value of the parameter. If a null value is provided, 
+            parameter value will be set to <see cref="F:System.DBNull.Value"/>.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.Provider.OdbcDataProvider">
+            <summary>
+            Provides methods to access 
+            ODBC compliant databases.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.#ctor">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.Provider.OdbcDataProvider"/> class
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Initialize(System.String,System.Boolean)">
+            <summary>
+            Initializes an instance of 
+            the <see cref="T:Radischevo.Wahha.Data.Provider.OdbcDataProvider"/> class.
+            </summary>
+            <param name="connectionString">The database connection string.</param>
+            <param name="useTransaction">True to use a transaction.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.BeginTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Starts the database transaction with the specified isolation level.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Commit">
+            <summary>
+            Commits the current transaction (if present).
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Rollback">
+            <summary>
+            Rolls back the current transaction.
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Close">
+            <summary>
+            Closes the underlying database connection.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Open">
+            <summary>
+            Ensures the current database connection is opened.
+            </summary>
+            <exception cref="T:System.Data.Odbc.OdbcException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Execute``1(System.Data.IDbCommand,System.Func{System.Data.IDbCommand,``0})">
+            <summary>
+            Executes the <paramref name="command"/> against the current 
+            <see cref="!:Radischevo.Wahha.Data.IDataProvider"/> and converts the 
+            result using the specified <paramref name="converter"/>.
+            </summary>
+            <param name="command">The <see cref="T:System.Data.IDbCommand"/> 
+            command to execute.</param>
+            <param name="converter">The action to perform convertion with.</param>
+            <typeparam name="TR">The type of the returning value.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.CreateDataAdapter">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbDataAdapter"/> instance, 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.CreateCommand">
+            <summary>
+            Creates an <see cref="T:System.Data.IDbCommand"/> instance, 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Dispose">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Dispose(System.Boolean)">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Radischevo#Wahha#Data#IDbDataProvider#Rollback(System.String)">
+            <summary>
+            Generates the <see cref="T:System.NotSupportedException"/> exception
+            </summary>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Radischevo#Wahha#Data#IDbDataProvider#CreateSavePoint(System.String)">
+            <summary>
+            Generates the <see cref="T:System.NotSupportedException"/> exception
+            </summary>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.OdbcDataProvider.UseTransaction">
+            <summary>
+            Gets or sets the value indicating 
+            whether the transaction will be used
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.OdbcDataProvider.State">
+            <summary>
+            Gets the current connection state
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.OdbcDataProvider.IsOpened">
+            <summary>
+            Gets the value indicating 
+            whether the current connection 
+            is opened
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.Provider.SqlDbDataProvider">
+            <summary>
+            Provides methods to access 
+            Microsoft SQL Server databases.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.#ctor">
+            <summary>
+            Creates a new instance of 
+            the <see cref="!:SqlDataProvider"/> class
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Initialize(System.String,System.Boolean)">
+            <summary>
+            Initializes an instance of 
+            the <see cref="!:SqlDataProvider"/> class
+            </summary>
+            <param name="connectionString">The database connection string</param>
+            <param name="useTransaction">True to use a transaction</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.BeginTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Starts the database transaction with the specified isolation level
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Commit">
+            <summary>
+            Commits the current transaction (if present)
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Rollback">
+            <summary>
+            Rolls back the current transaction
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Close">
+            <summary>
+            Closes the underlying database connection.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Rollback(System.String)">
+            <summary>
+            Restores the current transaction to 
+            the <paramref name="savePointName"/> savepoint
+            </summary>
+            <param name="savePointName">The savepoint name</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.CreateSavePoint(System.String)">
+            <summary>
+            Creates a savepoint with name <paramref name="savePointName"/>
+            </summary>
+            <param name="savePointName">The savepoint name</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Open">
+            <summary>
+            Ensures the current connection is opened
+            </summary>
+            <exception cref="T:System.Data.SqlClient.SqlException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Execute``1(System.Data.IDbCommand,System.Func{System.Data.IDbCommand,``0})">
+            <summary>
+            Executes the <paramref name="command"/> against the current 
+            <see cref="!:Radischevo.Wahha.Data.IDataProvider"/> and converts the 
+            result using the specified <paramref name="converter"/>.
+            </summary>
+            <param name="command">The <see cref="T:System.Data.IDbCommand"/> 
+            command to execute.</param>
+            <param name="converter">The action to perform convertion with.</param>
+            <typeparam name="TR">The type of the returning value.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.CreateDataAdapter">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbDataAdapter"/> instance, 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.CreateCommand">
+            <summary>
+            Creates an <see cref="T:System.Data.IDbCommand"/> instance, 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Dispose">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Dispose(System.Boolean)">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.UseTransaction">
+            <summary>
+            Gets or sets the value indicating 
+            whether the transaction will be used
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.State">
+            <summary>
+            Gets the current connection state
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.IsOpened">
+            <summary>
+            Gets the value, indicating 
+            whether the connection is opened 
+            at the moment
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbConnectionExtensions">
+            <summary>
+            Provides additional extension methods for the 
+            <see cref="T:System.Data.IDbConnection"/> interface 
+            implementations.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbConnectionExtensions.Execute(System.Data.IDbConnection,System.Action{System.Data.IDbConnection})">
+            <summary>
+            Executes the specified <paramref name="action"/> against the connection.
+            </summary>
+            <param name="connection">The connection instance.</param>
+            <param name="action">An action to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbConnectionExtensions.Execute``1(System.Data.IDbConnection,System.Func{System.Data.IDbConnection,``0})">
+            <summary>
+            Executes the specified <paramref name="action"/> against the connection and 
+            returns its result.
+            </summary>
+            <typeparam name="TResult">The type of the action result.</typeparam>
+            <param name="connection">The connection instance.</param>
+            <param name="action">An action to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.EnumerableExtensions.Total``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns the total number of elements that can be 
+            retrieved from the sequence.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.IDbDataRecord">
+            <summary>
+            Provides an extended access to the column values within 
+            each row for a DataReader, based on the 
+            <see cref="T:System.Data.IDataRecord"/> interface.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.ContainsKey(System.String)">
+            <summary>
+            Returns a value indicating whether the column 
+            with the specified name exists in the current 
+            value set.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.ContainsAny(System.String[])">
+            <summary>
+            Determines whether the current record 
+            contains at least one of the listed fields.
+            </summary>
+            <param name="keys">An array, containing 
+            the names of the fields to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.ContainsAll(System.String[])">
+            <summary>
+            Determines whether the current record 
+            contains all of the listed fields.
+            </summary>
+            <param name="keys">An array, containing 
+            the names of the fields to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetBoolean(System.String)">
+            <summary>
+            Gets the value of the specified column as a Boolean.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetByte(System.String)">
+            <summary>
+            Gets the 8-bit unsigned integer value of the specified column.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetBytes(System.String,System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of bytes from the specified column 
+            offset into the buffer as an array, starting 
+            at the given buffer offset.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+            <param name="fieldOffset">The index within the field from 
+            which to start the read operation.</param>
+            <param name="buffer">The buffer into which to 
+            read the stream of bytes.</param>
+            <param name="bufferOffset">The index for buffer 
+            to start the read operation.</param>
+            <param name="length">The number of bytes to read.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetChar(System.String)">
+            <summary>
+            Gets the character value of the 
+            specified column.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.IsDBNull(System.String)">
+            <summary>
+            Return whether the specified field 
+            is set to null.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetChars(System.String,System.Int64,System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of characters from the specified 
+            column offset into the buffer as an array, starting 
+            at the given buffer offset.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+            <param name="fieldOffset">The index within the row 
+            from which to start the read operation.</param>
+            <param name="buffer">The buffer into which to read 
+            the stream of bytes.</param>
+            <param name="bufferOffset">The index for buffer 
+            to start the read operation.</param>
+            <param name="length">The number of bytes to read.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetData(System.String)">
+            <summary>
+            Returns an <see cref="T:System.Data.IDataReader"/> 
+            for the specified column name.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetDataTypeName(System.String)">
+            <summary>
+            Gets the data type information for 
+            the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetDateTime(System.String)">
+            <summary>
+            Gets the date and time data value 
+            of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetDecimal(System.String)">
+            <summary>
+            Gets the fixed-position numeric value 
+            of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetDouble(System.String)">
+            <summary>
+            Gets the double-precision floating 
+            point number of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetFieldType(System.String)">
+            <summary>
+            Gets the <see cref="T:System.Type"/> information corresponding 
+            to the type of <see cref="T:System.Object"/> that would be 
+            returned from <see cref="M:System.Data.IDataRecord.GetValue(System.String)"/>.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetFloat(System.String)">
+            <summary>
+            Gets the single-precision floating point 
+            number of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetGuid(System.String)">
+            <summary>
+            Returns the GUID value of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetInt16(System.String)">
+            <summary>
+            Gets the 16-bit signed integer value 
+            of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetInt32(System.String)">
+            <summary>
+            Gets the 32-bit signed integer 
+            value of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetInt64(System.String)">
+            <summary>
+            Gets the 64-bit signed integer 
+            value of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetString(System.String)">
+            <summary>
+            Gets the string value of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.IDbDataRecord.GetValue(System.String)">
+            <summary>
+            Return the value of the specified field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.IDbDataRecord.AccessedFields">
+            <summary>
+            Gets the collection of column names, 
+            which values were accessed by calling 
+            value-getter methods of the current row.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.IDbDataReader">
+            <summary>
+            Provides a means of reading one or more forward-only streams of result sets
+            obtained by executing a command at a data source, and is implemented by .NET
+            Framework data providers that access relational databases.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DataRecordExtensions">
+            <summary>
+            Provides additional extension methods 
+            for the <see cref="T:System.Data.IDataRecord"/> and 
+            <see cref="T:Radischevo.Wahha.Data.IDbDataRecord"/> interface 
+            implementations.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.ToDictionary(System.Data.IDataRecord)">
+            <summary>
+            Converts the <see cref="T:System.Data.IDataRecord"/> to a case-sensitive dictionary.
+            </summary>
+            <param name="record">The record to convert.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.ToDictionary(System.Data.IDataRecord,System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Converts the <see cref="T:System.Data.IDataRecord"/> to a dictionary 
+            with the specified key comparer.
+            </summary>
+            <param name="record">The record to convert.</param>
+            <param name="comparer">The comparer used for comparing keys.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.ToDataRecord(System.Data.IDataRecord)">
+            <summary>
+            Converts the <see cref="T:System.Data.IDataRecord"/> to 
+            an instance of the class that implements the 
+            <see cref="T:Radischevo.Wahha.Data.IDbDataRecord"/> interface.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetValue``1(System.Data.IDataRecord,System.Int32)">
+            <summary>
+            Gets the strongly-typed 
+            value of the specified column. 
+            </summary>
+            <typeparam name="TValue">The type of the value to return.</typeparam>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetValue``1(System.Data.IDataRecord,System.Int32,``0)">
+            <summary>
+            Gets the strongly-typed 
+            value of the specified column, or the specified 
+            default value, if no column found or no conversion possible.
+            </summary>
+            <typeparam name="TValue">The type of the value to return.</typeparam>
+            <param name="index">The zero-based column ordinal.</param>
+            <param name="defaultValue">The default value to return.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableBoolean(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Boolean"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableByte(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Byte"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableChar(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Char"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableDateTime(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.DateTime"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableDecimal(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Decimal"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableDouble(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Double"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableFloat(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Single"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableGuid(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Guid"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableInt16(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Int16"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableInt32(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Int32"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableInt64(Radischevo.Wahha.Data.IDbDataRecord,System.Int32)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="index">The zero-based column ordinal.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Int64"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableBoolean(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/>. 
+            </summary>
+            <param name="record">The data record.</param>
+            <param name="name">The name of the column.</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/>.</returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Boolean"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableByte(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Byte"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableChar(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Char"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableDateTime(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.DateTime"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableDecimal(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Decimal"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableDouble(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Double"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableFloat(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Single"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableGuid(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Guid"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableInt16(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Int16"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableInt32(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Int32"/> if possible.
+            </remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DataRecordExtensions.GetNullableInt64(Radischevo.Wahha.Data.IDbDataRecord,System.String)">
+            <summary>
+            Returns the value in the given column converted to <see cref="T:System.Nullable`1"/> 
+            </summary>
+            <param name="record">The data record</param>
+            <param name="name">The name of the column</param>
+            <returns>The value in the given column converted to <see cref="T:System.Nullable`1"/> </returns>
+            <remarks>
+            If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
+            converted to a <see cref="T:System.Int64"/> if possible.
+            </remarks>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.Provider.OleDbDataProvider">
+            <summary>
+            Provides methods to access 
+            Microsoft Jet databases
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.#ctor">
+            <summary>
+            Creates a new instance of 
+            the <see cref="T:Radischevo.Wahha.Data.Provider.OleDbDataProvider"/> class
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Initialize(System.String,System.Boolean)">
+            <summary>
+            Initializes an instance of 
+            the <see cref="T:Radischevo.Wahha.Data.Provider.OleDbDataProvider"/> class
+            </summary>
+            <param name="connectionString">The database connection string</param>
+            <param name="useTransaction">True to use a transaction</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.BeginTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Starts the database transaction with the specified isolation level
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Commit">
+            <summary>
+            Commits the current transaction (if present)
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Rollback">
+            <summary>
+            Rolls back the current transaction
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Close">
+            <summary>
+            Closes the underlying database connection.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Open">
+            <summary>
+            Ensures the current database connection is opened
+            </summary>
+            <exception cref="T:System.Data.OleDb.OleDbException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Execute``1(System.Data.IDbCommand,System.Func{System.Data.IDbCommand,``0})">
+            <summary>
+            Executes the <paramref name="command"/> against the current 
+            <see cref="!:Radischevo.Wahha.Data.IDataProvider"/> and converts the 
+            result using the specified <paramref name="converter"/>.
+            </summary>
+            <param name="command">The <see cref="T:System.Data.IDbCommand"/> 
+            command to execute.</param>
+            <param name="converter">The action to perform convertion with.</param>
+            <typeparam name="TR">The type of the returning value.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.CreateDataAdapter">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbDataAdapter"/> instance, 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.CreateCommand">
+            <summary>
+            Creates an <see cref="T:System.Data.IDbCommand"/> instance, 
+            which is supported by the current provider
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Dispose">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Dispose(System.Boolean)">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Radischevo#Wahha#Data#IDbDataProvider#Rollback(System.String)">
+            <summary>
+            Generates the <see cref="T:System.NotSupportedException"/> exception
+            </summary>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Radischevo#Wahha#Data#IDbDataProvider#CreateSavePoint(System.String)">
+            <summary>
+            Generates the <see cref="T:System.NotSupportedException"/> exception
+            </summary>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.OleDbDataProvider.UseTransaction">
+            <summary>
+            Gets or sets the value indicating 
+            whether the transaction will be used
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.OleDbDataProvider.State">
+            <summary>
+            Gets the current connection state
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.OleDbDataProvider.IsOpened">
+            <summary>
+            Gets the value indicating 
+            whether the current connection 
+            is opened
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbFieldLookup">
+            <summary>
+            Provides a two-way column lookup 
+            dictionary for the result set. 
+            Designed for internal use by the 
+            <see cref="T:Radischevo.Wahha.Data.DbDataReader"/> 
+            class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbFieldLookup.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbFieldLookup"/> 
+            class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbFieldLookup.Add(System.Int32,System.String)">
+            <summary>
+            Adds a new lookup field into the 
+            dictionary.
+            </summary>
+            <param name="ordinal">The zero-based field ordinal.</param>
+            <param name="name">The name of the field.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbFieldLookup.Clear">
+            <summary>
+            Clear the lookup dictionary.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbFieldLookup.Remove(System.Int32)">
+            <summary>
+            Removes an entry with the specified ordinal 
+            from the lookup dictionary.
+            </summary>
+            <param name="ordinal">The zero-based field ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbFieldLookup.Remove(System.String)">
+            <summary>
+            Removes an entry with the specified name 
+            from the lookup dictionary.
+            </summary>
+            <param name="name">The name of the field.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbFieldLookup.Contains(System.Int32)">
+            <summary>
+            Gets a value indicating whether the 
+            field with the specified ordinal 
+            exists in the lookup dictionary.
+            </summary>
+            <param name="ordinal">The zero-based field ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbFieldLookup.Contains(System.String)">
+            <summary>
+            Gets a value indicating whether the 
+            field with the specified name 
+            exists in the lookup dictionary.
+            </summary>
+            <param name="name">The name of the field.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbFieldLookup.TryGetName(System.Int32,System.String@)">
+            <summary>
+            Gets the name of the column with 
+            the specified ordinal.
+            </summary>
+            <param name="ordinal">The zero-based field ordinal.</param>
+            <param name="name">When the method returns, the name of the 
+            column with the specified ordinal, if the column is found;
+            otherwise, <value>null</value> is returned. 
+            The parameter is passed uninitialized.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbFieldLookup.TryGetOrdinal(System.String,System.Int32@)">
+            <summary>
+            Gets the zero-based ordinal of the column 
+            with the specified name.
+            </summary>
+            <param name="ordinal">When the method returns, the 
+            zero-based ordinal of the column with the specified name, 
+            if the column is found; otherwise, <value>-1</value> 
+            is returned. The parameter is passed uninitialized.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbFieldLookup.Ordinals">
+            <summary>
+            Gets the collection of the field ordinals 
+            which exist in the lookup dictionary.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbFieldLookup.Names">
+            <summary>
+            Gets the collection of the field 
+            names which exist in 
+            the lookup dictionary.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProviderExtensions.Execute(Radischevo.Wahha.Data.IDbDataProvider,System.String)">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbCommand"/> instance, which is 
+            appropriate for the current provider, using the specified 
+            <paramref name="commandText"/> and returns a 
+            <see cref="T:Radischevo.Wahha.Data.DbCommandResult"/> wrapper.
+            </summary>
+            <param name="commandText">The text of the query to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProviderExtensions.Execute(Radischevo.Wahha.Data.IDbDataProvider,System.String,System.Object)">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbCommand"/> instance, which is 
+            appropriate for the current provider, using the specified 
+            <paramref name="commandText"/> and <paramref name="parameters"/> 
+            and returns a <see cref="T:Radischevo.Wahha.Data.DbCommandResult"/> wrapper.
+            </summary>
+            <param name="commandText">The text of the query to execute.</param>
+            <param name="parameters">The object containing command parameters.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProviderExtensions.Execute(Radischevo.Wahha.Data.IDbDataProvider,System.String,System.Object[])">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbCommand"/> instance, which is 
+            appropriate for the current provider, using the specified 
+            <paramref name="commandText"/> and <paramref name="parameters"/> 
+            and returns a <see cref="T:Radischevo.Wahha.Data.DbCommandResult"/> wrapper.
+            </summary>
+            <param name="commandText">The text of the query to execute.</param>
+            <param name="parameters">The list of command parameters.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProviderExtensions.Execute(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.DbCommandDescriptor)">
+            <summary>
+            Creates a <see cref="T:Radischevo.Wahha.Data.DbCommandResult"/> wrapper for 
+            the specified <paramref name="command"/>.
+            </summary>
+            <param name="command">The object, describing the command to execute.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.Configuration.Configuration">
+            <summary>
+            Represents module configuration 
+            settings
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Configuration.Configuration.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.Configuration.Configuration"/> class
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Configuration.Configuration.ConnectionStrings">
+            <summary>
+            Gets the collection of connection strings, 
+            declared within the configuration file
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Configuration.Configuration.Instance">
+            <summary>
+            Gets the current module configuration
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbDataRecordEnumerator">
+            <summary>
+            Acts as a decorator for the 
+            <see cref="T:System.Data.Common.DbEnumerator"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecordEnumerator.#ctor(Radischevo.Wahha.Data.IDbDataReader,Radischevo.Wahha.Data.DbFieldLookup)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbDataRecordEnumerator"/> class.
+            </summary>
+            <param name="reader">The data reader instance, containing 
+            the result set.</param>
+            <param name="lookup">The column name lookup dictionary.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecordEnumerator.MoveNext">
+            <summary>
+            Advances the enumerator to the 
+            next element in the collection.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecordEnumerator.Reset">
+            <summary>
+            Throws the <see cref="T:System.NotSupportedException"/>.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecordEnumerator.Dispose">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataRecordEnumerator.Current">
+            <summary>
+            Gets the current element in 
+            the collection.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbCommandResult">
+            <summary>
+            Acts as a wrapper for the 
+            <see cref="T:System.Data.IDbCommand"/> object 
+            for executing various queries.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.#ctor(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Creates a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbCommandResult"/> class.
+            </summary>
+            <param name="provider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            instance used to access the database.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.#ctor(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.DbCommandDescriptor)">
+            <summary>
+            Creates a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbCommandResult"/> class.
+            </summary>
+            <param name="provider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            instance used to access the database.</param>
+            <param name="command">The <see cref="T:Radischevo.Wahha.Data.DbCommandDescriptor"/>
+            describing the command to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.ToProcedure">
+            <summary>
+            Sets the command type property of the wrapper 
+            command to CommandType.StoredProcedure and returns 
+            the same object.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.AsNonQuery">
+            <summary>
+            Executes an SQL statement against the current 
+            provider and returns a number of rows affected.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.AsScalar">
+            <summary>
+            Executes the query and returns the first column of the first row 
+            in the resultset returned by the query. Extra columns and rows are ignored.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.AsScalar``1">
+            <summary>
+            Executes the query and converts the first column of the first row 
+            in the resultset returned by the query to the 
+            <typeparamref name="T"/> type. If no rows returned or field type 
+            does not support the required conversion, a default value is returned.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.AsDataReader">
+            <summary>
+            Executes an SQL statement against the current provider 
+            and builds a <see cref="T:System.Data.IDataReader"/>.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.AsDataReader``1(System.Func{Radischevo.Wahha.Data.IDbDataReader,``0})">
+            <summary>
+            Executes an SQL statement against the current provider 
+            and builds a <see cref="T:System.Data.IDataReader"/>.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.AsDataSet">
+            <summary>
+            Executes an SQL statement against the current provider 
+            and creates a <see cref="T:System.Data.DataSet"/> containing 
+            the results of the query.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.AsEntitySet``1(System.Func{Radischevo.Wahha.Data.IDbDataRecord,``0})">
+            <summary>
+            Executes an SQL statement against the current provider 
+            and builds a typed collection of elements using the 
+            specified <paramref name="converter"/>.
+            </summary>
+            <typeparam name="TEntity">The type of a collection element.</typeparam>
+            <param name="converter">A function used to convert the data row to 
+            an instance of the specified type.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.AsEntitySet``1(Radischevo.Wahha.Data.IDbMaterializer{``0})">
+            <summary>
+            Executes an SQL statement against the current provider 
+            and builds a typed collection of elements using the 
+            specified <paramref name="materializer"/>.
+            </summary>
+            <typeparam name="TEntity">The type of a collection element.</typeparam>
+            <param name="materializer">A materialization service used to convert the data row to 
+            an instance of the specified type.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.Radischevo#Wahha#Core#IHideObjectMembers#GetType">
+            <summary>
+            Acts as a wrapper for the 
+            <see cref="T:System.Data.IDbCommand"/> object 
+            for executing various queries.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbCommandResult.Provider">
+            <summary>
+            Gets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            instance used to access the database.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbCommandResult.Command">
+            <summary>
+            Gets or sets the <see cref="T:Radischevo.Wahha.Data.DbCommandDescriptor"/> 
+            describing the command to execute.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbDataRecord">
+            <summary>
+            Acts as a high-level decorator for the 
+            <see cref="T:System.Data.IDataRecord"/> object, 
+            extending and adding some useful functionality 
+            to the decorated instance.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.#ctor(System.Data.IDataRecord,Radischevo.Wahha.Data.DbFieldLookup)">
+            <summary>
+            Initializes a new instance 
+            of the <see cref="!:DataRecord"/> class.
+            </summary>
+            <param name="reader">An <see cref="T:System.Data.IDataRecord"/> 
+            instance, which will be used to fill the value set</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetName(System.Int32)">
+            <summary>
+            Gets the name of the field to find.
+            </summary>
+            <param name="ordinal">The zero-based field 
+            ordinal to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetOrdinal(System.String)">
+            <summary>
+            Returns the index of the named field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.IsDBNull(System.Int32)">
+            <summary>
+            Returns a value indicating 
+            whether the specified field 
+            is set to null.
+            </summary>
+            <param name="ordinal">The zero-based 
+            column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.IsDBNull(System.String)">
+            <summary>
+            Returns a value indicating 
+            whether the specified field 
+            is set to null.
+            </summary>
+            <param name="name">The name of 
+            the field to find</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetDataTypeName(System.Int32)">
+            <summary>
+            Gets the data type information
+            for the specified column.
+            </summary>
+            <param name="ordinal">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetDataTypeName(System.String)">
+            <summary>
+            Gets the data type information
+            for the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetFieldType(System.Int32)">
+            <summary>
+            Gets the <see cref="T:System.Type"/>, describing the specified 
+            column value.
+            </summary>
+            <param name="ordinal">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetFieldType(System.String)">
+            <summary>
+            Gets the <see cref="T:System.Type"/>, describing the specified 
+            column value.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.ContainsAll(System.String[])">
+            <summary>
+            Determines whether the current record 
+            contains all of the listed fields.
+            </summary>
+            <param name="keys">An array, containing 
+            the names of the fields to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.ContainsAny(System.String[])">
+            <summary>
+            Determines whether the current record 
+            contains at least one of the listed fields.
+            </summary>
+            <param name="keys">An array, containing 
+            the names of the fields to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.ContainsKey(System.String)">
+            <summary>
+            Returns a value indicating whether the column 
+            with the specified name exists in the current 
+            value set.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetBoolean(System.Int32)">
+            <summary>
+            Gets the value of the specified column 
+            as a <see cref="T:System.Boolean"/>.
+            </summary>
+            <param name="ordinal">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetByte(System.Int32)">
+            <summary>
+            Gets the 8-bit unsigned integer value of the specified column.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetBytes(System.Int32,System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of bytes from the specified column offset 
+            into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+            <param name="fieldOffset">The index within the field from which 
+            to start the read operation.</param>
+            <param name="buffer">The buffer infto which to read the stream of bytes.</param>
+            <param name="bufferOffset">The index for buffer to start the read operation.</param>
+            <param name="length">The number of bytes to read.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetChar(System.Int32)">
+            <summary>
+            Gets the characher value of the specified column.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetChars(System.Int32,System.Int64,System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of characters from the specified column offset 
+            into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+            <param name="fieldOffset">The index within the field from which 
+            to start the read operation.</param>
+            <param name="buffer">The buffer infto which to read the stream of characters.</param>
+            <param name="bufferOffset">The index for buffer to start the read operation.</param>
+            <param name="length">The number of characters to read.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetData(System.Int32)">
+            <summary>
+            Gets a <see cref="T:System.Data.IDataReader"/> 
+            for the specified column.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetDateTime(System.Int32)">
+            <summary>
+            Gets the date and time data value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetDecimal(System.Int32)">
+            <summary>
+            Gets the fixed-position numeric 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetDouble(System.Int32)">
+            <summary>
+            Gets the double-precision floating point number 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetFloat(System.Int32)">
+            <summary>
+            Gets the single-precision floating point number 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetGuid(System.Int32)">
+            <summary>
+            Gets the GUID value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetInt16(System.Int32)">
+            <summary>
+            Gets the 16-bit signed integer 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetInt32(System.Int32)">
+            <summary>
+            Gets the 32-bit signed integer 
+            value of the specified column.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetInt64(System.Int32)">
+            <summary>
+            Gets the 64-bit signed integer 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetString(System.Int32)">
+            <summary>
+            Gets the string  
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue(System.Int32)">
+            <summary>
+            Gets the boxed value of the result 
+            column which has the specified name.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.Int32)">
+            <summary>
+            Gets the strongly-typed value of the 
+            specified column.
+            </summary>
+            <typeparam name="TValue">A type of column value.</typeparam>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.Int32,``0)">
+            <summary>
+            Gets the strongly-typed value of the 
+            specified column.
+            </summary>
+            <typeparam name="TValue">A type of column value.</typeparam>
+            <param name="index">The zero-based column ordinal.</param>
+            <param name="defaultValue">The default value of the variable.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValues(System.Object[])">
+            <summary>
+            Gets all the attribute fields in the collection 
+            for the current record.
+            </summary>
+            <param name="values">An Array of <see cref="T:System.Object"/> 
+            to copy the attribute fields into.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetBoolean(System.String)">
+            <summary>
+            Gets the value of the specified column 
+            as a <see cref="T:System.Boolean"/>.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetByte(System.String)">
+            <summary>
+            Gets the 8-bit unsigned integer value of the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetBytes(System.String,System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of bytes from the specified column offset 
+            into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+            <param name="fieldOffset">The index within the field from which 
+            to start the read operation.</param>
+            <param name="buffer">The buffer infto which to read the stream of bytes.</param>
+            <param name="bufferOffset">The index for buffer to start the read operation.</param>
+            <param name="length">The number of bytes to read.</param>        
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetChar(System.String)">
+            <summary>
+            Gets the characher value of the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetChars(System.String,System.Int64,System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of characters from the specified column offset 
+            into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+            <param name="fieldOffset">The index within the field from which 
+            to start the read operation.</param>
+            <param name="buffer">The buffer infto which to read the stream of characters.</param>
+            <param name="bufferOffset">The index for buffer to start the read operation.</param>
+            <param name="length">The number of characters to read.</param>        
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetData(System.String)">
+            <summary>
+            Gets a <see cref="T:System.Data.IDataReader"/> 
+            for the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetDateTime(System.String)">
+            <summary>
+            Gets the date and time data value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetDecimal(System.String)">
+            <summary>
+            Gets the fixed-position numeric 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetDouble(System.String)">
+            <summary>
+            Gets the double-precision floating point number 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetFloat(System.String)">
+            <summary>
+            Gets the single-precision floating point number 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetGuid(System.String)">
+            <summary>
+            Gets the GUID value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetInt16(System.String)">
+            <summary>
+            Gets the 16-bit signed integer 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetInt32(System.String)">
+            <summary>
+            Gets the 32-bit signed integer 
+            value of the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetInt64(System.String)">
+            <summary>
+            Gets the 64-bit signed integer 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetString(System.String)">
+            <summary>
+            Gets the string  
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue(System.String)">
+            <summary>
+            Gets the boxed value of the result 
+            column which has the specified name.
+            </summary>
+            <param name="key">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.String)">
+            <summary>
+            Gets the strongly-typed value of the result 
+            column which has the specified name.
+            </summary>
+            <typeparam name="TValue">A type of column value.</typeparam>
+            <param name="key">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.String,``0)">
+            <summary>
+            Gets the strongly-typed value of the result 
+            column which has the specified name.
+            </summary>
+            <typeparam name="TValue">A type of column value.</typeparam>
+            <param name="key">The name of the column to find.</param>
+            <param name="defaultValue">The default value of the variable.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataRecord.Item(System.Int32)">
+            <summary>
+            Gets the boxed value of the column 
+            which has the specified ordinal.
+            </summary>
+            <param name="ordinal">The zero-based 
+            column ordinal.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataRecord.Item(System.String)">
+            <summary>
+            Gets the boxed value of the 
+            column which has the specified name.
+            </summary>
+            <param name="name">The name of the 
+            column to find.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataRecord.FieldCount">
+            <summary>
+            Gets the number of columns 
+            in the current row.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataRecord.AccessedFields">
+            <summary>
+            Gets the collection of column names, 
+            which values were accessed by calling 
+            value-getter methods of the current row.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbDataReader">
+            <summary>
+            Acts as a high-level decorator for the 
+            <see cref="T:System.Data.IDataReader"/> object, 
+            extending and adding some useful functionality 
+            to the decorated instance.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.#ctor(System.Data.IDataReader)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbDataReader"/> class.
+            </summary>
+            <param name="reader">The <see cref="T:System.Data.IDataReader"/> 
+            to decorate.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.Dispose">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.Dispose(System.Boolean)">
+            <summary>
+            Performs tasks associated 
+            with freeing, releasing or 
+            resetting unmanaged resources.
+            </summary>
+            <param name="disposing">A value indicating 
+            that the process was initiated internally.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.Close">
+            <summary>
+            Closes the <see cref="T:Radischevo.Wahha.Data.DbDataReader"/> object.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetSchemaTable">
+            <summary>
+            Returns a <see cref="T:System.Data.DataTable"/> that describes 
+            describes the column metadata of the 
+            <see cref="T:Radischevo.Wahha.Data.DbDataReader"/>.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.NextResult">
+            <summary>
+            Advances the data reader to the next result, 
+            when reading the results of batch SQL statements.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.Read">
+            <summary>
+            Advances the data reader 
+            to the next record.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetEnumerator">
+            <summary>
+            Gets the IEnumerator that iterates 
+            through the records of the current 
+            result set.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetName(System.Int32)">
+            <summary>
+            Gets the name of the field to find.
+            </summary>
+            <param name="ordinal">The zero-based field 
+            ordinal to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetOrdinal(System.String)">
+            <summary>
+            Returns the index of the named field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.IsDBNull(System.Int32)">
+            <summary>
+            Returns a value indicating 
+            whether the specified field 
+            is set to null.
+            </summary>
+            <param name="ordinal">The zero-based 
+            column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.IsDBNull(System.String)">
+            <summary>
+            Returns a value indicating 
+            whether the specified field 
+            is set to null.
+            </summary>
+            <param name="name">The name of 
+            the field to find</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetDataTypeName(System.Int32)">
+            <summary>
+            Gets the data type information
+            for the specified column.
+            </summary>
+            <param name="ordinal">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetDataTypeName(System.String)">
+            <summary>
+            Gets the data type information
+            for the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetFieldType(System.Int32)">
+            <summary>
+            Gets the <see cref="T:System.Type"/>, describing the specified 
+            column value.
+            </summary>
+            <param name="ordinal">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetFieldType(System.String)">
+            <summary>
+            Gets the <see cref="T:System.Type"/>, describing the specified 
+            column value.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.ContainsAll(System.String[])">
+            <summary>
+            Determines whether the current record 
+            contains all of the listed fields.
+            </summary>
+            <param name="keys">An array, containing 
+            the names of the fields to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.ContainsAny(System.String[])">
+            <summary>
+            Determines whether the current record 
+            contains at least one of the listed fields.
+            </summary>
+            <param name="keys">An array, containing 
+            the names of the fields to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.ContainsKey(System.String)">
+            <summary>
+            Returns a value indicating whether the column 
+            with the specified name exists in the current 
+            value set.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetBoolean(System.Int32)">
+            <summary>
+            Gets the value of the specified column 
+            as a <see cref="T:System.Boolean"/>.
+            </summary>
+            <param name="ordinal">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetByte(System.Int32)">
+            <summary>
+            Gets the 8-bit unsigned integer value of the specified column.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetBytes(System.Int32,System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of bytes from the specified column offset 
+            into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+            <param name="fieldOffset">The index within the field from which 
+            to start the read operation.</param>
+            <param name="buffer">The buffer infto which to read the stream of bytes.</param>
+            <param name="bufferOffset">The index for buffer to start the read operation.</param>
+            <param name="length">The number of bytes to read.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetChar(System.Int32)">
+            <summary>
+            Gets the characher value of the specified column.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetChars(System.Int32,System.Int64,System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of characters from the specified column offset 
+            into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+            <param name="fieldOffset">The index within the field from which 
+            to start the read operation.</param>
+            <param name="buffer">The buffer infto which to read the stream of characters.</param>
+            <param name="bufferOffset">The index for buffer to start the read operation.</param>
+            <param name="length">The number of characters to read.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetData(System.Int32)">
+            <summary>
+            Gets a <see cref="T:System.Data.IDataReader"/> 
+            for the specified column.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetDateTime(System.Int32)">
+            <summary>
+            Gets the date and time data value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetDecimal(System.Int32)">
+            <summary>
+            Gets the fixed-position numeric 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetDouble(System.Int32)">
+            <summary>
+            Gets the double-precision floating point number 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetFloat(System.Int32)">
+            <summary>
+            Gets the single-precision floating point number 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetGuid(System.Int32)">
+            <summary>
+            Gets the GUID value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetInt16(System.Int32)">
+            <summary>
+            Gets the 16-bit signed integer 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetInt32(System.Int32)">
+            <summary>
+            Gets the 32-bit signed integer 
+            value of the specified column.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetInt64(System.Int32)">
+            <summary>
+            Gets the 64-bit signed integer 
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetString(System.Int32)">
+            <summary>
+            Gets the string  
+            value of the specified column. 
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue(System.Int32)">
+            <summary>
+            Gets the boxed value of the result 
+            column which has the specified name.
+            </summary>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.Int32)">
+            <summary>
+            Gets the strongly-typed value of the 
+            specified column.
+            </summary>
+            <typeparam name="TValue">A type of column value.</typeparam>
+            <param name="index">The zero-based column ordinal.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.Int32,``0)">
+            <summary>
+            Gets the strongly-typed value of the 
+            specified column.
+            </summary>
+            <typeparam name="TValue">A type of column value.</typeparam>
+            <param name="index">The zero-based column ordinal.</param>
+            <param name="defaultValue">The default value of the variable.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValues(System.Object[])">
+            <summary>
+            Gets all the attribute fields in the collection 
+            for the current record.
+            </summary>
+            <param name="values">An Array of <see cref="T:System.Object"/> 
+            to copy the attribute fields into.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetBoolean(System.String)">
+            <summary>
+            Gets the value of the specified column 
+            as a <see cref="T:System.Boolean"/>.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetByte(System.String)">
+            <summary>
+            Gets the 8-bit unsigned integer value of the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetBytes(System.String,System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of bytes from the specified column offset 
+            into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+            <param name="fieldOffset">The index within the field from which 
+            to start the read operation.</param>
+            <param name="buffer">The buffer infto which to read the stream of bytes.</param>
+            <param name="bufferOffset">The index for buffer to start the read operation.</param>
+            <param name="length">The number of bytes to read.</param>        
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetChar(System.String)">
+            <summary>
+            Gets the characher value of the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetChars(System.String,System.Int64,System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of characters from the specified column offset 
+            into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+            <param name="fieldOffset">The index within the field from which 
+            to start the read operation.</param>
+            <param name="buffer">The buffer infto which to read the stream of characters.</param>
+            <param name="bufferOffset">The index for buffer to start the read operation.</param>
+            <param name="length">The number of characters to read.</param>        
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetData(System.String)">
+            <summary>
+            Gets a <see cref="T:System.Data.IDataReader"/> 
+            for the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetDateTime(System.String)">
+            <summary>
+            Gets the date and time data value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetDecimal(System.String)">
+            <summary>
+            Gets the fixed-position numeric 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetDouble(System.String)">
+            <summary>
+            Gets the double-precision floating point number 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetFloat(System.String)">
+            <summary>
+            Gets the single-precision floating point number 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetGuid(System.String)">
+            <summary>
+            Gets the GUID value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetInt16(System.String)">
+            <summary>
+            Gets the 16-bit signed integer 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetInt32(System.String)">
+            <summary>
+            Gets the 32-bit signed integer 
+            value of the specified column.
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetInt64(System.String)">
+            <summary>
+            Gets the 64-bit signed integer 
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetString(System.String)">
+            <summary>
+            Gets the string  
+            value of the specified column. 
+            </summary>
+            <param name="name">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue(System.String)">
+            <summary>
+            Gets the boxed value of the result 
+            column which has the specified name.
+            </summary>
+            <param name="key">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.String)">
+            <summary>
+            Gets the strongly-typed value of the result 
+            column which has the specified name.
+            </summary>
+            <typeparam name="TValue">A type of column value.</typeparam>
+            <param name="key">The name of the column to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.String,``0)">
+            <summary>
+            Gets the strongly-typed value of the result 
+            column which has the specified name.
+            </summary>
+            <typeparam name="TValue">A type of column value.</typeparam>
+            <param name="key">The name of the column to find.</param>
+            <param name="defaultValue">The default value of the variable.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataReader.Item(System.Int32)">
+            <summary>
+            Gets the boxed value of the column 
+            which has the specified ordinal.
+            </summary>
+            <param name="ordinal">The zero-based 
+            column ordinal.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataReader.Item(System.String)">
+            <summary>
+            Gets the boxed value of the 
+            column which has the specified name.
+            </summary>
+            <param name="name">The name of the 
+            column to find.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataReader.IsClosed">
+            <summary>
+            Gets a value indicating whether 
+            the data reader is closed.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataReader.FieldCount">
+            <summary>
+            Gets the number of columns 
+            in the current row.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataReader.Depth">
+            <summary>
+            Gets a value indicating the 
+            depth of nesting for the current row.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataReader.RecordsAffected">
+            <summary>
+            Gets the number of rows changed, 
+            inserted, or deleted by execution 
+            of the SQL statement.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbDataReader.AccessedFields">
+            <summary>
+            Gets the collection of column names, 
+            which values were accessed by calling 
+            value-getter methods of the current row.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Caching.CacheProvider.Get``1(System.String)">
+            <summary>
+            Gets the typed value from the web application cache.
+            </summary>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <param name="cache"></param>
+            <param name="key">The key the object is stored with.</param>
+        </member>
+    </members>
+</doc>

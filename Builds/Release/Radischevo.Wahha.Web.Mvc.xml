@@ -1,0 +1,1810 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Radischevo.Wahha.Web.Mvc</name>
+    </assembly>
+    <members>
+        <member name="T:Radischevo.Wahha.Web.Mvc.Validation.RemoteValidationAttribute">
+            <summary>
+            Specifies a custom rule validation constraint 
+            for the value of a data field.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Validation.RemoteValidationAttribute.Url">
+            <summary>
+            Gets or sets the URL of the handler, 
+            which will be used to validate the value 
+            of a data field.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.ITempDataProvider">
+            <summary>
+            Defines the contract for temp data providers 
+            which store data viewed on the next request.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.UrlHelper">
+            <summary>
+            Class containing convenience 
+            methods for URL generation.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route(System.String)">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="routeKey">The name of the route, if any.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route(System.Object)">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="values">The route values.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route(System.String,System.Object)">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="routeKey">The name of the route, if any.</param>
+            <param name="values">The route values.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route(System.String,System.String,System.String)">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="routeKey">The name of the route, if any.</param>
+            <param name="controller">The name of the controller.</param>
+            <param name="action">The name of the action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route(System.String,System.String)">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="controller">The name of the controller.</param>
+            <param name="action">The name of the action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route(System.String,System.String,System.Object)">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="controller">The name of the controller.</param>
+            <param name="action">The name of the action.</param>
+            <param name="values">The route values.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route(System.String,System.String,System.String,System.Object)">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="routeKey">The name of the route, if any.</param>
+            <param name="controller">The name of the controller.</param>
+            <param name="action">The name of the action.</param>
+            <param name="values">The route values.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route(System.String,System.String,System.String,Radischevo.Wahha.Core.ValueDictionary)">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="routeKey">The name of the route, if any.</param>
+            <param name="controller">The name of the controller.</param>
+            <param name="action">The name of the action.</param>
+            <param name="values">The route values.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route``1(System.Linq.Expressions.Expression{System.Action{``0}})">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="action">The action with parameters.</param>
+            <typeparam name="TController">The type of the controller.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Route``1(System.String,System.Linq.Expressions.Expression{System.Action{``0}})">
+            <summary>
+            Convenience method used to generate a link 
+            using Routing to determine the virtual path.
+            </summary>
+            <param name="routeKey">The name of the route, if any.</param>
+            <param name="action">The action with parameters.</param>
+            <typeparam name="TController">The type of the controller.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Resource(System.String)">
+            <summary>
+            Gets a resource URL for the specified virtual path.
+            </summary>
+            <param name="virtualPath">The virtual path of the resource.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Resource(System.String,System.Boolean)">
+            <summary>
+            Gets a resource URL for the specified virtual path.
+            </summary>
+            <param name="virtualPath">The virtual path of the resource.</param>
+            <param name="includeVersion">If true, the resource version 
+            will be included in the URL.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.HostName(System.Int32)">
+            <summary>
+            Gets the DNS host name of the current application 
+            with the specified level of domain hierarchy.
+            </summary>
+            <param name="domainLevel">The target level of domain hierarchy.</param>
+            <remarks>If the <paramref name="domainLevel"/> equals to zero, 
+            the current domain is returned.</remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.MakeAbsolute(System.String)">
+            <summary>
+            Converts the specified virtual path to 
+            an absolute URL.
+            </summary>
+            <param name="virtualPath">The virtual path to convert.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.MakeAbsolute(System.String,System.Boolean)">
+            <summary>
+            Converts the specified virtual path to 
+            an absolute URL.
+            </summary>
+            <param name="virtualPath">The virtual path to convert.</param>
+            <param name="includeVersion">If true, the resource version 
+            will be included in the URL.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.MakeAbsolute(System.String,System.Int32)">
+            <summary>
+            Converts the specified virtual path to 
+            an absolute URL.
+            </summary>
+            <param name="virtualPath">The virtual path to convert.</param>
+            <param name="domainLevel">The target level of domain hierarchy.</param>
+            <remarks>If the <paramref name="domainLevel"/> equals to zero, 
+            the current domain is returned.</remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.MakeAbsolute(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Converts the specified virtual path to 
+            an absolute URL.
+            </summary>
+            <param name="virtualPath">The virtual path to convert.</param>
+            <param name="domainLevel">The target level of domain hierarchy.</param>
+            <param name="includeVersion">If true, the resource version 
+            will be included in the URL.</param>
+            <remarks>If the <paramref name="domainLevel"/> equals to zero, 
+            the current domain is returned.</remarks>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Radischevo#Wahha#Core#IHideObjectMembers#GetType">
+            <summary>
+            Class containing convenience 
+            methods for URL generation.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UrlHelper.Context">
+            <summary>
+            Gets the current 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewContext"/>.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UrlHelper.Routes">
+            <summary>
+            Gets the collection of routes.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.ControllerContext">
+            <summary>
+            Encapsulates information about an HTTP request that matches a defined 
+            <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase">Route</see> and 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ControllerBase">Controller</see>. 
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.AssemblyResourceViewEngine">
+            <summary>
+            Provides a view engine for serving pages or user controls 
+            from embedded resources, using the 
+            <see cref="T:Radischevo.Wahha.Web.Hosting.AssemblyResourcePathProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.AssemblyResourceViewEngine.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.AssemblyResourceViewEngine"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.AssemblyResourceViewEngine.Init(Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Initializes the current 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.AssemblyResourceViewEngine"/> instance 
+            using the specified <paramref name="settings"/>.
+            </summary>
+            <param name="settings">A settings list for the current instance.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.ControllerConfigurationElement.FactoryType">
+            <summary>
+            Gets the string representation 
+            of the type of controller factory which 
+            will be used by default
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.ControllerConfigurationElement.Mappings">
+            <summary>
+            Gets the predefined controller name-to-type mappings
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Configuration.Configuration.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.Configuration.Configuration"/> class
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.ViewResultBase">
+            <summary>
+            Base class used to supply the model to the view 
+            and then render the view to the response.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.ActionResult">
+            <summary>
+            Encapsulates the result of an action method and is used to perform a 
+            framework level operation on the action method's behalf.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ActionResult.Execute(Radischevo.Wahha.Web.Mvc.ControllerContext)">
+            <summary>
+            Enables processing of the result of an action method by a 
+            custom type that inherits from <see cref="T:Radischevo.Wahha.Web.Mvc.ActionResult"/>.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ViewResultBase.Execute(Radischevo.Wahha.Web.Mvc.ControllerContext)">
+            <summary>
+            When called by the action invoker, renders the view to the response.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ViewResultBase.FindView(Radischevo.Wahha.Web.Mvc.ControllerContext)">
+            <summary>
+            When overridden, returns the <see cref="T:Radischevo.Wahha.Web.Mvc.ViewEngineResult"/> 
+            used to render the view.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewResultBase.TempData">
+            <summary>
+            Gets or sets the <see cref="T:Radischevo.Wahha.Web.Mvc.TempDataDictionary"/> 
+            for this result.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewResultBase.ViewData">
+            <summary>
+            Gets or sets the view data 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewDataDictionary"/> 
+            for this result.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewResultBase.ViewEngines">
+            <summary>
+            Gets the view engines (
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewEngineCollection"/>) 
+            associated with this result.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewResultBase.ViewName">
+            <summary>
+            The name of the view to be rendered.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewResultBase.View">
+            <summary>
+             Gets or sets the <see cref="T:Radischevo.Wahha.Web.Mvc.IView"/> 
+             that is rendered to the response.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.EmptyResult">
+            <summary>
+            Represents a result that doesn't do anything, 
+            like a controller action returning null.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.ViewContext">
+            <summary>
+            Encapsulates information related to rendering a view.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewContext.TempData">
+            <summary>
+            Gets data associated with this request 
+            which only lives for one request.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewContext.ViewData">
+            <summary>
+            Gets the view data supplied to the view.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewContext.View">
+            <summary>
+            Gets the <see cref="T:Radischevo.Wahha.Web.Mvc.IView"/> 
+            to render.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewContext.Errors">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> 
+            containing any validation errors that occurred while processing the request.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.HttpContext">
+            <summary>
+            Encapsulates all HTTP-specific information 
+            about an individual HTTP request.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.Request">
+            <summary>
+            Gets the <see cref="T:System.Web.HttpRequest"/> 
+            object for the current HTTP request.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.Response">
+            <summary>
+            Gets the <see cref="T:System.Web.HttpResponse"/> 
+            object for the current HTTP request.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.Cache">
+            <summary>
+            Gets or sets the <see cref="T:Radischevo.Wahha.Data.Caching.CacheProvider"/> 
+            for the current controller.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.RouteData">
+            <summary>
+            Returns the <see cref="T:Radischevo.Wahha.Web.Routing.RouteData"/> 
+            for the current request.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.Server">
+            <summary>
+            Gets the <see cref="T:System.Web.HttpServerUtility"/> 
+            object that provides methods used in processing Web requests.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.Session">
+            <summary>
+            Gets the <see cref="T:System.Web.HttpSessionState"/> 
+            object for the current HTTP request.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.TempData">
+            <summary>
+            Gets data associated with this request which 
+            only lives for one request.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.ViewData">
+            <summary>
+            Gets the view data supplied to the view.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.Parameters">
+            <summary>
+            Gets the combined HTTP value collection 
+            for the current <see cref="T:System.Web.HttpRequest"/>.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ControllerBase.User">
+            <summary>
+            Gets the security information for the current HTTP request.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.OnPreAction(Radischevo.Wahha.Web.Mvc.ActionExecutionContext)">
+            <summary>
+            Method called before the action method is invoked.
+            </summary>
+            <param name="context">Contains information about the current request and action</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.OnPostAction(Radischevo.Wahha.Web.Mvc.ActionExecutedContext)">
+            <summary>
+            Method called after the action method is invoked.
+            </summary>
+            <param name="context">Contains information about the current request and action</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.OnPreResult(Radischevo.Wahha.Web.Mvc.ResultExecutionContext)">
+            <summary>
+            Method called before the action result returned by an action method is executed.
+            </summary>
+            <param name="context">Contains information about the current request and action result</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.OnPostResult(Radischevo.Wahha.Web.Mvc.ResultExecutedContext)">
+            <summary>
+            Method called after the action result returned by an action method is executed.
+            </summary>
+            <param name="context">Contains information about the current request and action result</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.OnAuthorization(Radischevo.Wahha.Web.Mvc.AuthorizationContext)">
+            <summary>
+            Method called when authorization occurs.
+            </summary>
+            <param name="context">Contains information about the current request and action</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.OnException(Radischevo.Wahha.Web.Mvc.ExceptionContext)">
+            <summary>
+            Method called when an unhandled exception occurs in the action.
+            </summary>
+            <param name="context">Contains information about the current request and action</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.HandleUnknownAction(System.String)">
+            <summary>
+            Method called whenever a request matches this controller, 
+            but not an action of this controller.
+            </summary>
+            <param name="actionName">The name of the attempted action</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Content(System.String)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ContentResult"/> 
+            which renders the supplied content to the response.
+            </summary>
+            <param name="content">The content to write to the response</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Content(System.String,System.String)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ContentResult"/> 
+            which renders the supplied content to the response.
+            </summary>
+            <param name="content">The content to write to the response</param>
+            <param name="contentType">The content MIME-type</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Content(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ContentResult"/> 
+            which renders the supplied content to the response.
+            </summary>
+            <param name="content">The content to write to the response</param>
+            <param name="contentType">The content MIME-type</param>
+            <param name="contentEncoding">The content encoding</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
+            specified object to JSON and writes the JSON to the response.
+            </summary>
+            <param name="data">The object to serialize</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Web.Scripting.Serialization.JavaScriptConverter})">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
+            specified object to JSON and writes the JSON to the response.
+            </summary>
+            <param name="data">The object to serialize</param>
+            <param name="converters">A collection of custom object-to-JSON converters.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
+            specified object to JSON and writes the JSON to the response.
+            </summary>
+            <param name="data">The object to serialize</param>
+            <param name="contentType">The content type</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Web.Scripting.Serialization.JavaScriptConverter})">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
+            specified object to JSON and writes the JSON to the response.
+            </summary>
+            <param name="data">The object to serialize</param>
+            <param name="contentType">The content type</param>
+            <param name="converters">A collection of custom object-to-JSON converters.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Text.Encoding)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
+            specified object to JSON and writes the JSON to the response.
+            </summary>
+            <param name="data">The object to serialize</param>
+            <param name="contentType">The content type</param>
+            <param name="contentEncoding">The content encoding</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Text.Encoding,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Web.Scripting.Serialization.JavaScriptConverter})">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
+            specified object to JSON and writes the JSON to the response.
+            </summary>
+            <param name="data">The object to serialize</param>
+            <param name="contentType">The content type</param>
+            <param name="contentEncoding">The content encoding</param>
+            <param name="converters">A collection of custom object-to-JSON converters.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Redirect(System.String)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
+            which redirects to the specified URL.
+            </summary>
+            <param name="url">The URL to redirect to.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.RedirectPermanent(System.String)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.PermanentRedirectResult"/> 
+            which permanently redirects to the specified URL.
+            </summary>
+            <param name="url">The URL to redirect to.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(System.Object)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
+            which redirects to the specified route.
+            </summary>
+            <param name="values">An object containing the parameters for a route.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(Radischevo.Wahha.Core.ValueDictionary)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
+            which redirects to the specified route.
+            </summary>
+            <param name="values">An object containing the parameters for a route.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(System.String,System.Object)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
+            which redirects to the specified route.
+            </summary>
+            <param name="values">An object containing the parameters for a route.</param>
+            <param name="routeKey">The name of the route</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(System.String,Radischevo.Wahha.Core.ValueDictionary)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
+            which redirects to the specified route.
+            </summary>
+            <param name="values">An object containing the parameters for a route.</param>
+            <param name="routeKey">The name of the route</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(System.String,Radischevo.Wahha.Core.ValueDictionary,System.String)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
+            which redirects to the specified route.
+            </summary>
+            <param name="values">An object containing the parameters for a route.</param>
+            <param name="routeKey">The name of the route</param>
+            <param name="suffix">An optional suffix, which will be added to the resulting URL.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.View(System.String)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ViewResult"/> 
+            which renders a view to the response.
+            </summary>
+            <param name="viewName">The name of the view</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.View(System.String,Radischevo.Wahha.Web.Mvc.ViewDataDictionary)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ViewResult"/> 
+            which renders a view to the response.
+            </summary>
+            <param name="viewName">The name of the view</param>
+            <param name="viewData">The view data supplied to the view</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.View(System.String,System.Object)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ViewResult"/> 
+            which renders a view to the response.
+            </summary>
+            <param name="viewName">The name of the view</param>
+            <param name="model">The model rendered by the view</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.View(System.String,System.Object,Radischevo.Wahha.Web.Mvc.ViewDataDictionary)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ViewResult"/> 
+            which renders a view to the response.
+            </summary>
+            <param name="viewName">The name of the view</param>
+            <param name="model">The model rendered by the view</param>
+            <param name="viewData">The view data supplied to the view</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.View(Radischevo.Wahha.Web.Mvc.IView)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ViewResult"/> 
+            which renders the specified <see cref="T:Radischevo.Wahha.Web.Mvc.IView"/> 
+            to the response.
+            </summary>
+            <param name="view">The view rendered to the response</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.View(Radischevo.Wahha.Web.Mvc.IView,System.Object)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ViewResult"/> 
+            which renders the specified <see cref="T:Radischevo.Wahha.Web.Mvc.IView"/> 
+            to the response.
+            </summary>
+            <param name="view">The view rendered to the response</param>
+            <param name="model">The model rendered by the view</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.View(Radischevo.Wahha.Web.Mvc.IView,System.Object,Radischevo.Wahha.Web.Mvc.ViewDataDictionary)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ViewResult"/> 
+            which renders the specified <see cref="T:Radischevo.Wahha.Web.Mvc.IView"/> 
+            to the response.
+            </summary>
+            <param name="view">The view rendered to the response</param>
+            <param name="model">The model rendered by the view</param>
+            <param name="viewData">The view data supplied to the view</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Controller.ActionExecutor">
+            <summary>
+            Gets the <see cref="T:Radischevo.Wahha.Web.Mvc.IActionExecutor"/> 
+            for the controller.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Controller.TempDataProvider">
+            <summary>
+            Gets the <see cref="T:Radischevo.Wahha.Web.Mvc.ITempDataProvider"/> 
+            object used to store data for the next request.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.BindAttribute">
+            <summary>
+            Attribute used to provide details on 
+            how model binding to a parameter should occur.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Exclude">
+            <summary>
+            A comma delimited black list of property 
+            names for which binding is not allowed.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Include">
+            <summary>
+            A comma delimited white list of property 
+            names for which binding is allowed.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Name">
+            <summary>
+            Gets or sets the prefix to use when 
+            binding to an action argument or model property.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Default">
+            <summary>
+            Gets or sets the default value for the parameter.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Source">
+            <summary>
+            Gets or sets a bitmask comprised of one or more 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ParameterSource"/> flags 
+            specifying locations where the parameter value is searched.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.IActionExecutor">
+            <summary>
+            Defines the contract for an action invoker, used to 
+            invoke an action in response to an http request.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.IActionExecutor.InvokeAction(Radischevo.Wahha.Web.Mvc.ControllerContext,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Invokes the specified action.
+            </summary>
+            <param name="context"></param>
+            <param name="actionName">The name of the action.</param>
+            <param name="values"></param>
+            <returns>True if the action was found, otherwise false.</returns>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.RequireAjaxRequestAttribute">
+            <summary>
+            Adds an action filter that checks 
+            if the current request is performed through 
+            the XmlHttpRequest object.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.RequireAjaxRequestAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.RequireAjaxRequestAttribute"/> 
+            class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.RequireAjaxRequestAttribute.IsValid(Radischevo.Wahha.Web.Mvc.ControllerContext,System.Reflection.MethodInfo)">
+            <summary>
+            Checks the request for XmlHttpRequest headers.
+            </summary>
+            <param name="context">The context of the current request.</param>
+            <param name="actionMethod">The method, currently being executed.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.BlockRenderer">
+            <summary>
+            Renders an Action delegate and captures all output to a string.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.BlockRenderer.Capture(System.Action)">
+            <summary>Renders the action and returns a string.</summary>
+            <param name="renderer">The delegate to render.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.ViewPage.InitHelpers(Radischevo.Wahha.Web.Mvc.ViewContext)">
+            <summary>
+            Instantiates and initializes the Ajax, Html, and Url properties.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.ViewPage.RenderView(Radischevo.Wahha.Web.Mvc.ViewContext)">
+            <summary>
+            Renders the view page to the response.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.ViewPage.Html">
+            <summary>
+            Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper"/> containing 
+            methods useful for rendering HTML elements.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.ViewPage.Output">
+            <summary>
+            Gets or sets the <see cref="T:System.IO.TextWriter"/>, 
+            where the page will be rendered into.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.ViewPage.Url">
+            <summary>
+            Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UrlHelper"/> containing 
+            methods useful for resolving URLs and routes.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.ViewPage.Ajax">
+            <summary>
+            Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper"/> 
+            containing methods useful for AJAX scenarios.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.ViewPage.Model">
+            <summary>
+            Convenience property used to access the Model 
+            property of the <see cref="T:Radischevo.Wahha.Web.Mvc.ViewDataDictionary"/>
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.ViewPage`1.Html">
+            <summary>
+            Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper"/> containing 
+            methods useful for rendering HTML elements.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.Resources.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_AmbiguousActionName">
+            <summary>
+              Looks up a localized string similar to Duplicate action name &apos;{0}&apos; found at controller &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_AsyncResultAlreadyConsumed">
+            <summary>
+              Looks up a localized string similar to The provided IAsyncResult has already been consumed..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_BinderValueInvalid">
+            <summary>
+              Looks up a localized string similar to The value &apos;{0}&apos; is not valid for {1}..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_BinderValueRequired">
+            <summary>
+              Looks up a localized string similar to A value is required..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CannotCallInstanceMethodOnNonControllerType">
+            <summary>
+              Looks up a localized string similar to Cannot call instance method &apos;{0}&apos; on non-controller type &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CannotRedirectFromChildAction">
+            <summary>
+              Looks up a localized string similar to Child actions are not allowed to perform redirect actions..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ChildRequestExecutionError">
+            <summary>
+              Looks up a localized string similar to Execution of the child request failed. Please examine the InnerException for more information..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ControllerCannotHandleMultipleRequests">
+            <summary>
+              Looks up a localized string similar to A single instance of controller &apos;{0}&apos; cannot be used to handle multiple requests. If a custom controller factory is in use, make sure that it creates a new instance of the controller for each request..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ControllerMustHaveDefaultConstructor">
+            <summary>
+              Looks up a localized string similar to The controller type &apos;{0}&apos; must have a parameterless public constructor..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ControllerMustImplementAsyncManagerContainer">
+            <summary>
+              Looks up a localized string similar to The controller of type &apos;{0}&apos; must subclass AsyncController or implement the IAsyncManagerContainer interface..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ControlRequiresViewDataProvider">
+            <summary>
+              Looks up a localized string similar to The ViewUserControl cannot find an IViewDataContainer. The ViewUserControl must be inside a ViewPage, ViewMasterPage, or another ViewUserControl..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CouldNotCreateController">
+            <summary>
+              Looks up a localized string similar to The controller &apos;{0}&apos; could not be found..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CouldNotCreateView">
+            <summary>
+              Looks up a localized string similar to The view found at &apos;{0}&apos; could not be created..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CouldNotFindAsyncCompletionMethod">
+            <summary>
+              Looks up a localized string similar to Could not locate the completion action method named &apos;{0}&apos; on controller type {1}..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CouldNotSetControlProperties">
+            <summary>
+              Looks up a localized string similar to The user control of type &apos;{0}&apos; was not successfully initialized..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_DuplicateControllerName">
+            <summary>
+              Looks up a localized string similar to The controller name &apos;{0}&apos; is ambiguous between several types..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ExpressionMustBeAMethodCall">
+            <summary>
+              Looks up a localized string similar to Expression parameter &apos;{0}&apos; must be a method call..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleControllerFactoryType">
+            <summary>
+              Looks up a localized string similar to The controller factory type &apos;{0}&apos; must implement the IControllerFactory interface..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleModelBinderType">
+            <summary>
+              Looks up a localized string similar to The model binder type &apos;{0}&apos; must implement the IModelBinder interface..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleModelMetadataProviderType">
+            <summary>
+              Looks up a localized string similar to The model metadata provider type &apos;{0}&apos; must inherit from the ModelMetadataProvider class..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleModelValidatorProviderType">
+            <summary>
+              Looks up a localized string similar to The model validator provider type &apos;{0}&apos; must inherit from the ModelValidatorProvider class..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleViewEngineType">
+            <summary>
+              Looks up a localized string similar to The view engine type &apos;{0}&apos; must implement the IViewEngine interface..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidAsyncResult">
+            <summary>
+              Looks up a localized string similar to The provided IAsyncResult is not valid for this method..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidControllerType">
+            <summary>
+              Looks up a localized string similar to The controller type &apos;{0}&apos; must implement the &apos;{1}&apos; interface..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidDataAnnotationsValidationRuleConstructor">
+            <summary>
+              Looks up a localized string similar to The type &apos;{0}&apos; must have a public constructor which accepts the parameters of types &apos;{1}&apos; and &apos;{2}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidMvcAction">
+            <summary>
+              Looks up a localized string similar to A public action method &apos;{0}&apos; could not be found on controller &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidReferrerUrl">
+            <summary>
+              Looks up a localized string similar to The referrer URL &apos;{0}&apos; is invalid for the current request..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidTimeout">
+            <summary>
+              Looks up a localized string similar to The timeout value must be non-negative or Timeout.Infinite..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidViewDataType">
+            <summary>
+              Looks up a localized string similar to The model item passed into the dictionary is of type &apos;{0}&apos; but this dictionary requires a model item of type &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MatchingRouteCouldNotBeLocated">
+            <summary>
+              Looks up a localized string similar to A route that matches the requested values could not be located in the route table..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MethodCallMustTargetLambdaArgument">
+            <summary>
+              Looks up a localized string similar to Expression parameter &apos;{0}&apos; must target the lambda argument..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MissingActionParameter">
+            <summary>
+              Looks up a localized string similar to The parameters dictionary does not contain an entry for parameter &apos;{0}&apos; of type &apos;{1}&apos; for method &apos;{2}&apos; in &apos;{3}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MissingParameterlessConstructor">
+            <summary>
+              Looks up a localized string similar to Cannot create an instance of type &apos;{0}&apos; since it does not provide a default constructor..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ModelBinderMustHaveDefaultConstructor">
+            <summary>
+              Looks up a localized string similar to The model binder type &apos;{0}&apos; must have a parameterless public constructor..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MultipleModelBinderAttributes">
+            <summary>
+              Looks up a localized string similar to The type &apos;{0}&apos; contains multiple attributes inheriting from ModelBinderAttribute..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MultipleModelBinderAttributes_Parameter">
+            <summary>
+              Looks up a localized string similar to The parameter &apos;{0}&apos; contains multiple attributes inheriting from ModelBinderAttribute..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MvcActionCannotBeGeneric">
+            <summary>
+              Looks up a localized string similar to Cannot call action method &apos;{0}&apos; on controller &apos;{1}&apos; since it is a generic method..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ParameterCannotBeNull">
+            <summary>
+              Looks up a localized string similar to Parameter &apos;{0}&apos; at action method &apos;{1}&apos; doesn&apos;t allow null value..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ParameterValueHasWrongType">
+            <summary>
+              Looks up a localized string similar to The parameters dictionary contains an invalid entry for parameter &apos;{0}&apos; for method &apos;{1}&apos; in &apos;{2}&apos;. A value of type &apos;{3}&apos; required..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_PropertyNotFound">
+            <summary>
+              Looks up a localized string similar to The property {0}.{1} could not be found..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ReferenceActionParametersNotSupported">
+            <summary>
+              Looks up a localized string similar to Reference parameter &apos;{0}&apos; at method &apos;{1}&apos; on type &apos;{2}&apos; is not supported..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_RequestValidationError">
+            <summary>
+              Looks up a localized string similar to A required request validation token was not supplied or was invalid..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_SecureConnectionRequired">
+            <summary>
+              Looks up a localized string similar to The requested resource can only be accessed via HTTPS..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_SessionStateDisabled">
+            <summary>
+              Looks up a localized string similar to The SessionStateTempDataProvider requires SessionState to be enabled..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_SynchronizationContextError">
+            <summary>
+              Looks up a localized string similar to An operation that crossed a synchronization context failed. See the inner exception for more information..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_TargetMustSubclassController">
+            <summary>
+              Looks up a localized string similar to The controller type &apos;{0}&apos; must inherit from the &apos;{1}&apos; type..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_TemplateExpressionLimitations">
+            <summary>
+              Looks up a localized string similar to Templates can be used only with field and property accessor expressions..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_TypeMustDeriveFromType">
+            <summary>
+              Looks up a localized string similar to The type &apos;{0}&apos; must derive from &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_UnableToInstantiateUserControl">
+            <summary>
+              Looks up a localized string similar to The user control found at &apos;{0}&apos; could not be created..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_UnableToLoadConfiguration">
+            <summary>
+              Looks up a localized string similar to Could not parse the configuration. Refer to the inner exception for details..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_UnknownProperty">
+            <summary>
+              Looks up a localized string similar to {0} has a DisplayColumn attribute for {1}, but property {1} does not exist..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_UnreadableProperty">
+            <summary>
+              Looks up a localized string similar to {0} has a DisplayColumn attribute for {1}, but property {1} does not have a public getter..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_UnsupportedDictionaryType">
+            <summary>
+              Looks up a localized string similar to The dictionary of type &apos;{0}&apos; cannot be used as an action parameter..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_UnsupportedModelType">
+            <summary>
+              Looks up a localized string similar to This model binder does not support the model type &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ViewControlRequiresViewPage">
+            <summary>
+              Looks up a localized string similar to A ViewUserControl can only be used inside pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ViewLocationFormatsAreEmpty">
+            <summary>
+              Looks up a localized string similar to View location format collection cannot be empty..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ViewMasterPageRequiresViewPage">
+            <summary>
+              Looks up a localized string similar to A ViewMasterPage can only be used with content pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ViewNotFound">
+            <summary>
+              Looks up a localized string similar to The view &apos;{0}&apos; could not be found..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_WrongViewBase">
+            <summary>
+              Looks up a localized string similar to The view type &apos;{0}&apos; must derive from ViewPage, ViewPage&lt;TViewData&gt;, ViewUserControl, or ViewUserControl&lt;TViewData&gt;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.String_DateTimeDataTypeRule">
+            <summary>
+              Looks up a localized string similar to date.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.String_NumberDataTypeRule">
+            <summary>
+              Looks up a localized string similar to number.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.String_TriState_No">
+            <summary>
+              Looks up a localized string similar to No.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.String_TriState_NotSet">
+            <summary>
+              Looks up a localized string similar to Not set.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.String_TriState_Yes">
+            <summary>
+              Looks up a localized string similar to Yes.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.UI.HtmlControlHelper">
+            <summary>
+            Class containing convenience methods for use in 
+            rendering HTML controls within a view.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlControlHelper.Token">
+            <summary>
+            Returns the string for a hidden input containing a 
+            token used to prevent CSRF attacks.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlControlHelper.Token(System.String)">
+            <summary>
+            Returns the string for a hidden input containing a 
+            token used to prevent CSRF attacks.
+            </summary>
+            <param name="value">An extended value to store in the token.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlControlHelper.Radischevo#Wahha#Core#IHideObjectMembers#GetType">
+            <summary>
+            Class containing convenience methods for use in 
+            rendering HTML controls within a view.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.HtmlControlHelper.Context">
+            <summary>
+            Gets the current 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewContext"/>
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.HtmlControlHelper.DataSource">
+            <summary>
+            Gets or sets the data source, which 
+            is used in the form binding scenarios. 
+            </summary>
+            <remarks>By default, ViewContext.Parameters collection 
+            is used as the data source.</remarks>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.UI.HtmlControlHelper`1">
+            <summary>
+            Class containing convenience methods for use in 
+            rendering HTML controls within a strongly-typed view.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.TempDataDictionary.GetValue``1(System.String)">
+            <summary>
+            Gets the typed value with the 
+            specified key
+            </summary>
+            <typeparam name="TValue">The type of value</typeparam>
+            <param name="key">The key to find</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.TempDataDictionary.GetValue``1(System.String,``0)">
+            <summary>
+            Gets the typed value with the 
+            specified key
+            </summary>
+            <typeparam name="TValue">The type of value</typeparam>
+            <param name="key">The key to find</param>
+            <param name="defaultValue">The default value of the variable</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.BinaryResult">
+            <summary>
+            Base class used to send binary content to the response
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.BinaryResult.ContentType">
+            <summary>
+            The content type to use for the response.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.BinaryResult.FileName">
+            <summary>
+            If specified, sets the content-disposition header 
+            so that a file download dialog appears in 
+            the browser with the specified file name.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.BinaryStreamResult">
+            <summary>
+            Sends binary content to the response via a 
+            <see cref="T:System.IO.Stream"/>.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.BinaryStreamResult.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new instance of 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.FileStreamResult"/>
+            </summary>
+            <param name="stream">The stream to send to the response</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.BinaryStreamResult.#ctor(System.IO.Stream,System.String)">
+            <summary>
+            Initializes a new instance of 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.FileStreamResult"/>
+            </summary>
+            <param name="stream">The stream to send to the response</param>
+            <param name="contentType">The content type to use for the response</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.BinaryStreamResult.#ctor(System.IO.Stream,System.String,System.String)">
+            <summary>
+            Initializes a new instance of 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.FileStreamResult"/>
+            </summary>
+            <param name="stream">The stream to send to the response</param>
+            <param name="contentType">The content type to use for the response</param>
+            <param name="fileName">The filename, which will appear in the download dialog</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.BinaryStreamResult.Stream">
+            <summary>
+            Gets the stream which will be sent to the response.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.Summary(System.Action{Radischevo.Wahha.Web.Mvc.ValidationError})">
+            <summary>
+            Returns a list of validation messages from the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see>, 
+            using the specified <paramref name="action"/> to render each of them.
+            </summary>
+            <param name="action">The action used to render an error message.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.Message(System.String,System.Action{Radischevo.Wahha.Web.Mvc.ValidationError})">
+            <summary>
+            Displays a validation message if the specified field contains an error in 
+            the <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see>.
+            </summary>
+            <param name="key">The name of the field.</param>
+            <param name="action">The action used to render an error message.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.HasError(System.String)">
+            <summary>
+            Gets the value indicating whether the
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see> 
+            contains an error with the specified field name.
+            </summary>
+            <param name="key">The name of the field.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.Rules">
+            <summary>
+            Gets the collection of client validation rules, 
+            which are applied to the current model.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.Rules(System.String)">
+            <summary>
+            Gets the collection of client validation rules, 
+            which are applied to the current model.
+            </summary>
+            <param name="modelName">Specifies the name of the model, 
+            which will prefix the validation rule member name.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.Rules(System.String,System.String)">
+            <summary>
+            Gets the collection of client validation rules, 
+            which are applied to the property of the 
+            model, accessed through the specified <paramref name="expression"/>.
+            </summary>
+            <param name="modelName">Specifies the name of the model, 
+            which will prefix the validation rule member name.</param>
+            <param name="expression">A string expression to access the 
+            model property.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ValidationHelper.Context">
+            <summary>
+            Gets the current 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewContext"/>
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ValidationHelper.Errors">
+            <summary>
+            Gets the <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> object 
+            containing the binding validation errors.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ValidationHelper.IsValid">
+            <summary>
+            Gets the value indicating whether the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> 
+            contains no errors.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper`1.Rules``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Gets the collection of client validation rules, 
+            which are applied to the property of the 
+            model, accessed through the specified <paramref name="expression"/>.
+            </summary>
+            <param name="expression">A lambda expression to access the 
+            model property.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper`1.Rules``1(System.String,System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Gets the collection of client validation rules, 
+            which are applied to the property of the 
+            model, accessed through the specified <paramref name="expression"/>.
+            </summary>
+            <param name="modelName">Specifies the name of the model, 
+            which will prefix the validation rule member name.</param>
+            <param name="expression">A lambda expression to access the 
+            model property.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">
+            <summary>
+            A collection of <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationError"/> instances.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection.Add(System.String,System.String)">
+            <summary>
+            Adds a validation error message to the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/>
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection.Add(System.String,Radischevo.Wahha.Web.Mvc.ValidationError)">
+            <summary>
+            Adds a validation error to the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/>
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Encode(System.Object)">
+            <summary>
+            Converts an object to a HTML-encoded string.
+            </summary>
+            <param name="obj">The object to encode.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Encode(System.String)">
+            <summary>
+            Converts a string to a HTML-encoded string.
+            </summary>
+            <param name="text">The string to encode.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Choice(System.Boolean,System.Action)">
+            <summary>
+            Executes the specified <paramref name="ifTrue">action</paramref> 
+            against the current context if the condition succees.
+            </summary>
+            <param name="condition">The condition to check.</param>
+            <param name="ifTrue">The action to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Choice(System.Boolean,System.Action,System.Action)">
+            <summary>
+            Executes the <paramref name="ifTrue"/> action 
+            against the current context if the condition succees. 
+            Otherwise, the <paramref name="ifFalse"/> action will be executed.
+            </summary>
+            <param name="condition">The condition to check.</param>
+            <param name="ifTrue">The action to execute if the condition succees.</param>
+            <param name="ifFalse">The action to execute if the condition fails.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Block(System.Action)">
+            <summary>
+            Executes the specified action against 
+            the current context and captures an output string.
+            </summary>
+            <param name="block">The action to execute</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Block``1(System.Action{``0},``0)">
+            <summary>
+            Executes the specified action against 
+            the current context and captures an output string.
+            </summary>
+            <param name="block">The action to execute</param>
+            <param name="parameter">The parameter for the action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Block``2(System.Action{``0,``1},``0,``1)">
+            <summary>
+            Executes the specified action against 
+            the current context and captures an output string.
+            </summary>
+            <param name="block">The action to execute</param>
+            <param name="arg1">The first argument of the action.</param>
+            <param name="arg2">The second argument of the action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Block``3(System.Action{``0,``1,``2},``0,``1,``2)">
+            <summary>
+            Executes the specified action against 
+            the current context and captures an output string.
+            </summary>
+            <param name="block">The action to execute</param>
+            <param name="arg1">The first argument of the action.</param>
+            <param name="arg2">The second argument of the action.</param>
+            <param name="arg3">The third argument of the action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Block``4(System.Action{``0,``1,``2,``3},``0,``1,``2,``3)">
+            <summary>
+            Executes the specified action against 
+            the current context and captures an output string.
+            </summary>
+            <param name="block">The action to execute</param>
+            <param name="arg1">The first argument of the action.</param>
+            <param name="arg2">The second argument of the action.</param>
+            <param name="arg3">The third argument of the action.</param>
+            <param name="arg4">The fourth argument of the action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Component(System.String,System.String)">
+            <summary>
+            Executes the specified action against the current context.
+            </summary>
+            <param name="controller">The name of the controller.</param>
+            <param name="action">The name of the action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Component(System.String,System.String,System.Object)">
+            <summary>
+            Executes the specified action against the current context.
+            </summary>
+            <param name="controller">The name of the controller.</param>
+            <param name="action">The name of the action.</param>
+            <param name="arguments">The arguments of the action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Component(System.String,System.String,Radischevo.Wahha.Core.ValueDictionary)">
+            <summary>
+            Executes the specified action against the current context.
+            </summary>
+            <param name="controller">The name of the controller.</param>
+            <param name="action">The name of the action.</param>
+            <param name="arguments">The arguments of the action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Component``1(System.Linq.Expressions.Expression{System.Action{``0}})">
+            <summary>
+            Executes the specified action against the current context.
+            </summary>
+            <typeparam name="TController">The type of the controller.</typeparam>
+            <param name="action">The expression containing the action and its parameters.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Control``1(Radischevo.Wahha.Web.Mvc.ViewDataDictionary,System.Object)">
+            <summary>
+            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
+            of specified type against the current context and captures the output string.
+            </summary>
+            <typeparam name="TControl">The type of control to render.</typeparam>
+            <param name="viewData">The view data supplied to the view control.</param>
+            <param name="settings">The object, containing values for the control's properties.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Control(System.String)">
+            <summary>
+            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
+            with the specified virtual path against the current context and captures 
+            the output string.
+            </summary>
+            <param name="virtualPath">The virtual path of the view control.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Control(System.String,Radischevo.Wahha.Web.Mvc.ViewDataDictionary)">
+            <summary>
+            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
+            with the specified virtual path against the current context and captures 
+            the output string.
+            </summary>
+            <param name="virtualPath">The virtual path of the view control.</param>
+            <param name="viewData">The view data supplied to the view control.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Control(System.String,Radischevo.Wahha.Web.Mvc.ViewDataDictionary,System.Object)">
+            <summary>
+            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
+            with the specified virtual path against the current context and captures 
+            the output string.
+            </summary>
+            <param name="virtualPath">The virtual path of the view control.</param>
+            <param name="viewData">The view data supplied to the view control.</param>
+            <param name="settings">The object, containing values for the control's properties.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Page``1(Radischevo.Wahha.Web.Mvc.ViewDataDictionary,System.Object)">
+            <summary>
+            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
+            of specified type against the current context and captures the output string.
+            </summary>
+            <typeparam name="TPage">The type of view page to render.</typeparam>
+            <param name="viewData">The view data supplied to the view page.</param>
+            <param name="settings">The object, containing values for the page properties.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Page(System.String)">
+            <summary>
+            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
+            with the specified virtual path against the current context and captures 
+            the output string.
+            </summary>
+            <param name="virtualPath">The virtual path of the view page.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Page(System.String,Radischevo.Wahha.Web.Mvc.ViewDataDictionary)">
+            <summary>
+            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
+            with the specified virtual path against the current context and captures 
+            the output string.
+            </summary>
+            <param name="virtualPath">The virtual path of the view page.</param>
+            <param name="viewData">The view data supplied to the view page.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Page(System.String,Radischevo.Wahha.Web.Mvc.ViewDataDictionary,System.Object)">
+            <summary>
+            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
+            with the specified virtual path against the current context and captures 
+            the output string.
+            </summary>
+            <param name="virtualPath">The virtual path of the view page.</param>
+            <param name="viewData">The view data supplied to the view page.</param>
+            <param name="settings">The object, containing values for the page properties.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Context">
+            <summary>
+            Gets the current 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewContext"/>.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Controls">
+            <summary>
+            Gets the <see cref="!:Radischevo.Wahha.Web.Mvc.HtmlControlHelper"/> instance 
+            for use in rendering HTML controls within a view.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper`1.Controls">
+            <summary>
+            Gets the <see cref="!:Radischevo.Wahha.Web.Mvc.HtmlControlHelper"/> instance 
+            for use in rendering HTML controls within a view.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.HttpRequestExtensions.IsAjaxRequest(Radischevo.Wahha.Web.Abstractions.HttpRequestBase)">
+            <summary>
+            Gets a value indicating whether the 
+            current resource is requested through 
+            the XmlHttpRequest.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Async.AsyncManager.Finish">
+            <summary>
+            Signals that all operations are complete.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Async.AsyncManager.Sync(System.Action)">
+            <summary>
+            Executes a callback in the current synchronization context, 
+            which gives access to HttpContext and related items.
+            </summary>
+            <param name="action">The callback action.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.JsonResult.Execute(Radischevo.Wahha.Web.Mvc.ControllerContext)">
+            <summary>
+            Executes an action result against the specified 
+            <paramref name="context"/>.
+            </summary>
+            <param name="context">The current 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ControllerContext"/></param>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.SettingsSection.Controllers">
+            <summary>
+            Gets the configuration element, 
+            which provides the information required for  
+            controller instantiation
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.SettingsSection.Views">
+            <summary>
+            Gets the configuration element, 
+            which provides the information required for  
+            view discovery and instantiation.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.SettingsSection.Models">
+            <summary>
+            Gets the configuration element, 
+            which provides the information required for  
+            model binding.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.#ctor(Radischevo.Wahha.Web.Mvc.ViewContext)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager"/> class.
+            </summary>
+            <param name="context">The current 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewContext"/> instance.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.Include(System.String)">
+            <summary>
+            Adds a script file reference to the page.
+            </summary>
+            <param name="path">The URL of the script file.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.Include(System.String,System.String)">
+            <summary>
+            Adds a script file reference to the page.
+            </summary>
+            <param name="key">A unique identifier for the script file.</param>
+            <param name="path">The URL of the script file.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.Block(System.String)">
+            <summary>
+            Adds an inline script block to the page.
+            </summary>
+            <param name="key">A unique identifier for the script block.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.Block(System.String,System.Action)">
+            <summary>
+            Adds an inline script block to the page.
+            </summary>
+            <param name="key">A unique identifier for the script block.</param>
+            <param name="script">The JavaScript code to include in the Page.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.Render">
+            <summary>
+            Renders the ScriptManager to the page.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.ScriptBlock.#ctor(Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="!:Radischevo.Wahha.Web.Mvc.Ajax.ScriptBlock"/> class.
+            </summary>
+            <param name="manager">A parent script manager instance.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.ScriptBlock.Append(System.Action)">
+            <summary>
+            Appends a script to the script block.
+            </summary>
+            <param name="script">A script code string to add.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.ScriptBlock.Wrap(System.Action{System.String})">
+            <summary>
+            Wraps the script block using
+            the specified <paramref name="wrapper"/>.
+            </summary>
+            <param name="wrapper">A wrapper method to 
+            decorate the script block with.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.ScriptBlock.Render(System.IO.TextWriter)">
+            <summary>
+            Renders a script block to the specified 
+            <paramref name="writer"/>.
+            </summary>
+            <param name="writer">A <see cref="T:System.IO.TextWriter"/> 
+            to render the script block to.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.AcceptHttpVerbsAttribute">
+            <summary>
+            When applied to an action method, specifies which HTTP verbs the method will respond to.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.AcceptHttpVerbsAttribute.Verbs">
+            <summary>
+            Gets the combination of HTTP verbs 
+            the action method will respond to.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.HttpCompressionAttribute">
+            <summary>
+            Enables the output compression 
+            using standard gzip/deflate.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.HttpCompressionAttribute.#ctor">
+            <summary>
+            Initializes an instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.HttpCompressionAttribute"/> class
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.HttpCompressionAttribute.IsEncodingAccepted(Radischevo.Wahha.Web.Abstractions.HttpContextBase,System.String)">
+            <summary>
+            Checks the request headers to see if the specified
+            encoding is accepted by the client.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.HttpCompressionAttribute.SetEncoding(Radischevo.Wahha.Web.Abstractions.HttpContextBase,System.String)">
+            <summary>
+            Adds the specified encoding to the response headers.
+            </summary>
+            <param name="context">The context of the current controller action</param>
+            <param name="encoding"></param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.HttpCompressionAttribute.OnExecuted(Radischevo.Wahha.Web.Mvc.ActionExecutedContext)">
+            <summary>
+            Enables the output compression 
+            using gzip/deflate
+            </summary>
+            <param name="ctx">The context of the current controller action</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper">
+            <summary>
+            Class containing convenience methods for use in 
+            rendering HTML for use in Ajax scenarios within a view.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.#ctor(Radischevo.Wahha.Web.Mvc.ViewContext)">
+            <summary>
+            Initializes a new instance of 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper"/>
+            </summary>
+            <param name="context">The current 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewContext"/></param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Encode(System.String)">
+            <summary>
+            Encodes the specified string to a 
+            valid JavaScript string.
+            </summary>
+            <param name="data">The string to encode.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Serialize(System.Object)">
+            <summary>
+            Converts an object to a JSON string.
+            </summary>
+            <param name="data">The object to serialize.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Serialize(System.Object,Radischevo.Wahha.Web.Scripting.Serialization.SerializationFormat)">
+            <summary>
+            Converts an object to a JSON string.
+            </summary>
+            <param name="data">The object to serialize.</param>
+            <param name="format">Specifies the JSON formatting options.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Serialize(System.Object,System.Int32)">
+            <summary>
+            Converts an object to a JSON string.
+            </summary>
+            <param name="data">The object to serialize.</param>
+            <param name="recursionLimit">Sets the limit for constraining the 
+            number of object levels to process.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Serialize(System.Object,Radischevo.Wahha.Web.Scripting.Serialization.SerializationFormat,System.Int32)">
+            <summary>
+            Converts an object to a JSON string.
+            </summary>
+            <param name="data">The object to serialize.</param>
+            <param name="format">Specifies the JSON formatting options.</param>
+            <param name="recursionLimit">Sets the limit for constraining the 
+            number of object levels to process.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Deserialize(System.String)">
+            <summary>
+            Converts the specified JSON string 
+            to an object graph.
+            </summary>
+            <param name="json">The JSON string to be deserialized.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Deserialize``1(System.String)">
+            <summary>
+            Converts the specified JSON string 
+            to an object of type <typeparamref name="T"/>.
+            </summary>
+            <param name="json">The JSON string to be deserialized.</param>
+            <typeparam name="T">The type of the resulting object.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Radischevo#Wahha#Core#IHideObjectMembers#GetType">
+            <summary>
+            Class containing convenience methods for use in 
+            rendering HTML for use in Ajax scenarios within a view.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Context">
+            <summary>
+            Gets the current 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewContext"/>.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Scripts">
+            <summary>
+            Gets a <see cref="T:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager"/> 
+            instance for the current request.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.ControllerMappingConfigurationElement.Name">
+            <summary>
+            Gets the name assigned to the specified controller
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.ControllerMappingConfigurationElement.ControllerType">
+            <summary>
+            Gets the string representation 
+            of the type of controller
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.ViewResult">
+            <summary>
+            Class used to render a view using an <see cref="T:Radischevo.Wahha.Web.Mvc.IView"/> 
+            returned by a <see cref="T:Radischevo.Wahha.Web.Mvc.IViewEngine"/>.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ViewResult.FindView(Radischevo.Wahha.Web.Mvc.ControllerContext)">
+            <summary>
+            Searches the registered view engines and returns the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewEngineResult"/> 
+            used to render the view.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.FormCollection">
+            <summary>
+            Provides a value collection suitable for 
+            form binding scenarios.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.FormCollection.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.FormCollection"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.FormCollection.#ctor(Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.FormCollection"/> class.
+            </summary>
+            <param name="collection">An existing collection to be 
+            used as a data source for the current instance.</param>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Error_AmbiguousActionName" xml:space="preserve">
+    <value>Duplicate action name '{0}' found at controller '{1}'.</value>
+  </data>
+  <data name="Error_CannotCallInstanceMethodOnNonControllerType" xml:space="preserve">
+    <value>Cannot call instance method '{0}' on non-controller type '{1}'.</value>
+  </data>
+  <data name="Error_ControllerMustHaveDefaultConstructor" xml:space="preserve">
+    <value>The controller type '{0}' must have a parameterless public constructor.</value>
+  </data>
+  <data name="Error_ControlRequiresViewDataProvider" xml:space="preserve">
+    <value>The ViewUserControl cannot find an IViewDataContainer. The ViewUserControl must be inside a ViewPage, ViewMasterPage, or another ViewUserControl.</value>
+  </data>
+  <data name="Error_CouldNotCreateController" xml:space="preserve">
+    <value>The controller '{0}' could not be found.</value>
+  </data>
+  <data name="Error_CouldNotCreateView" xml:space="preserve">
+    <value>The view found at '{0}' could not be created.</value>
+  </data>
+  <data name="Error_CouldNotSetControlProperties" xml:space="preserve">
+    <value>The user control of type '{0}' was not successfully initialized.</value>
+  </data>
+  <data name="Error_DuplicateControllerName" xml:space="preserve">
+    <value>The controller name '{0}' is ambiguous between several types.</value>
+  </data>
+  <data name="Error_ExpressionMustBeAMethodCall" xml:space="preserve">
+    <value>Expression parameter '{0}' must be a method call.</value>
+  </data>
+  <data name="Error_IncompatibleControllerFactoryType" xml:space="preserve">
+    <value>The controller factory type '{0}' must implement the IControllerFactory interface.</value>
+  </data>
+  <data name="Error_IncompatibleModelBinderType" xml:space="preserve">
+    <value>The model binder type '{0}' must implement the IModelBinder interface.</value>
+  </data>
+  <data name="Error_IncompatibleViewEngineType" xml:space="preserve">
+    <value>The view engine type '{0}' must implement the IViewEngine interface.</value>
+  </data>
+  <data name="Error_InvalidControllerType" xml:space="preserve">
+    <value>The controller type '{0}' must implement the '{1}' interface.</value>
+  </data>
+  <data name="Error_InvalidMvcAction" xml:space="preserve">
+    <value>A public action method '{0}' could not be found on controller '{1}'.</value>
+  </data>
+  <data name="Error_InvalidViewDataType" xml:space="preserve">
+    <value>The model item passed into the dictionary is of type '{0}' but this dictionary requires a model item of type '{1}'.</value>
+  </data>
+  <data name="Error_MethodCallMustTargetLambdaArgument" xml:space="preserve">
+    <value>Expression parameter '{0}' must target the lambda argument.</value>
+  </data>
+  <data name="Error_MissingActionParameter" xml:space="preserve">
+    <value>The parameters dictionary does not contain an entry for parameter '{0}' of type '{1}' for method '{2}' in '{3}'.</value>
+  </data>
+  <data name="Error_MissingParameterlessConstructor" xml:space="preserve">
+    <value>Cannot create an instance of type '{0}' since it does not provide a default constructor.</value>
+  </data>
+  <data name="Error_ModelBinderMustHaveDefaultConstructor" xml:space="preserve">
+    <value>The model binder type '{0}' must have a parameterless public constructor.</value>
+  </data>
+  <data name="Error_MultipleModelBinderAttributes" xml:space="preserve">
+    <value>The type '{0}' contains multiple attributes inheriting from ModelBinderAttribute.</value>
+  </data>
+  <data name="Error_MultipleModelBinderAttributes_Parameter" xml:space="preserve">
+    <value>The parameter '{0}' contains multiple attributes inheriting from ModelBinderAttribute.</value>
+  </data>
+  <data name="Error_MvcActionCannotBeGeneric" xml:space="preserve">
+    <value>Cannot call action method '{0}' on controller '{1}' since it is a generic method.</value>
+  </data>
+  <data name="Error_ParameterCannotBeNull" xml:space="preserve">
+    <value>Parameter '{0}' at action method '{1}' doesn't allow null value.</value>
+  </data>
+  <data name="Error_ParameterValueHasWrongType" xml:space="preserve">
+    <value>The parameters dictionary contains an invalid entry for parameter '{0}' for method '{1}' in '{2}'. A value of type '{3}' required.</value>
+  </data>
+  <data name="Error_ReferenceActionParametersNotSupported" xml:space="preserve">
+    <value>Reference parameter '{0}' at method '{1}' on type '{2}' is not supported.</value>
+  </data>
+  <data name="Error_RequestValidationError" xml:space="preserve">
+    <value>A required request validation token was not supplied or was invalid.</value>
+  </data>
+  <data name="Error_SessionStateDisabled" xml:space="preserve">
+    <value>The SessionStateTempDataProvider requires SessionState to be enabled.</value>
+  </data>
+  <data name="Error_TargetMustSubclassController" xml:space="preserve">
+    <value>The controller type '{0}' must inherit from the '{1}' type.</value>
+  </data>
+  <data name="Error_UnableToInstantiateUserControl" xml:space="preserve">
+    <value>The user control found at '{0}' could not be created.</value>
+  </data>
+  <data name="Error_UnableToLoadConfiguration" xml:space="preserve">
+    <value>Could not parse the configuration. Refer to the inner exception for details.</value>
+  </data>
+  <data name="Error_UnsupportedDictionaryType" xml:space="preserve">
+    <value>The dictionary of type '{0}' cannot be used as an action parameter.</value>
+  </data>
+  <data name="Error_ViewControlRequiresViewPage" xml:space="preserve">
+    <value>A ViewUserControl can only be used inside pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;.</value>
+  </data>
+  <data name="Error_ViewLocationFormatsAreEmpty" xml:space="preserve">
+    <value>View location format collection cannot be empty.</value>
+  </data>
+  <data name="Error_ViewMasterPageRequiresViewPage" xml:space="preserve">
+    <value>A ViewMasterPage can only be used with content pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;.</value>
+  </data>
+  <data name="Error_ViewNotFound" xml:space="preserve">
+    <value>The view '{0}' could not be found.</value>
+  </data>
+  <data name="Error_WrongViewBase" xml:space="preserve">
+    <value>The view type '{0}' must derive from ViewPage, ViewPage&lt;TViewData&gt;, ViewUserControl, or ViewUserControl&lt;TViewData&gt;.</value>
+  </data>
+  <data name="Error_UnsupportedModelType" xml:space="preserve">
+    <value>This model binder does not support the model type '{0}'.</value>
+  </data>
+  <data name="Error_InvalidReferrerUrl" xml:space="preserve">
+    <value>The referrer URL '{0}' is invalid for the current request.</value>
+  </data>
+  <data name="String_TriState_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="String_TriState_NotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
+  <data name="String_TriState_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Error_TemplateExpressionLimitations" xml:space="preserve">
+    <value>Templates can be used only with field and property accessor expressions.</value>
+  </data>
+  <data name="Error_BinderValueInvalid" xml:space="preserve">
+    <value>The value '{0}' is not valid for {1}.</value>
+  </data>
+  <data name="Error_BinderValueRequired" xml:space="preserve">
+    <value>A value is required.</value>
+  </data>
+  <data name="Error_MatchingRouteCouldNotBeLocated" xml:space="preserve">
+    <value>A route that matches the requested values could not be located in the route table.</value>
+  </data>
+  <data name="Error_PropertyNotFound" xml:space="preserve">
+    <value>The property {0}.{1} could not be found.</value>
+  </data>
+  <data name="Error_UnknownProperty" xml:space="preserve">
+    <value>{0} has a DisplayColumn attribute for {1}, but property {1} does not exist.</value>
+  </data>
+  <data name="Error_UnreadableProperty" xml:space="preserve">
+    <value>{0} has a DisplayColumn attribute for {1}, but property {1} does not have a public getter.</value>
+  </data>
+  <data name="Error_IncompatibleModelMetadataProviderType" xml:space="preserve">
+    <value>The model metadata provider type '{0}' must inherit from the ModelMetadataProvider class.</value>
+  </data>
+  <data name="Error_IncompatibleModelValidatorProviderType" xml:space="preserve">
+    <value>The model validator provider type '{0}' must inherit from the ModelValidatorProvider class.</value>
+  </data>
+  <data name="Error_InvalidDataAnnotationsValidationRuleConstructor" xml:space="preserve">
+    <value>The type '{0}' must have a public constructor which accepts the parameters of types '{1}' and '{2}'.</value>
+  </data>
+  <data name="Error_TypeMustDeriveFromType" xml:space="preserve">
+    <value>The type '{0}' must derive from '{1}'.</value>
+  </data>
+  <data name="Error_ChildRequestExecutionError" xml:space="preserve">
+    <value>Execution of the child request failed. Please examine the InnerException for more information.</value>
+  </data>
+  <data name="Error_ControllerCannotHandleMultipleRequests" xml:space="preserve">
+    <value>A single instance of controller '{0}' cannot be used to handle multiple requests. If a custom controller factory is in use, make sure that it creates a new instance of the controller for each request.</value>
+  </data>
+  <data name="Error_AsyncResultAlreadyConsumed" xml:space="preserve">
+    <value>The provided IAsyncResult has already been consumed.</value>
+  </data>
+  <data name="Error_CannotRedirectFromChildAction" xml:space="preserve">
+    <value>Child actions are not allowed to perform redirect actions.</value>
+  </data>
+  <data name="Error_ControllerMustImplementAsyncManagerContainer" xml:space="preserve">
+    <value>The controller of type '{0}' must subclass AsyncController or implement the IAsyncManagerContainer interface.</value>
+  </data>
+  <data name="Error_CouldNotFindAsyncCompletionMethod" xml:space="preserve">
+    <value>Could not locate the completion action method named '{0}' on controller type {1}.</value>
+  </data>
+  <data name="Error_InvalidAsyncResult" xml:space="preserve">
+    <value>The provided IAsyncResult is not valid for this method.</value>
+  </data>
+  <data name="Error_InvalidTimeout" xml:space="preserve">
+    <value>The timeout value must be non-negative or Timeout.Infinite.</value>
+  </data>
+  <data name="Error_SynchronizationContextError" xml:space="preserve">
+    <value>An operation that crossed a synchronization context failed. See the inner exception for more information.</value>
+  </data>
+  <data name="String_DateTimeDataTypeRule" xml:space="preserve">
+    <value>date</value>
+  </data>
+  <data name="String_NumberDataTypeRule" xml:space="preserve">
+    <value>number</value>
+  </data>
+  <data name="Error_SecureConnectionRequired" xml:space="preserve">
+    <value>The requested resource can only be accessed via HTTPS.</value>
+  </data>
+</root>

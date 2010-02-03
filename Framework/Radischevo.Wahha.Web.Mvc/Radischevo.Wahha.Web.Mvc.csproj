@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{713B1B11-C690-46C7-9971-FC4F68126519}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Radischevo.Wahha.Web.Mvc</RootNamespace>
+    <AssemblyName>Radischevo.Wahha.Web.Mvc</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Radischevo.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Builds\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Builds\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Builds\Release\Radischevo.Wahha.Web.Mvc.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionResults\BinaryResult.cs" />
+    <Compile Include="ActionResults\BinaryStreamResult.cs" />
+    <Compile Include="ActionResults\CollectionResult.cs" />
+    <Compile Include="ActionResults\JavaScriptResult.cs" />
+    <Compile Include="ActionResults\Http\HttpStatusResult.cs" />
+    <Compile Include="ActionResults\PermanentRedirectResult.cs" />
+    <Compile Include="ActionResults\StaticFileResult.cs" />
+    <Compile Include="ActionResults\Http\HttpForbiddenResult.cs" />
+    <Compile Include="ActionResults\Http\HttpNotFoundResult.cs" />
+    <Compile Include="ActionResults\Http\HttpUnauthorizedResult.cs" />
+    <Compile Include="ActionResults\ViewResult.cs" />
+    <Compile Include="ActionResults\XmlResult.cs" />
+    <Compile Include="Async\AsyncActionExecutor.cs" />
+    <Compile Include="Async\AsyncTimeoutAttribute.cs" />
+    <Compile Include="Async\MvcAsyncHandler.cs" />
+    <Compile Include="Async\MvcAsyncRouteCollectionExtensions.cs" />
+    <Compile Include="Async\MvcAsyncRouteHandler.cs" />
+    <Compile Include="Async\MvcHttpAsyncHandler.cs" />
+    <Compile Include="Async\NoAsyncTimeoutAttribute.cs" />
+    <Compile Include="Async\ReflectedAsyncActionDescriptor.cs" />
+    <Compile Include="Async\ReflectedAsyncControllerDescriptor.cs" />
+    <Compile Include="Attributes\ActionFilterAttribute.cs" />
+    <Compile Include="Attributes\RequireHttpsAttribute.cs" />
+    <Compile Include="Engine\ActionDescriptorCreator.cs" />
+    <Compile Include="Async\AsyncActionDescriptor.cs" />
+    <Compile Include="Async\AsyncActionMethodSelector.cs" />
+    <Compile Include="Async\AsyncController.cs" />
+    <Compile Include="Async\AsyncException.cs" />
+    <Compile Include="Async\AsyncManager.cs" />
+    <Compile Include="Async\AsyncResultWrapper.cs" />
+    <Compile Include="Async\AsyncTask.cs" />
+    <Compile Include="Async\AsyncVoid.cs" />
+    <Compile Include="Async\MvcAsyncResult.cs" />
+    <Compile Include="Engine\ActionMethodCacheEntry.cs" />
+    <Compile Include="Async\Interfaces\IAsyncActionExecutor.cs" />
+    <Compile Include="Async\Interfaces\IAsyncController.cs" />
+    <Compile Include="Async\Interfaces\IAsyncManagerContainer.cs" />
+    <Compile Include="Async\SynchronizationContextExtensions.cs" />
+    <Compile Include="Attributes\ActionNameAttribute.cs" />
+    <Compile Include="Attributes\ActionSelectorAttribute.cs" />
+    <Compile Include="Attributes\BindAttribute.cs" />
+    <Compile Include="Attributes\ApplyCultureAttribute.cs" />
+    <Compile Include="Attributes\ChildActionAttribute.cs" />
+    <Compile Include="Attributes\ErrorHandlerAttribute.cs" />
+    <Compile Include="Attributes\FilterAttribute.cs" />
+    <Compile Include="Attributes\HiddenInputAttribute.cs" />
+    <Compile Include="Attributes\HttpCacheAttribute.cs" />
+    <Compile Include="Attributes\HttpCompressionAttribute.cs" />
+    <Compile Include="Attributes\HttpContentTypeAttribute.cs" />
+    <Compile Include="Attributes\IgnoreActionAttribute.cs" />
+    <Compile Include="Attributes\ModelBinderAttribute.cs" />
+    <Compile Include="Attributes\RequireAjaxRequestAttribute.cs" />
+    <Compile Include="Attributes\RequireUsersAttribute.cs" />
+    <Compile Include="Attributes\RequireRolesAttribute.cs" />
+    <Compile Include="Attributes\AcceptHttpVerbsAttribute.cs" />
+    <Compile Include="Attributes\ActionCacheAttribute.cs" />
+    <Compile Include="Attributes\SkipBindingAttribute.cs" />
+    <Compile Include="Attributes\ValidateRequestTokenAttribute.cs" />
+    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Configuration\ControllerConfigurationSettings.cs" />
+    <Compile Include="Configuration\ControllerMappingConfigurationElementCollection.cs" />
+    <Compile Include="Configuration\ControllerMappingConfigurationElement.cs" />
+    <Compile Include="Configuration\ControllerConfigurationElement.cs" />
+    <Compile Include="Configuration\ModelConfigurationElement.cs" />
+    <Compile Include="Configuration\ModelConfigurationElementCollection.cs" />
+    <Compile Include="Configuration\ModelConfigurationSettings.cs" />
+    <Compile Include="Configuration\SettingsSection.cs" />
+    <Compile Include="Configuration\ViewConfigurationSettings.cs" />
+    <Compile Include="Configuration\ViewConfigurationElement.cs" />
+    <Compile Include="Configuration\ViewConfigurationElementCollection.cs" />
+    <Compile Include="Engine\ActionDescriptor.cs" />
+    <Compile Include="Engine\ActionFilterInfo.cs" />
+    <Compile Include="Engine\ActionSelector.cs" />
+    <Compile Include="Engine\AssemblyResourceViewEngine.cs" />
+    <Compile Include="Engine\BindingContext.cs" />
+    <Compile Include="Engine\CollectionHelpers.cs" />
+    <Compile Include="Engine\FormCollection.cs" />
+    <Compile Include="Engine\FormCollectionBinder.cs" />
+    <Compile Include="Engine\HttpPostedFileCollectionBinder.cs" />
+    <Compile Include="Engine\MethodDispatcher.cs" />
+    <Compile Include="Engine\ActionMethodSelector.cs" />
+    <Compile Include="Engine\Controller.cs" />
+    <Compile Include="Engine\ActionContext.cs" />
+    <Compile Include="Engine\ActionExecutor.cs" />
+    <Compile Include="Engine\ControllerDescriptorCache.cs" />
+    <Compile Include="Engine\DefaultModelBinder.cs" />
+    <Compile Include="Engine\HttpPostedFileBinder.cs" />
+    <Compile Include="Engine\JsonModelBinder.cs" />
+    <Compile Include="Engine\ControllerDescriptor.cs" />
+    <Compile Include="Engine\MethodDispatcherCache.cs" />
+    <Compile Include="Engine\ModelBinderCollection.cs" />
+    <Compile Include="Helpers\HttpHandlerWrapper.cs" />
+    <Compile Include="Metadata\FieldOrderAttribute.cs" />
+    <Compile Include="Metadata\ModelMetadataProviderCollection.cs" />
+    <Compile Include="Validation\DataTypeValidationAttribute.cs" />
+    <Compile Include="Validation\RemoteValidationResult.cs" />
+    <Compile Include="Validation\Rules\ClientModelValidationRule.cs" />
+    <Compile Include="Validation\Formatters\IModelValidationRuleFormatter.cs" />
+    <Compile Include="Validation\Formatters\JsonModelValidationRuleFormatter.cs" />
+    <Compile Include="Validation\FormValidationMetadata.cs" />
+    <Compile Include="Validation\ModelValidatorProviderCollection.cs" />
+    <Compile Include="Engine\MvcHttpHandler.cs" />
+    <Compile Include="Engine\ParameterBinding.cs" />
+    <Compile Include="Engine\ParameterDescriptor.cs" />
+    <Compile Include="Engine\ReflectedActionDescriptor.cs" />
+    <Compile Include="Engine\ReflectedControllerDescriptor.cs" />
+    <Compile Include="Engine\ReflectedParameterBinding.cs" />
+    <Compile Include="Engine\ReflectedParameterDescriptor.cs" />
+    <Compile Include="Engine\StaticControllerFactory.cs" />
+    <Compile Include="Engine\ViewEngineCollection.cs" />
+    <Compile Include="Engine\ViewEngineResult.cs" />
+    <Compile Include="Engine\ViewLocationCache.cs" />
+    <Compile Include="ActionResults\ActionResult.cs" />
+    <Compile Include="Engine\AuthorizationContext.cs" />
+    <Compile Include="Engine\CaptureFilter.cs" />
+    <Compile Include="ActionResults\ContentResult.cs" />
+    <Compile Include="Engine\ControllerBase.cs" />
+    <Compile Include="Engine\ControllerBuilder.cs" />
+    <Compile Include="Engine\ControllerContext.cs" />
+    <Compile Include="Engine\ControllerTypeCache.cs" />
+    <Compile Include="Engine\DefaultControllerFactory.cs" />
+    <Compile Include="Engine\VirtualPathViewEngine.cs" />
+    <Compile Include="ActionResults\DelegatedResult.cs" />
+    <Compile Include="ActionResults\EmptyResult.cs" />
+    <Compile Include="Engine\ErrorHandlerInfo.cs" />
+    <Compile Include="Engine\ExceptionContext.cs" />
+    <Compile Include="ActionResults\JsonResult.cs" />
+    <Compile Include="Engine\MvcHandler.cs" />
+    <Compile Include="Engine\MvcRouteHandler.cs" />
+    <Compile Include="ActionResults\RedirectResult.cs" />
+    <Compile Include="Attributes\RequireAuthorizationAttribute.cs" />
+    <Compile Include="Engine\ResultContext.cs" />
+    <Compile Include="Engine\SessionStateTempDataProvider.cs" />
+    <Compile Include="Engine\ViewDataEvaluator.cs" />
+    <Compile Include="ActionResults\ViewResultBase.cs" />
+    <Compile Include="Engine\WebFormView.cs" />
+    <Compile Include="Engine\WebFormViewEngine.cs" />
+    <Compile Include="Engine\XmlModelBinder.cs" />
+    <Compile Include="Helpers\AjaxHelper.cs" />
+    <Compile Include="Helpers\BlockRenderer.cs" />
+    <Compile Include="Helpers\HtmlControlHelper.cs" />
+    <Compile Include="Helpers\HtmlHelper.cs" />
+    <Compile Include="Helpers\HttpRequestExtensions.cs" />
+    <Compile Include="Helpers\LinqHelper.cs" />
+    <Compile Include="Helpers\RequestValidationException.cs" />
+    <Compile Include="Helpers\RequestValidationToken.cs" />
+    <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Helpers\MvcRouteCollectionExtensions.cs" />
+    <Compile Include="Helpers\ScriptManager.cs" />
+    <Compile Include="Helpers\TemplateHelper.cs" />
+    <Compile Include="Helpers\UrlHelper.cs" />
+    <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="Helpers\ViewHelper.cs" />
+    <Compile Include="Html\BinaryHtmlExtensions.cs" />
+    <Compile Include="Html\FormExtensions.cs" />
+    <Compile Include="Html\LabelExtensions.cs" />
+    <Compile Include="Html\LinkExtensions.cs" />
+    <Compile Include="Html\ListItem.cs" />
+    <Compile Include="Html\MultiSelectList.cs" />
+    <Compile Include="Html\MvcForm.cs" />
+    <Compile Include="Html\SelectList.cs" />
+    <Compile Include="Interfaces\IActionExecutor.cs" />
+    <Compile Include="Interfaces\IActionFilter.cs" />
+    <Compile Include="Interfaces\IAuthorizationFilter.cs" />
+    <Compile Include="Interfaces\IController.cs" />
+    <Compile Include="Interfaces\IControllerFactory.cs" />
+    <Compile Include="Interfaces\IExceptionFilter.cs" />
+    <Compile Include="Interfaces\IResultFilter.cs" />
+    <Compile Include="Interfaces\ITempDataProvider.cs" />
+    <Compile Include="Interfaces\IModelBinder.cs" />
+    <Compile Include="Interfaces\IView.cs" />
+    <Compile Include="Interfaces\IViewDataContainer.cs" />
+    <Compile Include="Interfaces\IViewEngine.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Interfaces\IViewLocationCache.cs" />
+    <Compile Include="Engine\ParameterSource.cs" />
+    <Compile Include="Metadata\DataAnnotationsMetadataProvider.cs" />
+    <Compile Include="Metadata\DataAnnotationsModelMetadata.cs" />
+    <Compile Include="Metadata\EmptyModelMetadataProvider.cs" />
+    <Compile Include="Metadata\ModelMetadata.cs" />
+    <Compile Include="Metadata\ModelMetadataProvider.cs" />
+    <Compile Include="Validation\DataAnnotationsModelValidator.cs" />
+    <Compile Include="Validation\DataAnnotationsValidatorProvider.cs" />
+    <Compile Include="Validation\EmptyModelValidatorProvider.cs" />
+    <Compile Include="Validation\ModelValidationResult.cs" />
+    <Compile Include="Validation\Rules\ClientModelValidationRuleBuilder.cs" />
+    <Compile Include="Validation\Rules\ModelValidationRule.cs" />
+    <Compile Include="Validation\ModelValidator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RedirectData.cs" />
+    <Compile Include="Engine\TempDataDictionary.cs" />
+    <Compile Include="UI\DefaultDisplayTemplates.cs" />
+    <Compile Include="UI\DefaultEditorTemplates.cs" />
+    <Compile Include="UI\TemplateDescriptor.cs" />
+    <Compile Include="UI\ViewContext.cs" />
+    <Compile Include="UI\ViewDataDictionary.cs" />
+    <Compile Include="UI\ViewDataDictionary`1.cs" />
+    <Compile Include="UI\ViewDataInfo.cs" />
+    <Compile Include="UI\ViewMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\ViewPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\ViewPageBuilder.cs" />
+    <Compile Include="UI\ViewTemplateUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\ViewType.cs" />
+    <Compile Include="UI\ViewTypeControlBuilder.cs" />
+    <Compile Include="UI\ViewTypeParserFilter.cs" />
+    <Compile Include="UI\ViewUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Engine\ValidationErrorCollection.cs" />
+    <Compile Include="UI\ViewUserControlBuilder.cs" />
+    <Compile Include="Validation\ModelValidatorProvider.cs" />
+    <Compile Include="Validation\RemoteValidationAttribute.cs" />
+    <Compile Include="Validation\Rules\DataAnnotationsValidationRule.cs" />
+    <Compile Include="Validation\Rules\DataTypeValidationRule.cs" />
+    <Compile Include="Validation\Rules\RangeValidationRule.cs" />
+    <Compile Include="Validation\Rules\RegularExpressionValidationRule.cs" />
+    <Compile Include="Validation\Rules\RemoteValidationRule.cs" />
+    <Compile Include="Validation\Rules\RequiredFieldValidationRule.cs" />
+    <Compile Include="Validation\Rules\StringLengthValidationRule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">
+      <Project>{C4A83864-BF32-49D8-BC23-C69F025628EC}</Project>
+      <Name>Radischevo.Wahha.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Radischevo.Wahha.Data\Radischevo.Wahha.Data.csproj">
+      <Project>{C7346189-E495-4A61-9398-F90B69AB619A}</Project>
+      <Name>Radischevo.Wahha.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Radischevo.Wahha.Web.Routing\Radischevo.Wahha.Web.Routing.csproj">
+      <Project>{63510543-829A-44CF-9D34-5A039BC78811}</Project>
+      <Name>Radischevo.Wahha.Web.Routing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Radischevo.Wahha.Web\Radischevo.Wahha.Web.csproj">
+      <Project>{2DEB7611-864B-48C4-9CE7-5100F314371D}</Project>
+      <Name>Radischevo.Wahha.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Radischevo.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
