@@ -26,13 +26,11 @@ namespace Radischevo.Wahha.Core
             #region Static Methods
             private static IDynamicAccessor CreateAccessor(Type type, string memberName)
             {
-                PropertyInfo property = type.GetProperty(memberName, BindingFlags.Instance |
-                    BindingFlags.Public | BindingFlags.FlattenHierarchy);
+                PropertyInfo property = type.GetProperty(memberName, _memberFlags);
                 if (property != null)
                     return property.CreateAccessor();
 
-                FieldInfo field = type.GetField(memberName, BindingFlags.Instance |
-                    BindingFlags.Public | BindingFlags.FlattenHierarchy);
+                FieldInfo field = type.GetField(memberName, _memberFlags);
 
                 if (field != null)
                     return field.CreateAccessor();
@@ -52,8 +50,13 @@ namespace Radischevo.Wahha.Core
         }
         #endregion
 
-        #region Instance Fields
-        private object _instance;
+		#region Constants
+		private const BindingFlags _memberFlags = BindingFlags.Instance |
+			BindingFlags.Public | BindingFlags.FlattenHierarchy;
+		#endregion
+
+		#region Instance Fields
+		private object _instance;
         private Type _type;
         private MemberAccessorCache _cache;
 		private IEnumerable<string> _keys;
@@ -139,8 +142,8 @@ namespace Radischevo.Wahha.Core
 			get
 			{
 				if (_keys == null)
-					_keys = _type.GetFields().Select(f => f.Name)
-						.Concat(_type.GetProperties().Select(p => p.Name))
+					_keys = _type.GetFields(_memberFlags).Select(f => f.Name)
+						.Concat(_type.GetProperties(_memberFlags).Select(p => p.Name))
 						.ToArray();
 
 				return _keys;
