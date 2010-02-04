@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Radischevo.Wahha.Core
 {
-    public class Indexable
+    public class Indexable : IValueSet
     {
         #region Nested Types
         private sealed class MemberAccessorCache : ReaderWriterCache<string, IDynamicAccessor>
@@ -54,6 +56,7 @@ namespace Radischevo.Wahha.Core
         private object _instance;
         private Type _type;
         private MemberAccessorCache _cache;
+		private IEnumerable<string> _keys;
         #endregion
 
         #region Constructors
@@ -93,29 +96,58 @@ namespace Radischevo.Wahha.Core
         #endregion
 
         #region Instance Methods
-        protected virtual IDynamicAccessor GetAccessorAndValidate(string memberName)
+		private IDynamicAccessor GetAccessorAndValidate(string memberName)
+		{
+			IDynamicAccessor accessor = GetAccessor(memberName);
+			if (accessor == null)
+				throw Error.MissingMember(_type, memberName);
+
+			return accessor;
+		}
+
+		protected virtual IDynamicAccessor GetAccessor(string memberName)
+		{
+			Precondition.Require(!String.IsNullOrEmpty(memberName),
+				Error.ArgumentNull("memberName"));
+
+			return _cache.GetAccessor(memberName);
+		}
+
+        public TValue GetValue<TValue>(string memberName)
         {
-            Precondition.Require(!String.IsNullOrEmpty(memberName), 
-                Error.ArgumentNull("memberName"));
-
-            IDynamicAccessor accessor = _cache.GetAccessor(memberName);
-            if (accessor == null)
-                throw Error.MissingMember(_type, memberName);
-
-            return accessor;
+			return GetValue<TValue>(memberName, default(TValue));
         }
 
-        public virtual TValue GetValue<TValue>(string memberName)
-        {
-            return Converter.ChangeType<TValue>(this[memberName]);
-        }
+		public virtual TValue GetValue<TValue>(string memberName, TValue defaultValue)
+		{
+			IDynamicAccessor accessor = GetAccessor(memberName);
+			if (accessor == null)
+				return defaultValue;
+
+			return Converter.ChangeType<TValue>(accessor.GetValue(_instance));
+		}
 
         public virtual void SetValue<TValue>(string memberName, TValue value)
         {
             this[memberName] = value;
         }
         #endregion
-    }
+
+		#region IValueSet Members
+		IEnumerable<string> IValueSet.Keys
+		{
+			get
+			{
+				if (_keys == null)
+					_keys = _type.GetFields().Select(f => f.Name)
+						.Concat(_type.GetProperties().Select(p => p.Name))
+						.ToArray();
+
+				return _keys;
+			}
+		}
+		#endregion
+	}
 
     public class Indexable<T> : Indexable
         where T : class
