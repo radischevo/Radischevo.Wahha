@@ -26,6 +26,16 @@ namespace Radischevo.Wahha.Data
             _enumerator = _reader.GetEnumerator();
             _translator = translator;
         }
+
+		public ObjectEnumerator(IDbDataReader reader, IDbMaterializer<TEntity> materializer)
+		{
+			Precondition.Require(reader, Error.ArgumentNull("reader"));
+			Precondition.Require(materializer, Error.ArgumentNull("materializer"));
+
+			_reader = reader;
+			_enumerator = _reader.GetEnumerator();
+			_translator = materializer.Materialize;
+		}
         #endregion
 
         #region Instance Properties

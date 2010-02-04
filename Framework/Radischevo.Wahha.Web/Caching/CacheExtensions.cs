@@ -89,13 +89,14 @@ namespace Radischevo.Wahha.Web.Caching
         public static T Get<T>(this Cache cache, string key, 
             Func<T> selector, DateTime expiration, params string[] tags)
         {
-            if (cache.Get(key) == null)
+			object value;
+			if ((value = cache.Get(key)) == null)
             {
                 lock (AcquireLock(key))
                 {
-                    if (cache.Get(key) == null)
+					if ((value = cache.Get(key)) == null)
                     {
-                        object value = selector();
+                        value = selector();
                         cache.Insert(key, value, CreateTagDependency(cache, tags), 
                             expiration, Cache.NoSlidingExpiration, 
                             CacheItemPriority.Normal, null);
@@ -104,7 +105,7 @@ namespace Radischevo.Wahha.Web.Caching
                     }
                 }
             }
-            return Converter.ChangeType<T>(cache.Get(key));
+            return Converter.ChangeType<T>(value);
         }
 
         public static T Get<T>(this Cache cache, string key, Func<T> selector)
