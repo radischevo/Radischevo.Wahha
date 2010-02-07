@@ -21,9 +21,9 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             SortedDictionary<string, object> dict = new SortedDictionary<string, object>();
 
-            dict.Add("fields", rules.ToLookup(k => k.Field, StringComparer.OrdinalIgnoreCase)
-                .Select(g => new { field = g.Key, rules = g.ToList() }));
-            dict.Add("selector", selector);
+            dict.Add("Fields", rules.ToLookup(k => k.Field, StringComparer.OrdinalIgnoreCase)
+                .Select(g => new { Field = g.Key, Rules = g.ToList() }));
+            dict.Add("Selector", selector);
 
             return serializer.Serialize(dict);
         }

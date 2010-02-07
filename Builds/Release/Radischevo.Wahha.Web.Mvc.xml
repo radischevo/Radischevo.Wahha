@@ -909,6 +909,11 @@
               Looks up a localized string similar to The type &apos;{0}&apos; must have a public constructor which accepts the parameters of types &apos;{1}&apos; and &apos;{2}&apos;..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidIndexerExpression">
+            <summary>
+              Looks up a localized string similar to The expression compiler was unable to evaluate the indexer expression &apos;{0}&apos; because it references the model parameter &apos;{1}&apos; which is unavailable..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidMvcAction">
             <summary>
               Looks up a localized string similar to A public action method &apos;{0}&apos; could not be found on controller &apos;{1}&apos;..
@@ -1022,6 +1027,11 @@
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_TypeMustDeriveFromType">
             <summary>
               Looks up a localized string similar to The type &apos;{0}&apos; must derive from &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_TypeMustImplementIEnumerable">
+            <summary>
+              Looks up a localized string similar to The Collection template was used with an object of type &apos;{0}&apos;, which does not implement System.IEnumerable..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_UnableToInstantiateUserControl">
@@ -1292,7 +1302,7 @@
             which are applied to the property of the 
             model, accessed through the specified <paramref name="expression"/>.
             </summary>
-            <param name="expression">A lambda expression to access the 
+            <param name="expression">A lambda expression accessor for the 
             model property.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper`1.Rules``1(System.String,System.Linq.Expressions.Expression{System.Func{`0,``0}})">
@@ -1303,7 +1313,7 @@
             </summary>
             <param name="modelName">Specifies the name of the model, 
             which will prefix the validation rule member name.</param>
-            <param name="expression">A lambda expression to access the 
+            <param name="expression">A lambda expression accessor for the 
             model property.</param>
         </member>
         <member name="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">

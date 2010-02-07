@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
@@ -8,20 +9,79 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public class TempDataDictionary : IValueSet, IDictionary<string, object>, ISerializable, 
-        ICollection<KeyValuePair<string, object>>, IEnumerable<KeyValuePair<string, object>>
-    {
-        #region Static Fields
-        private const string _serializationKey = "Radischevo.Wahha.Web.Mvc.TempDataDictionary.Serialization";
+	[Serializable]
+    public class TempDataDictionary : IValueSet, IDictionary<string, object>, ISerializable
+	{
+		#region Nested Types
+		private sealed class TempDataEnumerator : IEnumerator<KeyValuePair<string, object>>
+		{
+			#region Instance Fields
+			private IEnumerator<KeyValuePair<string, object>> _enumerator;
+			private TempDataDictionary _data;
+			#endregion
+
+			#region Constructors
+			public TempDataEnumerator(TempDataDictionary tempData)
+			{
+				_data = tempData;
+				_enumerator = _data._data.GetEnumerator();
+			}
+			#endregion
+
+			#region Instance Properties
+			public KeyValuePair<string, object> Current
+			{
+				get
+				{
+					KeyValuePair<string, object> kvp = _enumerator.Current;
+					_data._initialKeys.Remove(kvp.Key);
+
+					return kvp;
+				}
+			}
+
+			object IEnumerator.Current
+			{
+				get
+				{
+					return Current;
+				}
+			}
+			#endregion
+
+			#region Instance Methods
+			public bool MoveNext()
+			{
+				return _enumerator.MoveNext();
+			}
+
+			public void Reset()
+			{
+				_enumerator.Reset();
+			}
+
+			void IDisposable.Dispose()
+			{
+				_enumerator.Dispose();
+			}
+			#endregion
+		}
+		#endregion
+
+		#region Static Fields
+		private const string _serializationKey = "Radischevo.Wahha.Web.Mvc.TempDataDictionary.Serialization";
         #endregion
 
         #region Instance Fields
         private Dictionary<string, object> _data;
+		private HashSet<string> _initialKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+		private HashSet<string> _retainedKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         #endregion
 
         #region Constructors
         public TempDataDictionary()
         {
+			_data = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         }
 
         protected TempDataDictionary(SerializationInfo info, StreamingContext context)
@@ -47,15 +107,17 @@ namespace Radischevo.Wahha.Web.Mvc
                 if (!_data.TryGetValue(key, out obj))
                     return null;
 
+				_initialKeys.Remove(key);
                 return obj;
             }
             set
             {
                 _data[key] = value;
+				_initialKeys.Add(key);
             }
         }
 
-        public Dictionary<string, object>.KeyCollection Keys
+        public ICollection<string> Keys
         {
             get
             {
@@ -63,7 +125,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public Dictionary<string, object>.ValueCollection Values
+        public ICollection<object> Values
         {
             get
             {
@@ -80,7 +142,35 @@ namespace Radischevo.Wahha.Web.Mvc
         }        
         #endregion
 
-        #region Instance Methods
+		#region Static Methods
+		private static TValue ConvertValue<TValue>(object value, TValue defaultValue)
+		{
+			if (value != null && typeof(TValue) == typeof(bool))
+			{
+				switch (value.ToString().ToLower())
+				{
+					case "on":
+					case "yes":
+						value = true;
+						break;
+				}
+			}
+			return Converter.ChangeType<TValue>(value, defaultValue);
+		}
+		#endregion
+
+		#region Instance Methods
+		public void Keep()
+		{
+			_retainedKeys.Clear();
+			_retainedKeys.UnionWith(_data.Keys);
+		}
+
+		public void Keep(string key)
+		{
+			_retainedKeys.Add(key);
+		}
+
         public void Load(ControllerContext context, ITempDataProvider provider)
         {
             Precondition.Require(context, Error.ArgumentNull("context"));
@@ -89,24 +179,59 @@ namespace Radischevo.Wahha.Web.Mvc
             IDictionary<string, object> pd = provider.Load(context);
             _data = (pd == null) ? new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase) : 
                 new Dictionary<string, object>(pd, StringComparer.OrdinalIgnoreCase);
+
+			_initialKeys = new HashSet<string>(_data.Keys, StringComparer.OrdinalIgnoreCase);
+			_retainedKeys.Clear();
         }
+
+		public object Peek(string key)
+		{
+			object value;
+			_data.TryGetValue(key, out value);
+
+			return value;
+		}
+
+		public TValue Peek<TValue>(string key)
+		{
+			return Peek<TValue>(key, default(TValue));
+		}
+
+		public TValue Peek<TValue>(string key, TValue defaultValue)
+		{
+			object value;
+
+			if (!_data.TryGetValue(key, out value))
+				return defaultValue;
+
+			return ConvertValue(value, defaultValue);
+		}
 
         public void Save(ControllerContext context, ITempDataProvider provider)
         {
             Precondition.Require(context, Error.ArgumentNull("context"));
             Precondition.Require(provider, Error.ArgumentNull("provider"));
 
-            provider.Save(context, _data);
+			string[] keysToKeep = _initialKeys.Union(_retainedKeys, StringComparer.OrdinalIgnoreCase).ToArray();
+			string[] keysToRemove = _data.Keys.Except(keysToKeep, StringComparer.OrdinalIgnoreCase).ToArray();
+
+			foreach (string key in keysToRemove)
+				_data.Remove(key);
+			
+			provider.Save(context, _data);
         }
 
         public void Add(string key, object value)
         {
             _data.Add(key, value);
+			_initialKeys.Add(key);
         }
 
         public void Clear()
         {
             _data.Clear();
+			_retainedKeys.Clear();
+			_initialKeys.Clear();
         }
 
         /// <summary>
@@ -134,17 +259,7 @@ namespace Radischevo.Wahha.Web.Mvc
             if (!TryGetValue(key, out value))
                 return defaultValue;
 
-            if (typeof(TValue) == typeof(bool)) // специальная методика для bool 
-            {
-                switch (value.ToString().ToLower())
-                {
-                    case "on":
-                    case "yes":
-                        value = true;
-                        break;
-                }
-            }
-            return Converter.ChangeType<TValue>(value, defaultValue);
+			return ConvertValue(value, defaultValue);
         }
 
         public bool ContainsAll(params string[] keys)
@@ -177,17 +292,21 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public bool Remove(string key)
         {
+			_retainedKeys.Remove(key);
+			_initialKeys.Remove(key);
+
             return _data.Remove(key);
         }
 
         public bool TryGetValue(string key, out object value)
         {
+			_initialKeys.Remove(key);
             return _data.TryGetValue(key, out value);
         }
 
-        public Dictionary<string, object>.Enumerator GetEnumerator()
+		public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
-            return _data.GetEnumerator();
+			return new TempDataEnumerator(this);
         }
 
         protected virtual void GetObjectData(SerializationInfo info,
@@ -206,25 +325,10 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        ICollection<string> IDictionary<string, object>.Keys
-        {
-            get
-            {
-                return Keys;
-            }
-        }
-
-        ICollection<object> IDictionary<string, object>.Values
-        {
-            get
-            {
-                return Values;
-            }
-        }
-
         void ICollection<KeyValuePair<string, object>>.Add(
             KeyValuePair<string, object> item)
         {
+			_initialKeys.Add(item.Key);
             ((ICollection<KeyValuePair<string, object>>)_data).Add(item);
         }
 
@@ -243,18 +347,19 @@ namespace Radischevo.Wahha.Web.Mvc
         bool ICollection<KeyValuePair<string, object>>.Remove(
             KeyValuePair<string, object> item)
         {
+			_initialKeys.Remove(item.Key);
             return ((ICollection<KeyValuePair<string, object>>)_data).Remove(item);
         }        
 
         IEnumerator<KeyValuePair<string, object>> 
             IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
         {
-            return _data.GetEnumerator();
+			return GetEnumerator();
         }       
         
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _data.GetEnumerator();
+			return GetEnumerator();
         }
         
         void ISerializable.GetObjectData(SerializationInfo info, 

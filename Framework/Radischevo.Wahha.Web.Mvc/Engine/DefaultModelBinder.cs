@@ -64,7 +64,7 @@ namespace Radischevo.Wahha.Web.Mvc
             string keyPrefix = String.Concat(memberName, _valueDelimiter);
             // на входе: product-items-1-id, product-items
             // на выходе - 1
-            int index = key.IndexOf(keyPrefix);
+            int index = key.IndexOf(keyPrefix, StringComparison.OrdinalIgnoreCase);
             if (index != 0) // ключ должен начинаться с memberName + delimiter
                 return null;
 
@@ -87,7 +87,7 @@ namespace Radischevo.Wahha.Web.Mvc
             string keyPrefix = String.Concat(memberName, _valueDelimiter);
             // на входе: product-items-1-id, product-items
             // на выходе - 1
-            int index = key.IndexOf(keyPrefix);
+            int index = key.IndexOf(keyPrefix, StringComparison.OrdinalIgnoreCase);
             if (index != 0) // ключ должен начинаться с memberName + delimiter
                 return null;
 
@@ -135,15 +135,15 @@ namespace Radischevo.Wahha.Web.Mvc
             return true;
         }
 
-        protected static bool IsValid(BindingContext context)
-        {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            if (String.IsNullOrEmpty(context.ModelName))
-                return (context.Errors.Count == 0);
-            
-            return !context.Errors.Any(k => k.Key.Equals(context.ModelName, 
-                StringComparison.InvariantCultureIgnoreCase));
-        }
+		protected static bool AreMembersValid(BindingContext context, string modelName)
+		{
+			Precondition.Require(context, Error.ArgumentNull("context"));
+			modelName = modelName ?? context.ModelName;
+			
+			return !context.Errors.Where(k => k.Key.StartsWith(modelName,
+				StringComparison.InvariantCultureIgnoreCase))
+				.Any(k => k.Key.Length != modelName.Length);
+		}
         #endregion
 
         #region Instance Methods
@@ -160,14 +160,12 @@ namespace Radischevo.Wahha.Web.Mvc
 
         private bool VerifyValueUsability(BindingContext context, string elementKey, Type elementType, object value)
         {
-            if (value == null && !elementType.IsNullable())
-            {
-                if (!context.Errors.Any(k => k.Key.Equals(elementKey, 
-                    StringComparison.InvariantCultureIgnoreCase)))
-                {
-                    string message = GetValueRequiredResource(context);
-                    context.Errors.Add(elementKey, new ValidationError(message, value, null));
-                }
+            if (value == null && !elementType.IsNullable() && !context.Errors.Any(
+				k => k.Key.Equals(elementKey, StringComparison.InvariantCultureIgnoreCase)))
+			{
+				string message = GetValueRequiredResource(context);
+                context.Errors.Add(elementKey, new ValidationError(message, value, null));
+             
                 return false;
             }
             return true;
@@ -478,13 +476,7 @@ namespace Radischevo.Wahha.Web.Mvc
             if (result == null)
                 return null;
 
-            BindAttribute bind = (BindAttribute)TypeDescriptor.GetAttributes(context.ModelType)[typeof(BindAttribute)];
-            Predicate<string> propertyFilter = (bind != null) ? (Predicate<string>)(propertyName => 
-                bind.IsUpdateAllowed(propertyName) && context.AllowMemberUpdate(propertyName)) : context.AllowMemberUpdate;
-
-            BindingContext inner = new BindingContext(context, context.ModelType,
-                context.ModelName, context.Source, context.Data, propertyFilter,
-                context.Errors) { Model = result };
+			BindingContext inner = CreateComplexModelBindingContext(context, result);
             
             if (OnModelUpdating(inner))
             {
@@ -494,6 +486,20 @@ namespace Radischevo.Wahha.Web.Mvc
             return result;
         }
 
+		private BindingContext CreateComplexModelBindingContext(BindingContext context, object result)
+		{
+			BindAttribute bind = (BindAttribute)TypeDescriptor.GetAttributes(context.ModelType)[typeof(BindAttribute)];
+			Predicate<string> propertyFilter = (bind != null) ? (Predicate<string>)(propertyName =>
+				bind.IsUpdateAllowed(propertyName) && context.AllowMemberUpdate(propertyName)) : context.AllowMemberUpdate;
+
+			BindingContext inner = new BindingContext(context, context.ModelType,
+				context.ModelName, context.Source, context.Data, propertyFilter,
+				context.Errors) {
+					Model = result
+				};
+			return inner;
+		}
+
         protected virtual bool OnModelUpdating(BindingContext context)
         {
             return true;
@@ -501,19 +507,13 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual void OnModelUpdated(BindingContext context)
         {
-            IDataErrorInfo provider = (context.Model as IDataErrorInfo);
-            if (provider != null)
-            {
-                string errorText = provider.Error;
-                if (!String.IsNullOrEmpty(errorText))
-                    context.Errors.Add(context.ModelName, errorText);
-            }
-
-            if (!IsValid(context))
-                return;
-
-            foreach (ModelValidationResult result in context.Validator.Validate(context, context.Model))
-                context.Errors.Add(CreateSubMemberName(context.ModelName, result.Member), result.Message);
+			ModelValidationContext validation = new ModelValidationContext(context, context.Metadata, context.Model);
+			foreach (ModelValidationResult result in context.Validator.Validate(validation))
+			{
+				string memberKey = CreateSubMemberName(context.ModelName, result.Member);
+				if(AreMembersValid(context, memberKey))
+					context.Errors.Add(memberKey, result.Message);
+			}
         }
 
         protected void BindProperties(BindingContext context)
@@ -525,20 +525,23 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual void BindProperty(BindingContext context, PropertyDescriptor property)
         {
             string propertyKey = CreateSubMemberName(context.ModelName, property.Name);
-            if (!context.Data.Any(k => k.Key.StartsWith(propertyKey, 
-                StringComparison.InvariantCultureIgnoreCase)))
-                return;
+			object value = null;
 
-            IModelBinder binder = Binders.GetBinder(property.PropertyType);
-            ModelMetadata propertyMetadata = context.Metadata.GetPropertyMetadata(property.Name);
-            ModelValidator propertyValidator = context.Validator.GetPropertyValidator(property.Name);
+			if (context.Data.Any(k => k.Key.StartsWith(propertyKey,
+				StringComparison.InvariantCultureIgnoreCase)))
+			{
+				IModelBinder binder = Binders.GetBinder(property.PropertyType);
+				ModelMetadata propertyMetadata = context.Metadata.GetPropertyMetadata(property.Name);
+				ModelValidator propertyValidator = context.Validator.GetPropertyValidator(property.Name);
 
-            BindingContext inner = new BindingContext(context, property.PropertyType,
-                propertyKey, context.Source, context.Data, null, context.Errors) {
-                Model = property.GetValue(context.Model), 
-                Metadata = propertyMetadata, Validator = propertyValidator };
+				BindingContext inner = new BindingContext(context, property.PropertyType,
+					propertyKey, context.Source, context.Data, null, context.Errors) {
+						Model = property.GetValue(context.Model),
+						Metadata = propertyMetadata, Validator = propertyValidator
+					};
 
-            object value = GetPropertyValue(inner, property, binder);
+				value = GetPropertyValue(inner, property, binder);
+			}
             if (OnPropertyUpdating(context, property, value))
             {
                 SetProperty(context, property, value);
@@ -563,9 +566,11 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             string propertyKey = CreateSubMemberName(context.ModelName, property.Name);
             ModelValidator propertyValidator = context.Validator.GetPropertyValidator(property.Name);
+			ModelValidationContext validation = new ModelValidationContext(context, 
+				context.Metadata, context.Model, value);
 
             bool isUsable = true;
-            foreach (ModelValidationResult result in propertyValidator.Validate(context, value))
+            foreach (ModelValidationResult result in propertyValidator.Validate(validation))
             {
                 context.Errors.Add(propertyKey, new ValidationError(result.Message, value, null));
                 isUsable = false;
@@ -592,15 +597,6 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual void OnPropertyUpdated(BindingContext context, 
             PropertyDescriptor property, object value)
         {
-            string propertyKey = CreateSubMemberName(context.ModelName, property.Name);
-
-            IDataErrorInfo errorProvider = (context.Model as IDataErrorInfo);
-            if (errorProvider != null)
-            {
-                string errorText = errorProvider[property.Name];
-                if (!String.IsNullOrEmpty(errorText))
-                    context.Errors.Add(propertyKey, new ValidationError(errorText, value, null));
-            }
         }
         #endregion
         #endregion

@@ -87,12 +87,11 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
             return Enumerable.Empty<ModelValidationRule>();
         }
 
-        public virtual IEnumerable<ModelValidationResult> Validate(
-            ControllerContext context, object container)
+        public virtual IEnumerable<ModelValidationResult> Validate(ModelValidationContext context)
         {
             foreach (ModelValidationRule rule in GetValidationRules())
             {
-                ModelValidationResult result = rule.Validate(context, container);
+                ModelValidationResult result = rule.Validate(context);
                 if (result != null)
                     yield return result;
             }

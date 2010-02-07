@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -94,6 +95,7 @@ namespace Radischevo.Wahha.Web.Mvc
             _modeViewPaths.Add(DataBoundControlMode.Edit, "views/templates/edit");
 
             _displayActions.Add("EmailAddress", DefaultDisplayTemplates.EmailAddress);
+			_displayActions.Add("Collection", DefaultDisplayTemplates.Collection);
             _displayActions.Add("HiddenInput", DefaultDisplayTemplates.HiddenInput);
             _displayActions.Add("Html", DefaultDisplayTemplates.HtmlString);
             _displayActions.Add("Text", DefaultDisplayTemplates.String);
@@ -105,6 +107,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
             _editorActions.Add("HiddenInput", DefaultEditorTemplates.Hidden);
             _editorActions.Add("Html", DefaultEditorTemplates.TextArea);
+			_editorActions.Add("Collection", DefaultEditorTemplates.Collection);
             _editorActions.Add("MultilineText", DefaultEditorTemplates.TextArea);
             _editorActions.Add("Password", DefaultEditorTemplates.Password);
             _editorActions.Add("Text", DefaultEditorTemplates.String);
@@ -154,34 +157,6 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Static Methods
-        internal static string GetExpressionText(LambdaExpression expression)
-        {
-            Stack<string> nameParts = new Stack<string>();
-            Expression part = expression.Body;
-
-            while (part != null)
-            {
-                if (part.NodeType == ExpressionType.MemberAccess)
-                {
-                    MemberExpression memberExpression = (MemberExpression)part;
-                    nameParts.Push(memberExpression.Member.Name);
-                    part = memberExpression.Expression;
-                }
-                else
-                    break;
-            }
-
-            if (nameParts.Count > 0 && String.Equals(nameParts.Peek(), 
-                "model", StringComparison.OrdinalIgnoreCase))
-                nameParts.Pop();
-
-            if (nameParts.Count == 0)
-                return String.Empty;
-
-            return nameParts.Aggregate((left, right) => 
-                left + "." + right).ToLowerInvariant();
-        }
-
         private static IEnumerable<string> GetTemplateNames(ModelMetadata metadata, string templateName)
         {
             if (!String.IsNullOrEmpty(templateName))
@@ -197,20 +172,32 @@ namespace Radischevo.Wahha.Web.Mvc
 				yield return "Enum";
 
             if (_convertibleToString.Contains(type))
+			{
                 yield return "String";
-            else if (type.IsInterface)
-                yield return "Object";
-            else
-            {
-                while (true)
-                {
-                    type = type.BaseType;
-                    if (type == null)
-                        break;
+			}
+			else if (type.IsInterface)
+			{
+				if (typeof(IEnumerable).IsAssignableFrom(type))
+					yield return "Collection";
 
-                    yield return type.Name;
-                }
-            }
+				yield return "Object";
+			}
+			else
+			{
+				bool isEnumerable = typeof(IEnumerable).IsAssignableFrom(type);
+
+				while (true)
+				{
+					type = type.BaseType;
+					if (type == null)
+						break;
+
+					if (isEnumerable && type == typeof(Object))
+						yield return "Collection";
+
+					yield return type.Name;
+				}
+			}
         }
 
         internal static ModelMetadata GetMetadata(Type containerType, Type modelType, string propertyName)
@@ -355,8 +342,16 @@ namespace Radischevo.Wahha.Web.Mvc
 
             switch (expression.Body.NodeType)
             {
+				case ExpressionType.ArrayIndex:
+					break;
+
                 case ExpressionType.Parameter:
                     break;
+
+				case ExpressionType.Call:
+					if (!LinqHelper.IsSingleArgumentIndexer(expression.Body))
+						throw Error.TemplateExpressionLimitations();
+					break;
 
                 case ExpressionType.MemberAccess:
                     MemberExpression memberExpression = (MemberExpression)expression.Body;
@@ -367,7 +362,7 @@ namespace Radischevo.Wahha.Web.Mvc
                 default:
                     throw Error.TemplateExpressionLimitations();
             }
-            return Render(mode, templateName, htmlElementName ?? GetExpressionText(expression), 
+            return Render(mode, templateName, htmlElementName ?? LinqHelper.GetExpressionText(expression), 
                 parentModelType, modelType, propertyName, modelValue);
         }
         #endregion

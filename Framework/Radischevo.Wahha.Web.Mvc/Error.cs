@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Linq.Expressions;
 using System.Net;
 using System.Web;
 
@@ -382,6 +383,19 @@ namespace Radischevo.Wahha.Web.Mvc
 		internal static Exception SecureConnectionRequired()
 		{
 			throw new InvalidOperationException(Resources.Resources.Error_SecureConnectionRequired);
+		}
+
+		internal static Exception CollectionTypeMustBeEnumerable(Type type)
+		{
+			return new InvalidOperationException(String.Format(
+				Resources.Resources.Error_TypeMustImplementIEnumerable, type.FullName));
+		}
+
+		internal static Exception InvalidIndexerExpression(Expression expression, ParameterExpression parameter)
+		{
+			return new InvalidOperationException(String.Format(
+				Resources.Resources.Error_InvalidIndexerExpression, 
+				expression, parameter.Name));
 		}
 	}
 }

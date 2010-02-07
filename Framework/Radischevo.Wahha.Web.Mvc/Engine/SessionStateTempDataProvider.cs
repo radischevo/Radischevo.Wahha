@@ -16,24 +16,37 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public virtual IDictionary<string, object> Load(ControllerContext context)
         {
-            HttpContextBase ctx = context.Context;
-            Precondition.Require(ctx.Session, Error.SessionStateDisabled());
+            HttpSessionStateBase session = context.Context.Session;
 
-            Dictionary<string, object> data = (ctx.Session[SessionStateKey] as Dictionary<string, object>);
-            if (data == null)
-                data = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-            else
-                ctx.Session.Remove(SessionStateKey);
-
-            return data;
+			if (session != null)
+			{
+				Dictionary<string, object> data = (session[SessionStateKey] as Dictionary<string, object>);
+				if (data != null)
+					session.Remove(SessionStateKey);
+			}
+            return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         }
 
         public virtual void Save(ControllerContext context, IDictionary<string, object> values)
         {
-            HttpContextBase ctx = context.Context;
-            Precondition.Require(ctx.Session, Error.SessionStateDisabled());
+            HttpSessionStateBase session = context.Context.Session;
+			bool isDirty = (values != null && values.Count > 0);
 
-            ctx.Session[SessionStateKey] = values;
+			if (session == null)
+			{
+				if (isDirty)
+					throw Error.SessionStateDisabled();
+			}
+			else
+			{
+				if (isDirty)
+					session[SessionStateKey] = values;
+				else
+				{
+					if (session[SessionStateKey] != null)
+						session.Remove(SessionStateKey);
+				}
+			}
         }
         #endregion
     }

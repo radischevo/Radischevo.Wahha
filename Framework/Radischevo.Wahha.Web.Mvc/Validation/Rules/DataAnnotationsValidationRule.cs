@@ -30,9 +30,9 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         #endregion
 
         #region Instance Methods
-        public override ModelValidationResult Validate(ControllerContext context, object container)
+		public override ModelValidationResult Validate(ModelValidationContext context)
         {
-            if (!Attribute.IsValid(container))
+            if (!Attribute.IsValid(context.Value))
                 return new ModelValidationResult { Message = Attribute.FormatErrorMessage(Member) };
 
             return null;

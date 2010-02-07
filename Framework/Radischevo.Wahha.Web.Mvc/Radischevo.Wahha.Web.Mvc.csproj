@@ -144,7 +144,10 @@
     <Compile Include="Helpers\HttpHandlerWrapper.cs" />
     <Compile Include="Metadata\FieldOrderAttribute.cs" />
     <Compile Include="Metadata\ModelMetadataProviderCollection.cs" />
+    <Compile Include="Validation\DataErrorInfoModelValidator.cs" />
+    <Compile Include="Validation\DataErrorInfoValidatorProvider.cs" />
     <Compile Include="Validation\DataTypeValidationAttribute.cs" />
+    <Compile Include="Validation\ModelValidationContext.cs" />
     <Compile Include="Validation\RemoteValidationResult.cs" />
     <Compile Include="Validation\Rules\ClientModelValidationRule.cs" />
     <Compile Include="Validation\Formatters\IModelValidationRuleFormatter.cs" />

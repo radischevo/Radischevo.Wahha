@@ -77,7 +77,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             MemberExpression me = (MemberExpression)expression.Body;
             PropertyInfo propertyInfo = (me.Member as PropertyInfo);
 
-            return Render(helper.Context, TemplateHelper.GetExpressionText(expression),
+            return Render(helper.Context, LinqHelper.GetExpressionText(expression),
                    me.Member.DeclaringType, (propertyInfo == null) ? null :
                    propertyInfo.Name, typeof(TValue));
         }

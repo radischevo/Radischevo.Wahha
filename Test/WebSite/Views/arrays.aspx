@@ -29,12 +29,12 @@
             <input type="checkbox" name="names-5" value="Ксюша" /> Ксюша<br />
         </p>
         <p>
-            1 <input type="checkbox" name="dict-1-first" />
-              <input type="text" name="dict-1-second" value="Имя" /><br />
-            2 <input type="checkbox" name="dict-2-first" />
-              <input type="text" name="dict-2-second" value="" /><br />
-            3 <input type="checkbox" name="dict-3-first" />
-              <input type="text" name="dict-3-second" value="" /><br />
+            1 <input type="checkbox" name="dict-1-item1" />
+              <input type="text" name="dict-1-item2" value="Имя" /><br />
+            2 <input type="checkbox" name="dict-2-item1" />
+              <input type="text" name="dict-2-item2" value="" /><br />
+            3 <input type="checkbox" name="dict-3-item1" />
+              <input type="text" name="dict-3-item2" value="" /><br />
         </p>
         <input type="submit" value="Поехали" />
     </form>

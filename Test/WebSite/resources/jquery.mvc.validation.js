@@ -18,7 +18,7 @@
         }
     };
     var createFieldRules = function(field) {
-        var collection = field.rules;
+        var collection = field.Rules;
         var rules = {};
 
         for (var i = 0, l = collection.length; i < l; ++i) {
@@ -52,7 +52,7 @@
         var rules = {};
         for (var i = 0, l = fields.length; i < l; ++i) {
             var f = fields[i];
-            rules[f.field] = createFieldRules(f);
+            rules[f.Field] = createFieldRules(f);
         }
         return rules;
     };
@@ -62,7 +62,7 @@
         for (var i = 0, l = fields.length; i < l; ++i) {
             var field = fields[i];
             var fieldMessages = {};
-            var rules = field.rules;
+            var rules = field.Rules;
 
             for (var j = 0, c = rules.length; j < c; ++j) {
                 var rule = rules[j];
@@ -79,7 +79,7 @@
                     fieldMessages[jQueryValidationType] = rule.ErrorMessage;
                 }
             }
-            messages[field.field] = fieldMessages;
+            messages[field.Field] = fieldMessages;
         }
         return messages;
     };
@@ -94,14 +94,14 @@
     return {
         apply: function(options) {
             init();
-            $(options.selector).validate({
+            $(options.Selector).validate({
                 errorClass: "validation-error",
                 errorElement: "span",
                 errorPlacement: function(error, element) {
                     error.insertAfter(element);
                 },
-                messages: createMessages(options.fields),
-                rules: createRules(options.fields),
+                messages: createMessages(options.Fields),
+                rules: createRules(options.Fields),
                 success: function(label) {
                     label.remove();
                 }

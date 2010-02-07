@@ -15,7 +15,6 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Fields
         private IBuildManager _buildManager;
         private ControllerBuilder _builder;
-        private RequestContext _context;
         private ControllerTypeCache _instanceTypeCache;
         #endregion
 
@@ -70,18 +69,6 @@ namespace Radischevo.Wahha.Web.Mvc
                 _instanceTypeCache = value;
             }
         }
-
-        public RequestContext Context
-        {
-            get
-            {
-                return _context;
-            }
-            set
-            {
-                _context = value;
-            }
-        }
         #endregion
 
         #region Instance Methods
@@ -96,7 +83,6 @@ namespace Radischevo.Wahha.Web.Mvc
             Precondition.Require(!String.IsNullOrEmpty(controllerName),
                 Error.InvalidArgument("controllerName"));
             
-            _context = context;
             return GetControllerInstance(GetControllerType(controllerName));
         }
 

@@ -72,8 +72,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         #endregion
 
         #region Instance Methods
-        public virtual ModelValidationResult Validate(
-            ControllerContext context, object container)
+        public virtual ModelValidationResult Validate(ModelValidationContext context)
         {
             return null;
         }

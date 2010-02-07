@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web.UI.WebControls;
 
+using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Web.Mvc.Html;
 
@@ -64,6 +66,47 @@ namespace Radischevo.Wahha.Web.Mvc.UI
                 html.Context.ViewData.Model, CultureInfo.InvariantCulture) },
                 Convert.ToString(html.Context.ViewData.Template.Value, CultureInfo.InvariantCulture));
         }
+
+		public static string Collection(HtmlHelper html)
+		{
+			object model = html.Context.ViewData.Model;
+			if (model == null)
+				return string.Empty;
+
+			IEnumerable collection = (model as IEnumerable);
+			if (collection == null)
+				throw Error.CollectionTypeMustBeEnumerable(model.GetType());
+
+			Type elementType = collection.GetType().GetSequenceElementType() ?? typeof(string);
+			elementType = elementType.MakeNonNullableType();
+			string oldPrefix = html.Context.ViewData.Template.Prefix;
+
+			try
+			{
+				html.Context.ViewData.Template.Prefix = string.Empty;
+
+				StringBuilder result = new StringBuilder();
+				int index = 0;
+
+				foreach (object item in collection)
+				{
+					Type itemType = elementType;
+					if (item != null)
+						itemType = item.GetType().MakeNonNullableType();
+					
+					ModelMetadata metadata = Configuration.Configuration.Instance.Models
+						.MetadataProviders.GetProvider(itemType).GetMetadata(itemType);
+
+					string fieldName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", oldPrefix, index++);
+					result.Append(html.Templates.Render(DataBoundControlMode.ReadOnly, metadata, null, fieldName, item));
+				}
+				return result.ToString();
+			}
+			finally
+			{
+				html.Context.ViewData.Template.Prefix = oldPrefix;
+			}
+		}
 
         public static string Object(HtmlHelper html)
         {

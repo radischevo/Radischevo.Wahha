@@ -107,7 +107,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         public virtual string GetHtmlElementName(string expression)
         {
             return (Prefix + "-" + (expression ?? String.Empty)).Trim('-')
-                .Replace('.', '-').ToLowerInvariant();
+                .Replace('.', '-').Replace("[", "").Replace("]", "").ToLowerInvariant();
         }
         #endregion
     }

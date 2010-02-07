@@ -286,6 +286,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The expression compiler was unable to evaluate the indexer expression &apos;{0}&apos; because it references the model parameter &apos;{1}&apos; which is unavailable..
+        /// </summary>
+        internal static string Error_InvalidIndexerExpression {
+            get {
+                return ResourceManager.GetString("Error_InvalidIndexerExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A public action method &apos;{0}&apos; could not be found on controller &apos;{1}&apos;..
         /// </summary>
         internal static string Error_InvalidMvcAction {
@@ -489,6 +498,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         internal static string Error_TypeMustDeriveFromType {
             get {
                 return ResourceManager.GetString("Error_TypeMustDeriveFromType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Collection template was used with an object of type &apos;{0}&apos;, which does not implement System.IEnumerable..
+        /// </summary>
+        internal static string Error_TypeMustImplementIEnumerable {
+            get {
+                return ResourceManager.GetString("Error_TypeMustImplementIEnumerable", resourceCulture);
             }
         }
         

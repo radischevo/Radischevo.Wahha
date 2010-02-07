@@ -37,8 +37,10 @@ public enum Status
 }
 
 [DisplayColumn("ID")]
-public class TemplatedItem
+public class TemplatedItem : IDataErrorInfo
 {
+	private List<int> _indices = new List<int>();
+
     [HiddenInput(DisplayValue = false)]
     public int ID { get; set; }
     [DisplayName("Элемент активен")]
@@ -63,12 +65,45 @@ public class TemplatedItem
     [DisplayName("Вложенный элемент")]
     [DisplayFormat(NullDisplayText = "(Not set)")]
     public TemplatedItem Inner { get; set; }
+	[DisplayName("Номера")]
+	public List<int> Indices
+	{
+		get
+		{
+			return _indices;
+		}
+		set
+		{
+			_indices = value;
+		}
+	}
 
 	public Status Status
 	{
 		get;
 		set;
 	}
+
+	#region IDataErrorInfo Members
+	public string Error
+	{
+		get
+		{
+			return null;
+		}
+	}
+
+	public string this[string columnName]
+	{
+		get
+		{
+			if (columnName == "Title")
+				return "Zhopa is an uncorrect title.";
+
+			return null;
+		}
+	}
+	#endregion
 }
 
 /// <summary>
@@ -205,42 +240,49 @@ public class MainController : Controller
         Radischevo.Wahha.Web.Mvc.Configuration.Configuration
             .Instance.Models.MetadataProviders
             .Default = new DataAnnotationsMetadataProvider();
-        Radischevo.Wahha.Web.Mvc.Configuration.Configuration
+
+		Radischevo.Wahha.Web.Mvc.Configuration.Configuration
             .Instance.Models.ValidatorProviders
             .Default = new DataAnnotationsValidatorProvider();
 
-        return View("template", new TemplatedItem()
-        {
-            ID = 500,
-            Count = 10,
-            Date = DateTime.Now,
-            IsActive = true,
-            IsViewed = null,
-            Message = "Йоу, товарищи!",
-            Inner = new TemplatedItem()
-            {
-                ID = 5561,
-                Count = 17,
-                Date = DateTime.Now,
-                IsActive = true,
-                IsViewed = true,
-                Message = "Вложения приветствуются",
-                Inner = new TemplatedItem()
-                {
-                    ID = 12449,
-                    Count = 28,
-                    Date = DateTime.Now,
-                    IsActive = false,
-                    IsViewed = true,
-                    Message = "А вот эти уже нет"
-                }
-            }
-        });
+		var ti = new TemplatedItem() {
+			ID = 500,
+			Count = 10,
+			Date = DateTime.Now,
+			IsActive = true,
+			IsViewed = null,
+			Message = "Йоу, товарищи!",
+			Inner = new TemplatedItem() {
+				ID = 5561,
+				Count = 17,
+				Date = DateTime.Now,
+				IsActive = true,
+				IsViewed = true,
+				Message = "Вложения приветствуются",
+				Inner = new TemplatedItem() {
+					ID = 12449,
+					Count = 28,
+					Date = DateTime.Now,
+					IsActive = false,
+					IsViewed = true,
+					Message = "А вот эти уже нет"
+				}
+			}
+		};
+		ti.Indices.Add(5);
+		ti.Indices.Add(6);
+		ti.Indices.Add(7);
+		ti.Indices.Add(9);
+
+        return View("template", ti);
     }
 
     [AcceptHttpVerbs(HttpMethod.Post)]
-    public ActionResult TemplatedItemTest(TemplatedItem item)
+    public ActionResult TemplatedItemTest([Bind(Name="item-id")]int id)
     {
+		TemplatedItem item = new TemplatedItem();
+		item = BindModel(item, "item");
+
         return View("template", item);
     }
 

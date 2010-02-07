@@ -99,6 +99,11 @@ namespace Radischevo.Wahha.Web.Mvc
         {
         }
 
+		protected virtual bool FileExists(ControllerContext context, string virtualPath)
+		{
+			return VirtualPathProvider.FileExists(virtualPath);
+		}
+
         protected abstract ViewEngineResult CreateView(ControllerContext context, string viewName);
 
         protected string GetViewPath(ControllerContext context, string viewName)
@@ -117,27 +122,27 @@ namespace Radischevo.Wahha.Web.Mvc
             if (_locationFormats.Count < 1)
                 throw Error.ViewLocationFormatsAreEmpty();
 
-            result = (isSpecific) ? GetViewPathFromSpecificName(viewName) : 
-                GetViewPathFromGeneralName(controllerName, viewName);
+            result = (isSpecific) ? GetViewPathFromSpecificName(context, viewName) : 
+                GetViewPathFromGeneralName(context, controllerName, viewName);
 
             LocationCache.SetVirtualPath(key, result);
             return result;
         }
 
-        private string GetViewPathFromGeneralName(string controllerName, string viewName)
+        private string GetViewPathFromGeneralName(ControllerContext context, string controllerName, string viewName)
         {
             foreach (string format in _locationFormats)
             {
                 string virtualPath = String.Format(CultureInfo.InvariantCulture, format, viewName, controllerName);
-                if (VirtualPathProvider.FileExists(virtualPath))
+                if (FileExists(context, virtualPath))
                     return virtualPath;
             }
             return String.Empty;
         }
 
-        private string GetViewPathFromSpecificName(string viewName)
+        private string GetViewPathFromSpecificName(ControllerContext context, string viewName)
         {
-            if (!VirtualPathProvider.FileExists(viewName))
+            if (!FileExists(context, viewName))
                 return String.Empty;
 
             return viewName;

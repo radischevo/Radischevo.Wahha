@@ -294,7 +294,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// which are applied to the property of the 
         /// model, accessed through the specified <paramref name="expression"/>.
         /// </summary>
-        /// <param name="expression">A lambda expression to access the 
+        /// <param name="expression">A lambda expression accessor for the 
         /// model property.</param>
         public FormValidationMetadata Rules<TValue>(
             Expression<Func<TModel, TValue>> expression)
@@ -309,7 +309,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// </summary>
         /// <param name="modelName">Specifies the name of the model, 
         /// which will prefix the validation rule member name.</param>
-        /// <param name="expression">A lambda expression to access the 
+        /// <param name="expression">A lambda expression accessor for the 
         /// model property.</param>
         public FormValidationMetadata Rules<TValue>(string modelName, 
             Expression<Func<TModel, TValue>> expression)
@@ -319,7 +319,7 @@ namespace Radischevo.Wahha.Web.Mvc
             bool hasEmptyExpression = (expression.Body.NodeType == 
                 ExpressionType.Parameter);
             descriptor.Prefix = descriptor.GetHtmlElementName(
-                TemplateHelper.GetExpressionText(expression));
+                LinqHelper.GetExpressionText(expression));
 
             return new FormValidationMetadata(
                 CreateClientRules(GetRulesInternal(expression))
