@@ -140,9 +140,9 @@ namespace Radischevo.Wahha.Web.Mvc
 			Precondition.Require(context, Error.ArgumentNull("context"));
 			modelName = modelName ?? context.ModelName;
 			
-			return !context.Errors.Where(k => k.Key.StartsWith(modelName,
+			return !context.Errors.Where(k => k.Member.StartsWith(modelName,
 				StringComparison.InvariantCultureIgnoreCase))
-				.Any(k => k.Key.Length != modelName.Length);
+				.Any(k => k.Member.Length != modelName.Length);
 		}
         #endregion
 
@@ -161,7 +161,7 @@ namespace Radischevo.Wahha.Web.Mvc
         private bool VerifyValueUsability(BindingContext context, string elementKey, Type elementType, object value)
         {
             if (value == null && !elementType.IsNullable() && !context.Errors.Any(
-				k => k.Key.Equals(elementKey, StringComparison.InvariantCultureIgnoreCase)))
+				k => k.Member.Equals(elementKey, StringComparison.InvariantCultureIgnoreCase)))
 			{
 				string message = GetValueRequiredResource(context);
                 context.Errors.Add(elementKey, new ValidationError(message, value, null));

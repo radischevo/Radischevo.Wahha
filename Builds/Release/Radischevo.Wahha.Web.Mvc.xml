@@ -1236,6 +1236,14 @@
             </summary>
             <param name="action">The action used to render an error message.</param>
         </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.Messages(System.String,System.Action{System.Collections.Generic.IEnumerable{Radischevo.Wahha.Web.Mvc.ValidationError}})">
+            <summary>
+            Displays a validation message if the specified field contains an error in 
+            the <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see>.
+            </summary>
+            <param name="key">The name of the field.</param>
+            <param name="action">The action used to render an error message.</param>
+        </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.Message(System.String,System.Action{Radischevo.Wahha.Web.Mvc.ValidationError})">
             <summary>
             Displays a validation message if the specified field contains an error in 
@@ -1244,7 +1252,14 @@
             <param name="key">The name of the field.</param>
             <param name="action">The action used to render an error message.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.HasError(System.String)">
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.Valid">
+            <summary>
+            Gets the value indicating whether the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> 
+            contains no errors.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper.Valid(System.String)">
             <summary>
             Gets the value indicating whether the
             <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see> 
@@ -1287,13 +1302,6 @@
             <summary>
             Gets the <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> object 
             containing the binding validation errors.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.ValidationHelper.IsValid">
-            <summary>
-            Gets the value indicating whether the 
-            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> 
-            contains no errors.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.ValidationHelper`1.Rules``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">

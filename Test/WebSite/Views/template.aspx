@@ -11,6 +11,13 @@
 <form action="/wahha-test/template" method="post" id="default">    
     <%= Html.Templates.Editor(model => model, null, "item") %>
     <input type="submit" value="Save" />
+    <% Validation.Messages("item-title", errors => { %>
+    <ul class="error">
+	<% foreach(var error in errors) { %>
+	<li><%= error.Message %></li>
+	<% } %>
+	</ul>
+    <% }); %>
 </form>
 <%  Ajax.Scripts.Block("validate", () => { %>
     $().ready(function() {

@@ -50,19 +50,6 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        /// <summary>
-        /// Gets the value indicating whether the 
-        /// <see cref="Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> 
-        /// contains no errors.
-        /// </summary>
-        public bool IsValid
-        {
-            get
-            {
-                return (Errors.Count < 1);
-            }
-        }
-
         public ModelValidatorProviderCollection Providers
         {
             get
@@ -86,7 +73,7 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             Precondition.Require(action, Error.ArgumentNull("action"));
             
-            foreach (ValidationError error in Errors.Values)
+            foreach (ValidationError error in Errors)
                 action(error);
         }
 
@@ -96,17 +83,35 @@ namespace Radischevo.Wahha.Web.Mvc
         /// </summary>
         /// <param name="key">The name of the field.</param>
         /// <param name="action">The action used to render an error message.</param>
-        public void Message(string key, 
-            Action<ValidationError> action)
+        public void Messages(string key, Action<IEnumerable<ValidationError>> action)
         {
             Precondition.Require(action, Error.ArgumentNull("action"));
-            
-            ValidationError error;
-            if (!Errors.TryGetError(key, out error))
-                return;
-
-            action(error);
+			action(Errors[key]);
         }
+
+		/// <summary>
+		/// Displays a validation message if the specified field contains an error in 
+		/// the <see cref="Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see>.
+		/// </summary>
+		/// <param name="key">The name of the field.</param>
+		/// <param name="action">The action used to render an error message.</param>
+		public void Message(string key,
+			Action<ValidationError> action)
+		{
+			Precondition.Require(action, Error.ArgumentNull("action"));
+			foreach (ValidationError error in Errors[key])
+				action(error);
+		}
+
+		/// <summary>
+		/// Gets the value indicating whether the 
+		/// <see cref="Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> 
+		/// contains no errors.
+		/// </summary>
+		public bool Valid()
+		{
+			return Errors.IsValid();
+		}
 
         /// <summary>
         /// Gets the value indicating whether the
@@ -114,9 +119,9 @@ namespace Radischevo.Wahha.Web.Mvc
         /// contains an error with the specified field name.
         /// </summary>
         /// <param name="key">The name of the field.</param>
-        public bool HasError(string key)
+        public bool Valid(string key)
         {
-            return Errors.ContainsKey(key);
+			return Errors.IsValid(key);
         }
         #endregion
 
