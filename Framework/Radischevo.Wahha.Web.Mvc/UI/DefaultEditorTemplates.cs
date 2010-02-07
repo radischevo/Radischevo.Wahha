@@ -164,11 +164,14 @@ namespace Radischevo.Wahha.Web.Mvc.UI
 				builder.Append(html.Templates.Render(W.DataBoundControlMode.Edit,
 					property, null, property.PropertyName, propertyValue));
 
-				validation.Message(elementName, (error) => builder.Append(
-					new HtmlElementBuilder("span", new {
-						@class = "validation-error"
-					},
-						error.Message).ToString()));
+				validation.Messages(elementName, (errors) => {
+					builder.Append(new HtmlElementBuilder("ul", 
+						new { @class = "validation-error" }, 
+						string.Join(Environment.NewLine, errors.Select(
+							error => new HtmlElementBuilder("li", null, error.Message).ToString()
+						).ToArray())
+					));
+				});
 			}
 			return builder.ToString();
 		}

@@ -86,7 +86,10 @@ namespace Radischevo.Wahha.Web.Mvc
         public void Messages(string key, Action<IEnumerable<ValidationError>> action)
         {
             Precondition.Require(action, Error.ArgumentNull("action"));
-			action(Errors[key]);
+			IEnumerable<ValidationError> errors = Errors[key];
+
+			if(errors != null && errors.Any())
+				action(errors);
         }
 
 		/// <summary>

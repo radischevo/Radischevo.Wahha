@@ -282,6 +282,8 @@ public class MainController : Controller
     {
 		TemplatedItem item = new TemplatedItem();
 		item = BindModel(item, "item");
+		Errors.Add("item-title", "Заголовок слишком короткий");
+		Errors.Add("item-title", "Текст чересчур тупой");
 
         return View("template", item);
     }

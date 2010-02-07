@@ -23,7 +23,7 @@
     $().ready(function() {
         MvcValidation.apply(<%= Validation.Rules("item")
             .Append(r => r.Range<int>("item-count", 5, 10, "PIZZDEC!!!"))
-            .Append(r => r.Remote("item-title", "/wahha-test/ajax/check-title", "PIZDEC!"))
+            //.Append(r => r.Remote("item-title", "/wahha-test/ajax/check-title", "PIZDEC!"))
             .Apply("form#default") %>);
     });
 <% }); %>
