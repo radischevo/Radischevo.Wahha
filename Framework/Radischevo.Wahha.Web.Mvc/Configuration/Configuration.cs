@@ -81,7 +81,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configuration
         {            
             try
             {
-                SettingsSection section = ConfigurationManager.GetSection("Radischevo.wahha/web/mvc")
+                SettingsSection section = ConfigurationManager.GetSection("radischevo.wahha/web/mvc")
                    as SettingsSection;
 
                 if (section == null)

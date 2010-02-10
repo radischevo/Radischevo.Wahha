@@ -27,7 +27,7 @@ namespace Radischevo.Wahha.Web.Routing.Configuration
             _routes = new List<RouteConfigurationElement>();
 
             SettingsSection section =
-                    ConfigurationManager.GetSection("Radischevo.wahha/web/routing")
+                    ConfigurationManager.GetSection("radischevo.wahha/web/routing")
                     as SettingsSection;
 
             if (section != null)

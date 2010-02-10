@@ -1463,7 +1463,7 @@
         <member name="T:Radischevo.Wahha.Data.Configuration.Configuration">
             <summary>
             Represents module configuration 
-            settings
+            settings.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.Configuration.Configuration.#ctor">
@@ -1472,15 +1472,15 @@
             <see cref="T:Radischevo.Wahha.Data.Configuration.Configuration"/> class
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Data.Configuration.Configuration.Instance">
+            <summary>
+            Gets the current module configuration
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Data.Configuration.Configuration.ConnectionStrings">
             <summary>
             Gets the collection of connection strings, 
             declared within the configuration file
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Configuration.Configuration.Instance">
-            <summary>
-            Gets the current module configuration
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbDataRecordEnumerator">
@@ -1546,6 +1546,14 @@
             instance used to access the database.</param>
             <param name="command">The <see cref="T:Radischevo.Wahha.Data.DbCommandDescriptor"/>
             describing the command to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandResult.ExecuteOnce``1(System.Func{System.Data.IDbCommand,``0})">
+            <summary>
+            Executes the command against the specified data source 
+            and immediately closes the underlying connection.
+            </summary>
+            <typeparam name="TResult">The type of the execution result.</typeparam>
+            <param name="converter">The action to perform conversion with.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbCommandResult.ToProcedure">
             <summary>

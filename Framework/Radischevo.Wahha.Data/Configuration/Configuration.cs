@@ -9,7 +9,7 @@ namespace Radischevo.Wahha.Data.Configuration
 {
     /// <summary>
     /// Represents module configuration 
-    /// settings
+    /// settings.
     /// </summary>
     public sealed class Configuration
     {
@@ -22,36 +22,6 @@ namespace Radischevo.Wahha.Data.Configuration
         private CacheSettings _caching;
         private DbDataProviderSettings _providers;
         private NameValueCollection _connectionStrings;
-        #endregion
-
-        #region Instance Properties
-        public DbDataProviderSettings Providers
-        {
-            get
-            {
-                return _providers;
-            }
-        }
-
-        /// <summary>
-        /// Gets the collection of connection strings, 
-        /// declared within the configuration file
-        /// </summary>
-        public NameValueCollection ConnectionStrings
-        {
-            get
-            {
-                return _connectionStrings;
-            }
-        }
-
-        public CacheSettings Caching
-        {
-            get
-            {
-                return _caching;
-            }
-        }
         #endregion
 
         #region Constructors
@@ -68,7 +38,7 @@ namespace Radischevo.Wahha.Data.Configuration
             try
             {
                 SettingsSection section =
-                    ConfigurationManager.GetSection("Radischevo.wahha/data") 
+                    ConfigurationManager.GetSection("radischevo.wahha/data") 
                     as SettingsSection;
 
                 if (section == null)
@@ -88,7 +58,7 @@ namespace Radischevo.Wahha.Data.Configuration
         }
         #endregion
 
-        #region Static Members
+        #region Static Properties
         /// <summary>
         /// Gets the current module configuration
         /// </summary>
@@ -108,5 +78,35 @@ namespace Radischevo.Wahha.Data.Configuration
             }
         }
         #endregion
+
+		#region Instance Properties
+		public DbDataProviderSettings Providers
+		{
+			get
+			{
+				return _providers;
+			}
+		}
+
+		/// <summary>
+		/// Gets the collection of connection strings, 
+		/// declared within the configuration file
+		/// </summary>
+		public NameValueCollection ConnectionStrings
+		{
+			get
+			{
+				return _connectionStrings;
+			}
+		}
+
+		public CacheSettings Caching
+		{
+			get
+			{
+				return _caching;
+			}
+		}
+		#endregion
     }
 }

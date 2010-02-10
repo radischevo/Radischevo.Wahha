@@ -119,6 +119,26 @@ namespace Radischevo.Wahha.Data
 			return command;
 		}
 
+		/// <summary>
+		/// Executes the command against the specified data source 
+		/// and immediately closes the underlying connection.
+		/// </summary>
+		/// <typeparam name="TResult">The type of the execution result.</typeparam>
+		/// <param name="converter">The action to perform conversion with.</param>
+		protected TResult ExecuteOnce<TResult>(Func<IDbCommand, TResult> converter)
+		{
+			try
+			{
+				return Execute<TResult>(converter);
+			}
+			finally
+			{
+				if ((Behavior & CommandBehavior.CloseConnection) ==
+					CommandBehavior.CloseConnection)
+					Provider.Close();
+			}
+		}
+
 		protected virtual TResult Execute<TResult>(Func<IDbCommand, TResult> converter)
 		{
 			using (IDbCommand command = CreateCommand())
@@ -153,7 +173,7 @@ namespace Radischevo.Wahha.Data
         public int AsNonQuery()
         {
             Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
-            return Execute<int>(c => c.ExecuteNonQuery());
+            return ExecuteOnce<int>(c => c.ExecuteNonQuery());
         }
 
         /// <summary>
@@ -163,7 +183,7 @@ namespace Radischevo.Wahha.Data
         public object AsScalar()
         {
             Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
-            return Execute<object>(c => c.ExecuteScalar());
+			return ExecuteOnce<object>(c => c.ExecuteScalar());
         }
 
         /// <summary>
@@ -175,7 +195,7 @@ namespace Radischevo.Wahha.Data
         public T AsScalar<T>()
         {
             Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
-            return Execute<T>(c => Converter.ChangeType<T>(c.ExecuteScalar()));
+			return ExecuteOnce<T>(c => Converter.ChangeType<T>(c.ExecuteScalar()));
         }
 
         /// <summary>
@@ -206,7 +226,7 @@ namespace Radischevo.Wahha.Data
         public DataSet AsDataSet()
         {
             Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
-            return Execute<DataSet>(DataSetConverter);
+			return ExecuteOnce<DataSet>(DataSetConverter);
         }
 
 		/// <summary>
