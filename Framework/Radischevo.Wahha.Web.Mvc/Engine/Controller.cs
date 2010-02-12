@@ -366,6 +366,16 @@ namespace Radischevo.Wahha.Web.Mvc
 			return new PermanentRedirectResult(url);
 		}
 
+		/// <summary>
+		/// Returns a <see cref="Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
+		/// which redirects to the specified route.
+		/// </summary>
+		/// <param name="values">An object containing the parameters for a route.</param>
+		protected ActionResult Route(string routeKey)
+		{
+			return Route(routeKey, null, null);
+		}
+
         /// <summary>
         /// Returns a <see cref="Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
         /// which redirects to the specified route.
@@ -420,11 +430,13 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual ActionResult Route(string routeKey, 
             ValueDictionary values, string suffix)
         {
+			values = values ?? new ValueDictionary();
+
             VirtualPathData vp = RouteTable.Routes.GetVirtualPath(Context, routeKey, values);
             if (vp != null)
                 return new RedirectResult(String.Concat(vp.VirtualPath, suffix));
 
-            return new EmptyResult();
+            return EmptyResult.Instance;
         }
         
         /// <summary>

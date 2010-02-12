@@ -56,12 +56,12 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
-        /// <summary>
+		/// <summary>
         /// Enables the output compression 
         /// using gzip/deflate
         /// </summary>
         /// <param name="ctx">The context of the current controller action</param>
-        public virtual void OnExecuted(ActionExecutedContext ctx)
+        public override void OnExecuted(ActionExecutedContext ctx)
         {
             HttpContextBase context = ctx.Context;
             if (!context.Items.Contains(COMPRESS_ENABLED_KEY))

@@ -172,7 +172,8 @@ namespace Radischevo.Wahha.Web.Mvc
             IEnumerable<ModelValidationRule> rules)
         {
             Precondition.Require(rules, Error.ArgumentNull("rules"));
-            return rules.Select(r => new ClientModelValidationRule(r));
+            return rules.Where(r => r.SupportsClientValidation)
+				.Select(r => new ClientModelValidationRule(r));
         }
 
         protected virtual IEnumerable<ModelValidationRule> GetRulesInternal<TModel, TValue>(
@@ -275,6 +276,7 @@ namespace Radischevo.Wahha.Web.Mvc
             TemplateDescriptor descriptor = new TemplateDescriptor(
                 Context.ViewData.Template.Type) { Prefix = modelName };
             descriptor.Prefix = descriptor.GetHtmlElementName(expression);
+
             bool hasEmptyExpression = (String.IsNullOrEmpty(expression));
 
             return new FormValidationMetadata(
@@ -324,15 +326,17 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             TemplateDescriptor descriptor = new TemplateDescriptor(
                 Context.ViewData.Template.Type) { Prefix = modelName };
+
             bool hasEmptyExpression = (expression.Body.NodeType == 
                 ExpressionType.Parameter);
+
             descriptor.Prefix = descriptor.GetHtmlElementName(
-                LinqHelper.GetExpressionText(expression));
+				LinqHelper.GetExpressionText(expression));
 
             return new FormValidationMetadata(
                 CreateClientRules(GetRulesInternal(expression))
                     .Each(r => { r.Field = (hasEmptyExpression)
-                        ? descriptor.GetHtmlElementName(r.Field)
+						? descriptor.GetHtmlElementName(r.Field).Trim('-')
                         : descriptor.Prefix; 
                     }));
         }

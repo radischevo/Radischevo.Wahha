@@ -69,6 +69,14 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
                 _errorMessage = value;
             }
         }
+
+		public virtual bool SupportsClientValidation
+		{
+			get
+			{
+				return true;
+			}
+		}
         #endregion
 
         #region Instance Methods

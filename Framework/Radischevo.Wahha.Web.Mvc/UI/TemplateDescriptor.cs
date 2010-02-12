@@ -106,8 +106,9 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         #region Instance Methods
         public virtual string GetHtmlElementName(string expression)
         {
-            return (Prefix + "-" + (expression ?? String.Empty)).Trim('-')
-                .Replace('.', '-').Replace("[", "").Replace("]", "").ToLowerInvariant();
+            return (Prefix + (expression ?? String.Empty))
+                .Replace('.', '-').Replace("[", "").Replace("]", "")
+				.Trim('-').ToLowerInvariant();
         }
         #endregion
     }

@@ -531,6 +531,13 @@
             </summary>
             <param name="url">The URL to redirect to.</param>
         </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(System.String)">
+            <summary>
+            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
+            which redirects to the specified route.
+            </summary>
+            <param name="values">An object containing the parameters for a route.</param>
+        </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(System.Object)">
             <summary>
             Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.RedirectResult"/> 

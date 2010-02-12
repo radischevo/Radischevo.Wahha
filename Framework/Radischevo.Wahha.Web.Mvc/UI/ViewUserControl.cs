@@ -9,6 +9,7 @@ using Mvc = Radischevo.Wahha.Web.Mvc;
 
 namespace Radischevo.Wahha.Web.Mvc.UI
 {
+	[FileLevelControlBuilder(typeof(ViewUserControlBuilder))]
     public class ViewUserControl : UserControl,
         IViewDataContainer
     {

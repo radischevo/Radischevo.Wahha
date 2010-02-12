@@ -55,7 +55,10 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
 
         public FormValidationMetadata Append(ModelValidationRule rule)
         {
-            return Append(new ClientModelValidationRule(rule));
+			if(rule.SupportsClientValidation)
+				return Append(new ClientModelValidationRule(rule));
+
+			return this;
         }
 
         public FormValidationMetadata Append(ClientModelValidationRule rule)

@@ -298,17 +298,14 @@ namespace Radischevo.Wahha.Web.Mvc
             if (context.ModelType.IsSimple() || context.ModelType.IsEnum) // простой тип, тут пробуем устроить convert
                 return BindSimpleObject(context, context.ModelType, rawValue, CultureInfo.CurrentCulture);
 
-            if (context.ModelType.IsGenericType && // nullable - достаем аргумент и делаем конверт...
-                context.ModelType.GetGenericTypeDefinition() == typeof(Nullable<>))
-                return BindSimpleObject(context, context.ModelType.GetGenericArguments()[0], 
-                    rawValue, CultureInfo.CurrentCulture);
-
             return BindComplexObject(context);
         }
 
         protected object BindSimpleObject(BindingContext context,
             Type type, object value, CultureInfo culture)
         {
+			type = type.MakeNonNullableType();
+
             if (type.IsInstanceOfType(value))
                 return value;
 
@@ -525,7 +522,11 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual void BindProperty(BindingContext context, PropertyDescriptor property)
         {
             string propertyKey = CreateSubMemberName(context.ModelName, property.Name);
-			object value = null;
+			// В случае с типом значения нужно задать значение по умолчанию, 
+			// иначе частичная инициализация объекта не удастся.
+			object value = (property.PropertyType.IsNullable()) 
+				? null 
+				: Activator.CreateInstance(property.PropertyType);
 
 			if (context.Data.Any(k => k.Key.StartsWith(propertyKey,
 				StringComparison.InvariantCultureIgnoreCase)))
@@ -542,6 +543,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
 				value = GetPropertyValue(inner, property, binder);
 			}
+
             if (OnPropertyUpdating(context, property, value))
             {
                 SetProperty(context, property, value);
