@@ -126,7 +126,7 @@ namespace Radischevo.Wahha.Data
             if (EnableCaching)
             {
                 string cacheKey = CreateCacheKey(command);
-                string[] concreteTags = _tags.Concat(tags ?? Enumerable.Empty<string>()).ToArray();
+				IEnumerable<string> concreteTags = _tags.Concat(tags ?? Enumerable.Empty<string>());
 
                 return Cache.Get<IEnumerable<TEntity>>(cacheKey, 
                     () => ExecuteSelect(command), DateTime.Now.Add(_expirationTimeout),
@@ -146,7 +146,7 @@ namespace Radischevo.Wahha.Data
             if (EnableCaching)
             {
                 string cacheKey = CreateCacheKey(command);
-                string[] concreteTags = _tags.Concat(tags ?? Enumerable.Empty<string>()).ToArray();
+				IEnumerable<string> concreteTags = _tags.Concat(tags ?? Enumerable.Empty<string>());
 
                 return Cache.Get<TEntity>(cacheKey, 
                     () => ExecuteSingle(command), DateTime.Now.Add(_expirationTimeout),
@@ -236,7 +236,7 @@ namespace Radischevo.Wahha.Data
             if (EnableCaching)
             {
                 string cacheKey = CreateCacheKey(key);
-                string[] concreteTags = Tags.Concat(tags ?? Enumerable.Empty<string>()).ToArray();
+				IEnumerable<string> concreteTags = Tags.Concat(tags ?? Enumerable.Empty<string>());
 
                 return Cache.Get<TEntity>(cacheKey, 
                     () => ExecuteSingle(key), DateTime.Now.Add(ExpirationTimeout),

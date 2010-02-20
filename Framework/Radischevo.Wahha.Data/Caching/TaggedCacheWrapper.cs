@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Radischevo.Wahha.Core;
 
@@ -40,7 +41,7 @@ namespace Radischevo.Wahha.Data.Caching
             _provider.Init(settings);
         }
 
-        public void Invalidate(string[] tags)
+		public void Invalidate(IEnumerable<string> tags)
         {
             TaggedProvider.Invalidate(tags);
         }
@@ -56,8 +57,8 @@ namespace Radischevo.Wahha.Data.Caching
             return _provider.Get<T>(key, selector, expiration);
         }
 
-        public T Get<T>(string key, CacheItemSelector<T> selector, 
-			DateTime expiration, string[] tags)
+        public T Get<T>(string key, CacheItemSelector<T> selector,
+			DateTime expiration, IEnumerable<string> tags)
         {
             if (tags == null)
                 return _provider.Get<T>(key, selector, expiration);
@@ -71,7 +72,7 @@ namespace Radischevo.Wahha.Data.Caching
         }
 
         public bool Add<T>(string key, T value, DateTime expiration,
-            string[] tags)
+			IEnumerable<string> tags)
         {
             if (tags == null)
                 return _provider.Add<T>(key, value, expiration);
@@ -85,7 +86,7 @@ namespace Radischevo.Wahha.Data.Caching
         }
 
         public void Insert<T>(string key, T value, DateTime expiration,
-            string[] tags)
+			IEnumerable<string> tags)
         {
             if (tags == null)
                 _provider.Insert<T>(key, value, expiration);

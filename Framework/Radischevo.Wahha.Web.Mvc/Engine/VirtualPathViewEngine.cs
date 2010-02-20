@@ -106,12 +106,28 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected abstract ViewEngineResult CreateView(ControllerContext context, string viewName);
 
+		protected virtual string MakeCanonicalControllerName(string controllerName)
+		{
+			if (String.IsNullOrEmpty(controllerName))
+				return String.Empty;
+
+			int index = controllerName.LastIndexOf("controller", 
+				StringComparison.OrdinalIgnoreCase);
+
+			if (index > -1)
+				controllerName = controllerName.Substring(0, index);
+
+			return controllerName;
+		}
+
         protected string GetViewPath(ControllerContext context, string viewName)
         {
             if (String.IsNullOrEmpty(viewName))
                 return String.Empty;
 
-            string controllerName = context.RouteData.GetRequiredValue<string>("controller");
+            string controllerName = MakeCanonicalControllerName(
+				context.RouteData.GetRequiredValue<string>("controller"));
+			
             bool isSpecific = IsSpecificPath(viewName);
             string key = CreateCacheKey(viewName, (isSpecific) ? String.Empty : controllerName);
 

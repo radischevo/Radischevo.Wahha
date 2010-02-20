@@ -11,6 +11,7 @@ namespace Radischevo.Wahha.Web.Mvc
     {
         #region Instance Fields
         private string _redirectTo;
+		private string _parameterName;
         #endregion
 
         #region Constructors
@@ -31,6 +32,18 @@ namespace Radischevo.Wahha.Web.Mvc
                 _redirectTo = value;
             }
         }
+
+		public string ParameterName
+		{
+			get
+			{
+				return _parameterName;
+			}
+			set
+			{
+				_parameterName = value;
+			}
+		}
 
         protected virtual ActionResult DefaultResult
         {
@@ -55,7 +68,39 @@ namespace Radischevo.Wahha.Web.Mvc
             
             return context.User.Identity.IsAuthenticated;
         }
-        
+
+		protected virtual string CreateRedirectionUrl(AuthorizationContext context)
+		{
+			if (String.IsNullOrEmpty(_redirectTo))
+				return null;
+
+			string url = _redirectTo;
+			string query = String.Empty;
+
+			if (!String.IsNullOrEmpty(_parameterName))
+				query = String.Concat(
+					(_redirectTo.IndexOf('?') > -1) ? "&" : "?",
+					_parameterName, "=", 
+					Uri.EscapeUriString(context.Context.Request.Url.PathAndQuery)
+				);
+			
+			return url + query;
+		}
+
+		protected virtual bool RedirectAllowed(AuthorizationContext context, string url)
+		{
+			if (String.IsNullOrEmpty(url))
+				return false;
+
+			if (context.IsChild)
+				return false;
+
+			if (context.Context.Request.IsAjaxRequest())
+				return false;
+
+			return true;
+		}
+
         public void OnAuthorization(AuthorizationContext context)
         {
             Precondition.Require(context, Error.ArgumentNull("context"));
@@ -68,10 +113,12 @@ namespace Radischevo.Wahha.Web.Mvc
             else
             {
                 context.Cancel = true;
-                if (String.IsNullOrEmpty(_redirectTo))
-                    context.Result = DefaultResult;
+				string url = CreateRedirectionUrl(context);
+
+				if (RedirectAllowed(context, url))
+					context.Result = new RedirectResult(url);
                 else
-                    context.Result = new RedirectResult(_redirectTo);
+					context.Result = DefaultResult;
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Radischevo.Wahha.Core;
 
@@ -122,20 +123,20 @@ namespace Radischevo.Wahha.Data.Caching
             return Get<T>(key, selector, expiration, null);
         }
 
-        public T Get<T>(string key, CacheItemSelector<T> selector, 
-            params string[] tags)
+        public T Get<T>(string key, CacheItemSelector<T> selector,
+			IEnumerable<string> tags)
         {
             return Get<T>(key, selector, _defaultTimeout, tags);
         }
 
         public T Get<T>(string key, CacheItemSelector<T> selector,
-            TimeSpan timeout, params string[] tags)
+			TimeSpan timeout, IEnumerable<string> tags)
         {
             return Get<T>(key, selector, timeout, tags);
         }
 
         public T Get<T>(string key, CacheItemSelector<T> selector,
-            DateTime expiration, params string[] tags)
+			DateTime expiration, IEnumerable<string> tags)
         {
 			return _provider.Get<T>(key, selector, expiration, tags);
         }
@@ -157,19 +158,19 @@ namespace Radischevo.Wahha.Data.Caching
             return Add<T>(key, value, expiration, null);
         }
 
-        public bool Add<T>(string key, T value, params string[] tags)
+		public bool Add<T>(string key, T value, IEnumerable<string> tags)
         {
             return Add<T>(key, value, _defaultTimeout, tags);
         }
 
         public bool Add<T>(string key, T value, TimeSpan timeout,
-            params string[] tags)
+		    IEnumerable<string> tags)
         {
             return Add<T>(key, value, DateTime.UtcNow.Add(timeout), tags);
         }
 
-        public bool Add<T>(string key, T value, DateTime expiration, 
-            params string[] tags)
+        public bool Add<T>(string key, T value, DateTime expiration,
+			IEnumerable<string> tags)
         {
             Precondition.Require(key, Error.ArgumentNull("key"));
             return _provider.Add<T>(key, value, expiration, tags);
@@ -192,23 +193,23 @@ namespace Radischevo.Wahha.Data.Caching
             Insert<T>(key, value, expiration, null);
         }
 
-        public void Insert<T>(string key, T value, params string[] tags)
+		public void Insert<T>(string key, T value, IEnumerable<string> tags)
         {
             Insert<T>(key, value, _defaultTimeout, tags);
         }
 
         public void Insert<T>(string key, T value, TimeSpan timeout,
-            params string[] tags)
+			IEnumerable<string> tags)
         {
             Insert<T>(key, value, DateTime.UtcNow.Add(timeout), tags);
         }
 
-        public void Insert<T>(string key, T value, DateTime expiration,
-            params string[] tags)
-        {
-            Precondition.Require(key, Error.ArgumentNull("key"));
-            _provider.Insert<T>(key, value, expiration, tags);
-        }
+		public void Insert<T>(string key, T value, DateTime expiration,
+			IEnumerable<string> tags)
+		{
+			Precondition.Require(key, Error.ArgumentNull("key"));
+			_provider.Insert<T>(key, value, expiration, tags);
+		}
         #endregion
 
 		public void Remove(string key)
@@ -217,13 +218,13 @@ namespace Radischevo.Wahha.Data.Caching
             _provider.Remove(key);
         }
 
-        public void Invalidate(params string[] tags)
-        {
-            _provider.Invalidate(tags);
-        }
+		public void Invalidate(IEnumerable<string> tags)
+		{
+			_provider.Invalidate(tags);
+		}
 
         void ICacheProvider.Init(IValueSet settings)
         {   }
         #endregion
-    }
+	}
 }

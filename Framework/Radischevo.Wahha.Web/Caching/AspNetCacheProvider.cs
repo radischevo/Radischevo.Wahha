@@ -53,15 +53,15 @@ namespace Radischevo.Wahha.Web.Caching
         }
 
         private static CacheDependency CreateTagDependency(
-            Cache cache, string[] tags)
+			Cache cache, IEnumerable<string> tags)
         {
-            if (tags == null || tags.Length < 1)
+            if (tags == null || !tags.Any())
                 return null;
 
             long version = DateTime.UtcNow.Ticks;
-            for (int i = 0; i < tags.Length; ++i)
-            {
-                cache.Add(CreateTagStoreKey(tags[i]), version, null,
+			foreach (string tag in tags)
+			{
+                cache.Add(CreateTagStoreKey(tag), version, null,
                     DateTime.MaxValue, Cache.NoSlidingExpiration,
                     CacheItemPriority.NotRemovable, null);
             }
@@ -76,18 +76,18 @@ namespace Radischevo.Wahha.Web.Caching
             // nothing to initialize here
         }
 
-        public void Invalidate(string[] tags)
+		public void Invalidate(IEnumerable<string> tags)
         {
             if (tags == null)
                 return;
 
             long version = DateTime.UtcNow.Ticks;
-            for (int i = 0; i < tags.Length; ++i)
-            {
-                Cache.Insert(CreateTagStoreKey(tags[i]), version, null,
-                    DateTime.MaxValue, Cache.NoSlidingExpiration, 
-                    CacheItemPriority.NotRemovable, null);
-            }
+			foreach (string tag in tags)
+			{
+				Cache.Insert(CreateTagStoreKey(tag), version, null,
+					DateTime.MaxValue, Cache.NoSlidingExpiration,
+					CacheItemPriority.NotRemovable, null);
+			}
         }
 
         public T Get<T>(string key)
@@ -102,8 +102,8 @@ namespace Radischevo.Wahha.Web.Caching
             return Get<T>(key, selector, expiration, null);
         }
 
-        public T Get<T>(string key, CacheItemSelector<T> selector, 
-			DateTime expiration, string[] tags)
+        public T Get<T>(string key, CacheItemSelector<T> selector,
+			DateTime expiration, IEnumerable<string> tags)
         {
             Precondition.Require(key, Error.ArgumentNull("key"));
             Precondition.Require(selector, Error.ArgumentNull("selector"));
@@ -133,7 +133,7 @@ namespace Radischevo.Wahha.Web.Caching
         }
 
         public bool Add<T>(string key, T value, DateTime expiration,
-            string[] tags)
+			IEnumerable<string> tags)
         {
             Precondition.Require(key, Error.ArgumentNull("key"));
             object obj = Cache.Add(key, value, CreateTagDependency(Cache, tags),
@@ -149,7 +149,7 @@ namespace Radischevo.Wahha.Web.Caching
         }
 
         public void Insert<T>(string key, T value, DateTime expiration,
-            string[] tags)
+			IEnumerable<string> tags)
         {
             Precondition.Require(key, Error.ArgumentNull("key"));
 
