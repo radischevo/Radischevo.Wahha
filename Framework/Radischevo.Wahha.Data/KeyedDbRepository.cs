@@ -121,6 +121,21 @@ namespace Radischevo.Wahha.Data
 			return _materializer.Materialize(values);
 		}
 
+		protected virtual TEntity Materialize(TEntity entity, IValueSet values, bool isComplete)
+		{
+			if (EnableCaching)
+			{
+				CachedDbEntry<TEntity> instance = new CachedDbEntry<TEntity>(
+					_materializer.Materialize(entity, values), isComplete);
+
+				Cache.Insert(CreateCacheKey(ExtractKey(values)), instance, 
+					DateTime.Now.Add(ExpirationTimeout));
+
+				return instance.Entity;
+			}
+			return _materializer.Materialize(entity, values);
+		}
+
 		protected override IEnumerable<TEntity> ExecuteSelect(DbCommandDescriptor command)
 		{
 			Precondition.Require(command, Error.ArgumentNull("command"));
