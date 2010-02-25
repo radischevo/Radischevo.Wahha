@@ -217,13 +217,15 @@ namespace Radischevo.Wahha.Core
 
             return converter(argument);
         }
+		#endregion
 
-        /// <summary>
+		#region Generic Methods
+		/// <summary>
         /// Converts the <paramref name="value"/> to the 
-        /// <typeparamref name="T"/> type
+        /// <typeparamref name="T"/> type.
         /// </summary>
-        /// <typeparam name="T">A type to convert to</typeparam>
-        /// <param name="value">A value to convert</param>
+        /// <typeparam name="T">A type to convert to.</typeparam>
+        /// <param name="value">A value to convert.</param>
         public static T ChangeType<T>(object value)
         {
             return ChangeType<T>(value, Thread.CurrentThread.CurrentCulture);
@@ -231,33 +233,89 @@ namespace Radischevo.Wahha.Core
 
         /// <summary>
         /// Converts the <paramref name="value"/> to the 
-        /// <typeparamref name="T"/> type
+        /// <typeparamref name="T"/> type.
         /// </summary>
-        /// <typeparam name="T">A type to convert to</typeparam>
-        /// <param name="value">A value to convert</param>
+        /// <typeparam name="T">A type to convert to.</typeparam>
+        /// <param name="value">A value to convert.</param>
         /// <param name="provider">An <see cref="IFormatProvider" /> interface implementation that 
         /// supplies culture-specific formatting information.</param>
         public static T ChangeType<T>(object value, IFormatProvider provider)
         {
-            Type type = typeof(T);
+			return (T)ChangeType(typeof(T), value, provider);
+        }
 
-            if (value == null && !type.IsNullable())
-                throw Error.TargetTypeIsNotNullable(type, "value");
+        /// <summary>
+        /// Converts the <paramref name="value"/> to the 
+        /// <typeparamref name="T"/> type.
+        /// </summary>
+        /// <typeparam name="T">A type to convert to.</typeparam>
+        /// <param name="value">A value to convert.</param>
+        /// <param name="defaultValue">The default value of the parameter.</param>
+        public static T ChangeType<T>(object value, T defaultValue)
+        {
+            return ChangeType<T>(value, defaultValue, Thread.CurrentThread.CurrentCulture);
+        }
 
-            Type underlyingType = type.MakeNonNullableType();
-            if (underlyingType.IsEnum && value != null) // особые правила для Enum
-            {
-                // на входе - константа
-                if (Enum.GetUnderlyingType(underlyingType).IsAssignableFrom(value.GetType()) &&
-                    Enum.IsDefined(underlyingType, value))
-                    return (T)value;
+        /// <summary>
+        /// Converts the <paramref name="value"/> to the 
+        /// <typeparamref name="T"/> type.
+        /// </summary>
+        /// <typeparam name="T">A type to convert to.</typeparam>
+        /// <param name="value">A value to convert.</param>
+        /// <param name="defaultValue">The default value of the parameter</param>
+        /// <param name="provider">An <see cref="IFormatProvider" /> interface implementation that 
+        /// supplies culture-specific formatting information.</param>
+        public static T ChangeType<T>(object value, T defaultValue, IFormatProvider provider)
+        {
+			return (T)ChangeType(typeof(T), value, defaultValue, provider);
+        }
+        #endregion
 
-                // на входе - строка
-                if (value is string)
-                    return (T)Enum.Parse(underlyingType, (string)value, true);
+		#region Non-generic Methods
+		/// <summary>
+		/// Converts the <paramref name="value"/> to the 
+		/// specified <paramref name="type"/>.
+		/// </summary>
+		/// <param name="type">A type to convert to.</param>
+		/// <param name="value">A value to convert.</param>
+		public static object ChangeType(Type type, object value)
+		{
+			return ChangeType(type, value, Thread.CurrentThread.CurrentCulture);
+		}
 
-                throw Error.CouldNotConvertType(type, "value");
-            }
+		/// <summary>
+		/// Converts the <paramref name="value"/> to the 
+		/// specified <paramref name="type"/>.
+		/// </summary>
+		/// <param name="type">A type to convert to.</param>
+		/// <param name="value">A value to convert.</param>
+		/// <param name="provider">An <see cref="IFormatProvider" /> interface implementation that 
+		/// supplies culture-specific formatting information.</param>
+		public static object ChangeType(Type type, object value, IFormatProvider provider)
+		{
+			Precondition.Require(type, Error.ArgumentNull("type"));
+
+			if (type.IsInstanceOfType(value))
+				return value;
+
+			if (value == null && !type.IsNullable())
+				throw Error.TargetTypeIsNotNullable(type, "value");
+
+			Type underlyingType = type.MakeNonNullableType();
+			if (underlyingType.IsInstanceOfType(value))
+				return value;
+
+			if (underlyingType.IsEnum && value != null)
+			{
+				if (Enum.GetUnderlyingType(underlyingType)
+					.IsAssignableFrom(value.GetType()))
+					return Enum.ToObject(underlyingType, value);
+
+				if (value is string)
+					return Enum.Parse(underlyingType, (string)value, true);
+
+				throw Error.CouldNotConvertType(type, "value");
+			}
 
 			if (underlyingType == typeof(Guid))
 			{
@@ -272,67 +330,74 @@ namespace Radischevo.Wahha.Core
 				else
 					throw Error.CouldNotConvertType(type, "value");
 
-				return (T)result;
+				return result;
 			}
 
-            if (underlyingType.GetInterface(typeof(IConvertible).Name) != null) // реализуем IConvertible - вперед
-                return (T)System.Convert.ChangeType(value, underlyingType, provider);
+			if (underlyingType.GetInterface(typeof(IConvertible).Name) != null)
+				return System.Convert.ChangeType(value, underlyingType, provider);
 
-            if (value != null && !type.IsAssignableFrom(value.GetType())) // нет - требуем совпадения типов
-                throw Error.CouldNotConvertType(type, "value");
+			if (value != null && !type.IsAssignableFrom(value.GetType()))
+				throw Error.CouldNotConvertType(type, "value");
 
-            return (T)value;
-        }
+			return value;
+		}
 
-        /// <summary>
-        /// Converts the <paramref name="value"/> to the 
-        /// <typeparamref name="T"/> type
-        /// </summary>
-        /// <typeparam name="T">A type to convert to</typeparam>
-        /// <param name="value">A value to convert</param>
-        /// <param name="defaultValue">The default value of the parameter</param>
-        public static T ChangeType<T>(object value, T defaultValue)
-        {
-            return ChangeType<T>(value, defaultValue, Thread.CurrentThread.CurrentCulture);
-        }
+		/// <summary>
+		/// Converts the <paramref name="value"/> to the specified 
+		/// <paramref name="type"/>.
+		/// </summary>
+		/// <param name="type">A type to convert to.</param>
+		/// <param name="value">A value to convert.</param>
+		/// <param name="defaultValue">The default value of the parameter.</param>
+		public static object ChangeType(Type type, object value, object defaultValue)
+		{
+			return ChangeType(type, value, defaultValue, Thread.CurrentThread.CurrentCulture);
+		}
 
-        /// <summary>
-        /// Converts the <paramref name="value"/> to the 
-        /// <typeparamref name="T"/> type
-        /// </summary>
-        /// <typeparam name="T">A type to convert to</typeparam>
-        /// <param name="value">A value to convert</param>
-        /// <param name="defaultValue">The default value of the parameter</param>
-        /// <param name="provider">An <see cref="IFormatProvider" /> interface implementation that 
-        /// supplies culture-specific formatting information.</param>
-        public static T ChangeType<T>(object value, T defaultValue, IFormatProvider provider)
-        {
-            Type type = typeof(T);
+		/// <summary>
+		/// Converts the <paramref name="value"/> to the specified 
+		/// <paramref name="type"/>.
+		/// </summary>
+		/// <param name="type">A type to convert to.</param>
+		/// <param name="value">A value to convert.</param>
+		/// <param name="defaultValue">The default value of the parameter.</param>
+		/// <param name="provider">An <see cref="IFormatProvider" /> interface implementation that 
+		/// supplies culture-specific formatting information.</param>
+		public static object ChangeType(Type type, object value, 
+			object defaultValue, IFormatProvider provider)
+		{
+			Precondition.Require(type, Error.ArgumentNull("type"));
 
-            if (value == null && !type.IsNullable())
-                return defaultValue;
+			if (type.IsInstanceOfType(value))
+				return value;
 
-            Type underlyingType = type.MakeNonNullableType();
-            if (underlyingType.IsEnum && value != null)
-            {
-                if (Enum.GetUnderlyingType(underlyingType).IsAssignableFrom(value.GetType()) &&
-                    Enum.IsDefined(underlyingType, value))
-                    return (T)value;
+			if (value == null && !type.IsNullable())
+				return defaultValue;
 
-                if (value is string)
-                {
-                    try
-                    {
-                        return (T)Enum.Parse(underlyingType, (string)value, true);
-                    }
-                    catch (ArgumentException)
-                    {
-                        return defaultValue;
-                    }
-                }
+			Type underlyingType = type.MakeNonNullableType();
 
-                return defaultValue;
-            }
+			if (underlyingType.IsInstanceOfType(value))
+				return value;
+
+			if (underlyingType.IsEnum && value != null)
+			{
+				if (Enum.GetUnderlyingType(underlyingType)
+					.IsAssignableFrom(value.GetType()))
+					return Enum.ToObject(underlyingType, value);
+
+				if (value is string)
+				{
+					try
+					{
+						return Enum.Parse(underlyingType, (string)value, true);
+					}
+					catch (ArgumentException)
+					{
+						return defaultValue;
+					}
+				}
+				return defaultValue;
+			}
 
 			if (underlyingType == typeof(Guid))
 			{
@@ -369,30 +434,30 @@ namespace Radischevo.Wahha.Core
 				else
 					return defaultValue;
 
-				return (T)result;
+				return result;
 			}
 
-            if (underlyingType.GetInterface(typeof(IConvertible).Name) != null)
-            {
-                try
-                {
-                    return (T)System.Convert.ChangeType(value, underlyingType, provider);
-                }
-                catch (InvalidCastException)
-                {
-                    return defaultValue;
-                }
-                catch (FormatException)
-                {
-                    return defaultValue;
-                }
-            }
+			if (underlyingType.GetInterface(typeof(IConvertible).Name) != null)
+			{
+				try
+				{
+					return System.Convert.ChangeType(value, underlyingType, provider);
+				}
+				catch (InvalidCastException)
+				{
+					return defaultValue;
+				}
+				catch (FormatException)
+				{
+					return defaultValue;
+				}
+			}
 
-            if (value != null && !type.IsAssignableFrom(value.GetType()))
-                return defaultValue;
+			if (value != null && !type.IsAssignableFrom(value.GetType()))
+				return defaultValue;
 
-            return (T)value;
-        }
-        #endregion
-    }
+			return value;
+		}
+		#endregion
+	}
 }

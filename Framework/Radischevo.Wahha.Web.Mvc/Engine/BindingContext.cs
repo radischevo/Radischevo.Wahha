@@ -165,29 +165,19 @@ namespace Radischevo.Wahha.Web.Mvc
             if ((source & ParameterSource.Cookie) == ParameterSource.Cookie)
                 data.Merge(parameters.Cookies);
 
-            if ((source & ParameterSource.Session) == ParameterSource.Session)
-                MergeWithSessionState(context.Context.Session, data);
+			if ((source & ParameterSource.Session) == ParameterSource.Session)
+				data.Merge(new HttpSessionStateSet(context.Context.Session));
 
             if ((source & ParameterSource.QueryString) == ParameterSource.QueryString)
                 data.Merge(parameters.QueryString);
 
             if ((source & ParameterSource.Form) == ParameterSource.Form)
-                data.Merge(parameters.Form);
+                data.Merge(parameters.Form).Merge(new HttpPostedFileSet(context.Context.Request.Files));
 
             if ((source & ParameterSource.Url) == ParameterSource.Url)
                 data.Merge((IValueSet)context.RouteData.Values);
 
             return data;
-        }
-
-        private static void MergeWithSessionState(
-            HttpSessionStateBase session, ValueDictionary values)
-        {
-            if (session == null)
-                return;
-
-            for (int i = 0; i < session.Keys.Count; ++i)
-                values[session.Keys[i]] = session[i];
         }
         #endregion
 

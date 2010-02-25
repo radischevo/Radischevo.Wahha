@@ -28,12 +28,23 @@ using Radischevo.Wahha.Core.Expressions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Radischevo.Wahha.Web.Mvc.Validation;
+using Radischevo.Wahha.Web.Abstractions;
 
 public enum Status
 {
 	Active = 0, 
 	Blocked = 1,
 	Moderated = 2
+}
+
+[Flags]
+public enum AccessModes : int
+{
+	None = 0,
+	Read = 1,
+	Edit = 2,
+	Delete = 4,
+	ChangePermissions = 8
 }
 
 [DisplayColumn("ID")]
@@ -207,16 +218,6 @@ public class MainController : Controller
 
         ints.Normalize();
 
-        bool b1 = Cache.Add("sample", "Данные", DateTime.MaxValue);
-        bool b2 = Cache.Add("sample", "Еще какие-то данные", DateTime.Now.AddMinutes(10));
-
-        Cache.Insert("section", new Section("maza"), TimeSpan.FromMinutes(10), "main-part", "sections");
-        Cache.Insert("you-count", 144, TimeSpan.FromMinutes(5), "sections", "section-count");
-        Section section = Cache.Get<Section>("section");
-
-        Cache.Invalidate("main-part");
-        section = Cache.Get<Section>("section");
-
         //Response.ContentType = "application/xhtml+xml";
 
         return View("Default", new TemplatedItem() { Count = 10, Date = DateTime.Now, 
@@ -384,9 +385,24 @@ public class MainController : Controller
         return View("Arrays");
     }
 
+	public class TestClass
+	{
+		public HttpPostedFileBase File
+		{
+			get;
+			set;
+		}
+
+		public AccessModes Access
+		{
+			get;
+			set;
+		}
+	}
+
     [AcceptHttpVerbs(HttpMethod.Post)]
     public ActionResult TestArrayAndCollection(int[] indices, IEnumerable<string> names, 
-        Dictionary<int, Tuple<bool, string>> dict, FormCollection form)
+        Dictionary<int, Tuple<bool, string>> dict, TestClass model, FormCollection form)
     {
         int errors = Errors.Count;
 

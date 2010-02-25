@@ -55,6 +55,14 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Static Methods
+		private static T Accumulate<T>(object accumulator, object value, Func<T, T, T> func)
+		{
+			if (accumulator == null)
+				return (T)value;
+
+			return func((T)accumulator, (T)value);
+		}
+
         protected static int? GetItemIndex(string key, string memberName)
         {
             if (String.IsNullOrEmpty(key))
@@ -109,6 +117,40 @@ namespace Radischevo.Wahha.Web.Mvc
 
             return String.Concat(prefix, _valueDelimiter, propertyName);
         }
+
+		protected static object AccumulateBitmask(object accumulator, object value, Type type)
+		{
+			Type valueType = Enum.GetUnderlyingType(type);
+
+			if (valueType.Equals(typeof(int)))
+				return Accumulate<int>(accumulator, value, (a, b) => a | b);
+			
+			if (valueType.Equals(typeof(sbyte)))
+				return Accumulate<sbyte>(accumulator, value, (a, b) => (sbyte)(a | b));
+
+			if (valueType.Equals(typeof(byte)))
+				return Accumulate<byte>(accumulator, value, (a, b) => (byte)(a | b));
+
+			if (valueType.Equals(typeof(short)))
+				return Accumulate<short>(accumulator, value, (a, b) => (short)(a | b));
+
+			if (valueType.Equals(typeof(ushort)))
+				return Accumulate<ushort>(accumulator, value, (a, b) => (ushort)(a | b));
+
+			if (valueType.Equals(typeof(uint)))
+				return Accumulate<uint>(accumulator, value, (a, b) => (uint)(a | b));
+
+			if (valueType.Equals(typeof(long)))
+				return Accumulate<long>(accumulator, value, (a, b) => (long)(a | b));
+
+			if (valueType.Equals(typeof(ulong)))
+				return Accumulate<ulong>(accumulator, value, (a, b) => (ulong)(a | b));
+
+			if (valueType.Equals(typeof(char)))
+				return Accumulate<char>(accumulator, value, (a, b) => (char)(a | b));
+
+			return value;
+		}
 
         private static bool CanUpdateReadonlyTypedReference(Type type)
         {
@@ -353,9 +395,19 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected object BindEnum(BindingContext context, string value, Type type)
         {
+			if (String.IsNullOrEmpty(value))
+				return null;
+
+			bool canBeBitmask = type.GetCustomAttributes<FlagsAttribute>().Any();
+			string[] values = value.Split(new char[] { ',' }, 
+				StringSplitOptions.RemoveEmptyEntries);
+
+			if (canBeBitmask && values.Length > 1)
+				return BindBitmask(context, values, type);
+			
             try
             {
-                return Enum.Parse(type, value, true);
+                return Enum.Parse(type, values[0], true);
             }
             catch (Exception ex)
             {
@@ -363,6 +415,22 @@ namespace Radischevo.Wahha.Web.Mvc
                 return null;
             }
         }
+
+		protected object BindBitmask(BindingContext context, IEnumerable<string> values, Type type)
+		{
+			IEnumerable<string> names = values.Intersect(Enum.GetNames(type), 
+				StringComparer.OrdinalIgnoreCase);
+			object value = null;
+			object defaultValue = type.CreateInstance();
+
+			foreach (string name in names)
+				value = AccumulateBitmask(value, Enum.Parse(type, name, true), type);
+
+			if (value == null)
+				return defaultValue;
+
+			return Converter.ChangeType(type, value, defaultValue, CultureInfo.CurrentCulture);
+		}
 
         protected virtual object BindComplexObject(BindingContext context)
         {
@@ -526,7 +594,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			// иначе частичная инициализация объекта не удастся.
 			object value = (property.PropertyType.IsNullable()) 
 				? null 
-				: Activator.CreateInstance(property.PropertyType);
+				: property.PropertyType.CreateInstance();
 
 			if (context.Data.Any(k => k.Key.StartsWith(propertyKey,
 				StringComparison.InvariantCultureIgnoreCase)))

@@ -8,7 +8,7 @@
     <title>Array Binder Test</title>
 </head>
 <body>
-    <form action="/wahha-test/array" method="post">
+    <form action="/wahha-test/array" method="post" enctype="multipart/form-data">
         <p>
             <input type="text" name="indices" value="0" /> 1<br />
             <% Validation.Message("indices-0", error => { %><%= error.Message %><br /><% }); %>
@@ -36,8 +36,17 @@
             3 <input type="checkbox" name="dict-3-item1" />
               <input type="text" name="dict-3-item2" value="" /><br />
         </p>
+        <p>
+			<input type="file" name="model-file" /><br />
+			<input type="checkbox" name="model-access" value="Read" /> Read<br />
+			<input type="checkbox" name="model-access" value="Edit" /> Edit<br /> 
+			<input type="checkbox" name="model-access" value="Delete" /> Delete<br />
+			<input type="checkbox" name="model-access" value="ChangePermissions" /> ChangePermissions<br />
+        </p>
+        
         <input type="submit" value="Поехали" />
     </form>
+    
     <% if(ViewContext.Context.Request.HttpMethod == HttpMethod.Post) { %>
     <div style="border:1px solid #555">
         <b>Номера:</b>

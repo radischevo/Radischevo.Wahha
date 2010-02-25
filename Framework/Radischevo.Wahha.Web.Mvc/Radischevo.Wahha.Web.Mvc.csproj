@@ -142,6 +142,8 @@
     <Compile Include="Engine\MethodDispatcherCache.cs" />
     <Compile Include="Engine\ModelBinderCollection.cs" />
     <Compile Include="Helpers\HttpHandlerWrapper.cs" />
+    <Compile Include="Helpers\HttpPostedFileSet.cs" />
+    <Compile Include="Helpers\HttpSessionStateSet.cs" />
     <Compile Include="Metadata\FieldOrderAttribute.cs" />
     <Compile Include="Metadata\ModelMetadataProviderCollection.cs" />
     <Compile Include="Validation\DataErrorInfoModelValidator.cs" />

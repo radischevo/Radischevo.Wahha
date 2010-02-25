@@ -672,38 +672,76 @@
         <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object)">
             <summary>
             Converts the <paramref name="value"/> to the 
-            <typeparamref name="T"/> type
+            <typeparamref name="T"/> type.
             </summary>
-            <typeparam name="T">A type to convert to</typeparam>
-            <param name="value">A value to convert</param>
+            <typeparam name="T">A type to convert to.</typeparam>
+            <param name="value">A value to convert.</param>
         </member>
         <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,System.IFormatProvider)">
             <summary>
             Converts the <paramref name="value"/> to the 
-            <typeparamref name="T"/> type
+            <typeparamref name="T"/> type.
             </summary>
-            <typeparam name="T">A type to convert to</typeparam>
-            <param name="value">A value to convert</param>
+            <typeparam name="T">A type to convert to.</typeparam>
+            <param name="value">A value to convert.</param>
             <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
             supplies culture-specific formatting information.</param>
         </member>
         <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,``0)">
             <summary>
             Converts the <paramref name="value"/> to the 
-            <typeparamref name="T"/> type
+            <typeparamref name="T"/> type.
             </summary>
-            <typeparam name="T">A type to convert to</typeparam>
-            <param name="value">A value to convert</param>
-            <param name="defaultValue">The default value of the parameter</param>
+            <typeparam name="T">A type to convert to.</typeparam>
+            <param name="value">A value to convert.</param>
+            <param name="defaultValue">The default value of the parameter.</param>
         </member>
         <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,``0,System.IFormatProvider)">
             <summary>
             Converts the <paramref name="value"/> to the 
-            <typeparamref name="T"/> type
+            <typeparamref name="T"/> type.
             </summary>
-            <typeparam name="T">A type to convert to</typeparam>
-            <param name="value">A value to convert</param>
+            <typeparam name="T">A type to convert to.</typeparam>
+            <param name="value">A value to convert.</param>
             <param name="defaultValue">The default value of the parameter</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            specified <paramref name="type"/>.
+            </summary>
+            <param name="type">A type to convert to.</param>
+            <param name="value">A value to convert.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object,System.IFormatProvider)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            specified <paramref name="type"/>.
+            </summary>
+            <param name="type">A type to convert to.</param>
+            <param name="value">A value to convert.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object,System.Object)">
+            <summary>
+            Converts the <paramref name="value"/> to the specified 
+            <paramref name="type"/>.
+            </summary>
+            <param name="type">A type to convert to.</param>
+            <param name="value">A value to convert.</param>
+            <param name="defaultValue">The default value of the parameter.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object,System.Object,System.IFormatProvider)">
+            <summary>
+            Converts the <paramref name="value"/> to the specified 
+            <paramref name="type"/>.
+            </summary>
+            <param name="type">A type to convert to.</param>
+            <param name="value">A value to convert.</param>
+            <param name="defaultValue">The default value of the parameter.</param>
             <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
             supplies culture-specific formatting information.</param>
         </member>

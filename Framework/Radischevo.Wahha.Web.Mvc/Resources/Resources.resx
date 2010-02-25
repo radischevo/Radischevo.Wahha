@@ -315,4 +315,7 @@
   <data name="Error_InvalidIndexerExpression" xml:space="preserve">
     <value>The expression compiler was unable to evaluate the indexer expression '{0}' because it references the model parameter '{1}' which is unavailable.</value>
   </data>
+  <data name="Error_HttpPostedFileSetTypeLimitations" xml:space="preserve">
+    <value>Invalid output type '{0}'. Only objects of type 'HttpPostedFileBase' can be retrieved from the HttpPostedFileSet.</value>
+  </data>
 </root>

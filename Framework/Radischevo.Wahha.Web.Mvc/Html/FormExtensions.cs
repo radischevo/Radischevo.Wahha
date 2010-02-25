@@ -218,38 +218,44 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         #endregion
 
         #region CheckBox
-        public static string CheckBox(this HtmlControlHelper helper, string name)
+		public static string CheckBox(this HtmlControlHelper helper, string name)
+		{
+			return CheckBox(helper, name, null, new ValueDictionary());
+		}
+
+        public static string CheckBox(this HtmlControlHelper helper, 
+			string name, object value)
         {
-            return CheckBox(helper, name, new ValueDictionary());
+            return CheckBox(helper, name, value, new ValueDictionary());
         }
 
         public static string CheckBox(this HtmlControlHelper helper, 
-            string name, bool isChecked)
+            string name, object value, bool isChecked)
         {
-            return CheckBox(helper, name, isChecked, new ValueDictionary());
+            return CheckBox(helper, name, value, isChecked, new ValueDictionary());
         }
 
         public static string CheckBox(this HtmlControlHelper helper,
-            string name, object attributes)
+            string name, object value, object attributes)
         {
-            return CheckBox(helper, name, new ValueDictionary(attributes));
+            return CheckBox(helper, name, value, new ValueDictionary(attributes));
         }
 
         public static string CheckBox(this HtmlControlHelper helper,
-            string name, IDictionary<string, object> attributes)
+            string name, object value, IDictionary<string, object> attributes)
         {
             Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
-            return CheckBox(helper, name, false, attributes);
+            return CheckBox(helper, name, value, false, attributes);
         }
 
         public static string CheckBox(this HtmlControlHelper helper,
-            string name, bool isChecked, object attributes)
+            string name, object value, bool isChecked, object attributes)
         {
-            return CheckBox(helper, name, isChecked, new ValueDictionary(attributes));
+            return CheckBox(helper, name, value, isChecked, new ValueDictionary(attributes));
         }
 
         public static string CheckBox(this HtmlControlHelper helper, 
-            string name, bool isChecked, IDictionary<string, object> attributes)
+            string name, object value, bool isChecked, IDictionary<string, object> attributes)
         {
             Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
 
@@ -265,26 +271,26 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             else
                 attributes.Remove("checked");
             
-            return InputBuilder(helper, "checkbox", name, null, attributes);
+            return InputBuilder(helper, "checkbox", name, value, attributes);
         }
 
         public static string CheckBox<TModel>(this HtmlControlHelper<TModel> helper,
-            string name, Expression<Func<TModel, bool>> isChecked)
+            string name, object value, Expression<Func<TModel, bool>> isChecked)
             where TModel : class
         {
-            return CheckBox(helper, name, isChecked, null);
+            return CheckBox(helper, name, value, isChecked, null);
         }
 
         public static string CheckBox<TModel>(this HtmlControlHelper<TModel> helper,
-            string name, Expression<Func<TModel, bool>> isChecked,
+			string name, object value, Expression<Func<TModel, bool>> isChecked,
             object attributes)
             where TModel : class
         {
-            return CheckBox(helper, name, isChecked, new ValueDictionary(attributes));
+            return CheckBox(helper, name, value, isChecked, new ValueDictionary(attributes));
         }
 
         public static string CheckBox<TModel>(this HtmlControlHelper<TModel> helper,
-            string name, Expression<Func<TModel, bool>> isChecked, 
+			string name, object value, Expression<Func<TModel, bool>> isChecked, 
             IDictionary<string, object> attributes)
             where TModel: class
         {
@@ -293,7 +299,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             TModel model = (TModel)helper.Context.ViewData.Model;
             Func<bool> accessor = LinqHelper.WrapModelAccessor(isChecked, model);
 
-            return CheckBox(helper, name, accessor(), attributes);
+            return CheckBox(helper, name, value, accessor(), attributes);
         }
         #endregion
 

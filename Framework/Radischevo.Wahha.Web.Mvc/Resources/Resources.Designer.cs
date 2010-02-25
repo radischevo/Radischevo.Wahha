@@ -214,6 +214,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid output type &apos;{0}&apos;. Only objects of type &apos;HttpPostedFileBase&apos; can be retrieved from the HttpPostedFileSet..
+        /// </summary>
+        internal static string Error_HttpPostedFileSetTypeLimitations {
+            get {
+                return ResourceManager.GetString("Error_HttpPostedFileSetTypeLimitations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The controller factory type &apos;{0}&apos; must implement the IControllerFactory interface..
         /// </summary>
         internal static string Error_IncompatibleControllerFactoryType {

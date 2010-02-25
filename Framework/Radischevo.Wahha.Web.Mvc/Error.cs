@@ -397,5 +397,11 @@ namespace Radischevo.Wahha.Web.Mvc
 				Resources.Resources.Error_InvalidIndexerExpression, 
 				expression, parameter.Name));
 		}
+
+		internal static Exception HttpPostedFileSetTypeLimitations(Type type)
+		{
+			return new InvalidOperationException(String.Format(Resources.Resources
+				.Error_HttpPostedFileSetTypeLimitations, type.FullName));
+		}
 	}
 }
