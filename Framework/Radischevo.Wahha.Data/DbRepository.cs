@@ -215,8 +215,8 @@ namespace Radischevo.Wahha.Data
             Encoding encoding = Encoding.UTF8;
 
             sb.Append(GetType().FullName).Append("::")
-                .Append(typeof(TKey).Name)
-				.Append("::Single");
+				.Append(typeof(TEntity).FullName).Append("::")
+                .Append(typeof(TKey).Name).Append("::Single");
 
             sb.Append("=>{Key=").Append((Object.ReferenceEquals(key, null)) ? "<NULL>" :
                 Convert.ToString(key, CultureInfo.InvariantCulture)).Append("}");
