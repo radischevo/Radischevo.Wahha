@@ -15,9 +15,11 @@
 </form>
 <%  Ajax.Scripts.Block("validate", () => { %>
     $().ready(function() {
-        MvcValidation.apply(<%= Validation.Rules("item")
-            .Append(r => r.Range<int>("item-count", 5, 10, "PIZZDEC!!!"))
-            //.Append(r => r.Remote("item-title", "/wahha-test/ajax/check-title", "PIZDEC!"))
+		MvcValidation.apply(<%= Validation.Rules("item")
+            .Apply("form#default") %>);
+        MvcValidation.apply(<%= Validation.Rules("item", model => model.Title)
+            .Apply("form#default") %>);
+        MvcValidation.apply(<%= Validation.Rules("item", model => model.Inner)
             .Apply("form#default") %>);
     });
 <% }); %>

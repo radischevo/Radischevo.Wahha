@@ -44,7 +44,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         {
             Precondition.Require(rule, Error.ArgumentNull("rule"));
 
-            _field = rule.Member;
+			_field = rule.Member;
             _errorMessage = rule.ErrorMessage;
             _validationType = rule.ValidationType;
 

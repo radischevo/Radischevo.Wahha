@@ -150,6 +150,7 @@
     <Compile Include="Validation\DataErrorInfoValidatorProvider.cs" />
     <Compile Include="Validation\DataTypeValidationAttribute.cs" />
     <Compile Include="Validation\ModelValidationContext.cs" />
+    <Compile Include="Validation\ModelValidatorSet.cs" />
     <Compile Include="Validation\RemoteValidationResult.cs" />
     <Compile Include="Validation\Rules\ClientModelValidationRule.cs" />
     <Compile Include="Validation\Formatters\IModelValidationRuleFormatter.cs" />

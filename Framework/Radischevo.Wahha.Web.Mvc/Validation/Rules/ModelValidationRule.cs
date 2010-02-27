@@ -8,6 +8,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
     public class ModelValidationRule
     {
         #region Instance Fields
+		private ModelValidator _validator;
         private IDictionary<string, object> _parameters;
         private string _validationType;
         private string _errorMessage;
@@ -19,7 +20,9 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         {
             Precondition.Require(validator, Error.ArgumentNull("validator"));
 
+			_validator = validator;
             _member = validator.PropertyName;
+
             _parameters = new Dictionary<string, object>(
                 StringComparer.OrdinalIgnoreCase);
         }
@@ -33,6 +36,14 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
                 return _parameters;
             }
         }
+
+		public ModelValidator Validator
+		{
+			get
+			{
+				return _validator;
+			}
+		}
 
         public string ValidationType
         {

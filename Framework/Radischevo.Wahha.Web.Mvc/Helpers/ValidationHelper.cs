@@ -11,9 +11,9 @@ using Radischevo.Wahha.Web.Mvc.Validation;
 namespace Radischevo.Wahha.Web.Mvc
 {
     public class ValidationHelper
-    {
-        #region Instance Fields
-        private ModelValidatorProviderCollection _providers;
+	{
+		#region Instance Fields
+		private ModelValidatorProviderCollection _providers;
         private ViewContext _context;
         #endregion
 
@@ -129,11 +129,14 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Helper Methods
-        protected ModelValidator GetValidatorFromExpression(string expression)
+        protected ModelValidatorSet GetValidatorsFromExpression(string expression)
         {
+			if (String.IsNullOrEmpty(expression))
+				return new ModelValidatorSet(Context.ViewData.Validator);
+			
             ViewDataInfo vdi = Context.ViewData.GetViewDataInfo(expression);
-            if (vdi == null)
-                return null;
+			if (vdi == null)
+				return new ModelValidatorSet();
 
             Type containerType = null;
             Type modelType = null;
@@ -152,93 +155,71 @@ namespace Radischevo.Wahha.Web.Mvc
             if (model != null && modelType == null)
                 modelType = model.GetType();
 
-            if (modelType == null)
-                model = typeof(string);
-
-            return GetValidatorFromProvider(containerType, modelType ?? typeof(string), propertyName);
+            return GetValidatorsFromProvider(containerType, modelType ?? typeof(string), propertyName);
         }
 
-        protected virtual ModelValidator GetValidatorFromProvider(Type containerType,
+		protected ModelValidatorSet GetValidatorsFromExpression<TModel, TValue>(
+			Expression<Func<TModel, TValue>> expression)
+			where TModel : class
+		{
+			Precondition.Require(expression, Error.ArgumentNull("expression"));
+
+			object modelValue = LinqHelper.WrapModelAccessor(
+				expression, (TModel)Context.ViewData.Model)();
+
+			Type modelType = typeof(TValue);
+			Type parentModelType = null;
+			string propertyName = null;
+
+			switch (expression.Body.NodeType)
+			{
+				case ExpressionType.Parameter:
+					break;
+
+				case ExpressionType.MemberAccess:
+					MemberExpression memberExpression = (MemberExpression)expression.Body;
+					propertyName = (memberExpression.Member is PropertyInfo) ? memberExpression.Member.Name : null;
+					parentModelType = memberExpression.Member.DeclaringType;
+					break;
+
+				default:
+					throw Error.TemplateExpressionLimitations();
+			}
+			return GetValidatorsFromProvider(parentModelType, modelType, propertyName);
+		}
+
+        protected virtual ModelValidatorSet GetValidatorsFromProvider(Type containerType,
             Type modelType, string propertyName)
         {
-            if (containerType != null && !String.IsNullOrEmpty(propertyName))
-                return Providers.GetProvider(containerType).GetValidator(containerType)
-                    .GetPropertyValidator(propertyName);
+			ModelValidator model = Providers.GetProvider(modelType).GetValidator(modelType);
+			ModelValidator container = (containerType == null || String.IsNullOrEmpty(propertyName))
+				? null : Providers.GetProvider(containerType).GetValidator(containerType)
+					.GetPropertyValidator(propertyName);
 
-            return Providers.GetProvider(modelType).GetValidator(modelType);
+			return new ModelValidatorSet(model, container);
         }
 
         protected virtual IEnumerable<ClientModelValidationRule> CreateClientRules(
-            IEnumerable<ModelValidationRule> rules)
-        {
-            Precondition.Require(rules, Error.ArgumentNull("rules"));
-            return rules.Where(r => r.SupportsClientValidation)
+			IEnumerable<ModelValidationRule> rules)
+		{
+			Precondition.Require(rules, Error.ArgumentNull("rules"));
+
+			return rules.Where(r => r.SupportsClientValidation)
 				.Select(r => new ClientModelValidationRule(r));
-        }
+		}
 
-        protected virtual IEnumerable<ModelValidationRule> GetRulesInternal<TModel, TValue>(
-            Expression<Func<TModel, TValue>> expression)
-            where TModel : class
-        {
-            Precondition.Require(expression, Error.ArgumentNull("expression"));
+		private IEnumerable<ModelValidationRule> GetRulesInternal(string expression)
+		{
+			return GetValidatorsFromExpression(expression).GetValidationRules();
+		}
 
-            object modelValue = LinqHelper.WrapModelAccessor(
-                expression, (TModel)Context.ViewData.Model)();
-
-            Type modelType = typeof(TValue);
-            Type parentModelType = null;
-            string propertyName = null;
-
-            switch (expression.Body.NodeType)
-            {
-                case ExpressionType.Parameter:
-                    break;
-
-                case ExpressionType.MemberAccess:
-                    MemberExpression memberExpression = (MemberExpression)expression.Body;
-                    propertyName = (memberExpression.Member is PropertyInfo) ? memberExpression.Member.Name : null;
-                    parentModelType = memberExpression.Member.DeclaringType;
-                    break;
-
-                default:
-                    throw Error.TemplateExpressionLimitations();
-            }
-
-            ModelValidator validator = GetValidatorFromProvider(parentModelType, modelType, propertyName);
-            if (validator != null)
-            {
-                if(parentModelType == null) // model => model
-                    return validator.GetValidationRules().Concat(validator.Properties
-                        .SelectMany(m => m.GetValidationRules()));
-
-                return validator.GetValidationRules(); // model => model.Property
-            }
-
-            return Enumerable.Empty<ModelValidationRule>();
-        }
-
-        protected virtual IEnumerable<ModelValidationRule> GetRulesInternal(string expression)
-        {
-            ModelValidator validator = Context.ViewData.Validator;
-
-            if (String.IsNullOrEmpty(expression))
-            {
-                if(validator != null)
-                    return validator.GetValidationRules().Concat(validator.Properties
-                        .SelectMany(m => m.GetValidationRules()));
-
-                return Enumerable.Empty<ModelValidationRule>();
-            }
-            validator = validator.GetPropertyValidator(expression);
-            if (validator != null)
-                return validator.GetValidationRules();
-
-            validator = GetValidatorFromExpression(expression);
-            if (validator != null)
-                return validator.GetValidationRules();
-            
-            return Enumerable.Empty<ModelValidationRule>();
-        }
+		protected static string CreateFieldName(TemplateDescriptor descriptor, 
+			string expression, string member)
+		{
+			return (String.Equals(expression, member, StringComparison.OrdinalIgnoreCase))
+				? descriptor.Prefix
+				: descriptor.GetHtmlElementName(member);
+		}
         #endregion
 
         #region Client Validation
@@ -276,14 +257,12 @@ namespace Radischevo.Wahha.Web.Mvc
             TemplateDescriptor descriptor = new TemplateDescriptor(
                 Context.ViewData.Template.Type) { Prefix = modelName };
             descriptor.Prefix = descriptor.GetHtmlElementName(expression);
-
-            bool hasEmptyExpression = (String.IsNullOrEmpty(expression));
-
+			
             return new FormValidationMetadata(
                 CreateClientRules(GetRulesInternal(expression))
-                    .Each(r => { r.Field = (hasEmptyExpression)
-                        ? descriptor.GetHtmlElementName(r.Field)
-                        : descriptor.Prefix; }));
+					.Each(r => {
+						r.Field = CreateFieldName(descriptor, expression, r.Field);
+					}));
         }
         #endregion
     }
@@ -299,6 +278,12 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
+		private IEnumerable<ModelValidationRule> GetRulesInternal<TValue>(
+			Expression<Func<TModel, TValue>> expression)
+		{
+			return GetValidatorsFromExpression(expression).GetValidationRules();
+		}
+
         /// <summary>
         /// Gets the collection of client validation rules, 
         /// which are applied to the property of the 
@@ -327,17 +312,13 @@ namespace Radischevo.Wahha.Web.Mvc
             TemplateDescriptor descriptor = new TemplateDescriptor(
                 Context.ViewData.Template.Type) { Prefix = modelName };
 
-            bool hasEmptyExpression = (expression.Body.NodeType == 
-                ExpressionType.Parameter);
+			string stringExpression = LinqHelper.GetExpressionText(expression);
+            descriptor.Prefix = descriptor.GetHtmlElementName(stringExpression);
 
-            descriptor.Prefix = descriptor.GetHtmlElementName(
-				LinqHelper.GetExpressionText(expression));
-
-            return new FormValidationMetadata(
+			return new FormValidationMetadata(
                 CreateClientRules(GetRulesInternal(expression))
-                    .Each(r => { r.Field = (hasEmptyExpression)
-						? descriptor.GetHtmlElementName(r.Field).Trim('-')
-                        : descriptor.Prefix; 
+                    .Each(r => {
+						r.Field = CreateFieldName(descriptor, stringExpression, r.Field);
                     }));
         }
         #endregion

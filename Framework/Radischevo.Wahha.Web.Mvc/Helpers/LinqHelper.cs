@@ -113,7 +113,7 @@ namespace Radischevo.Wahha.Web.Mvc
 				else if (part.NodeType == ExpressionType.MemberAccess)
 				{
 					MemberExpression mep = (MemberExpression)part;
-					nameParts.Push("." + mep.Member.Name);
+					nameParts.Push(mep.Member.Name);
 
 					part = mep.Expression;
 				}

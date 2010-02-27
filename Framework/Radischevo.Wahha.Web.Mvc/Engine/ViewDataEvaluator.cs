@@ -82,22 +82,22 @@ namespace Radischevo.Wahha.Web.Mvc
 
         private static ViewDataInfo GetPropertyValue(object container, string propertyName)
         {
-            ViewDataInfo value = GetIndexedPropertyValue(container, propertyName);
-            if (value != null)
-                return value;
+			ViewDataInfo value = GetIndexedPropertyValue(container, propertyName);
+			if (value != null)
+				return value;
+			
+			ViewDataDictionary vdd = container as ViewDataDictionary;
+			if (vdd != null)
+				container = vdd.Model;
 
-            ViewDataDictionary vdd = (container as ViewDataDictionary);
-            if (vdd != null)
-                container = vdd.Model;
+			if (container == null)
+				return null;
+			
+			PropertyDescriptor descriptor = TypeDescriptor.GetProperties(container)
+				.Find(propertyName, true);
 
-            if (container == null)
-                return null;
-
-            PropertyDescriptor descriptor = TypeDescriptor.GetProperties(container)
-                .Find(propertyName, true);
-
-            if (descriptor == null)
-                return null;
+			if (descriptor == null)
+				return null;
 
             return new ViewDataInfo() {
                 Container = container,

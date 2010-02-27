@@ -69,6 +69,14 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Properties
+		protected virtual int SelectBufferSize
+		{
+			get
+			{
+				return 15;
+			}
+		}
+
 		public IDbMaterializer<TEntity> Materializer
 		{
 			get
@@ -128,7 +136,7 @@ namespace Radischevo.Wahha.Data
 			return DataProvider.Execute(command)
 				.Using(CommandBehavior.CloseConnection)
 				.AsDataReader(reader => {
-					List<TEntity> list = new List<TEntity>();
+					List<TEntity> list = new List<TEntity>(SelectBufferSize);
 					int count = -1;
 
 					while (reader.Read())
