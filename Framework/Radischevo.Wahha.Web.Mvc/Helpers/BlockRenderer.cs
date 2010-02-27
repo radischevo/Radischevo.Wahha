@@ -19,7 +19,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public BlockRenderer(HttpContextBase context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             _context = context;
         }
         #endregion

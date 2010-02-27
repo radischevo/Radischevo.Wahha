@@ -18,7 +18,7 @@ namespace Radischevo.Wahha.Core
             public MemberAccessorCache(Type type)
                 : base()
             {
-                Precondition.Require(type, Error.ArgumentNull("type"));
+				Precondition.Require(type, () => Error.ArgumentNull("type"));
                 _type = type;
             }
             #endregion
@@ -65,8 +65,8 @@ namespace Radischevo.Wahha.Core
         #region Constructors
         public Indexable(object instance)
         {
-            Precondition.Require(instance, 
-                Error.ArgumentNull("instance"));
+            Precondition.Require(instance,
+				() => Error.ArgumentNull("instance"));
 
             _instance = instance;
             _type = instance.GetType();
@@ -111,7 +111,7 @@ namespace Radischevo.Wahha.Core
 		protected virtual IDynamicAccessor GetAccessor(string memberName)
 		{
 			Precondition.Require(!String.IsNullOrEmpty(memberName),
-				Error.ArgumentNull("memberName"));
+				() => Error.ArgumentNull("memberName"));
 
 			return _cache.GetAccessor(memberName);
 		}

@@ -42,9 +42,9 @@ namespace Radischevo.Wahha.Web.Text
             }
             set
             {
-                Precondition.Require(value, Error.ArgumentNull("value"));
+                Precondition.Require(value, () => Error.ArgumentNull("value"));
                 Precondition.Require(String.Equals(name, value.Name, StringComparison.OrdinalIgnoreCase),
-                    new InvalidOperationException("The rule name must be equal to the key."));
+                    () => Error.RuleNameCannotDifferFromKey(name, value.Name));
 
                 _values[name] = value;
             }
@@ -62,7 +62,7 @@ namespace Radischevo.Wahha.Web.Text
         #region Static Methods
         private static HtmlElementRule Validate(HtmlElementRule rule)
         {
-            Precondition.Require(rule, Error.ArgumentNull("rule"));
+            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
             return rule;
         }
         #endregion
@@ -75,7 +75,7 @@ namespace Radischevo.Wahha.Web.Text
 
         public void AddRange(IEnumerable<HtmlElementRule> collection)
         {
-            Precondition.Require(collection, Error.ArgumentNull("collection"));
+            Precondition.Require(collection, () => Error.ArgumentNull("collection"));
             foreach (HtmlElementRule rule in collection)
                 Add(rule);
         }
@@ -92,8 +92,8 @@ namespace Radischevo.Wahha.Web.Text
 
         public void CopyTo(HtmlElementRuleCollection collection)
         {
-            Precondition.Require(collection, 
-                Error.ArgumentNull("collection"));
+            Precondition.Require(collection,
+				() => Error.ArgumentNull("collection"));
 
             collection.Clear();
             collection.AddRange(this);

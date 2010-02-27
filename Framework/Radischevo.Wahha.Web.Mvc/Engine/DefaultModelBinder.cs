@@ -179,7 +179,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
 		protected static bool AreMembersValid(BindingContext context, string modelName)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
 			modelName = modelName ?? context.ModelName;
 			
 			return !context.Errors.Where(k => k.Member.StartsWith(modelName,
@@ -323,7 +323,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Well-Know Type Binding Methods
         public virtual object Bind(BindingContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
 
             if (!String.IsNullOrEmpty(context.ModelName) && !context.Data.Any(k => 
                 k.Key.StartsWith(context.ModelName, StringComparison.InvariantCultureIgnoreCase)))

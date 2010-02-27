@@ -32,8 +32,8 @@ namespace Radischevo.Wahha.Data
         public DbDataRecordEnumerator(IDbDataReader reader, 
             DbFieldLookup lookup)
         {
-            Precondition.Require(reader, Error.ArgumentNull("reader"));
-            Precondition.Require(lookup, Error.ArgumentNull("lookup"));
+            Precondition.Require(reader, () => Error.ArgumentNull("reader"));
+            Precondition.Require(lookup, () => Error.ArgumentNull("lookup"));
 
             _reader = reader;
             _lookup = lookup;

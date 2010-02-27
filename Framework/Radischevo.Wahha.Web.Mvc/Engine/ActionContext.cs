@@ -17,7 +17,7 @@ namespace Radischevo.Wahha.Web.Mvc
         protected ActionContext(ControllerContext context, ActionDescriptor action)
             : base(context)
         {
-            Precondition.Require(action, Error.ArgumentNull("action"));
+            Precondition.Require(action, () => Error.ArgumentNull("action"));
             _action = action;
         }
         #endregion
@@ -31,7 +31,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
             set
             {
-                Precondition.Require(value, Error.ArgumentNull("value"));
+                Precondition.Require(value, () => Error.ArgumentNull("value"));
                 _action = value;
             }
         }
@@ -52,7 +52,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Static Methods
         internal static ActionContext GetActionContext(ActionContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             return context;
         }
         #endregion

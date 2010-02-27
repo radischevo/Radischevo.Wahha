@@ -19,7 +19,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		public override bool IsValid(ControllerContext context, 
 			MethodInfo actionMethod)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
 			return context.IsChild;
 		}
 		#endregion

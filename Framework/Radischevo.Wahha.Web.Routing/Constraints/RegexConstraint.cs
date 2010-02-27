@@ -27,8 +27,7 @@ namespace Radischevo.Wahha.Web.Routing
 
         public RegexConstraint(string parameterName, string pattern, RegexOptions options)
         {
-            Precondition.Require(!String.IsNullOrEmpty(parameterName), 
-                Error.ArgumentNull("parameterName"));
+            Precondition.Defined(parameterName, () =>Error.ArgumentNull("parameterName"));
 
             _parameterName = parameterName;
             _pattern = new Regex(NormalizePattern(pattern), options);
@@ -59,7 +58,7 @@ namespace Radischevo.Wahha.Web.Routing
         protected virtual bool Match(HttpContextBase context, Route route,
             ValueDictionary values, RouteDirection direction)
         {
-            Precondition.Require(values, Error.ArgumentNull("values"));
+            Precondition.Require(values, () => Error.ArgumentNull("values"));
 
             string value = values.GetValue<string>(_parameterName) ?? String.Empty;
             return _pattern.IsMatch(value);

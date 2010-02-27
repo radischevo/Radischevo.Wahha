@@ -124,8 +124,8 @@ namespace Radischevo.Wahha.Core
             }
             set
             {
-                Precondition.Require(value > -1, 
-                    Error.ParameterMustBeGreaterThanOrEqual("value", 0, value));
+                Precondition.Require(value > -1,
+					() => Error.ParameterMustBeGreaterThanOrEqual("value", 0, value));
                 _count = value;
             }
         }
@@ -145,7 +145,7 @@ namespace Radischevo.Wahha.Core
 					if (!_hasLoadedValue)
 					{
 						Precondition.Require((_hasAssignedValue || _source != null),
-							Error.LinkSourceIsNotInitialized());
+							() => Error.LinkSourceIsNotInitialized());
 
 						_collection = _source();
 						_hasLoadedValue = true;

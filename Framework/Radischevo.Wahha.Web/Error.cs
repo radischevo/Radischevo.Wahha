@@ -408,5 +408,11 @@ namespace Radischevo.Wahha.Web
 			return new HttpParseException(Resources.Resources.Error_EmptyCodeRenderExpression, 
 				null, path, code, lineNumber);
 		}
+
+		internal static Exception RuleNameCannotDifferFromKey(string key, string actualValue)
+		{
+			return new ArgumentException(String.Format(Resources.Resources
+				.Error_RuleNameCannotDifferFromKey, key, actualValue));
+		}
 	}
 }

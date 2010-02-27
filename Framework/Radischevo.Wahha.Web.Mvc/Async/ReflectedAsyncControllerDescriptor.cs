@@ -20,7 +20,7 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		public ReflectedAsyncControllerDescriptor(Type controllerType)
 			: base()
 		{
-			Precondition.Require(controllerType, Error.ArgumentNull("controllerType"));
+			Precondition.Require(controllerType, () => Error.ArgumentNull("controllerType"));
 
 			_controllerType = controllerType;
 			_selector = new AsyncActionMethodSelector(_controllerType);
@@ -40,8 +40,8 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		#region Instance Methods
 		public override ActionDescriptor FindAction(ControllerContext context, string actionName)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
-			Precondition.Require(!String.IsNullOrEmpty(actionName), Error.ArgumentNull("actionName"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
+			Precondition.Defined(actionName, () => Error.ArgumentNull("actionName"));
 
 			ActionDescriptorCreator creator = _selector.GetAsyncDescriptor(context, actionName);
 			if (creator == null)

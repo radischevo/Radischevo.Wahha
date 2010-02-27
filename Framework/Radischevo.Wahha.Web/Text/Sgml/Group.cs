@@ -126,7 +126,7 @@ namespace Radischevo.Wahha.Web.Text.Sgml
 
         public bool CanContain(string name, SgmlDtd dtd)
         {
-            Precondition.Require(dtd, Error.ArgumentNull("dtd"));
+            Precondition.Require(dtd, () => Error.ArgumentNull("dtd"));
 
             // Do a simple search of members.
             foreach (object obj in _members)

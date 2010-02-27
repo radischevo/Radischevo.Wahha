@@ -135,7 +135,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
         private static object Deserialize(JavaScriptSerializer serializer, 
             string input, Type type, int depthLimit)
         {
-            Precondition.Require(input, Error.ArgumentNull("input"));
+            Precondition.Require(input, () => Error.ArgumentNull("input"));
             if (input.Length > serializer.MaxJsonLength)
                 throw Error.MaximumJsonStringLengthExceeded();
             
@@ -450,7 +450,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
 
         public void RegisterConverters(IEnumerable<JavaScriptConverter> converters)
         {
-            Precondition.Require(converters, Error.ArgumentNull("converters"));
+            Precondition.Require(converters, () => Error.ArgumentNull("converters"));
             
             foreach (JavaScriptConverter converter in converters)
             {

@@ -17,8 +17,8 @@ namespace Radischevo.Wahha.Core
         public TransformWrapper(IValueSet collection,
             Func<string, string> keyTransformer)
         {
-            Precondition.Require(collection, Error.ArgumentNull("collection"));
-            Precondition.Require(keyTransformer, Error.ArgumentNull("keySelector"));
+			Precondition.Require(collection, () => Error.ArgumentNull("collection"));
+			Precondition.Require(keyTransformer, () => Error.ArgumentNull("keySelector"));
 
             _collection = collection;
             _keyTransformer = keyTransformer;

@@ -108,9 +108,8 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		public override bool InvokeAction(ControllerContext context,
 			string actionName, IDictionary<string, object> values)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
-			Precondition.Require(!String.IsNullOrEmpty(actionName),
-				Error.ArgumentNull("actionName"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
+			Precondition.Defined(actionName, () => Error.ArgumentNull("actionName"));
 
 			IAsyncResult result = BeginInvokeAction(context,
 				actionName, null, null, values);
@@ -127,9 +126,8 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 			string actionName, AsyncCallback callback, object state,
 			IDictionary<string, object> values)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
-			Precondition.Require(!String.IsNullOrEmpty(actionName),
-				Error.ArgumentNull("actionName"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
+			Precondition.Defined(actionName, () => Error.ArgumentNull("actionName"));
 
 			ControllerDescriptor controller = GetControllerDescriptor(context);
 			ActionDescriptor action = controller.FindAction(context, actionName);

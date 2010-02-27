@@ -122,7 +122,7 @@ namespace Radischevo.Wahha.Core.Expressions
 		/// <param name="arg">The expression to be evaluated.</param>
 		public static object Evaluate(Expression arg)
 		{
-			Precondition.Require(arg, Error.ArgumentNull("arg"));
+			Precondition.Require(arg, () => Error.ArgumentNull("arg"));
 
 			Func<object, object> func = Wrap(arg);
 			return func(null);

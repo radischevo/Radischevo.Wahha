@@ -30,7 +30,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         /// <param name="application">The object that this wrapper class provides access to.</param>
         public HttpApplicationStateWrapper(HttpApplicationState application)
         {
-            Precondition.Require(application, Error.ArgumentNull("application"));
+            Precondition.Require(application, () => Error.ArgumentNull("application"));
             _application = application;
         }
         #endregion

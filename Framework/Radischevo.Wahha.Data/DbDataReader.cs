@@ -31,7 +31,7 @@ namespace Radischevo.Wahha.Data
         /// to decorate.</param>
         internal DbDataReader(IDataReader reader)
         {
-            Precondition.Require(reader, Error.ArgumentNull("reader"));
+            Precondition.Require(reader, () => Error.ArgumentNull("reader"));
             
             _reader = reader;
             _accessedFields = new HashSet<string>(

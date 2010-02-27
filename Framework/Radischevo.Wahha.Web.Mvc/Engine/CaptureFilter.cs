@@ -18,7 +18,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public CaptureFilter(Stream stream)
         {
-            Precondition.Require(stream, Error.ArgumentNull("stream"));
+            Precondition.Require(stream, () => Error.ArgumentNull("stream"));
 
             _stream = stream;
             _buffer = new MemoryStream();

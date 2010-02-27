@@ -16,7 +16,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public ModelBinderAttribute(Type binderType)
         {
-            Precondition.Require(binderType, Error.ArgumentNull("binderType"));
+            Precondition.Require(binderType, () => Error.ArgumentNull("binderType"));
             _binderType = binderType;
         }
         #endregion

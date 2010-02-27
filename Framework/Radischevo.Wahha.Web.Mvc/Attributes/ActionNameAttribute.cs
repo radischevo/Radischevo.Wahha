@@ -14,7 +14,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public ActionNameAttribute(string name)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
             _name = name;
         }
         #endregion

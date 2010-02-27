@@ -26,7 +26,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         #region Constructors
         public HttpResponseWrapper(HttpResponse response)
         {
-            Precondition.Require(response, Error.ArgumentNull("response"));
+            Precondition.Require(response, () => Error.ArgumentNull("response"));
             _response = response;
         }
         #endregion

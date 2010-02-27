@@ -72,7 +72,7 @@ namespace Radischevo.Wahha.Web.Routing
         /// <param name="item">The value of the element to add</param>
         public virtual void Add(string key, RouteBase item)
         {
-            Precondition.Require(item, Error.ArgumentNull("item"));
+            Precondition.Require(item, () => Error.ArgumentNull("item"));
 
             try
             {
@@ -208,8 +208,8 @@ namespace Radischevo.Wahha.Web.Routing
         /// <param name="context">The current <see cref="HttpContext"/> object</param>
         public virtual RouteData GetRouteData(HttpContextBase context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(context.Request, Error.ArgumentNull("request"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(context.Request, () => Error.ArgumentNull("request"));
 
             try
             {
@@ -240,8 +240,8 @@ namespace Radischevo.Wahha.Web.Routing
         /// containing the route parameter values</param>
         public virtual VirtualPathData GetVirtualPath(RequestContext context, ValueDictionary values)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(values, Error.ArgumentNull("values"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(values, () => Error.ArgumentNull("values"));
 
             try
             {
@@ -273,8 +273,8 @@ namespace Radischevo.Wahha.Web.Routing
         public virtual VirtualPathData GetVirtualPath(RequestContext context, 
             string key, ValueDictionary values)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(values, Error.ArgumentNull("values"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(values, () => Error.ArgumentNull("values"));
 
             if (String.IsNullOrEmpty(key))
                 return GetVirtualPath(context, values);

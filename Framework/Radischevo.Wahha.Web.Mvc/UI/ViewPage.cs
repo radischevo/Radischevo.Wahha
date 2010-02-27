@@ -223,7 +223,8 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         /// </summary>
         public virtual void InitHelpers(ViewContext context)
         {
-            Precondition.Require(context, Mvc.Error.ArgumentNull("context"));
+			Precondition.Require(context, 
+				() => Mvc.Error.ArgumentNull("context"));
 
             SetContentType(context.Context);
             _parameters = context.Context.Request.Parameters;

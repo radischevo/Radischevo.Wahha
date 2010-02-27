@@ -23,7 +23,7 @@ namespace Radischevo.Wahha.Data
         #region Constructors
         protected DbRepository(params string[] tags)
         {
-            Precondition.Require(tags, Error.ArgumentNull("tags"));
+            Precondition.Require(tags, () => Error.ArgumentNull("tags"));
             _tags = new List<string>(tags);
             _enableCaching = true;
         }
@@ -122,7 +122,7 @@ namespace Radischevo.Wahha.Data
         public virtual IEnumerable<TEntity> Select(DbCommandDescriptor command, 
             params string[] tags)
         {
-            Precondition.Require(command, Error.ArgumentNull("command"));
+            Precondition.Require(command, () => Error.ArgumentNull("command"));
             if (EnableCaching)
             {
                 string cacheKey = CreateCacheKey(command);
@@ -142,7 +142,7 @@ namespace Radischevo.Wahha.Data
 
         public virtual TEntity Single(DbCommandDescriptor command, params string[] tags)
         {
-            Precondition.Require(command, Error.ArgumentNull("command"));
+            Precondition.Require(command, () => Error.ArgumentNull("command"));
             if (EnableCaching)
             {
                 string cacheKey = CreateCacheKey(command);

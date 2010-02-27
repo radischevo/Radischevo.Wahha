@@ -87,7 +87,7 @@ namespace Radischevo.Wahha.Web.Text
 
         public void Merge(string key, object value, bool replaceExisting)
         {
-            Precondition.Require(!String.IsNullOrEmpty(key), Error.ArgumentNull("key"));
+            Precondition.Defined(key, () => Error.ArgumentNull("key"));
 
             if (!_values.ContainsKey(key) || replaceExisting)
                 _values[key] = value;

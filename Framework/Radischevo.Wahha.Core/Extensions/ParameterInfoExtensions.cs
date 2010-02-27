@@ -23,7 +23,7 @@ namespace Radischevo.Wahha.Core
         /// </summary>
         public static IEnumerable<TAttribute> GetCustomAttributes<TAttribute>(this ParameterInfo parameter, bool inherit)
         {
-            Precondition.Require(parameter, Error.ArgumentNull("parameter"));
+			Precondition.Require(parameter, () => Error.ArgumentNull("parameter"));
             return parameter.GetCustomAttributes(inherit).OfType<TAttribute>();
         }
         #endregion

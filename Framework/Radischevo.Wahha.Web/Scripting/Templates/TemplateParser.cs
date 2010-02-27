@@ -173,8 +173,8 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 			CaptureCollection names = match.Groups["attrname"].Captures;
 			CaptureCollection values = match.Groups["attrval"].Captures;
 
-			Precondition.Require(names.Count > 0, 
-				Error.TemplateDirectiveCannotBeEmpty(_virtualPath, text, _lineNumber + 1));
+			Precondition.Require(names.Count > 0,
+				() => Error.TemplateDirectiveCannotBeEmpty(_virtualPath, text, _lineNumber + 1));
 
 			string directiveName = names[0].Value;
 			DirectiveExpression directive = new DirectiveExpression(directiveName);
@@ -303,7 +303,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 
 		protected virtual void ParseInternal(string text, Encoding encoding)
 		{
-			Precondition.Require(text, Error.ArgumentNull("text"));
+			Precondition.Require(text, () => Error.ArgumentNull("text"));
 
 			int startIndex = 0;
 			int length = text.Length;
@@ -358,8 +358,8 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		#region Instance Methods
 		public ParsedTemplate ParseFile(string fileName)
 		{
-			Precondition.Require(!String.IsNullOrEmpty(fileName),
-				Error.ArgumentNull("fileName"));
+			Precondition.Defined(fileName,
+				() => Error.ArgumentNull("fileName"));
 
 			using (StreamReader reader = new StreamReader(
 				ConstructPhysicalPath(fileName, out _virtualPath)))
@@ -370,7 +370,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 
 		public ParsedTemplate Parse(TextReader reader)
 		{
-			Precondition.Require(reader, Error.ArgumentNull("reader"));
+			Precondition.Require(reader, () => Error.ArgumentNull("reader"));
 			string text = reader.ReadToEnd();
 
 			return Parse(text);

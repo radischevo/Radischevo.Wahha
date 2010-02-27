@@ -92,7 +92,7 @@ namespace Radischevo.Wahha.Web.Caching
 
         public T Get<T>(string key)
         {
-            Precondition.Require(key, Error.ArgumentNull("key"));
+            Precondition.Require(key, () => Error.ArgumentNull("key"));
             return Converter.ChangeType<T>(Cache.Get(key));
         }
 
@@ -105,8 +105,8 @@ namespace Radischevo.Wahha.Web.Caching
         public T Get<T>(string key, CacheItemSelector<T> selector,
 			DateTime expiration, IEnumerable<string> tags)
         {
-            Precondition.Require(key, Error.ArgumentNull("key"));
-            Precondition.Require(selector, Error.ArgumentNull("selector"));
+            Precondition.Require(key, () => Error.ArgumentNull("key"));
+            Precondition.Require(selector, () => Error.ArgumentNull("selector"));
 
             object value;
             if ((value = Cache.Get(key)) == null)
@@ -135,7 +135,7 @@ namespace Radischevo.Wahha.Web.Caching
         public bool Add<T>(string key, T value, DateTime expiration,
 			IEnumerable<string> tags)
         {
-            Precondition.Require(key, Error.ArgumentNull("key"));
+            Precondition.Require(key, () => Error.ArgumentNull("key"));
             object obj = Cache.Add(key, value, CreateTagDependency(Cache, tags),
                 expiration, Cache.NoSlidingExpiration,
                 CacheItemPriority.Normal, null);
@@ -151,7 +151,7 @@ namespace Radischevo.Wahha.Web.Caching
         public void Insert<T>(string key, T value, DateTime expiration,
 			IEnumerable<string> tags)
         {
-            Precondition.Require(key, Error.ArgumentNull("key"));
+            Precondition.Require(key, () => Error.ArgumentNull("key"));
 
             Cache.Insert(key, value, CreateTagDependency(Cache, tags),
                 expiration, Cache.NoSlidingExpiration,
@@ -160,7 +160,7 @@ namespace Radischevo.Wahha.Web.Caching
 
         public void Remove(string key)
         {
-            Precondition.Require(key, Error.ArgumentNull("key"));
+            Precondition.Require(key, () => Error.ArgumentNull("key"));
             Cache.Remove(key);
         }
         #endregion

@@ -61,7 +61,7 @@ namespace Radischevo.Wahha.Data
 		protected KeyedDbRepository(IDbDataProvider dataProvider,
 			IDbMaterializer<TEntity> materializer)
 		{
-			Precondition.Require(materializer, Error.ArgumentNull("materializer"));
+			Precondition.Require(materializer, () => Error.ArgumentNull("materializer"));
 
 			_dataProvider = dataProvider;
 			_materializer = materializer;
@@ -85,7 +85,7 @@ namespace Radischevo.Wahha.Data
 			}
 			set
 			{
-				Precondition.Require(value, Error.ArgumentNull("value"));
+				Precondition.Require(value, () => Error.ArgumentNull("value"));
 				_materializer = value;
 			}
 		}
@@ -131,7 +131,7 @@ namespace Radischevo.Wahha.Data
 
 		protected override IEnumerable<TEntity> ExecuteSelect(DbCommandDescriptor command)
 		{
-			Precondition.Require(command, Error.ArgumentNull("command"));
+			Precondition.Require(command, () => Error.ArgumentNull("command"));
 
 			return DataProvider.Execute(command)
 				.Using(CommandBehavior.CloseConnection)
@@ -162,7 +162,7 @@ namespace Radischevo.Wahha.Data
 
 		protected virtual TEntity ExecuteSingle(DbCommandDescriptor command, bool isComplete)
 		{
-			Precondition.Require(command, Error.ArgumentNull("command"));
+			Precondition.Require(command, () => Error.ArgumentNull("command"));
 
 			return DataProvider.Execute(command).Using(CommandBehavior.CloseConnection)
 				.AsDataReader(reader => {

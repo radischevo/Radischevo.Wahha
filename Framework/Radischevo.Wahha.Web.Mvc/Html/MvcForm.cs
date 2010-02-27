@@ -24,13 +24,13 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         #region Constructors
         public MvcForm(HttpResponseBase response)
         {
-            Precondition.Require(response, Error.ArgumentNull("response"));
+            Precondition.Require(response, () => Error.ArgumentNull("response"));
             _response = response;
         }
 
         public MvcForm(HttpResponseBase response, FormMethod method)
         {
-            Precondition.Require(response, Error.ArgumentNull("response"));
+            Precondition.Require(response, () => Error.ArgumentNull("response"));
             _response = response;
             _method = method;
         }

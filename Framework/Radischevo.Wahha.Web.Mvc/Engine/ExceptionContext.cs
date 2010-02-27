@@ -16,7 +16,7 @@ namespace Radischevo.Wahha.Web.Mvc
         public ExceptionContext(ControllerContext context, Exception exception)
             : base(context)
         {
-            Precondition.Require(exception, Error.ArgumentNull("exception"));
+            Precondition.Require(exception, () => Error.ArgumentNull("exception"));
             _exception = exception;
             _result = EmptyResult.Instance;
         }

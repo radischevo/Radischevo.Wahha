@@ -46,7 +46,7 @@ namespace Radischevo.Wahha.Web.Mvc
         public ModelMetadata(ModelMetadata container, string propertyName, 
             Type modelType, Func<object, object> accessor)
         {
-            Precondition.Require(modelType, Error.ArgumentNull("type"));
+            Precondition.Require(modelType, () => Error.ArgumentNull("type"));
 
             _container = container;
             _propertyName = propertyName;

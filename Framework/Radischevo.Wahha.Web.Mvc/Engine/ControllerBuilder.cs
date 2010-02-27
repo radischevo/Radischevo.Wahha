@@ -53,14 +53,14 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public void SetControllerFactory(IControllerFactory factory)
         {
-            Precondition.Require(factory, Error.ArgumentNull("factory"));
+            Precondition.Require(factory, () => Error.ArgumentNull("factory"));
             _factoryThunk = () => factory;
         }
 
         public void SetControllerFactory(Type factoryType)
         {
             Type type = factoryType;
-            Precondition.Require(type, Error.ArgumentNull("factoryType"));
+            Precondition.Require(type, () => Error.ArgumentNull("factoryType"));
             if (!typeof(IControllerFactory).IsAssignableFrom(type))
                 throw Error.IncompatibleControllerFactoryType(type);
 

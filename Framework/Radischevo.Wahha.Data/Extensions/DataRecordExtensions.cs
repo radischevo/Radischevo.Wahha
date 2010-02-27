@@ -42,7 +42,7 @@ namespace Radischevo.Wahha.Data
         public static IDictionary<string, object> ToDictionary(
             this IDataRecord record, IEqualityComparer<string> comparer)
         {
-            Precondition.Require(record, Error.ArgumentNull("record"));
+            Precondition.Require(record, () => Error.ArgumentNull("record"));
 
             Dictionary<string, object> dictionary = 
                 new Dictionary<string, object>(record.FieldCount, comparer);

@@ -32,7 +32,7 @@ namespace Radischevo.Wahha.Core
         #region Static Extension Methods
         public static FieldAccessor CreateAccessor(this FieldInfo field)
         {
-            Precondition.Require(field, Error.ArgumentNull("field"));
+			Precondition.Require(field, () => Error.ArgumentNull("field"));
             return _cache.GetAccessor(field);
         }
         #endregion

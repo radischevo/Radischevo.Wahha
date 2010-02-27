@@ -16,7 +16,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
 		#region Instance Methods
 		public override ModelValidator GetValidator(Type type)
 		{
-			Precondition.Require(type, Error.ArgumentNull("type"));
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
 			return new DataErrorInfoModelValidator(type);
 		}
 		#endregion

@@ -21,7 +21,7 @@ namespace Radischevo.Wahha.Web.Mvc
             // что были использованы как источник в 
             // атрибуте BindAttribute.
 
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             return new FormCollection(context.Data);
         }
         #endregion

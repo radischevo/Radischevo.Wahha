@@ -55,7 +55,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public void Add(Type modelType, IModelBinder binder)
         {
-            Precondition.Require(modelType, Error.ArgumentNull("modelType"));
+            Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
             _collection.Add(modelType, binder);
         }
 
@@ -76,7 +76,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public IModelBinder GetBinder(Type modelType, bool fallbackToDefault)
         {
-            Precondition.Require(modelType, Error.ArgumentNull("modelType"));
+            Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
 
             if (_collection.ContainsKey(modelType))
                 return _collection[modelType] ?? DefaultBinder;

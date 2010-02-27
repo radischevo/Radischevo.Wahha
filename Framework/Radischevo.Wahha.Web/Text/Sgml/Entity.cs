@@ -481,8 +481,8 @@ namespace Radischevo.Wahha.Web.Text.Sgml
         /// <returns>The scanned token.</returns>
         public string ScanToken(StringBuilder sb, string term, bool nameToken)
         {
-            Precondition.Require(sb, Error.ArgumentNull("sb"));
-            Precondition.Require(term, Error.ArgumentNull("term"));
+            Precondition.Require(sb, () => Error.ArgumentNull("sb"));
+            Precondition.Require(term, () => Error.ArgumentNull("term"));
             
             sb.Length = 0;
             char ch = _lastChar;
@@ -510,7 +510,7 @@ namespace Radischevo.Wahha.Web.Text.Sgml
         /// <returns>The literal scanned from the input stream.</returns>
         public string ScanLiteral(StringBuilder sb, char quote)
         {
-            Precondition.Require(sb, Error.ArgumentNull("sb"));
+            Precondition.Require(sb, () => Error.ArgumentNull("sb"));
             
             sb.Length = 0;
             char ch = ReadChar();
@@ -553,8 +553,8 @@ namespace Radischevo.Wahha.Web.Text.Sgml
         /// <returns>The string read from the input stream.</returns>
         public string ScanToEnd(StringBuilder sb, string type, string terminators)
         {
-            Precondition.Require(sb, Error.ArgumentNull("sb"));
-            Precondition.Require(terminators, Error.ArgumentNull("terminators"));
+            Precondition.Require(sb, () => Error.ArgumentNull("sb"));
+            Precondition.Require(terminators, () => Error.ArgumentNull("terminators"));
 
             if (sb != null)
                 sb.Length = 0;

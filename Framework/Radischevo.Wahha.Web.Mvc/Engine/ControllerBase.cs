@@ -221,7 +221,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected void Execute(RequestContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
 
 			VerifyExecuteCalledOnce();
             Initialize(context);
@@ -230,14 +230,14 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual void Initialize(RequestContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
 
             _context = new ControllerContext(context, this);
         }
 
         protected virtual void InitializeChildRequest(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
 			context.RouteData.Tokens[ControllerContext.ParentContextKey] = context;
 			_tempData = context.Controller.TempData;
 

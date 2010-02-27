@@ -19,8 +19,8 @@ namespace Radischevo.Wahha.Data
         #region Constructors
         public ObjectEnumerator(IDbDataReader reader, Func<IDbDataRecord, TEntity> translator)
         {
-            Precondition.Require(reader, Error.ArgumentNull("reader"));
-            Precondition.Require(translator, Error.ArgumentNull("translator"));
+            Precondition.Require(reader, () => Error.ArgumentNull("reader"));
+            Precondition.Require(translator, () => Error.ArgumentNull("translator"));
 
             _reader = reader;
             _enumerator = _reader.GetEnumerator();
@@ -29,8 +29,8 @@ namespace Radischevo.Wahha.Data
 
 		public ObjectEnumerator(IDbDataReader reader, IDbMaterializer<TEntity> materializer)
 		{
-			Precondition.Require(reader, Error.ArgumentNull("reader"));
-			Precondition.Require(materializer, Error.ArgumentNull("materializer"));
+			Precondition.Require(reader, () => Error.ArgumentNull("reader"));
+			Precondition.Require(materializer, () => Error.ArgumentNull("materializer"));
 
 			_reader = reader;
 			_enumerator = _reader.GetEnumerator();

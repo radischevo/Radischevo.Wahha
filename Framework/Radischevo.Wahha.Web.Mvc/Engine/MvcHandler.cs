@@ -31,7 +31,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public MvcHandler(RequestContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             _context = context;
         }
         #endregion

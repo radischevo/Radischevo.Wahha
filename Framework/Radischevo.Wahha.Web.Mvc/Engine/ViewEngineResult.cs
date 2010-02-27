@@ -13,8 +13,8 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public ViewEngineResult(IView view, IViewEngine engine)
         {
-            Precondition.Require(view, Error.ArgumentNull("view"));
-            Precondition.Require(engine, Error.ArgumentNull("engine"));
+            Precondition.Require(view, () => Error.ArgumentNull("view"));
+            Precondition.Require(engine, () => Error.ArgumentNull("engine"));
 
             _view = view;
             _engine = engine;

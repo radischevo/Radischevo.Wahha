@@ -24,7 +24,7 @@ namespace Radischevo.Wahha.Core
         public static IEnumerable<TAttribute> GetCustomAttributes<TAttribute>(this MemberInfo member, 
             bool inherit)
         {
-            Precondition.Require(member, Error.ArgumentNull("member"));
+			Precondition.Require(member, () => Error.ArgumentNull("member"));
             return member.GetCustomAttributes(typeof(TAttribute), inherit).OfType<TAttribute>();
         }
 

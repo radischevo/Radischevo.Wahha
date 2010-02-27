@@ -27,8 +27,8 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public ActionExecutor(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(context.Controller, Error.ArgumentNull("controller"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(context.Controller, () => Error.ArgumentNull("controller"));
 
             _context = context;
         }
@@ -150,8 +150,8 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         protected ControllerBase GetController()
         {
-            Precondition.Require(_context, Error.ArgumentNull("context"));
-            Precondition.Require(_context.Controller, Error.ArgumentNull("controller"));
+            Precondition.Require(_context, () => Error.ArgumentNull("context"));
+            Precondition.Require(_context.Controller, () => Error.ArgumentNull("controller"));
 
             return _context.Controller;
         }
@@ -204,8 +204,8 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual IDictionary<string, object> GetParameterValues(
             ControllerContext context, ActionDescriptor descriptor)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(descriptor, Error.ArgumentNull("descriptor"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(descriptor, () => Error.ArgumentNull("descriptor"));
 
             return descriptor.GetParameters().ToDictionary(
                 p => p.Name, p => GetParameterValue(context, p), 
@@ -215,8 +215,8 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual object GetParameterValue(ControllerContext context, 
             ParameterDescriptor parameter)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(parameter, Error.ArgumentNull("parameter"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(parameter, () => Error.ArgumentNull("parameter"));
 
             IModelBinder binder = GetBinder(parameter);
             BindingContext bc = new BindingContext(context, parameter.Type, 
@@ -231,10 +231,10 @@ namespace Radischevo.Wahha.Web.Mvc
             ControllerContext context, ActionDescriptor action, 
             IList<IActionFilter> filters, IDictionary<string, object> parameters)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(action, Error.ArgumentNull("action"));
-            Precondition.Require(filters, Error.ArgumentNull("filters"));
-            Precondition.Require(parameters, Error.ArgumentNull("parameters"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(action, () => Error.ArgumentNull("action"));
+            Precondition.Require(filters, () => Error.ArgumentNull("filters"));
+            Precondition.Require(parameters, () => Error.ArgumentNull("parameters"));
             
             ActionExecutionContext exc = new ActionExecutionContext(context, action);
             Func<ActionExecutedContext> continuation = () =>
@@ -248,9 +248,9 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual ResultExecutedContext InvokeActionResultFilters(
             ControllerContext context, IList<IResultFilter> filters, ActionResult result)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(result, Error.ArgumentNull("result"));
-            Precondition.Require(filters, Error.ArgumentNull("filters"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(result, () => Error.ArgumentNull("result"));
+            Precondition.Require(filters, () => Error.ArgumentNull("filters"));
 
             ResultExecutionContext rec = new ResultExecutionContext(context, result);
             Func<ResultExecutedContext> continuation = () => {
@@ -267,9 +267,9 @@ namespace Radischevo.Wahha.Web.Mvc
             ControllerContext context, ActionDescriptor descriptor,
             IEnumerable<IAuthorizationFilter> filters)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(descriptor, Error.ArgumentNull("descriptor"));
-            Precondition.Require(filters, Error.ArgumentNull("filters"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(descriptor, () => Error.ArgumentNull("descriptor"));
+            Precondition.Require(filters, () => Error.ArgumentNull("filters"));
 
             AuthorizationContext filterContext = new AuthorizationContext(context, descriptor);
             foreach (IAuthorizationFilter filter in filters)
@@ -284,8 +284,8 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual ExceptionContext InvokeExceptionFilters(
             ControllerContext context, Exception exception, IList<IExceptionFilter> filters)
         {
-            Precondition.Require(exception, Error.ArgumentNull("exception"));
-            Precondition.Require(filters, Error.ArgumentNull("filters"));
+            Precondition.Require(exception, () => Error.ArgumentNull("exception"));
+            Precondition.Require(filters, () => Error.ArgumentNull("filters"));
 
             ExceptionContext filterContext = new ExceptionContext(context, exception);
             foreach (IExceptionFilter filter in filters)
@@ -302,9 +302,8 @@ namespace Radischevo.Wahha.Web.Mvc
         public virtual bool InvokeAction(ControllerContext context, string actionName, 
             IDictionary<string, object> values)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(!String.IsNullOrEmpty(actionName),
-                Error.ArgumentNull("actionName"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Defined(actionName, () => Error.ArgumentNull("actionName"));
 
             ControllerDescriptor controller = GetControllerDescriptor(context);
             ActionDescriptor currentAction = FindAction(context, controller, actionName);
@@ -351,9 +350,9 @@ namespace Radischevo.Wahha.Web.Mvc
         public virtual ActionResult InvokeActionMethod(ControllerContext context,
             ActionDescriptor action, IDictionary<string, object> parameters)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(action, Error.ArgumentNull("action"));
-            Precondition.Require(parameters, Error.ArgumentNull("parameters"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(action, () => Error.ArgumentNull("action"));
+            Precondition.Require(parameters, () => Error.ArgumentNull("parameters"));
 
             object value = action.Execute(context, parameters);
             return CreateActionResult(context, action, value);
@@ -361,8 +360,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual void InvokeActionResult(ControllerContext context, ActionResult result)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(result, Error.ArgumentNull("result"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(result, () => Error.ArgumentNull("result"));
 
             result.Execute(context);
         }

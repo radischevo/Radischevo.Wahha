@@ -65,7 +65,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configuration
         #region Static Methods
         private static IModelBinder CreateModelBinder(Type type)
         {
-            Precondition.Require(type, Error.ArgumentNull("type"));
+            Precondition.Require(type, () => Error.ArgumentNull("type"));
             if (!typeof(IModelBinder).IsAssignableFrom(type))
                 throw Error.IncompatibleModelBinderType(type);
 
@@ -74,7 +74,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configuration
 
         private static ModelMetadataProvider CreateMetadataProvider(Type type)
         {
-            Precondition.Require(type, Error.ArgumentNull("type"));
+            Precondition.Require(type, () => Error.ArgumentNull("type"));
             if (!typeof(ModelMetadataProvider).IsAssignableFrom(type))
                 throw Error.IncompatibleModelMetadataProviderType(type);
 
@@ -86,7 +86,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configuration
 
         private static ModelValidatorProvider CreateValidatorProvider(Type type)
         {
-            Precondition.Require(type, Error.ArgumentNull("type"));
+            Precondition.Require(type, () => Error.ArgumentNull("type"));
             if (!typeof(ModelValidatorProvider).IsAssignableFrom(type))
                 throw Error.IncompatibleModelValidatorProviderType(type);
 
@@ -100,7 +100,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configuration
         #region Instance Methods
         internal void Init(ModelConfigurationElementCollection element)
         {
-            Precondition.Require(element, Error.ArgumentNull("element"));
+            Precondition.Require(element, () => Error.ArgumentNull("element"));
 
             if (!String.IsNullOrEmpty(element.BinderType))
                 _binders.DefaultBinder = CreateModelBinder(

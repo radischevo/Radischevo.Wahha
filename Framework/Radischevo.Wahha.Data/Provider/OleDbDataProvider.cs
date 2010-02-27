@@ -171,10 +171,10 @@ namespace Radischevo.Wahha.Data.Provider
         /// <typeparam name="TR">The type of the returning value.</typeparam>
         public virtual TR Execute<TR>(IDbCommand command, Func<IDbCommand, TR> converter)
         {
-            Precondition.Require(command, Error.ArgumentNull("command"));
-            Precondition.Require(command is OleDbCommand, 
-                Error.UnsupportedCommandType(typeof(OleDbCommand), command.GetType()));
-            Precondition.Require(converter, Error.ArgumentNull("converter"));
+            Precondition.Require(command, () => Error.ArgumentNull("command"));
+            Precondition.Require(command is OleDbCommand,
+				() => Error.UnsupportedCommandType(typeof(OleDbCommand), command.GetType()));
+            Precondition.Require(converter, () => Error.ArgumentNull("converter"));
 
             TR result = default(TR);
             try

@@ -200,7 +200,7 @@ namespace Radischevo.Wahha.Web.Routing
         /// containing the route parameter values</param>
         public override VirtualPathData GetVirtualPath(RequestContext context, ValueDictionary values)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             HttpContextBase httpContext = context.Context;
             HttpRequestBase request = httpContext.Request;
 
@@ -243,7 +243,7 @@ namespace Radischevo.Wahha.Web.Routing
         /// containing the incoming request</param>
         public override RouteData GetRouteData(HttpContextBase context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
 
             string applicationPath = GetApplicationPath(context);
             string appRelativePath = String.Concat(context.Request

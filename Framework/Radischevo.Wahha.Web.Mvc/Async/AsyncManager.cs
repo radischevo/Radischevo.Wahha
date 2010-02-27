@@ -98,8 +98,8 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		public virtual void RegisterTask(Func<AsyncCallback, IAsyncResult> beginDelegate, 
 			Action<IAsyncResult> endDelegate)
 		{
-			Precondition.Require(beginDelegate, Error.ArgumentNull("beginDelegate"));
-			Precondition.Require(endDelegate, Error.ArgumentNull("endDelegate"));
+			Precondition.Require(beginDelegate, () => Error.ArgumentNull("beginDelegate"));
+			Precondition.Require(endDelegate, () => Error.ArgumentNull("endDelegate"));
 			
 			AsyncCallback callback = ar => {
 				lock (_taskLock)

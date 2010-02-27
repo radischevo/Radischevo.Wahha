@@ -12,8 +12,8 @@ namespace Radischevo.Wahha.Web.Mvc
         public static Route MapRoute(this RouteCollection routes, string key,
             string url)
         {
-            Precondition.Require(routes, Error.ArgumentNull("routes"));
-            Precondition.Require(url, Error.ArgumentNull("url"));
+            Precondition.Require(routes, () => Error.ArgumentNull("routes"));
+            Precondition.Require(url, () => Error.ArgumentNull("url"));
 
             Route route = new Route(url, new MvcRouteHandler());
 
@@ -37,8 +37,8 @@ namespace Radischevo.Wahha.Web.Mvc
             string url, object defaults, object tokens, 
 			params IRouteConstraint[] constraints)
         {
-            Precondition.Require(routes, Error.ArgumentNull("routes"));
-            Precondition.Require(url, Error.ArgumentNull("url"));
+            Precondition.Require(routes, () => Error.ArgumentNull("routes"));
+            Precondition.Require(url, () => Error.ArgumentNull("url"));
 
 			constraints = constraints ?? new IRouteConstraint[0];
 
@@ -69,8 +69,8 @@ namespace Radischevo.Wahha.Web.Mvc
 			object tokens, params IRouteConstraint[] constraints)
 			where TController : IController
 		{
-			Precondition.Require(routes, Error.ArgumentNull("routes"));
-			Precondition.Require(url, Error.ArgumentNull("url"));
+			Precondition.Require(routes, () => Error.ArgumentNull("routes"));
+			Precondition.Require(url, () => Error.ArgumentNull("url"));
 
 			MethodCallExpression mexp = (action.Body as MethodCallExpression);
 			if (mexp == null)

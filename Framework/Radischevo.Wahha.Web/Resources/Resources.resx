@@ -285,6 +285,9 @@
   <data name="Error_ParameterMustBeGreaterThanOrEqual" xml:space="preserve">
     <value>The value of the '{0}' parameter should be greater than or equal to {1}.</value>
   </data>
+  <data name="Error_RuleNameCannotDifferFromKey" xml:space="preserve">
+    <value>The name of the rule '{0}' cannot differ from its key '{1}'.</value>
+  </data>
   <data name="Error_StringIsNotQuoted" xml:space="preserve">
     <value>String is not quoted.</value>
   </data>

@@ -31,8 +31,7 @@ namespace Radischevo.Wahha.Web.Routing
             bool validateAccessRights, IBuildManager buildManager)
             : base()
         {
-            Precondition.Require(!String.IsNullOrEmpty(virtualPath),
-                Error.ArgumentNull("virtualPath"));
+            Precondition.Defined(virtualPath, () => Error.ArgumentNull("virtualPath"));
 
             _virtualPath = virtualPath;
             _validateAccessRights = validateAccessRights;

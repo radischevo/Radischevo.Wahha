@@ -59,7 +59,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             string name, MultiSelectList dataSource, bool isMultiple, 
             IDictionary<string, object> attributes)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
             
             if (attributes == null)
                 attributes = new ValueDictionary();
@@ -244,7 +244,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         public static string CheckBox(this HtmlControlHelper helper,
             string name, object value, IDictionary<string, object> attributes)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
             return CheckBox(helper, name, value, false, attributes);
         }
 
@@ -257,7 +257,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         public static string CheckBox(this HtmlControlHelper helper, 
             string name, object value, bool isChecked, IDictionary<string, object> attributes)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
 
             if (attributes == null)
                 attributes = new ValueDictionary();
@@ -294,7 +294,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             IDictionary<string, object> attributes)
             where TModel: class
         {
-            Precondition.Require(isChecked, Error.ArgumentNull("isChecked"));
+            Precondition.Require(isChecked, () => Error.ArgumentNull("isChecked"));
 
             TModel model = (TModel)helper.Context.ViewData.Model;
             Func<bool> accessor = LinqHelper.WrapModelAccessor(isChecked, model);
@@ -337,7 +337,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         public static string RadioButton(this HtmlControlHelper helper,
             string name, object value, bool isChecked, IDictionary<string, object> attributes)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
 
             if (attributes == null)
                 attributes = new ValueDictionary();
@@ -379,7 +379,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             IDictionary<string, object> attributes)
             where TModel : class
         {
-            Precondition.Require(isChecked, Error.ArgumentNull("isChecked"));
+            Precondition.Require(isChecked, () => Error.ArgumentNull("isChecked"));
 
             TModel model = (TModel)helper.Context.ViewData.Model;
             Func<bool> accessor = LinqHelper.WrapModelAccessor(isChecked, model);
@@ -410,7 +410,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         public static string Hidden(this HtmlControlHelper helper, 
             string name, object value, IDictionary<string, object> attributes)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
 
             if (helper.DataSource.Keys.Any(k => k.Equals(name, StringComparison.OrdinalIgnoreCase)))
                 value = helper.DataSource.GetValue<object>(name);
@@ -437,7 +437,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             IDictionary<string, object> attributes)
             where TModel : class
         {
-            Precondition.Require(value, Error.ArgumentNull("value"));
+            Precondition.Require(value, () => Error.ArgumentNull("value"));
 
             TModel model = (TModel)helper.Context.ViewData.Model;
             Func<object> func = LinqHelper.WrapModelAccessor(value, model);
@@ -467,7 +467,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         public static string TextBox(this HtmlControlHelper helper, 
             string name, object value, IDictionary<string, object> attributes)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
             if(helper.DataSource.Keys.Any(c => String.Equals(c, name, 
                 StringComparison.InvariantCultureIgnoreCase)))
                 value = helper.DataSource.GetValue<object>(name);
@@ -495,7 +495,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             IDictionary<string, object> attributes)
             where TModel : class
         {
-            Precondition.Require(value, Error.ArgumentNull("value"));
+            Precondition.Require(value, () => Error.ArgumentNull("value"));
 
             TModel model = (TModel)helper.Context.ViewData.Model;
             Func<object> func = LinqHelper.WrapModelAccessor(value, model);
@@ -525,7 +525,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         public static string Password(this HtmlControlHelper helper,
             string name, object value, IDictionary<string, object> attributes)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
             return InputBuilder(helper, "password", name, value, attributes);
         }
 
@@ -548,7 +548,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             IDictionary<string, object> attributes)
             where TModel : class
         {
-            Precondition.Require(value, Error.ArgumentNull("value"));
+            Precondition.Require(value, () => Error.ArgumentNull("value"));
 
             TModel model = (TModel)helper.Context.ViewData.Model;
             Func<object> func = LinqHelper.WrapModelAccessor(value, model);
@@ -602,7 +602,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         public static string TextArea(this HtmlControlHelper helper, 
             string name, string value, int rows, int columns, IDictionary<string, object> attributes)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
             if (helper.DataSource.Keys.Any(k => k.Equals(name, StringComparison.OrdinalIgnoreCase)))
                 value = helper.DataSource.GetValue<string>(name);
 
@@ -644,7 +644,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             int rows, int columns, IDictionary<string, object> attributes)
             where TModel : class
         {
-            Precondition.Require(value, Error.ArgumentNull("value"));
+            Precondition.Require(value, () => Error.ArgumentNull("value"));
 
             TModel model = (TModel)helper.Context.ViewData.Model;
             Func<string> func = LinqHelper.WrapModelAccessor(value, model);

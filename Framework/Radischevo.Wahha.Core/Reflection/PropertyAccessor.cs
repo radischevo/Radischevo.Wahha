@@ -84,7 +84,7 @@ namespace Radischevo.Wahha.Core
         /// <param name="property">The property to build accessor for</param>
         public PropertyAccessor(PropertyInfo property)
         {
-            Precondition.Require(property, Error.ArgumentNull("property"));
+			Precondition.Require(property, () => Error.ArgumentNull("property"));
 
             if (property.GetIndexParameters().Length > 0)
                 throw Error.CouldNotCreateAccessorForIndexedProperty(property);
@@ -138,7 +138,7 @@ namespace Radischevo.Wahha.Core
         /// <param name="instance">An object whose property value will be returned</param>
         public object GetValue(object instance)
         {
-            Precondition.Require(instance, Error.ArgumentNull("instance"));
+			Precondition.Require(instance, () => Error.ArgumentNull("instance"));
             return _accessor.GetBoxedValue(instance);
         }
 
@@ -151,7 +151,7 @@ namespace Radischevo.Wahha.Core
         /// <typeparam name="V">The type of the property.</typeparam>
         public V GetValue<T, V>(T instance)
         {
-            Precondition.Require(instance, Error.ArgumentNull("instance"));
+			Precondition.Require(instance, () => Error.ArgumentNull("instance"));
             return (V)_accessor.GetBoxedValue(instance);
         }
 
@@ -163,7 +163,7 @@ namespace Radischevo.Wahha.Core
         /// <param name="value">The value to assign to the property</param>
         public void SetValue(object instance, object value)
         {
-            Precondition.Require(instance, Error.ArgumentNull("instance"));
+			Precondition.Require(instance, () => Error.ArgumentNull("instance"));
             _accessor.SetBoxedValue(instance, value);
         }
         #endregion

@@ -32,7 +32,7 @@ namespace Radischevo.Wahha.Core
         #region Static Extension Methods
         public static PropertyAccessor CreateAccessor(this PropertyInfo property)
         {
-            Precondition.Require(property, Error.ArgumentNull("property"));
+			Precondition.Require(property, () => Error.ArgumentNull("property"));
             return _cache.GetAccessor(property);
         }
         #endregion

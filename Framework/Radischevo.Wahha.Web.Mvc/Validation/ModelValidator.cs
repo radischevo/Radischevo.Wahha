@@ -25,7 +25,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         public ModelValidator(ModelValidator container, 
             string propertyName, Type modelType)
         {
-            Precondition.Require(modelType, Error.ArgumentNull("modelType"));
+            Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
 
             _container = container;
             _propertyName = propertyName;

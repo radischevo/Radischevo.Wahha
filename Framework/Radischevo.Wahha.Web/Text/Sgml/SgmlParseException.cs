@@ -90,7 +90,7 @@ namespace Radischevo.Wahha.Web.Text.Sgml
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            Precondition.Require(info, Error.ArgumentNull("info"));
+            Precondition.Require(info, () => Error.ArgumentNull("info"));
 
             info.AddValue("entityContext", _entityContext);
             base.GetObjectData(info, context);

@@ -42,7 +42,7 @@ namespace Radischevo.Wahha.Core
 
         public static object Evaluate(this object container, string expression)
         {
-            Precondition.Require(expression, Error.ArgumentNull("expression"));
+			Precondition.Require(expression, () => Error.ArgumentNull("expression"));
             expression = expression.Trim();
 
             if (container == null)
@@ -66,8 +66,8 @@ namespace Radischevo.Wahha.Core
 			Func<T, TResult> expression, TResult defaultValue) 
 			where T : class
 		{
-			Precondition.Require(expression, 
-				Error.ArgumentNull("expression"));
+			Precondition.Require(expression,
+				() => Error.ArgumentNull("expression"));
 
 			if (container == null)
 				return defaultValue;
@@ -97,8 +97,8 @@ namespace Radischevo.Wahha.Core
 
         private static object GetIndexedPropertyValue(object container, string expr)
         {
-            Precondition.Require(container, Error.ArgumentNull("container"));
-            Precondition.Require(!String.IsNullOrEmpty(expr), Error.BindingExpressionCannotBeEmpty("expr"));
+			Precondition.Require(container, () => Error.ArgumentNull("container"));
+			Precondition.Defined(expr, () => Error.BindingExpressionCannotBeEmpty("expr"));
 
             int start = expr.IndexOfAny(_indexExprStartChars);
             int end = expr.IndexOfAny(_indexExprEndChars, start + 1);
@@ -164,8 +164,8 @@ namespace Radischevo.Wahha.Core
 
         private static object GetPropertyOrFieldValue(object container, string name)
         {
-            Precondition.Require(container, Error.ArgumentNull("container"));
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.BindingExpressionCannotBeEmpty("name"));
+			Precondition.Require(container, () => Error.ArgumentNull("container"));
+			Precondition.Defined(name, () => Error.BindingExpressionCannotBeEmpty("name"));
 
             Type type = container.GetType();
             PropertyInfo pi = type.GetProperty(name,

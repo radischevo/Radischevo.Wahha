@@ -20,7 +20,7 @@ namespace Radischevo.Wahha.Core
         #region Constructors
         public MethodInvoker(MethodInfo method)
         {
-            Precondition.Require(method, Error.ArgumentNull("method"));
+			Precondition.Require(method, () => Error.ArgumentNull("method"));
 
             _method = method;
             _invoker = CreateInvoker(method);

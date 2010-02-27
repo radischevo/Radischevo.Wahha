@@ -45,7 +45,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configuration
         #region Instance Methods
         internal void Init(ControllerConfigurationElement element)
         {
-            Precondition.Require(element, Error.ArgumentNull("element"));
+            Precondition.Require(element, () => Error.ArgumentNull("element"));
 
             Type type = Type.GetType(element.FactoryType, false, true);
             if (type != null)

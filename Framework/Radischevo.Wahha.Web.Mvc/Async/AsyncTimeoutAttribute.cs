@@ -15,7 +15,7 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		#region Constructors
 		public AsyncTimeoutAttribute(int duration)
 		{
-			Precondition.Require(duration > -2, Error.InvalidTimeout("duration"));
+			Precondition.Require(duration > -2, () => Error.InvalidTimeout("duration"));
 			_duration = duration;
 		}
 		#endregion
@@ -33,10 +33,10 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		#region Instance Methods
 		public void OnExecuting(ActionExecutionContext context)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
 
 			IAsyncManagerContainer container = (context.Controller as IAsyncManagerContainer);
-			Precondition.Require(container, Error.ControllerMustImplementAsyncManagerContainer(context.Controller.GetType()));
+			Precondition.Require(container, () => Error.ControllerMustImplementAsyncManagerContainer(context.Controller.GetType()));
 			
 			container.AsyncManager.Timeout = Duration;
 		}

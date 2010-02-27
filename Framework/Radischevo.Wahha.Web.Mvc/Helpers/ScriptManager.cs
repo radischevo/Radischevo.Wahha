@@ -30,7 +30,7 @@ namespace Radischevo.Wahha.Web.Mvc.Ajax
             /// <param name="manager">A parent script manager instance.</param>
             public ScriptBlock(ScriptManager manager)
             {
-                Precondition.Require(manager, Error.ArgumentNull("manager"));
+                Precondition.Require(manager, () => Error.ArgumentNull("manager"));
                 _manager = manager;
                 _scripts = new List<Action>();
             }
@@ -63,7 +63,7 @@ namespace Radischevo.Wahha.Web.Mvc.Ajax
             /// decorate the script block with.</param>
             public void Wrap(Action<string> wrapper)
             {
-                Precondition.Require(wrapper, Error.ArgumentNull("wrapper"));
+                Precondition.Require(wrapper, () => Error.ArgumentNull("wrapper"));
                 _wrapper = wrapper;
             }
 
@@ -106,7 +106,7 @@ namespace Radischevo.Wahha.Web.Mvc.Ajax
         /// <see cref="Radischevo.Wahha.Web.Mvc.ViewContext"/> instance.</param>
         public ScriptManager(ViewContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             _context = context;
             _includes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             _blocks = new Dictionary<string, ScriptBlock>(StringComparer.OrdinalIgnoreCase);

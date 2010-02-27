@@ -39,7 +39,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override bool IsValid(ControllerContext context, MethodInfo actionMethod)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             return ((_verbs & context.Context.Request.HttpMethod) > 0);
         }
         #endregion

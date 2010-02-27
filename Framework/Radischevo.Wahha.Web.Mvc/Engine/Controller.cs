@@ -42,7 +42,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
             set
             {
-                Precondition.Require(value, Error.ArgumentNull("value"));
+                Precondition.Require(value, () => Error.ArgumentNull("value"));
                 _actionExecutor = value;
             }
         }
@@ -176,9 +176,9 @@ namespace Radischevo.Wahha.Web.Mvc
             where TController : Controller
         {
             MethodCallExpression mce = (action.Body as MethodCallExpression);
-            Precondition.Require(mce, Error.ExpressionMustBeAMethodCall("action"));
+            Precondition.Require(mce, () => Error.ExpressionMustBeAMethodCall("action"));
             Precondition.Require(mce.Object == action.Parameters[0],
-                Error.MethodCallMustTargetLambdaArgument("action"));
+				() => Error.MethodCallMustTargetLambdaArgument("action"));
 
             Include(typeof(TController).Name,
                 ActionMethodSelector.GetNameOrAlias(mce.Method),
@@ -196,7 +196,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			{
 				controller = factory.CreateController(Context, controllerName);
 				Controller c = (controller as Controller);
-				Precondition.Require(c, Error.TargetMustSubclassController(controllerName));
+				Precondition.Require(c, () => Error.TargetMustSubclassController(controllerName));
 
 				c.InitializeChildRequest(Context);
 
@@ -347,9 +347,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// <param name="url">The URL to redirect to.</param>
         protected virtual ActionResult Redirect(string url)
         {
-            Precondition.Require(!String.IsNullOrEmpty(url), 
-                Error.ArgumentNull("url"));
-
+            Precondition.Defined(url, () => Error.ArgumentNull("url"));
             return new RedirectResult(url);
         }
 
@@ -360,9 +358,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		/// <param name="url">The URL to redirect to.</param>
 		protected virtual ActionResult RedirectPermanent(string url)
 		{
-			Precondition.Require(!String.IsNullOrEmpty(url),
-				Error.ArgumentNull("url"));
-
+			Precondition.Defined(url, () => Error.ArgumentNull("url"));
 			return new PermanentRedirectResult(url);
 		}
 

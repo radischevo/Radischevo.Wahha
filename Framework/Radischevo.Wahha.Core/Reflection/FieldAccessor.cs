@@ -62,7 +62,7 @@ namespace Radischevo.Wahha.Core
         /// <param name="field">The field to build accessor for</param>
         public FieldAccessor(FieldInfo field)
         {
-            Precondition.Require(field, Error.ArgumentNull("field"));
+			Precondition.Require(field, () => Error.ArgumentNull("field"));
 
             _field = field;
             _accessor = CreateAccessor(field);
@@ -117,7 +117,7 @@ namespace Radischevo.Wahha.Core
         /// <param name="instance">An object whose field value will be returned</param>
         public object GetValue(object instance)
         {
-            Precondition.Require(instance, Error.ArgumentNull("instance"));
+			Precondition.Require(instance, () => Error.ArgumentNull("instance"));
             return _accessor.GetBoxedValue(instance);
         }
 
@@ -130,7 +130,7 @@ namespace Radischevo.Wahha.Core
         /// <typeparam name="V">The type of the field.</typeparam>
         public V GetValue<T, V>(T instance)
         {
-            Precondition.Require(instance, Error.ArgumentNull("instance"));
+			Precondition.Require(instance, () => Error.ArgumentNull("instance"));
             return (V)_accessor.GetBoxedValue(instance);
         }
 
@@ -142,7 +142,7 @@ namespace Radischevo.Wahha.Core
         /// <param name="value">The value to assign to the field</param>
         public void SetValue(object instance, object value)
         {
-            Precondition.Require(instance, Error.ArgumentNull("instance"));
+			Precondition.Require(instance, () => Error.ArgumentNull("instance"));
             _accessor.SetBoxedValue(instance, value);
         }
         #endregion

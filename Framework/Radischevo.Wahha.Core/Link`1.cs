@@ -160,7 +160,7 @@ namespace Radischevo.Wahha.Core
 					if (!_hasLoadedValue)
 					{
 						Precondition.Require((_hasAssignedValue || _source != null),
-							Error.LinkSourceIsNotInitialized());
+							() => Error.LinkSourceIsNotInitialized());
 
 						_value = _source();
 						_hasLoadedValue = true;

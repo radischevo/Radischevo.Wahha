@@ -36,9 +36,9 @@ namespace Radischevo.Wahha.Web.Text
             string name, HtmlAttributeFlags flags, string pattern,
             string defaultValue)
         {
-            Precondition.Require(element, Error.ArgumentNull("element"));
-            Precondition.Require(!String.IsNullOrEmpty(name), 
-                Error.ArgumentNull("name"));
+            Precondition.Require(element, () => Error.ArgumentNull("element"));
+            Precondition.Defined(name,
+				() => Error.ArgumentNull("name"));
 
             _element = element;
             _name = name;

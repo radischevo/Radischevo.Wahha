@@ -144,8 +144,8 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 			bool debug, string codeBufferVariableName, HttpCacheability cacheability, 
 			int cacheDuration)
 		{
-			Precondition.Require(!String.IsNullOrEmpty(virtualPath), 
-				Error.ArgumentNull("virtualPath"));
+			Precondition.Defined(virtualPath,
+				() => Error.ArgumentNull("virtualPath"));
 
 			TemplateInfo info = new TemplateInfo();
 
@@ -160,8 +160,8 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 
 		private static string GenerateUrl(string handlerUrl, TemplateInfo info)
 		{
-			Precondition.Require(!String.IsNullOrEmpty(handlerUrl), 
-				Error.ArgumentNull("handlerUrl"));
+			Precondition.Defined(handlerUrl,
+				() => Error.ArgumentNull("handlerUrl"));
 
 			string serializedData;
 			string parameter = (handlerUrl.IndexOf('?') > -1) ? "&v=" : "?v=";
@@ -229,7 +229,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 
 		private void ProcessRequest(HttpContext context)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
 			ProcessRequestInternal(new HttpContextWrapper(context));
 		}
 
@@ -261,8 +261,8 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		private void RenderTemplate(HttpContextBase context, 
 			TemplateInfo info, string physicalPath)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
-			Precondition.Require(info, Error.ArgumentNull("info"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
+			Precondition.Require(info, () => Error.ArgumentNull("info"));
 
 			string cacheKey = CreateCacheKey(info);
 

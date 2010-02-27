@@ -18,8 +18,7 @@ namespace Radischevo.Wahha.Web.Text
         public StringReplacementRule(StringReplacementMode mode,
             string pattern, string replacement)
         {
-            Precondition.Require(!String.IsNullOrEmpty(pattern),
-                new ArgumentNullException("pattern"));
+            Precondition.Defined(pattern, () => Error.ArgumentNull("pattern"));
 
             _mode = mode;
             _pattern = pattern;
@@ -38,9 +37,7 @@ namespace Radischevo.Wahha.Web.Text
             }
             set
             {
-                Precondition.Require(!String.IsNullOrEmpty(value),
-                    new ArgumentNullException("value"));
-
+                Precondition.Defined(value, () => Error.ArgumentNull("value"));
                 _pattern = value;
             }
         }

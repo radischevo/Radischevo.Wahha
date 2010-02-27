@@ -18,7 +18,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public RequireRolesAttribute(params string[] roles)
         {
-            Precondition.Require(roles, Error.ArgumentNull("roles"));
+            Precondition.Require(roles, () => Error.ArgumentNull("roles"));
             _roles = roles;
         }
         #endregion

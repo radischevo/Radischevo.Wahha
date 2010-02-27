@@ -173,8 +173,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public void Load(ControllerContext context, ITempDataProvider provider)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(provider, Error.ArgumentNull("provider"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(provider, () => Error.ArgumentNull("provider"));
 
             IDictionary<string, object> pd = provider.Load(context);
             _data = (pd == null) ? new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase) : 
@@ -209,8 +209,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public void Save(ControllerContext context, ITempDataProvider provider)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(provider, Error.ArgumentNull("provider"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(provider, () => Error.ArgumentNull("provider"));
 
 			string[] keysToKeep = _initialKeys.Union(_retainedKeys, StringComparer.OrdinalIgnoreCase).ToArray();
 			string[] keysToRemove = _data.Keys.Except(keysToKeep, StringComparer.OrdinalIgnoreCase).ToArray();

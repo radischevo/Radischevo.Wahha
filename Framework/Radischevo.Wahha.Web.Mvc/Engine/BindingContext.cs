@@ -32,7 +32,7 @@ namespace Radischevo.Wahha.Web.Mvc
             ValidationErrorCollection errors) 
             : base(context)
         {
-            Precondition.Require(modelType, Error.ArgumentNull("modelType"));
+            Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
 
             _data = bindingData;
             _modelType = modelType;

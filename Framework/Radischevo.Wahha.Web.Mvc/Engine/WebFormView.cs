@@ -17,7 +17,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public WebFormView(string viewPath)
         {
-            Precondition.Require(!String.IsNullOrEmpty(viewPath), Error.ArgumentNull("viewPath"));
+            Precondition.Defined(viewPath, () => Error.ArgumentNull("viewPath"));
             _viewPath = viewPath;
         }
         #endregion
@@ -50,7 +50,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         protected virtual void Render(ViewContext context, TextWriter writer)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             
             object instance = BuildManager.CreateInstanceFromVirtualPath(_viewPath, typeof(object));
             if (instance == null)

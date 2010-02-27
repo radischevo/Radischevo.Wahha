@@ -12,8 +12,8 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		public static Route MapAsyncRoute(this RouteCollection routes, string key,
 			string url)
 		{
-			Precondition.Require(routes, Error.ArgumentNull("routes"));
-			Precondition.Require(url, Error.ArgumentNull("url"));
+			Precondition.Require(routes, () => Error.ArgumentNull("routes"));
+			Precondition.Require(url, () => Error.ArgumentNull("url"));
 
 			Route route = new Route(url, new MvcAsyncRouteHandler());
 
@@ -30,8 +30,8 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		public static Route MapAsyncRoute(this RouteCollection routes, string key,
 			string url, object defaults, params IRouteConstraint[] constraints)
 		{
-			Precondition.Require(routes, Error.ArgumentNull("routes"));
-			Precondition.Require(url, Error.ArgumentNull("url"));
+			Precondition.Require(routes, () => Error.ArgumentNull("routes"));
+			Precondition.Require(url, () => Error.ArgumentNull("url"));
 
 			Route route = (constraints == null) ?
 				new Route(url, new ValueDictionary(defaults), constraints, new MvcAsyncRouteHandler()) :
@@ -53,8 +53,8 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 			params IRouteConstraint[] constraints)
 			where TController : IAsyncController
 		{
-			Precondition.Require(routes, Error.ArgumentNull("routes"));
-			Precondition.Require(url, Error.ArgumentNull("url"));
+			Precondition.Require(routes, () => Error.ArgumentNull("routes"));
+			Precondition.Require(url, () => Error.ArgumentNull("url"));
 
 			MethodCallExpression mexp = (action.Body as MethodCallExpression);
 			if (mexp == null)

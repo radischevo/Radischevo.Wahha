@@ -13,15 +13,18 @@ namespace Radischevo.Wahha.Core
     public static class Precondition
     {
         #region Internal Methods
-        /// <summary>
-        /// Internal method performing throwing of exceptions.
-        /// </summary>
-        /// <param name="error">The exception leading to this error (if any).</param>
         private static void Fail(Exception error)
         {
             if (error != null)
                 throw error;
         }
+
+		private static void Fail<TException>(Func<TException> error)
+			where TException : Exception
+		{
+			if (error != null)
+				Fail(error());
+		}
         #endregion
 
         #region Static Methods
@@ -36,6 +39,12 @@ namespace Radischevo.Wahha.Core
             if (obj == null)
                 Fail(error);
         }
+
+		public static void Defined(string str, Exception error)
+		{
+			if (String.IsNullOrEmpty(str))
+				Fail(error);
+		}
 
         public static void Exist<T>(IEnumerable<T> collection, T value, 
             Exception error)
@@ -65,49 +74,61 @@ namespace Radischevo.Wahha.Core
                 Fail(error);
         }
 
-        public static void Require<TException>(bool condition)
-            where TException : Exception, new()
+        public static void Require<TException>(
+			bool condition, Func<TException> error)
+            where TException : Exception
         {
             if (!condition)
-                Fail(new TException());
+                Fail(error);
         }
 
-        public static void Require<TException>(object obj)
-            where TException : Exception, new()
+        public static void Require<TException>(
+			object obj, Func<TException> error)
+            where TException : Exception
         {
             if (obj == null)
-                Fail(new TException());
+                Fail(error);
         }
 
-        public static void Exist<T, TException>(IEnumerable<T> collection, T value)
-            where TException : Exception, new()
+		public static void Defined<TException>(
+			string str, Func<TException> error)
+			where TException : Exception
+		{
+			if (String.IsNullOrEmpty(str))
+				Fail(error);
+		}
+
+        public static void Exist<T, TException>(
+			IEnumerable<T> collection, T value, 
+			Func<TException> error)
+            where TException : Exception
         {
             if (!collection.Contains(value))
-                Fail(new TException());
+                Fail(error);
         }
 
-        public static void Exist<T, TException>(IEnumerable<T> collection, T value,
-            IEqualityComparer<T> comparer)
-            where TException : Exception, new()
+        public static void Exist<T, TException>(IEnumerable<T> collection, 
+			T value, IEqualityComparer<T> comparer, Func<TException> error)
+            where TException : Exception
         {
             if (!collection.Contains(value, comparer))
-                Fail(new TException());
+                Fail(error);
         }
 
         public static void Any<T, TException>(IEnumerable<T> collection,
-            Func<T, bool> predicate)
-            where TException : Exception, new()
+			Func<T, bool> predicate, Func<TException> error)
+			where TException : Exception
         {
             if (!collection.Any(predicate))
-                Fail(new TException());
+                Fail(error);
         }
 
         public static void All<T, TException>(IEnumerable<T> collection,
-            Func<T, bool> predicate)
-            where TException : Exception, new()
+            Func<T, bool> predicate, Func<TException> error)
+            where TException : Exception
         {
             if (!collection.All(predicate))
-                Fail(new TException());
+                Fail(error);
         }
         #endregion
     }

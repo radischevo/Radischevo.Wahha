@@ -43,7 +43,7 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		protected virtual IAsyncResult BeginExecute(RequestContext context, 
 			AsyncCallback callback, object state)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
 
 			VerifyExecuteCalledOnce();
 			Initialize(context);

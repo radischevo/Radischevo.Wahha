@@ -51,7 +51,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configuration
         #region Instance Methods
         internal void Init(ViewConfigurationElementCollection element)
         {
-            Precondition.Require(element, Error.ArgumentNull("element"));
+            Precondition.Require(element, () => Error.ArgumentNull("element"));
             int count = element.Count;
 
             switch (count)

@@ -163,9 +163,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public ViewDataInfo GetViewDataInfo(string expression)
         {
-            Precondition.Require(!String.IsNullOrEmpty(expression),
-                Error.ArgumentNull("expression"));
-
+            Precondition.Defined(expression, () => Error.ArgumentNull("expression"));
             return _evaluator.Eval(expression);
         }
 

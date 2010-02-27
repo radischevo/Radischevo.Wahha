@@ -32,7 +32,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         internal static string Render(ViewContext context, string expression,
             Type containerType, string propertyName, Type modelType)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             ModelMetadata metadata = TemplateHelper.GetMetadata(containerType, 
                 modelType, propertyName);
 
@@ -43,8 +43,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         #region Extension Methods
         public static string Label(this HtmlControlHelper helper, string expression)
         {
-            Precondition.Require(!String.IsNullOrEmpty(expression),
-                Error.ArgumentNull("expression"));
+            Precondition.Defined(expression, () => Error.ArgumentNull("expression"));
 
             Type containerType = null;
             Type modelType = null;
@@ -72,7 +71,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             where TModel : class
         {
             Precondition.Require(expression.Body.NodeType == ExpressionType.MemberAccess,
-                Error.TemplateExpressionLimitations());
+				() => Error.TemplateExpressionLimitations());
 
             MemberExpression me = (MemberExpression)expression.Body;
             PropertyInfo propertyInfo = (me.Member as PropertyInfo);

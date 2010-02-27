@@ -158,13 +158,13 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public virtual object[] GetCustomAttributes(Type type, bool inherit)
         {
-            Precondition.Require(type, Error.ArgumentNull("type"));
+            Precondition.Require(type, () => Error.ArgumentNull("type"));
             return (object[])Array.CreateInstance(type, 0);
         }
 
         public virtual bool IsDefined(Type type, bool inherit)
         {
-            Precondition.Require(type, Error.ArgumentNull("type"));
+            Precondition.Require(type, () => Error.ArgumentNull("type"));
             return false;
         }
         #endregion

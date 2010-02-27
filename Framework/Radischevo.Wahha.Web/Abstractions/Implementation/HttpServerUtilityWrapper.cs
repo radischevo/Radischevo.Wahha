@@ -23,7 +23,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         #region Constructors
         public HttpServerUtilityWrapper(HttpServerUtility server)
         {
-            Precondition.Require(server, Error.ArgumentNull("server"));
+            Precondition.Require(server, () => Error.ArgumentNull("server"));
             _server = server;
         }
         #endregion

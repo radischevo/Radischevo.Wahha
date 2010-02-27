@@ -55,7 +55,7 @@ namespace Radischevo.Wahha.Data.Caching
         #region Static Methods
         internal static bool IsProvider(Type type)
         {
-            Precondition.Require(type, Error.ArgumentNull("type"));
+            Precondition.Require(type, () => Error.ArgumentNull("type"));
 
             if (type.IsAbstract || type.IsInterface ||
                 type.IsGenericTypeDefinition || type.IsGenericType ||
@@ -71,7 +71,7 @@ namespace Radischevo.Wahha.Data.Caching
 
         public static CacheProvider Create(Type providerType, IValueSet settings)
         {
-            Precondition.Require(settings, Error.ArgumentNull("settings"));
+            Precondition.Require(settings, () => Error.ArgumentNull("settings"));
 
             if (!IsProvider(providerType))
                 throw Error.IncompatibleCacheProviderType(providerType);
@@ -102,7 +102,7 @@ namespace Radischevo.Wahha.Data.Caching
         /// <param name="key">The key the object is stored with.</param>
         public T Get<T>(string key)
         {
-            Precondition.Require(key, Error.ArgumentNull("key"));
+            Precondition.Require(key, () => Error.ArgumentNull("key"));
             return _provider.Get<T>(key);
         }
 
@@ -172,7 +172,7 @@ namespace Radischevo.Wahha.Data.Caching
         public bool Add<T>(string key, T value, DateTime expiration,
 			IEnumerable<string> tags)
         {
-            Precondition.Require(key, Error.ArgumentNull("key"));
+            Precondition.Require(key, () => Error.ArgumentNull("key"));
             return _provider.Add<T>(key, value, expiration, tags);
         }
         #endregion
@@ -207,14 +207,14 @@ namespace Radischevo.Wahha.Data.Caching
 		public void Insert<T>(string key, T value, DateTime expiration,
 			IEnumerable<string> tags)
 		{
-			Precondition.Require(key, Error.ArgumentNull("key"));
+			Precondition.Require(key, () => Error.ArgumentNull("key"));
 			_provider.Insert<T>(key, value, expiration, tags);
 		}
         #endregion
 
 		public void Remove(string key)
         {
-            Precondition.Require(key, Error.ArgumentNull("key"));
+            Precondition.Require(key, () => Error.ArgumentNull("key"));
             _provider.Remove(key);
         }
 

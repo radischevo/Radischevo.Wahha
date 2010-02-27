@@ -45,7 +45,7 @@ namespace Radischevo.Wahha.Web.Text
         public HtmlElementBuilder(string tagName, 
             object attributes, string content)
         {
-            Precondition.Require(!String.IsNullOrEmpty(tagName), Error.ArgumentNull("tagName"));
+            Precondition.Defined(tagName, () => Error.ArgumentNull("tagName"));
             _name = tagName;
             _attributes = new HtmlAttributeDictionary(attributes);
             _content = content;

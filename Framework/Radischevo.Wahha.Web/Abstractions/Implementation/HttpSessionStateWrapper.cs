@@ -24,7 +24,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         #region Constructors
         public HttpSessionStateWrapper(HttpSessionState session)
         {
-            Precondition.Require(session, Error.ArgumentNull("session"));
+            Precondition.Require(session, () => Error.ArgumentNull("session"));
             _session = session;
         }
         #endregion

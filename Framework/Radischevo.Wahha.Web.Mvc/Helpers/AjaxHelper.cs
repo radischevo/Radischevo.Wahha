@@ -32,7 +32,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         /// <see cref="Radischevo.Wahha.Web.Mvc.ViewContext"/></param>
         public AjaxHelper(ViewContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             _context = context;
         }
         #endregion

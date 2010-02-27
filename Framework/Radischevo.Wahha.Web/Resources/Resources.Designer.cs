@@ -565,6 +565,15 @@ namespace Radischevo.Wahha.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The name of the rule &apos;{0}&apos; cannot differ from its key &apos;{1}&apos;..
+        /// </summary>
+        internal static string Error_RuleNameCannotDifferFromKey {
+            get {
+                return ResourceManager.GetString("Error_RuleNameCannotDifferFromKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to String is not quoted..
         /// </summary>
         internal static string Error_StringIsNotQuoted {

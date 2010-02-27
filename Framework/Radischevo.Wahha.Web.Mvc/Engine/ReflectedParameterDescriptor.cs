@@ -18,8 +18,8 @@ namespace Radischevo.Wahha.Web.Mvc
         public ReflectedParameterDescriptor(ParameterInfo parameter, ActionDescriptor action)
             : base()
         {
-            Precondition.Require(parameter, Error.ArgumentNull("parameter"));
-            Precondition.Require(action, Error.ArgumentNull("action"));
+            Precondition.Require(parameter, () => Error.ArgumentNull("parameter"));
+            Precondition.Require(action, () => Error.ArgumentNull("action"));
 
             _parameter = parameter;
             _action = action;

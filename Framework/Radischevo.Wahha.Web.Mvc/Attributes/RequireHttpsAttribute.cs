@@ -18,7 +18,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Instance Methods
 		public void OnAuthorization(AuthorizationContext context)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
 			if (!context.Context.Request.IsSecureConnection)
 				HandleNonSecureRequest(context);
 		}

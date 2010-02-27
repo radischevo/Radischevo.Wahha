@@ -75,8 +75,8 @@ namespace Radischevo.Wahha.Data
         /// <param name="name">The name of the field.</param>
         public void Add(int ordinal, string name)
         {
-            Precondition.Require(ordinal >= 0, 
-                Error.ParameterMustBeGreaterThanOrEqual("ordinal", 0, ordinal));
+            Precondition.Require(ordinal >= 0,
+				() => Error.ParameterMustBeGreaterThanOrEqual("ordinal", 0, ordinal));
 
 			if (String.IsNullOrEmpty(name))
 				name = "F" + ordinal;

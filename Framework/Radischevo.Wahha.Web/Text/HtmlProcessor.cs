@@ -89,7 +89,7 @@ namespace Radischevo.Wahha.Web.Text
         /// </summary>
         public string Parse(string htmlString)
         {
-            Precondition.Require(htmlString, Error.ArgumentNull("htmlString"));
+            Precondition.Require(htmlString, () => Error.ArgumentNull("htmlString"));
             using (StringReader reader = new StringReader(
                 String.Concat("<html>", htmlString, "</html>")))
             {
@@ -103,7 +103,7 @@ namespace Radischevo.Wahha.Web.Text
         /// </summary>
         public virtual string Parse(TextReader reader)
         {
-            Precondition.Require(reader, Error.ArgumentNull("reader"));
+            Precondition.Require(reader, () => Error.ArgumentNull("reader"));
 
             XmlDocument document = new XmlDocument();
             document.PreserveWhitespace = _parser.PreserveWhitespace;

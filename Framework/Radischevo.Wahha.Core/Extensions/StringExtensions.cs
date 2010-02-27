@@ -45,7 +45,7 @@ namespace Radischevo.Wahha.Core
 
         public static string Bind(this string format, object source)
         {
-            Precondition.Require(format, Error.ArgumentNull("format"));
+			Precondition.Require(format, () => Error.ArgumentNull("format"));
 
             string[] parts = SplitFormat(format).Select(p => p.Eval(source)).ToArray();
             return String.Join("", parts);
@@ -86,8 +86,8 @@ namespace Radischevo.Wahha.Core
         /// <param name="count">A number of characters to return</param>
         public static string Left(this string str, int count)
         {
-            Precondition.Require(count > -1, 
-                Error.ParameterMustBeGreaterThanOrEqual("count", 0, count));
+            Precondition.Require(count > -1,
+				() => Error.ParameterMustBeGreaterThanOrEqual("count", 0, count));
 
             if (str.Length > count)
                 return str.Substring(0, count);
@@ -104,8 +104,8 @@ namespace Radischevo.Wahha.Core
         /// <param name="count">A number of characters to return</param>
         public static string Right(this string str, int count)
         {
-            Precondition.Require(count > -1, 
-                Error.ParameterMustBeGreaterThanOrEqual("count", 0, count));
+            Precondition.Require(count > -1,
+				() => Error.ParameterMustBeGreaterThanOrEqual("count", 0, count));
             
             if (str.Length > count)
                 return str.Substring(str.Length - count, count);

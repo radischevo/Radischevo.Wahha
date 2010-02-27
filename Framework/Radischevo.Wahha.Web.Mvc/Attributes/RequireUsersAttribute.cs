@@ -17,7 +17,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public RequireUsersAttribute(params string[] users)
         {
-            Precondition.Require(users, Error.ArgumentNull("users"));
+            Precondition.Require(users, () => Error.ArgumentNull("users"));
             _users = users;
         }
         #endregion

@@ -87,7 +87,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public void EnsureInitialized(IBuildManager buildManager)
         {
-            Precondition.Require(buildManager, Error.ArgumentNull("buildManager"));
+            Precondition.Require(buildManager, () => Error.ArgumentNull("buildManager"));
             if (_cache == null)
             {
                 lock (_lock)

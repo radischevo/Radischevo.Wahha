@@ -20,7 +20,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public ValidationHelper(ViewContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             _context = context;
         }
         #endregion
@@ -71,7 +71,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// <param name="action">The action used to render an error message.</param>
         public void Summary(Action<ValidationError> action)
         {
-            Precondition.Require(action, Error.ArgumentNull("action"));
+            Precondition.Require(action, () => Error.ArgumentNull("action"));
             
             foreach (ValidationError error in Errors)
                 action(error);
@@ -85,7 +85,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// <param name="action">The action used to render an error message.</param>
         public void Messages(string key, Action<IEnumerable<ValidationError>> action)
         {
-            Precondition.Require(action, Error.ArgumentNull("action"));
+            Precondition.Require(action, () => Error.ArgumentNull("action"));
 			IEnumerable<ValidationError> errors = Errors[key];
 
 			if(errors != null && errors.Any())
@@ -101,7 +101,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		public void Message(string key,
 			Action<ValidationError> action)
 		{
-			Precondition.Require(action, Error.ArgumentNull("action"));
+			Precondition.Require(action, () => Error.ArgumentNull("action"));
 			foreach (ValidationError error in Errors[key])
 				action(error);
 		}
@@ -162,10 +162,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			Expression<Func<TModel, TValue>> expression)
 			where TModel : class
 		{
-			Precondition.Require(expression, Error.ArgumentNull("expression"));
-
-			object modelValue = LinqHelper.WrapModelAccessor(
-				expression, (TModel)Context.ViewData.Model)();
+			Precondition.Require(expression, () => Error.ArgumentNull("expression"));
 
 			Type modelType = typeof(TValue);
 			Type parentModelType = null;
@@ -202,7 +199,7 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual IEnumerable<ClientModelValidationRule> CreateClientRules(
 			IEnumerable<ModelValidationRule> rules)
 		{
-			Precondition.Require(rules, Error.ArgumentNull("rules"));
+			Precondition.Require(rules, () => Error.ArgumentNull("rules"));
 
 			return rules.Where(r => r.SupportsClientValidation)
 				.Select(r => new ClientModelValidationRule(r));

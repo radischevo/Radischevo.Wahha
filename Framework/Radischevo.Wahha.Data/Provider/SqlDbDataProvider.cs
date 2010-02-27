@@ -199,10 +199,10 @@ namespace Radischevo.Wahha.Data.Provider
 		/// <typeparam name="TR">The type of the returning value.</typeparam>
 		public virtual TR Execute<TR>(IDbCommand command, Func<IDbCommand, TR> converter)
 		{
-			Precondition.Require(command, Error.ArgumentNull("command"));
+			Precondition.Require(command, () => Error.ArgumentNull("command"));
 			Precondition.Require(command is SqlCommand,
-				Error.UnsupportedCommandType(typeof(SqlCommand), command.GetType()));
-			Precondition.Require(converter, Error.ArgumentNull("converter"));
+				() => Error.UnsupportedCommandType(typeof(SqlCommand), command.GetType()));
+			Precondition.Require(converter, () => Error.ArgumentNull("converter"));
 
 			TR result = default(TR);
 			try

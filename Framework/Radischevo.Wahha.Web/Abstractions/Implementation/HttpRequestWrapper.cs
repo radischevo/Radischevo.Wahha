@@ -28,7 +28,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         #region Constructors
         public HttpRequestWrapper(HttpRequest request)
         {
-            Precondition.Require(request, Error.ArgumentNull("request"));
+            Precondition.Require(request, () => Error.ArgumentNull("request"));
             _request = request;
         }
         #endregion

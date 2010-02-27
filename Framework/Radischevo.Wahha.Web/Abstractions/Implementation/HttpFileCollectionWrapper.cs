@@ -25,7 +25,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         #region Constructors
         public HttpFileCollectionWrapper(HttpFileCollection collection)
         {
-            Precondition.Require(collection, Error.ArgumentNull("collection"));
+            Precondition.Require(collection, () => Error.ArgumentNull("collection"));
             _collection = collection;
         }
         #endregion

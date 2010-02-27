@@ -92,7 +92,7 @@ namespace Radischevo.Wahha.Data
             set
             {
                 Precondition.Require(_timeout > 0,
-                    Error.ParameterMustBeGreaterThan("value", 0, value));
+					() => Error.ParameterMustBeGreaterThan("value", 0, value));
 
                 _timeout = value;
             }

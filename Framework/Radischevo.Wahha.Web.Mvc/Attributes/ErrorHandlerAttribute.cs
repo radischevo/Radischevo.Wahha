@@ -47,7 +47,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
             set
             {
-                Precondition.Require(value, Error.ArgumentNull("value"));
+                Precondition.Require(value, () => Error.ArgumentNull("value"));
                 if (!typeof(Exception).IsAssignableFrom(value))
                     throw Error.InvalidArgument("value");
 
@@ -71,7 +71,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region IExceptionFilter Members
         public void OnException(ExceptionContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             Controller controller = (context.Controller as Controller);
             if (controller == null || context.Handled || !context.Context.IsCustomErrorEnabled)
                 return;

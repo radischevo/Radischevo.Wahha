@@ -23,7 +23,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         internal MethodDispatcher(MethodInfo method)
         {
-            Precondition.Require(method, Error.ArgumentNull("method"));
+            Precondition.Require(method, () => Error.ArgumentNull("method"));
 
             _methodExecutor = CreateExecutorDelegate(method);
             _method = method;

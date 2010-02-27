@@ -47,7 +47,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             IDictionary<string, object> attributes)
             where TModel : class
         {
-            Precondition.Require(value, Error.ArgumentNull("value"));
+            Precondition.Require(value, () => Error.ArgumentNull("value"));
 
             TModel model = (TModel)helper.Context.ViewData.Model;
             Func<byte[]> func = LinqHelper.WrapModelAccessor(value, model);

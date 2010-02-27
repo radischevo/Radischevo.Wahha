@@ -35,7 +35,7 @@ namespace Radischevo.Wahha.Web.Mvc
         public FormCollection(IValueSet collection)
         {
             Precondition.Require(collection, 
-                Error.ArgumentNull("collection"));
+				() => Error.ArgumentNull("collection"));
             _collection = collection;
         }
         #endregion

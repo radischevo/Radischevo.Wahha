@@ -141,7 +141,7 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 
 			public static WrappedAsyncResult<TResult> Cast(IAsyncResult result, object tag)
 			{
-				Precondition.Require(result, Error.ArgumentNull("result"));
+				Precondition.Require(result, () => Error.ArgumentNull("result"));
 
 				WrappedAsyncResult<TResult> castResult = (result as WrappedAsyncResult<TResult>);
 				if (castResult != null && Object.Equals(castResult._tag, tag))

@@ -30,8 +30,8 @@ namespace Radischevo.Wahha.Data
         public DbParameterDescriptor(string name, 
 			ParameterDirection direction, object value)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name), 
-                Error.ArgumentNull("name"));
+            Precondition.Defined(name,
+				() => Error.ArgumentNull("name"));
 
             _name = name;
             _direction = direction;
@@ -48,8 +48,8 @@ namespace Radischevo.Wahha.Data
             }
             set
             {
-                Precondition.Require(!String.IsNullOrEmpty(value),
-                    Error.ArgumentNull("value"));
+                Precondition.Defined(value,
+					() => Error.ArgumentNull("value"));
                 _name = value;
             }
         }

@@ -19,8 +19,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public HttpContentTypeAttribute(string contentType)
         {
-            Precondition.Require(!String.IsNullOrEmpty(contentType), 
-                Error.ArgumentNull("contentType"));
+			Precondition.Defined(contentType, () => Error.ArgumentNull("contentType"));
             _contentType = contentType;
         }
         #endregion
@@ -38,7 +37,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override void OnExecuting(ActionExecutionContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             if (context.Context.Items[_storeKey] == null)
             {
                 context.Context.Response.ContentType = _contentType;

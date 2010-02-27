@@ -17,7 +17,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public object Bind(BindingContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
 
             HttpPostedFileBase file = context.Context.Request.Files[context.ModelName];
             if (file == null)

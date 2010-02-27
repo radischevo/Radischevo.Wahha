@@ -28,8 +28,8 @@ namespace Radischevo.Wahha.Web.Abstractions
         #region Constructors
         public HttpContextWrapper(HttpContext context)
         {
-            Precondition.Require(context, Radischevo.Wahha.Web
-                .Error.ArgumentNull("context"));
+			Precondition.Require(context, () => Radischevo.Wahha.Web
+				.Error.ArgumentNull("context"));
             _context = context;
         }
         #endregion

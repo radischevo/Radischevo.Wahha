@@ -18,7 +18,7 @@ namespace Radischevo.Wahha.Web.Mvc
         public ReflectedControllerDescriptor(Type controllerType)
             : base()
         {
-            Precondition.Require(controllerType, Error.ArgumentNull("controllerType"));
+            Precondition.Require(controllerType, () => Error.ArgumentNull("controllerType"));
             
             _controllerType = controllerType;
             _selector = new ActionMethodSelector(_controllerType);
@@ -38,8 +38,8 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override ActionDescriptor FindAction(ControllerContext context, string actionName)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(!String.IsNullOrEmpty(actionName), Error.ArgumentNull("actionName"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Defined(actionName, () => Error.ArgumentNull("actionName"));
             MethodInfo method = _selector.GetActionMethod(context, actionName);
             
             if (method == null)

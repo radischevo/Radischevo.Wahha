@@ -17,8 +17,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Constructors
 		public HttpPostedFileSet(HttpFileCollectionBase collection)
 		{
-			Precondition.Require(collection, 
-				Error.ArgumentNull("collection"));
+			Precondition.Require(collection, () => Error.ArgumentNull("collection"));
 
 			_collection = collection;
 		}

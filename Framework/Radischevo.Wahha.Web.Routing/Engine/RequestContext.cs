@@ -26,8 +26,8 @@ namespace Radischevo.Wahha.Web.Routing
         /// <param name="routeData">The route parameter dictionary</param>
         public RequestContext(HttpContextBase context, RouteData routeData)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(routeData, Error.ArgumentNull("routeData"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(routeData, () => Error.ArgumentNull("routeData"));
 
             _context = context;
             _routeData = routeData;

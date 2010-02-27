@@ -45,7 +45,7 @@ namespace Radischevo.Wahha.Web.Mvc
         public BinaryStreamResult(Stream stream, string contentType, 
             string fileName) : base()
         {
-            Precondition.Require(stream, Error.ArgumentNull("stream"));
+            Precondition.Require(stream, () => Error.ArgumentNull("stream"));
             _stream = stream;
             base.FileName = fileName;
             base.ContentType = contentType;
@@ -68,7 +68,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override void Execute(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             base.Execute(context);
 
             Stream output = context.Context.Response.OutputStream;

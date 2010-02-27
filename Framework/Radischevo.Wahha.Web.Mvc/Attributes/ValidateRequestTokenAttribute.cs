@@ -59,7 +59,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region IAuthorizationFilter Members
         public void OnAuthorization(AuthorizationContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             string value = context.Context.Request.Form.GetValue<string>(ValidationFieldName);
 
             if (String.IsNullOrEmpty(value))

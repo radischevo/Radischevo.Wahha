@@ -20,7 +20,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         #region Constructors
         public HttpBrowserCapabilitiesWrapper(HttpBrowserCapabilities browser)
         {
-            Precondition.Require(browser, Error.ArgumentNull("browser"));
+            Precondition.Require(browser, () => Error.ArgumentNull("browser"));
             _browser = browser;
         }
         #endregion

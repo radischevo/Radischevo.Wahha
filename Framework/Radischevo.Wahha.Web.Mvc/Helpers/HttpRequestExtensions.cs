@@ -21,7 +21,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// </summary>
         public static bool IsAjaxRequest(this HttpRequestBase request)
         {
-            Precondition.Require(request, Error.ArgumentNull("request"));
+            Precondition.Require(request, () => Error.ArgumentNull("request"));
             if (request.Headers == null)
                 return false;
 

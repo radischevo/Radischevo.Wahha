@@ -86,7 +86,7 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 
 		protected override string GetCanonicalMethodName(MethodInfo method)
 		{
-			Precondition.Require(method, Error.ArgumentNull("method"));
+			Precondition.Require(method, () => Error.ArgumentNull("method"));
 
 			ActionNameAttribute[] attrs =
 				(ActionNameAttribute[])method.GetCustomAttributes(typeof(ActionNameAttribute), true);

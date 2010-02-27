@@ -58,7 +58,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		#region Instance Methods
 		public void Execute(HttpContext context, object[] parameters)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
 			ExecuteInternal(context, parameters);
 		}
 

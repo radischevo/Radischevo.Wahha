@@ -28,8 +28,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         public ClientModelValidationRule Regex(string field, string pattern,
             string errorMessage)
         {
-            Precondition.Require(!String.IsNullOrEmpty(pattern), 
-                Error.ArgumentNull("pattern"));
+            Precondition.Defined(pattern, () => Error.ArgumentNull("pattern"));
 
             return new ClientModelValidationRule("regex", field, errorMessage,
                 new { pattern = pattern });
@@ -38,8 +37,8 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         public ClientModelValidationRule Length(string field, int maximumLength,
             string errorMessage)
         {
-            Precondition.Require(maximumLength > -1, 
-                Error.ArgumentOutOfRange("maximumLength"));
+            Precondition.Require(maximumLength > -1,
+				() => Error.ArgumentOutOfRange("maximumLength"));
 
             return new ClientModelValidationRule("stringLength", field,
                 errorMessage, new { minimumLength = 0, maximumLength = maximumLength });
@@ -48,8 +47,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         public ClientModelValidationRule Remote(string field, string url,
             string errorMessage)
         {
-            Precondition.Require(!String.IsNullOrEmpty(url),
-                Error.ArgumentNull("url"));
+            Precondition.Defined(url, () => Error.ArgumentNull("url"));
 
             return new ClientModelValidationRule("remote", field,
                 errorMessage, new { url = url });
@@ -58,8 +56,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         public ClientModelValidationRule Equal(string field, 
             string comparedField, string errorMessage)
         {
-            Precondition.Require(!String.IsNullOrEmpty(comparedField),
-                Error.ArgumentNull("comparedField"));
+			Precondition.Defined(comparedField, () => Error.ArgumentNull("comparedField"));
 
             return new ClientModelValidationRule("equalTo", field, 
                 errorMessage, new { selector = comparedField });

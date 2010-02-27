@@ -138,7 +138,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// <param name="context"></param>
         public override void Execute(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             if (String.IsNullOrEmpty(_viewName))
                 _viewName = context.RouteData.GetRequiredValue<string>("action");
 

@@ -18,8 +18,8 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		internal static AsyncManager GetAsyncManager(ControllerBase controller)
 		{
 			IAsyncManagerContainer container = (controller as IAsyncManagerContainer);
-			Precondition.Require(container,
-				Error.ControllerMustImplementAsyncManagerContainer(controller.GetType()));
+			Precondition.Require(container, () => Error
+				.ControllerMustImplementAsyncManagerContainer(controller.GetType()));
 
 			return container.AsyncManager;
 		}

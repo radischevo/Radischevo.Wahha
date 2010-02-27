@@ -33,8 +33,7 @@ namespace Radischevo.Wahha.Web.Mvc
             string fileName, string contentType, 
             Encoding contentEncoding) : base()
         {
-            Precondition.Require(!String.IsNullOrEmpty(path),
-                Error.ArgumentNull("path"));
+            Precondition.Defined(path, () => Error.ArgumentNull("path"));
 
             _path = path;
             _contentEncoding = contentEncoding;
@@ -89,7 +88,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override void Execute(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             base.Execute(context);
 
             if (_contentEncoding != null)

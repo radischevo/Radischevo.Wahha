@@ -13,7 +13,7 @@ namespace Radischevo.Wahha.Web.Mvc
         protected ResultContext(ControllerContext context, ActionResult result)
             : base(context) 
         {
-            Precondition.Require(result, Error.ArgumentNull("error"));
+            Precondition.Require(result, () => Error.ArgumentNull("error"));
             _result = result;
         }
         #endregion
@@ -27,7 +27,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
             set
             {
-                Precondition.Require(value, Error.ArgumentNull("value"));
+                Precondition.Require(value, () => Error.ArgumentNull("value"));
                 _result = value;
             }
         }

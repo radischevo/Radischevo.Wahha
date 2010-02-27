@@ -35,7 +35,7 @@ namespace Radischevo.Wahha.Web.Routing.Providers
 				descriptor.Attributes.GetValue<string>("page")));
 
 			_defaultFactory = descriptor => {
-				Precondition.Require(descriptor.HandlerType, Error.ArgumentNull("handlerType"));
+				Precondition.Require(descriptor.HandlerType, () => Error.ArgumentNull("handlerType"));
 				IRouteHandler handler = (IRouteHandler)Activator.CreateInstance(descriptor.HandlerType);
 
 				return new Route(descriptor.Url, handler);
@@ -54,8 +54,8 @@ namespace Radischevo.Wahha.Web.Routing.Providers
 		#region Static Methods
 		public static void RegisterFactory(string routeType, RouteFactory factory)
 		{
-			Precondition.Require(!String.IsNullOrEmpty(routeType), Error.ArgumentNull("routeType"));
-			Precondition.Require(factory, Error.ArgumentNull("factory"));
+			Precondition.Defined(routeType, () => Error.ArgumentNull("routeType"));
+			Precondition.Require(factory, () => Error.ArgumentNull("factory"));
 
 			_lock.AcquireWriterLock(Timeout.Infinite);
 

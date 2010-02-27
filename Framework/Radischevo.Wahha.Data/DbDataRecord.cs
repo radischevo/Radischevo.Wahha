@@ -30,8 +30,8 @@ namespace Radischevo.Wahha.Data
         /// instance, which will be used to fill the value set</param>
         internal DbDataRecord(IDataRecord record, DbFieldLookup lookup)
         {
-            Precondition.Require(record, Error.ArgumentNull("record"));
-            Precondition.Require(lookup, Error.ArgumentNull("lookup"));
+            Precondition.Require(record, () => Error.ArgumentNull("record"));
+            Precondition.Require(lookup, () => Error.ArgumentNull("lookup"));
 
             _dataRecord = record;
             _lookup = lookup;

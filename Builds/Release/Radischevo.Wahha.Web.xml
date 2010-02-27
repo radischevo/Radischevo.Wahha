@@ -1531,6 +1531,11 @@
               Looks up a localized string similar to The value of the &apos;{0}&apos; parameter should be greater than or equal to {1}..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_RuleNameCannotDifferFromKey">
+            <summary>
+              Looks up a localized string similar to The name of the rule &apos;{0}&apos; cannot differ from its key &apos;{1}&apos;..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_StringIsNotQuoted">
             <summary>
               Looks up a localized string similar to String is not quoted..

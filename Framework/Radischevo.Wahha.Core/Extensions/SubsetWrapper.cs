@@ -16,8 +16,8 @@ namespace Radischevo.Wahha.Core
         public SubsetWrapper(IValueSet collection, 
             Func<string, bool> keySelector)
         {
-            Precondition.Require(collection, Error.ArgumentNull("collection"));
-            Precondition.Require(keySelector, Error.ArgumentNull("keySelector"));
+			Precondition.Require(collection, () => Error.ArgumentNull("collection"));
+			Precondition.Require(keySelector, () => Error.ArgumentNull("keySelector"));
 
             _collection = collection;
             _keySelector = keySelector;

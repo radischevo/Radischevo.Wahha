@@ -48,10 +48,10 @@ namespace Radischevo.Wahha.Web.Mvc
         private static void ValidateDisplayColumnAttribute(
             string displayColumn, PropertyInfo property, Type type)
         {
-            Precondition.Require(property, 
-                Error.UnknownProperty(type, displayColumn));
-            Precondition.Require(property.GetGetMethod(), 
-                Error.UnreadableProperty(type, displayColumn));
+            Precondition.Require(property,
+				() => Error.UnknownProperty(type, displayColumn));
+            Precondition.Require(property.GetGetMethod(),
+				() => Error.UnreadableProperty(type, displayColumn));
         }
         #endregion
 

@@ -103,7 +103,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public void OnAuthorization(AuthorizationContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             if (Validate(context.Context))
             {
                 HttpCachePolicyBase cachePolicy = context.Context.Response.Cache;
@@ -124,7 +124,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual HttpValidationStatus OnCacheAuthorization(HttpContextBase context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
 
             bool isAuthorized = Validate(context);
             return (isAuthorized) ? HttpValidationStatus.Valid : HttpValidationStatus.IgnoreThisRequest;

@@ -21,8 +21,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         #region Constructors
         public MultiSelectList(IEnumerable<ListItem> items)
         {
-            Precondition.Require(items, 
-                Error.ArgumentNull("items"));
+            Precondition.Require(items, () => Error.ArgumentNull("items"));
 
             _listItems = items;
         }
@@ -46,7 +45,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         public MultiSelectList(IEnumerable items, string dataTextField, 
             string dataValueField, IEnumerable selectedItems)
         {
-            Precondition.Require(items, Error.ArgumentNull("items"));
+            Precondition.Require(items, () => Error.ArgumentNull("items"));
             
             _items = items;
             _dataTextField = dataTextField;

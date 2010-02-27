@@ -18,7 +18,7 @@ namespace Radischevo.Wahha.Web.Text
         #region Constructors
         public StringBuffer(string value)
         {
-            Precondition.Require(value, new ArgumentNullException("value"));
+			Precondition.Require(value, () => Error.ArgumentNull("value"));
 
             _position = -1;
             _value = value;

@@ -115,7 +115,7 @@ namespace Radischevo.Wahha.Core
         /// <param name="lowerCase">If set to true, produces a lowercase string.</param>
         public static string ToBase16String(byte[] array, bool lowerCase)
         {
-            Precondition.Require(array, Error.ArgumentNull("array"));
+            Precondition.Require(array, () => Error.ArgumentNull("array"));
             return ToBase16String(array, 0, array.Length, lowerCase);
         }
 
@@ -144,13 +144,13 @@ namespace Radischevo.Wahha.Core
         public static string ToBase16String(byte[] array, int startIndex, 
             int length, bool lowerCase)
         {
-            Precondition.Require(array, Error.ArgumentNull("array"));
-            Precondition.Require(length > -1, 
-                Error.ParameterMustBeGreaterThanOrEqual("length", 0, length));
-            Precondition.Require(startIndex > -1, 
-                Error.ParameterMustBeGreaterThanOrEqual("startIndex", 0, startIndex));
-            Precondition.Require(startIndex <= (array.Length - length), 
-                Error.OffsetMustBeLessThanArrayLength("startIndex", startIndex));
+            Precondition.Require(array, () => Error.ArgumentNull("array"));
+            Precondition.Require(length > -1,
+				() => Error.ParameterMustBeGreaterThanOrEqual("length", 0, length));
+            Precondition.Require(startIndex > -1,
+				() => Error.ParameterMustBeGreaterThanOrEqual("startIndex", 0, startIndex));
+            Precondition.Require(startIndex <= (array.Length - length),
+				() => Error.OffsetMustBeLessThanArrayLength("startIndex", startIndex));
 
             char[] chars = new char[length * 2];
             int high, low;
@@ -176,8 +176,9 @@ namespace Radischevo.Wahha.Core
         /// <param name="str">A <see cref="String"/></param>
         public static byte[] FromBase16String(string str)
         {
-            Precondition.Require(str, Error.ArgumentNull("str"));
-            Precondition.Require(str.Length % 2 == 0, Error.EncodedStringMustLengthBeOdd("str"));
+			Precondition.Require(str, () => Error.ArgumentNull("str"));
+			Precondition.Require(str.Length % 2 == 0, 
+				() => Error.EncodedStringMustLengthBeOdd("str"));
 
             int byteCount = str.Length / 2;
             byte[] bytes = new byte[byteCount];
@@ -293,7 +294,7 @@ namespace Radischevo.Wahha.Core
 		/// supplies culture-specific formatting information.</param>
 		public static object ChangeType(Type type, object value, IFormatProvider provider)
 		{
-			Precondition.Require(type, Error.ArgumentNull("type"));
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
 
 			if (type.IsInstanceOfType(value))
 				return value;
@@ -366,7 +367,7 @@ namespace Radischevo.Wahha.Core
 		public static object ChangeType(Type type, object value, 
 			object defaultValue, IFormatProvider provider)
 		{
-			Precondition.Require(type, Error.ArgumentNull("type"));
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
 
 			if (type.IsInstanceOfType(value))
 				return value;

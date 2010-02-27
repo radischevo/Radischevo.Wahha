@@ -41,7 +41,7 @@ namespace Radischevo.Wahha.Data
 		/// describing the command to execute.</param>
         public DbCommandResult(IDbDataProvider provider, DbCommandDescriptor command)
         {
-            Precondition.Require(provider, Error.ArgumentNull("provider"));
+            Precondition.Require(provider, () => Error.ArgumentNull("provider"));
             _provider = provider;
 			_command = command;
 			_behavior = CommandBehavior.Default;
@@ -73,7 +73,7 @@ namespace Radischevo.Wahha.Data
             }
             set
             {
-                Precondition.Require(value, Error.ArgumentNull("value"));
+                Precondition.Require(value, () => Error.ArgumentNull("value"));
                 _command = value;
             }
         }
@@ -154,7 +154,7 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public DbCommandResult ToProcedure()
         {
-            Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
+            Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
             _command.Type = CommandType.StoredProcedure;
 			
             return this;
@@ -172,7 +172,7 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public int AsNonQuery()
         {
-            Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
+            Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
             return ExecuteOnce<int>(c => c.ExecuteNonQuery());
         }
 
@@ -182,7 +182,7 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public object AsScalar()
         {
-            Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
+            Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
 			return ExecuteOnce<object>(c => c.ExecuteScalar());
         }
 
@@ -194,7 +194,7 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public T AsScalar<T>()
         {
-            Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
+            Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
 			return ExecuteOnce<T>(c => Converter.ChangeType<T>(c.ExecuteScalar()));
         }
 
@@ -204,7 +204,7 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public IDbDataReader AsDataReader()
         {
-            Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
+            Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
             return Execute<IDbDataReader>(DataReaderConverter);
         }
 
@@ -214,7 +214,7 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		public TResult AsDataReader<TResult>(Func<IDbDataReader, TResult> action)
 		{
-			Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
+			Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
 			return Execute<TResult>((command) => DataReaderConverter(command, action));
 		}
 
@@ -225,7 +225,7 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public DataSet AsDataSet()
         {
-            Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
+            Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
 			return ExecuteOnce<DataSet>(DataSetConverter);
         }
 
@@ -239,7 +239,7 @@ namespace Radischevo.Wahha.Data
         /// an instance of the specified type.</param>
         public IEnumerable<TEntity> AsEntitySet<TEntity>(Func<IDbDataRecord, TEntity> converter)
         {
-            Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
+            Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
             return new ObjectReader<TEntity>(Execute<IDbDataReader>(DataReaderConverter), converter);
         }
 
@@ -253,8 +253,8 @@ namespace Radischevo.Wahha.Data
 		/// an instance of the specified type.</param>
 		public IEnumerable<TEntity> AsEntitySet<TEntity>(IDbMaterializer<TEntity> materializer)
 		{
-			Precondition.Require(_command, Error.CommandIsNotInitialized("Command"));
-			Precondition.Require(materializer, Error.ArgumentNull("materializer"));
+			Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
+			Precondition.Require(materializer, () => Error.ArgumentNull("materializer"));
 
 			return new ObjectReader<TEntity>(Execute<IDbDataReader>(DataReaderConverter), materializer.Materialize);
 		}

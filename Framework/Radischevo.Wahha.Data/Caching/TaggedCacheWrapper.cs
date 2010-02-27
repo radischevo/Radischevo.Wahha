@@ -15,7 +15,7 @@ namespace Radischevo.Wahha.Data.Caching
         #region Constructors
         internal TaggedCacheWrapper(ICacheProvider provider)
         {
-            Precondition.Require(provider, Error.ArgumentNull("provider"));
+            Precondition.Require(provider, () => Error.ArgumentNull("provider"));
 
             _provider = provider;
             _supportTags = (_provider is ITaggedCacheProvider);

@@ -106,7 +106,7 @@ namespace Radischevo.Wahha.Web.Hosting
         /// <param name="fileName">The name of the assembly file.</param>
         public static Assembly LoadAssemblyFromFile(string fileName)
         {
-            Precondition.Require(!String.IsNullOrEmpty(fileName), Error.ArgumentNull("fileName"));
+            Precondition.Defined(fileName, () => Error.ArgumentNull("fileName"));
 
             string binDir = Path.GetDirectoryName(HttpRuntime.BinDirectory);
             string assemblyPath = Path.Combine(binDir, Path.GetFileName(fileName));
@@ -136,7 +136,7 @@ namespace Radischevo.Wahha.Web.Hosting
 
         protected virtual bool IsAssemblyResource(string virtualPath, out string resourceName)
         {
-            Precondition.Require(!String.IsNullOrEmpty(virtualPath), Error.ArgumentNull("virtualPath"));
+            Precondition.Defined(virtualPath, () => Error.ArgumentNull("virtualPath"));
             virtualPath = VirtualPathUtility.ToAppRelative(virtualPath);
             resourceName = null;
 

@@ -40,7 +40,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public ActionCacheAttribute(string varyByKeys, string tags)
         {
-            Precondition.Require(varyByKeys, Error.ArgumentNull("varyByKeys"));
+            Precondition.Require(varyByKeys, () => Error.ArgumentNull("varyByKeys"));
             char[] splitters = new char[] { ',' };
 
             if (String.Equals(varyByKeys, "*", 

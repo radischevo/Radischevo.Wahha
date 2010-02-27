@@ -20,8 +20,8 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public ApplyCultureAttribute(string parameterName)
         {
-            Precondition.Require(!String.IsNullOrEmpty(parameterName),
-                Error.ArgumentNull("parameterName"));
+			Precondition.Defined(parameterName, 
+				() => Error.ArgumentNull("parameterName"));
 
             _parameterName = parameterName;
             _source = ParameterSource.Header;
@@ -37,8 +37,8 @@ namespace Radischevo.Wahha.Web.Mvc
             }
             set
             {
-                Precondition.Require(!String.IsNullOrEmpty(value),
-                    Error.ArgumentNull("value"));
+                Precondition.Defined(value, 
+					() => Error.ArgumentNull("value"));
                 _parameterName = value;
             }
         }
@@ -91,7 +91,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override void OnExecuting(ActionExecutionContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
 
             string cultureCode = GetCultureCode(context);
             if (!String.IsNullOrEmpty(cultureCode))

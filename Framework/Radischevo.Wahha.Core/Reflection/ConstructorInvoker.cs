@@ -20,7 +20,7 @@ namespace Radischevo.Wahha.Core
         #region Constructors
         public ConstructorInvoker(ConstructorInfo constructor)
         {
-            Precondition.Require(constructor, Error.ArgumentNull("constructor"));
+			Precondition.Require(constructor, () => Error.ArgumentNull("constructor"));
 
             _constructor = constructor;
             _invoker = CreateInvoker(constructor);

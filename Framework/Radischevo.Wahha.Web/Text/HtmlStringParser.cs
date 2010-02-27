@@ -198,7 +198,7 @@ namespace Radischevo.Wahha.Web.Text
         /// <param name="writer">An <see cref="System.Xml.XmlWriter"/> to write into.</param>
         public virtual void ProcessDocument(XmlElement document, XmlWriter writer)
         {
-            Precondition.Require(writer, Error.ArgumentNull("writer"));
+            Precondition.Require(writer, () => Error.ArgumentNull("writer"));
             if (document == null) // в случае загрузки пустого XML
                 return;
 
@@ -237,7 +237,7 @@ namespace Radischevo.Wahha.Web.Text
         protected XmlElement ConvertElement(HtmlElementRule parent, 
             XmlElement element, out HtmlElementRule rule)
         {
-            Precondition.Require(element, Error.ArgumentNull("element"));
+            Precondition.Require(element, () => Error.ArgumentNull("element"));
 
             rule = GetElementRule(parent, element.LocalName);
             if (rule.Converter != null)
@@ -428,7 +428,7 @@ namespace Radischevo.Wahha.Web.Text
         /// <param name="rule">A new sub-rule to add.</param>
         protected virtual HtmlElementRule AddElementRule(HtmlElementRule rule)
         {
-            Precondition.Require(rule, Error.ArgumentNull("rule"));
+            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
             return Document.AddElementRule(rule);
         }
 
@@ -438,7 +438,7 @@ namespace Radischevo.Wahha.Web.Text
         /// <param name="rule">A new sub-rule to add.</param>
         protected virtual HtmlAttributeRule AddAttributeRule(HtmlAttributeRule rule)
         {
-            Precondition.Require(rule, Error.ArgumentNull("rule"));
+            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
             return Document.AddAttributeRule(rule);
         }
 
@@ -460,7 +460,7 @@ namespace Radischevo.Wahha.Web.Text
         /// <param name="inner">The selector function.</param>
         public IRuleAppender Add(Func<IRuleSelector, IRuleBuilder> inner)
         {
-            Precondition.Require(inner, Error.ArgumentNull("inner"));
+            Precondition.Require(inner, () => Error.ArgumentNull("inner"));
             IRuleBuilder rule = inner(this);
 
             HtmlElementRule elem = (rule as HtmlElementRule);
@@ -502,7 +502,7 @@ namespace Radischevo.Wahha.Web.Text
 
         IFluentElementRule IRuleSelector.Elements(params string[] names)
         {
-            Precondition.Require(names, Error.ArgumentNull("names"));
+            Precondition.Require(names, () => Error.ArgumentNull("names"));
             HtmlElementRuleCollection collection = new HtmlElementRuleCollection();
 
             foreach (string name in names)
@@ -514,7 +514,7 @@ namespace Radischevo.Wahha.Web.Text
 
         IFluentAttributeRule IRuleSelector.Attributes(params string[] names)
         {
-            Precondition.Require(names, Error.ArgumentNull("names"));
+            Precondition.Require(names, () => Error.ArgumentNull("names"));
             HtmlAttributeRuleCollection collection = new HtmlAttributeRuleCollection();
 
             foreach (string name in names)

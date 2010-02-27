@@ -19,7 +19,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public CollectionResult(IEnumerable<ActionResult> list)
         {
-            Precondition.Require(list, Error.ArgumentNull("list"));
+            Precondition.Require(list, () => Error.ArgumentNull("list"));
             _results = new List<ActionResult>(list);
         }
         #endregion
@@ -37,7 +37,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override void Execute(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             foreach (ActionResult result in _results)
                 result.Execute(context);
         }

@@ -593,12 +593,6 @@
             standardized error reporting and automatic exception creation. 
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Core.Precondition.Fail(System.Exception)">
-            <summary>
-            Internal method performing throwing of exceptions.
-            </summary>
-            <param name="error">The exception leading to this error (if any).</param>
-        </member>
         <member name="M:Radischevo.Wahha.Core.DelegateExtensions.InvokeAndForget(System.Delegate,System.Object[])">
             <summary>
             Dynamically invokes (using fire-and-forget strategy) 

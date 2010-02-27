@@ -92,8 +92,8 @@ namespace Radischevo.Wahha.Web.Mvc
         /// </summary>
         public void Add(string key, ValidationError error)
         {
-            Precondition.Require(key, Error.InvalidArgument("key"));
-            Precondition.Require(error, Error.ArgumentNull("error"));
+            Precondition.Require(key, () => Error.InvalidArgument("key"));
+            Precondition.Require(error, () => Error.ArgumentNull("error"));
 
 			ICollection<ValidationError> list = GetOrCreateItem(key);
 			error.Member = key;

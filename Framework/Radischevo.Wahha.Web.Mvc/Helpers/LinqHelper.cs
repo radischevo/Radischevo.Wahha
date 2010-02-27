@@ -41,7 +41,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public static object[] ExtractArgumentsToArray(MethodCallExpression expression)
         {
-            Precondition.Require(expression, Error.ArgumentNull("expression"));
+            Precondition.Require(expression, () => Error.ArgumentNull("expression"));
             List<object> plist = new List<object>();
 
             foreach (Expression e in expression.Arguments)
@@ -52,7 +52,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public static ValueDictionary ExtractArgumentsToDictionary(MethodCallExpression expression)
         {
-            Precondition.Require(expression, Error.ArgumentNull("expression"));
+            Precondition.Require(expression, () => Error.ArgumentNull("expression"));
             ValueDictionary plist = new ValueDictionary();
             ParameterInfo[] parameters = expression.Method.GetParameters();
 

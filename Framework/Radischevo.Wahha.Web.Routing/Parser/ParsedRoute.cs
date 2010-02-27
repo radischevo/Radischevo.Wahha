@@ -20,7 +20,7 @@ namespace Radischevo.Wahha.Web.Routing
         public ParsedRoute(IEnumerable<PathSegment> segments, 
             bool isRelative, bool isAppRelative)
         {
-            Precondition.Require(segments, Error.ArgumentNull("segments"));
+            Precondition.Require(segments, () => Error.ArgumentNull("segments"));
             _segments = new List<PathSegment>(segments);
             _isRelative = isRelative;
             _isAppRelative = (isRelative & isAppRelative);

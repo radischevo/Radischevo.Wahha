@@ -29,8 +29,8 @@ namespace Radischevo.Wahha.Web
             public CollectionWrapper(TCollection collection, 
                 Func<TCollection, string, object> selector)
             {
-                Precondition.Require(collection, Error.ArgumentNull("collection"));
-                Precondition.Require(selector, Error.ArgumentNull("selector"));
+                Precondition.Require(collection, () => Error.ArgumentNull("collection"));
+                Precondition.Require(selector, () => Error.ArgumentNull("selector"));
 
                 _collection = collection;
                 _selector = selector;
@@ -183,7 +183,7 @@ namespace Radischevo.Wahha.Web
         /// <param name="request">The current HTTP request</param>
         public HttpParameters(HttpRequest request)
         {
-            Precondition.Require(request, Error.ArgumentNull("request"));
+            Precondition.Require(request, () => Error.ArgumentNull("request"));
 
             _queryString = new CollectionWrapper<NameValueCollection>(
                 request.QueryString, (col, key) => col[key]);

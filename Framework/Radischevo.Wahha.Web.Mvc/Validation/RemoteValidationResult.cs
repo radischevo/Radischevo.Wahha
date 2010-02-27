@@ -59,7 +59,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         #region Instance Methods
         public override void Execute(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             HttpResponseBase response = context.Context.Response;
 
             response.ContentType = "application/json";

@@ -23,8 +23,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         
         public TemplateDescriptor(Type type, object value)
         {
-            Precondition.Require(type,
-                Error.ArgumentNull("type"));
+            Precondition.Require(type, () => Error.ArgumentNull("type"));
             _type = type;
             _value = value;
         }

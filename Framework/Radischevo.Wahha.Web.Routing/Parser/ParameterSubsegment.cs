@@ -13,7 +13,7 @@ namespace Radischevo.Wahha.Web.Routing
         #region Constructors
         public ParameterSubsegment(string parameterName)
         {
-            Precondition.Require(parameterName, Error.ArgumentNull("parameterName"));
+            Precondition.Require(parameterName, () => Error.ArgumentNull("parameterName"));
 
             _isCatchAll = (parameterName.StartsWith("*", StringComparison.Ordinal));
             _parameterName = (_isCatchAll) ? parameterName.Substring(1) : parameterName;

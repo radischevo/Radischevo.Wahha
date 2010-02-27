@@ -30,9 +30,8 @@ namespace Radischevo.Wahha.Web.Hosting
             Assembly assembly, string resourcePath)
             : base(virtualPath)
         {
-            Precondition.Require(assembly, Error.ArgumentNull("assembly"));
-            Precondition.Require(!String.IsNullOrEmpty(resourcePath), 
-                Error.ArgumentNull("resourcePath"));
+            Precondition.Require(assembly, () => Error.ArgumentNull("assembly"));
+            Precondition.Defined(resourcePath, () => Error.ArgumentNull("resourcePath"));
 
             _assembly = assembly;
             _resourcePath = resourcePath;

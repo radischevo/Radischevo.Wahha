@@ -17,7 +17,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Constructors
 		public ActionMethodCacheEntry(MethodInfo method)
 		{
-			Precondition.Require(method, Error.ArgumentNull("method"));
+			Precondition.Require(method, () => Error.ArgumentNull("method"));
 			_method = method;
 			_selectors = GetActionSelectors(method);
 		}
@@ -26,7 +26,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Static Methods
 		private static List<ActionSelectorAttribute> GetActionSelectors(MethodInfo method)
 		{
-			Precondition.Require(method, Error.ArgumentNull("method"));
+			Precondition.Require(method, () => Error.ArgumentNull("method"));
 			return ((ActionSelectorAttribute[])method.GetCustomAttributes(typeof(ActionSelectorAttribute), true)).ToList();
 		}
 		#endregion

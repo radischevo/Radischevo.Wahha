@@ -16,7 +16,7 @@ namespace Radischevo.Wahha.Web.Routing
         #region Constructors
         public ContentSegment(IEnumerable<PathSubsegment> segments)
         {
-            Precondition.Require(segments, Error.ArgumentNull("segments"));
+            Precondition.Require(segments, () => Error.ArgumentNull("segments"));
             _segments = new List<PathSubsegment>(segments);
         }
         #endregion

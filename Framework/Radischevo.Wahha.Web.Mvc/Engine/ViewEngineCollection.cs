@@ -37,7 +37,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public void Add(IViewEngine item)
         {
-            Precondition.Require(item, Error.ArgumentNull("item"));
+            Precondition.Require(item, () => Error.ArgumentNull("item"));
             _list.Add(item);
         }
 

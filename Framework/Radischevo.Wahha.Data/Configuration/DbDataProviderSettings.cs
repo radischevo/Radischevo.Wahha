@@ -46,7 +46,7 @@ namespace Radischevo.Wahha.Data.Configuration
             }
             set
             {
-                Precondition.Require(value, Error.ArgumentNull("value"));
+                Precondition.Require(value, () => Error.ArgumentNull("value"));
                 _factory = value;
             }
         }

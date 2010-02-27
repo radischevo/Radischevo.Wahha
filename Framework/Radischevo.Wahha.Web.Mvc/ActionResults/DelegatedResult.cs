@@ -39,7 +39,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override void Execute(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             if (_command == null)
                 return;
 

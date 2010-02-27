@@ -42,7 +42,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
 
         public ClientModelValidationRule(ModelValidationRule rule)
         {
-            Precondition.Require(rule, Error.ArgumentNull("rule"));
+            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
 
 			_field = rule.Member;
             _errorMessage = rule.ErrorMessage;

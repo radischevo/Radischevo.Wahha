@@ -26,7 +26,7 @@ namespace Radischevo.Wahha.Web.Mvc
         protected override ViewEngineResult FindView(ControllerContext context)
         {
             ViewEngineResult result = base.ViewEngines.FindView(context, base.ViewName);
-            Precondition.Require(result, Error.ViewNotFound(base.ViewName));
+            Precondition.Require(result, () => Error.ViewNotFound(base.ViewName));
 
             return result;
         }

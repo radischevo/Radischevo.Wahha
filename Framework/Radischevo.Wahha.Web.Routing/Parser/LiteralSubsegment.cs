@@ -12,7 +12,7 @@ namespace Radischevo.Wahha.Web.Routing
         #region Constructors
         public LiteralSubsegment(string literal)
         {
-            Precondition.Require(literal, Error.ArgumentNull("literal"));
+            Precondition.Require(literal, () => Error.ArgumentNull("literal"));
             _literal = literal;
         }
         #endregion

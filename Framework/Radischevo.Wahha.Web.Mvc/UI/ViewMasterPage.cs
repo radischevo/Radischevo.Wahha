@@ -21,7 +21,8 @@ namespace Radischevo.Wahha.Web.Mvc.UI
             get
             {
                 ViewPage page = (Page as ViewPage);
-                Precondition.Require(page, Mvc.Error.ViewMasterPageRequiresViewPage());
+				Precondition.Require(page, 
+					() => Mvc.Error.ViewMasterPageRequiresViewPage());
                 
                 return page;
             }

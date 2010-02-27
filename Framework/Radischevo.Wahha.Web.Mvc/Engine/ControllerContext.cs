@@ -41,7 +41,7 @@ namespace Radischevo.Wahha.Web.Mvc
             RouteData routeData, ControllerBase controller)
             : base(context, routeData)
         {
-            Precondition.Require(controller, Error.ArgumentNull("controller"));
+            Precondition.Require(controller, () => Error.ArgumentNull("controller"));
             _controller = controller;
         }
         #endregion
@@ -94,13 +94,13 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Static Methods
         internal static RequestContext GetRequestContext(RequestContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             return context;
         }
 
         internal static ControllerContext GetControllerContext(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             return context;
         }
         #endregion

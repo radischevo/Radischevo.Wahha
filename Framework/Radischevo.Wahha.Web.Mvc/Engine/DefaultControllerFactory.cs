@@ -79,9 +79,8 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual IController CreateController(
             RequestContext context, string controllerName)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(!String.IsNullOrEmpty(controllerName),
-                Error.InvalidArgument("controllerName"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Defined(controllerName, () => Error.InvalidArgument("controllerName"));
             
             return GetControllerInstance(GetControllerType(controllerName));
         }
@@ -95,7 +94,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual IController GetControllerInstance(Type type)
         {
-            Precondition.Require(type, Error.ArgumentNull("type"));
+            Precondition.Require(type, () => Error.ArgumentNull("type"));
 
             if (!typeof(IController).IsAssignableFrom(type))
                 throw Error.InvalidControllerType(type.Name);
@@ -108,8 +107,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual Type GetControllerType(string controllerName)
         {
-            Precondition.Require(!String.IsNullOrEmpty(controllerName),
-                Error.InvalidArgument("controllerName"));
+            Precondition.Defined(controllerName, () => Error.InvalidArgument("controllerName"));
 
             TypeCache.EnsureInitialized(BuildManager);
             

@@ -30,10 +30,10 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		internal ReflectedAsyncActionDescriptor(MethodInfo entryMethod, MethodInfo completedMethod, 
 			string actionName, ControllerDescriptor controller, bool validateMethods)
 		{
-			Precondition.Require(entryMethod, Error.ArgumentNull("entryMethod"));
-			Precondition.Require(completedMethod, Error.ArgumentNull("completedMethod"));
-			Precondition.Require(!String.IsNullOrEmpty(actionName), Error.ArgumentNull("actionName"));
-			Precondition.Require(controller, Error.ArgumentNull("controller"));
+			Precondition.Require(entryMethod, () => Error.ArgumentNull("entryMethod"));
+			Precondition.Require(completedMethod, () => Error.ArgumentNull("completedMethod"));
+			Precondition.Defined(actionName, () => Error.ArgumentNull("actionName"));
+			Precondition.Require(controller, () => Error.ArgumentNull("controller"));
 			
 			if (validateMethods)
 			{
@@ -96,8 +96,8 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		public override IAsyncResult BeginExecute(ControllerContext context,
 			IDictionary<string, object> parameters, AsyncCallback callback, object state)
 		{
-			Precondition.Require(context, Error.ArgumentNull("context"));
-			Precondition.Require(parameters, Error.ArgumentNull("parameters"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
+			Precondition.Require(parameters, () => Error.ArgumentNull("parameters"));
 
 			AsyncManager asyncManager = GetAsyncManager(context.Controller);
 

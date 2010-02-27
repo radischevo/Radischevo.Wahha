@@ -54,7 +54,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public void Add(Type modelType, ModelMetadataProvider provider)
         {
-            Precondition.Require(modelType, Error.ArgumentNull("modelType"));
+            Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
             _collection.Add(modelType, provider);
         }
 
@@ -75,7 +75,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public ModelMetadataProvider GetProvider(Type modelType, bool fallbackToDefault)
         {
-            Precondition.Require(modelType, Error.ArgumentNull("modelType"));
+            Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
 
             if(_collection.ContainsKey(modelType)) 
                 return _collection[modelType] ?? Default;

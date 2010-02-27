@@ -22,7 +22,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         #region Constructors
         public HttpPostedFileWrapper(HttpPostedFile file)
         {
-            Precondition.Require(file, Error.ArgumentNull("file"));
+            Precondition.Require(file, () => Error.ArgumentNull("file"));
             _file = file;
         }
         #endregion

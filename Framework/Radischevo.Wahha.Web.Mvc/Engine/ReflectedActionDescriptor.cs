@@ -27,9 +27,9 @@ namespace Radischevo.Wahha.Web.Mvc
         internal ReflectedActionDescriptor(MethodInfo method, string name, 
             ControllerDescriptor controller, bool validateMethod)
         {
-            Precondition.Require(method, Error.ArgumentNull("method"));
-            Precondition.Require(!String.IsNullOrEmpty(name), Error.ArgumentNull("name"));
-            Precondition.Require(controller, Error.ArgumentNull("controller"));
+            Precondition.Require(method, () => Error.ArgumentNull("method"));
+            Precondition.Defined(name, () => Error.ArgumentNull("name"));
+            Precondition.Require(controller, () => Error.ArgumentNull("controller"));
 
             if (validateMethod)
                 ValidateActionMethod(method);
@@ -127,8 +127,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public override object Execute(ControllerContext context, IDictionary<string, object> parameters)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(parameters, Error.ArgumentNull("parameters"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(parameters, () => Error.ArgumentNull("parameters"));
             
             object[] parameterValues = _method.GetParameters()
                 .Select(p => ExtractParameter(p, parameters, _method))

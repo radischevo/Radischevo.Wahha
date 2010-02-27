@@ -20,8 +20,8 @@ namespace Radischevo.Wahha.Data
         /// <param name="action">An action to execute.</param>
         public static void Execute(this IDbConnection connection, Action<IDbConnection> action)
         {
-            Precondition.Require(connection, Error.ArgumentNull("connection"));
-            Precondition.Require(action, Error.ArgumentNull("action"));
+            Precondition.Require(connection, () => Error.ArgumentNull("connection"));
+            Precondition.Require(action, () => Error.ArgumentNull("action"));
 
             ConnectionState state = connection.State;            
             try
@@ -48,8 +48,8 @@ namespace Radischevo.Wahha.Data
         public static TResult Execute<TResult>(this IDbConnection connection, 
             Func<IDbConnection, TResult> action)
         {
-            Precondition.Require(connection, Error.ArgumentNull("connection"));
-            Precondition.Require(action, Error.ArgumentNull("action"));
+            Precondition.Require(connection, () => Error.ArgumentNull("connection"));
+            Precondition.Require(action, () => Error.ArgumentNull("action"));
 
             TResult result = default(TResult);
             

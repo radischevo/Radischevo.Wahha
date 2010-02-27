@@ -58,7 +58,7 @@ namespace Radischevo.Wahha.Data
 		public static DbCommandResult Execute(this IDbDataProvider provider, 
 			DbCommandDescriptor command)
 		{
-			Precondition.Require(provider, Error.ArgumentNull("provider"));
+			Precondition.Require(provider, () => Error.ArgumentNull("provider"));
 			command.Timeout = Configuration.Configuration
 				.Instance.Providers.CommandTimeout;
 

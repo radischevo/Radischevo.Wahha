@@ -22,7 +22,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         #region Constructors
         public HttpCachePolicyWrapper(HttpCachePolicy policy)
         {
-            Precondition.Require(policy, Error.ArgumentNull("policy"));
+            Precondition.Require(policy, () => Error.ArgumentNull("policy"));
             _policy = policy;
         }
         #endregion

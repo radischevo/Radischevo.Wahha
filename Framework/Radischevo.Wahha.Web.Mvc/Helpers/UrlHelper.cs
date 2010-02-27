@@ -30,8 +30,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public UrlHelper(ViewContext context, RouteCollection routes)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(routes, Error.ArgumentNull("routes"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Require(routes, () => Error.ArgumentNull("routes"));
 
             _context = context;
             _routes = routes;
@@ -67,7 +67,7 @@ namespace Radischevo.Wahha.Web.Mvc
         private static bool TryGetFileVersion(HttpContextBase context,
             string virtualPath, out long version)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             version = -1;
 
             if (!Uri.IsWellFormedUriString(virtualPath, UriKind.Relative))

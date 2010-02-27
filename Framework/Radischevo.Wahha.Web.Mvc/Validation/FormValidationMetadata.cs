@@ -49,7 +49,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         public FormValidationMetadata Append(
             Func<ClientModelValidationRuleBuilder, ClientModelValidationRule> rule)
         {
-            Precondition.Require(rule, Error.ArgumentNull("rule"));
+            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
             return Append(rule(new ClientModelValidationRuleBuilder()));
         }
 
@@ -63,7 +63,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
 
         public FormValidationMetadata Append(ClientModelValidationRule rule)
         {
-            Precondition.Require(rule, Error.ArgumentNull("rule"));
+            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
             _rules.Add(rule);
 
             return this;
@@ -79,8 +79,8 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         public string Apply(string selector, 
             IModelValidationRuleFormatter formatter)
         {
-            Precondition.Require(!String.IsNullOrEmpty(selector), 
-                Error.ArgumentNull("selector"));
+            Precondition.Defined(selector,
+				() => Error.ArgumentNull("selector"));
 
             if (formatter == null)
                 formatter = new JsonModelValidationRuleFormatter();

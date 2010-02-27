@@ -83,7 +83,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// <param name="settings">A settings list for the current instance.</param>
         protected override void Init(IValueSet settings)
         {
-            Precondition.Require(settings, Error.ArgumentNull("settings"));
+            Precondition.Require(settings, () => Error.ArgumentNull("settings"));
             base.Init(settings);
 
             Provider.AssemblyName = settings.GetValue<string>("assembly");

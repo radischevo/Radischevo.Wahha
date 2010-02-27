@@ -19,7 +19,7 @@ namespace Radischevo.Wahha.Core
         #region Static Methods
         public static bool TryGetValue(this IDictionary dictionary, string key, out object value)
         {
-            Precondition.Require(dictionary, Error.ArgumentNull("dictionary"));
+			Precondition.Require(dictionary, () => Error.ArgumentNull("dictionary"));
             TryGetValueDelegate dlgt = CreateTryGetValueDelegate(dictionary.GetType());
 
             if (dlgt == null)

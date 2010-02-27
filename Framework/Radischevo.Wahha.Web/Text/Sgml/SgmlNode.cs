@@ -180,7 +180,7 @@ namespace Radischevo.Wahha.Web.Text.Sgml
 
         public void CopyAttributes(SgmlNode node)
         {
-            Precondition.Require(node, Error.ArgumentNull("node"));
+            Precondition.Require(node, () => Error.ArgumentNull("node"));
 
             int index = 0;
             int count = node._attributes.Count;

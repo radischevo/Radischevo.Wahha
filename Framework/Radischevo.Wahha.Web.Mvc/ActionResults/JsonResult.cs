@@ -94,7 +94,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// <see cref="Radischevo.Wahha.Web.Mvc.ControllerContext"/></param>
         public override void Execute(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             HttpResponseBase response = context.Context.Response;
 
             string callbackFunction = context.Context.Request

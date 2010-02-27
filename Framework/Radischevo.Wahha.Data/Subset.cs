@@ -22,7 +22,7 @@ namespace Radischevo.Wahha.Data
 
 		public Subset(IEnumerable<T> collection, int total)
 		{
-			Precondition.Require(collection, Error.ArgumentNull("collection"));
+			Precondition.Require(collection, () => Error.ArgumentNull("collection"));
 			_collection = collection;
 			_total = total;
 		}

@@ -119,7 +119,7 @@ namespace Radischevo.Wahha.Core
 
         public static Type GetInterface(this Type t, Type type)
         {
-            Precondition.Require(t, Error.ArgumentNull("t"));
+			Precondition.Require(t, () => Error.ArgumentNull("t"));
             return t.GetInterface(type.FullName);
         }
 

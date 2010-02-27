@@ -33,7 +33,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		#region Instance Methods
 		public CompiledTemplate Build(ParsedTemplate template)
 		{
-			Precondition.Require(template, Error.ArgumentNull("template"));
+			Precondition.Require(template, () => Error.ArgumentNull("template"));
 			OnPreCompile(template);
 
 			foreach (TemplateExpression expression in template.ExpressionTree)

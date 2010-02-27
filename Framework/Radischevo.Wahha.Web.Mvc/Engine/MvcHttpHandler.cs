@@ -21,8 +21,8 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Instance Methods
 		protected override void VerifyAndProcessRequest(IHttpHandler handler, HttpContextBase context)
 		{
-			Precondition.Require(handler, Error.ArgumentNull("handler"));
-			Precondition.Require(context, Error.ArgumentNull("context"));
+			Precondition.Require(handler, () => Error.ArgumentNull("handler"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
 
 			handler.ProcessRequest(context.Unwrap());
 		}

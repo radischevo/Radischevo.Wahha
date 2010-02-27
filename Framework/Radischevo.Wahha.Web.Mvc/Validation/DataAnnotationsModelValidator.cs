@@ -120,7 +120,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
 
         private static void ValidateAdapterType(Type adapterType)
         {
-            Precondition.Require(adapterType, Error.ArgumentNull("adapterType"));
+            Precondition.Require(adapterType, () => Error.ArgumentNull("adapterType"));
 
             if (!typeof(DataAnnotationsValidationRule).IsAssignableFrom(adapterType))
                 throw Error.TypeMustDeriveFromType(adapterType, typeof(DataAnnotationsValidationRule));
@@ -128,7 +128,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
 
         private static void ValidateAttributeType(Type attributeType)
         {
-            Precondition.Require(attributeType, Error.ArgumentNull("attributeType"));
+            Precondition.Require(attributeType, () => Error.ArgumentNull("attributeType"));
 
             if (!typeof(ValidationAttribute).IsAssignableFrom(attributeType))
                 throw Error.TypeMustDeriveFromType(attributeType, typeof(ValidationAttribute));
@@ -136,7 +136,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
 
         private static void ValidateFactory(DataAnnotationsValidationRuleFactory factory)
         {
-            Precondition.Require(factory, Error.ArgumentNull("factory"));
+            Precondition.Require(factory, () => Error.ArgumentNull("factory"));
         }
         #endregion
 

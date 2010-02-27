@@ -156,7 +156,7 @@ namespace Radischevo.Wahha.Web.Text
 
         protected virtual void Init(string text)
         {
-            Precondition.Require(text, new ArgumentNullException("text"));
+            Precondition.Require(text, () => Error.ArgumentNull("text"));
 
             _input = new StringBuffer(text);
             _output = new StringBuilder();
@@ -179,7 +179,7 @@ namespace Radischevo.Wahha.Web.Text
         protected virtual string FormatElement(HtmlElementBuilder element,
             HtmlElementRenderMode mode)
         {
-            Precondition.Require(element, Error.ArgumentNull("element"));
+            Precondition.Require(element, () => Error.ArgumentNull("element"));
 
             if (_formatter == null)
                 return element.ToString(mode);

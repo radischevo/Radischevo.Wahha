@@ -43,7 +43,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Static Methods
 		public static string GetNameOrAlias(MethodInfo method)
 		{
-			Precondition.Require(method, Error.ArgumentNull("method"));
+			Precondition.Require(method, () => Error.ArgumentNull("method"));
 
 			ActionNameAttribute[] attrs =
 				(ActionNameAttribute[])method.GetCustomAttributes(typeof(ActionNameAttribute), true);
@@ -66,7 +66,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
 		protected virtual bool IsActionMethod(MethodInfo method)
         {
-            Precondition.Require(method, Error.ArgumentNull("method"));
+            Precondition.Require(method, () => Error.ArgumentNull("method"));
 
             if (method.IsDefined(typeof(IgnoreActionAttribute), false))
                 return false;
@@ -82,8 +82,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public virtual MethodInfo GetActionMethod(ControllerContext context, string actionName)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
-            Precondition.Require(!String.IsNullOrEmpty(actionName), Error.ArgumentNull("actionName"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
+            Precondition.Defined(actionName, () => Error.ArgumentNull("actionName"));
 
             List<ActionMethodCacheEntry> matchingMethods = _methods[actionName].Where(m => m.IsValidFor(context)).ToList();
             switch (matchingMethods.Count)

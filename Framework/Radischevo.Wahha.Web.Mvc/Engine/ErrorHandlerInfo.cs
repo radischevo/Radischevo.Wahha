@@ -13,7 +13,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         internal ErrorHandlerInfo(Exception exception)
         {
-            Precondition.Require(exception, Error.ArgumentNull("exception"));
+            Precondition.Require(exception, () => Error.ArgumentNull("exception"));
             _exception = exception;
         }
         #endregion

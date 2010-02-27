@@ -120,9 +120,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public TemplateHelper(HtmlHelper helper)
         {
-            Precondition.Require(helper, 
-                Error.ArgumentNull("helper"));
-
+            Precondition.Require(helper, () => Error.ArgumentNull("helper"));
             _helper = helper;
         }
         #endregion

@@ -26,7 +26,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
             public void RenderAction(ControllerContext context, 
                 string controllerName, string actionName, ValueDictionary arguments)
             {
-                Precondition.Require(context, Error.ArgumentNull("context"));
+                Precondition.Require(context, () => Error.ArgumentNull("context"));
                 InitializeChildRequest(context);
                 Include(controllerName, actionName, arguments);
             }
@@ -35,8 +35,8 @@ namespace Radischevo.Wahha.Web.Mvc.UI
                 Expression<Action<TController>> action)
                 where TController : Controller
             {
-                Precondition.Require(action, Error.ArgumentNull("action"));
-                Precondition.Require(context, Error.ArgumentNull("context"));
+                Precondition.Require(action, () => Error.ArgumentNull("action"));
+                Precondition.Require(context, () => Error.ArgumentNull("context"));
                 InitializeChildRequest(context);
                 Include<TController>(action);
             }            
@@ -53,7 +53,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         #region Constructors
         public HtmlHelper(ViewContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             _context = context;
             _controls = new HtmlControlHelper(_context);
             _templates = new TemplateHelper(this);
@@ -97,13 +97,13 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         #region Default Helper Overrides
         protected void SetTemplateHelper(TemplateHelper helper)
         {
-            Precondition.Require(helper, Error.ArgumentNull("helper"));
+            Precondition.Require(helper, () => Error.ArgumentNull("helper"));
             _templates = helper;
         }
 
         protected void SetControlsHelper(HtmlControlHelper helper)
         {
-            Precondition.Require(helper, Error.ArgumentNull("helper"));
+            Precondition.Require(helper, () => Error.ArgumentNull("helper"));
             _controls = helper;
         }
         #endregion
@@ -169,7 +169,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         public void Choice<TValue>(Func<TValue> value, Func<TValue, bool> condition,
             Action<TValue> ifTrue, Action<TValue> ifFalse)
         {
-            Precondition.Require(value, Error.ArgumentNull("value"));
+            Precondition.Require(value, () => Error.ArgumentNull("value"));
             Choice<TValue>(value(), condition, ifTrue, ifFalse);
         }
 
@@ -182,7 +182,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         public void Choice<TValue>(TValue value, Func<TValue, bool> condition, 
             Action<TValue> ifTrue, Action<TValue> ifFalse)
         {
-            Precondition.Require(condition, Error.ArgumentNull("condition"));
+            Precondition.Require(condition, () => Error.ArgumentNull("condition"));
             if (condition(value))
             {
                 if (ifTrue != null)
@@ -304,8 +304,8 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         /// <param name="arguments">The arguments of the action.</param>
         public void Component(string controller, string action, ValueDictionary arguments)
         {
-            Precondition.Require(!String.IsNullOrEmpty(controller), Error.ArgumentNull("controller"));
-            Precondition.Require(!String.IsNullOrEmpty(action), Error.ArgumentNull("action"));
+            Precondition.Defined(controller, () => Error.ArgumentNull("controller"));
+            Precondition.Defined(action, () => Error.ArgumentNull("action"));
 
             if (arguments == null)
                 arguments = new ValueDictionary();

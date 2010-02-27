@@ -13,7 +13,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override object Bind(BindingContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             object value;
             if (!context.TryGetValue(out value))
                 return null;

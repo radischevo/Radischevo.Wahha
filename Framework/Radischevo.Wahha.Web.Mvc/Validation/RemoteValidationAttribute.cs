@@ -36,9 +36,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
             }
             set
             {
-                Precondition.Require(!String.IsNullOrEmpty(value),
-                    Error.ArgumentNull("value"));
-
+                Precondition.Defined(value, () => Error.ArgumentNull("value"));
                 _url = value;
             }
         }

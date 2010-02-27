@@ -22,7 +22,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         #region Constructors
         public HtmlControlHelper(ViewContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             _context = context;
         }
         #endregion

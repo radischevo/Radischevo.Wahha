@@ -64,7 +64,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public override void Execute(ControllerContext context)
         {
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
 
             if (!String.IsNullOrEmpty(_contentType))
                 context.Context.Response.ContentType = ContentType;

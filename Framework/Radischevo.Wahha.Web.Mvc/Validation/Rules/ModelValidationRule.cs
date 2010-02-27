@@ -18,7 +18,7 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         #region Constructors
         public ModelValidationRule(ModelValidator validator)
         {
-            Precondition.Require(validator, Error.ArgumentNull("validator"));
+            Precondition.Require(validator, () => Error.ArgumentNull("validator"));
 
 			_validator = validator;
             _member = validator.PropertyName;

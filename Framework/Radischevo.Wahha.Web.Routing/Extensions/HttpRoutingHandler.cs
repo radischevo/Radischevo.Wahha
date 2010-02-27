@@ -49,7 +49,7 @@ namespace Radischevo.Wahha.Web.Routing
             Type type = typeof(THandler);
 
             ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
-            Precondition.Require(constructor, Error.CouldNotCreateHttpHandler(type));
+            Precondition.Require(constructor, () => Error.CouldNotCreateHttpHandler(type));
 
             return () => (THandler)constructor.Invoke(null);
         }

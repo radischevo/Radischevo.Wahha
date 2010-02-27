@@ -51,14 +51,14 @@ namespace Radischevo.Wahha.Web.Routing
         protected virtual void ProcessRequest(HttpContextBase context)
         {
             RouteData data = Routes.GetRouteData(context);
-            Precondition.Require(data, Error.NoRouteMatched());
+            Precondition.Require(data, () => Error.NoRouteMatched());
 
             IRouteHandler handler = data.Handler;
-            Precondition.Require(handler, Error.NoRouteHandlerFound());
+            Precondition.Require(handler, () => Error.NoRouteHandlerFound());
 
             RequestContext ctx = new RequestContext(context, data);
             IHttpHandler httpHandler = handler.GetHttpHandler(ctx);
-            Precondition.Require(httpHandler, Error.NoHttpHandlerFound(handler.GetType()));
+            Precondition.Require(httpHandler, () => Error.NoHttpHandlerFound(handler.GetType()));
 
             VerifyAndProcessRequest(httpHandler, context);
         }

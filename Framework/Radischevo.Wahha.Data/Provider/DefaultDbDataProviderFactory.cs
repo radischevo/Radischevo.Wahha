@@ -32,7 +32,7 @@ namespace Radischevo.Wahha.Data
         #region Instance Methods
         public IDbDataProvider CreateProvider(Type providerType)
         {
-            Precondition.Require(providerType, Error.ArgumentNull("providerType"));
+            Precondition.Require(providerType, () => Error.ArgumentNull("providerType"));
 
             if (!IsDataProvider(providerType))
                 throw Error.IncompatibleProviderType(providerType);
@@ -49,8 +49,8 @@ namespace Radischevo.Wahha.Data
 
         public IDbDataProvider CreateProvider(string providerName)
         {
-            Precondition.Require(!String.IsNullOrEmpty(providerName),
-                Error.ArgumentNull("providerName"));
+            Precondition.Defined(providerName,
+				() => Error.ArgumentNull("providerName"));
 
             Type type;
             if (!Config.Configuration.Instance.Providers
@@ -63,8 +63,8 @@ namespace Radischevo.Wahha.Data
 
         public void DisposeProvider(IDbDataProvider provider)
         {
-            Precondition.Require(provider, 
-                Error.ArgumentNull("provider"));
+            Precondition.Require(provider,
+				() => Error.ArgumentNull("provider"));
 
             provider.Dispose();
         }

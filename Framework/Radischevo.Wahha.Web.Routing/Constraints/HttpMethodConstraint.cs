@@ -26,7 +26,7 @@ namespace Radischevo.Wahha.Web.Routing
             if (direction == RouteDirection.UrlGeneration)
                 return true;
 
-            Precondition.Require(context, Error.ArgumentNull("context"));
+            Precondition.Require(context, () => Error.ArgumentNull("context"));
             return ((context.Request.HttpMethod & _methods) > 0);
         }
         #endregion

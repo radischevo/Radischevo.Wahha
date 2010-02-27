@@ -21,8 +21,8 @@ namespace Radischevo.Wahha.Web.Text
         public HtmlElementRule(HtmlElementRule parent,
             string name, HtmlElementFlags flags)
         {
-            Precondition.Require(!String.IsNullOrEmpty(name),
-                Error.ArgumentNull("name"));
+            Precondition.Defined(name,
+				() => Error.ArgumentNull("name"));
 
             _name = name;
             _flags = flags;
@@ -93,7 +93,7 @@ namespace Radischevo.Wahha.Web.Text
         #region Fluent Interface Implementation
         IRuleAppender IRuleAppender.With(Func<IRuleSelector, IRuleBuilder> inner)
         {
-            Precondition.Require(inner, Error.ArgumentNull("inner"));
+            Precondition.Require(inner, () => Error.ArgumentNull("inner"));
             IRuleBuilder rule = inner(this);
 
             HtmlElementRule elem = (rule as HtmlElementRule);
@@ -135,7 +135,7 @@ namespace Radischevo.Wahha.Web.Text
 
         IFluentElementRule IRuleSelector.Elements(params string[] names)
         {
-            Precondition.Require(names, Error.ArgumentNull("names"));
+            Precondition.Require(names, () => Error.ArgumentNull("names"));
             HtmlElementRuleCollection collection = new HtmlElementRuleCollection();
 
             foreach (string name in names)
@@ -152,7 +152,7 @@ namespace Radischevo.Wahha.Web.Text
 
         IFluentAttributeRule IRuleSelector.Attributes(params string[] names)
         {
-            Precondition.Require(names, Error.ArgumentNull("names"));
+            Precondition.Require(names, () => Error.ArgumentNull("names"));
             HtmlAttributeRuleCollection collection = new HtmlAttributeRuleCollection();
 
             foreach (string name in names)
@@ -165,7 +165,7 @@ namespace Radischevo.Wahha.Web.Text
         #region Instance Methods
         public virtual HtmlElementRule AddElementRule(HtmlElementRule rule)
         {
-            Precondition.Require(rule, Error.ArgumentNull("rule"));
+            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
             HtmlElementRule current = (rule.Parent == this) ? rule : rule.CreateCopy(this);
             _children[current.Name] = current;
 
@@ -174,7 +174,7 @@ namespace Radischevo.Wahha.Web.Text
 
         public virtual HtmlAttributeRule AddAttributeRule(HtmlAttributeRule rule)
         {
-            Precondition.Require(rule, Error.ArgumentNull("rule"));
+            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
             HtmlAttributeRule current = (rule.Element == this) ? rule : rule.CreateCopy(this);
             _attributes[current.Name] = current;
 

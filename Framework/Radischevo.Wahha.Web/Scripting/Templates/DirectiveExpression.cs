@@ -15,8 +15,8 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		public DirectiveExpression(string directiveName)
 			: base(TemplateExpressionType.Directive)
 		{
-			Precondition.Require(!String.IsNullOrEmpty(directiveName),
-				Error.ArgumentNull("directiveName"));
+			Precondition.Defined(directiveName,
+				() => Error.ArgumentNull("directiveName"));
 
 			_name = directiveName;
 			_attributes = new ParsedAttributeCollection();
@@ -32,9 +32,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 			}
 			set
 			{
-				Precondition.Require(!String.IsNullOrEmpty(value),
-				   Error.ArgumentNull("value"));
-
+				Precondition.Defined(value, () => Error.ArgumentNull("value"));
 				_name = value;
 			}
 		}

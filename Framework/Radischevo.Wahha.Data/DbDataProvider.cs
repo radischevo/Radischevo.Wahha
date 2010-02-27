@@ -52,9 +52,9 @@ namespace Radischevo.Wahha.Data
         private DbDataProvider(IDbDataProvider provider, 
             string connectionString, bool useTransaction)
         {
-            Precondition.Require(provider, Error.ArgumentNull("provider"));
-            Precondition.Require(!String.IsNullOrEmpty(connectionString), 
-                Error.ConnectionStringNotInitialized());
+            Precondition.Require(provider, () => Error.ArgumentNull("provider"));
+            Precondition.Defined(connectionString,
+				() => Error.ConnectionStringNotInitialized());
 
             _provider = provider;
             _provider.Initialize(connectionString, useTransaction);
@@ -159,7 +159,7 @@ namespace Radischevo.Wahha.Data
         {
             Type type = Config.Configuration.Instance
                 .Providers.Mappings.Default;
-            Precondition.Require(type, Error.ProviderNotConfigured());
+            Precondition.Require(type, () => Error.ProviderNotConfigured());
 
             IDbDataProvider provider = Config.Configuration.Instance
                 .Providers.Factory.CreateProvider(type);
