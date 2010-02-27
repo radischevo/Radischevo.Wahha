@@ -229,16 +229,17 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual ActionExecutedContext InvokeActionFilters(
             ControllerContext context, ActionDescriptor action, 
-            IList<IActionFilter> filters, IDictionary<string, object> parameters)
+            IList<IActionFilter> filters)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
             Precondition.Require(action, () => Error.ArgumentNull("action"));
             Precondition.Require(filters, () => Error.ArgumentNull("filters"));
-            Precondition.Require(parameters, () => Error.ArgumentNull("parameters"));
             
             ActionExecutionContext exc = new ActionExecutionContext(context, action);
             Func<ActionExecutedContext> continuation = () =>
-                new ActionExecutedContext(exc, null) { Result = InvokeActionMethod(context, action, parameters) };
+                new ActionExecutedContext(exc, null) { 
+					Result = InvokeActionMethod(context, action, exc.Parameters) 
+				};
 
             Func<ActionExecutedContext> thunk = filters.Reverse().Aggregate(continuation,
                 (next, filter) => () => InvokeActionFilter(filter, exc, next));
@@ -330,8 +331,7 @@ namespace Radischevo.Wahha.Web.Mvc
                         ValidateRequest(context.Context.Request);
 
                     ActionExecutedContext resultContext = InvokeActionFilters(
-                        context, currentAction, filters.ActionFilters, 
-                        context.Parameters);
+                        context, currentAction, filters.ActionFilters);
 
                     InvokeActionResultFilters(context, filters.ResultFilters, resultContext.Result);
                 }
