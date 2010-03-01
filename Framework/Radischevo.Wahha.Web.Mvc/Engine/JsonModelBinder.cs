@@ -34,21 +34,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
             try
             {
-                ParameterExpression stringParameter = Expression.Parameter(typeof(string), "input");
-                NewExpression newSerializer = Expression.New(typeof(JavaScriptSerializer));
-
-                MethodInfo method = typeof(JavaScriptSerializer).GetMethod("Deserialize", 
-                    BindingFlags.Instance | BindingFlags.Public, null, 
-                    new Type[] { typeof(string) }, null).MakeGenericMethod(type);
-
-                MethodCallExpression methodCall = Expression.Call(newSerializer, method, stringParameter);
-                UnaryExpression castMethodCall = Expression.Convert(methodCall, typeof(object));
-
-                Expression<JavaScriptDeserializationExecutor> lambda =
-                    Expression.Lambda<JavaScriptDeserializationExecutor>(castMethodCall, stringParameter);
-
-                JavaScriptDeserializationExecutor executor = lambda.Compile();
-                return executor(serializedString);
+				JavaScriptSerializer serializer = new JavaScriptSerializer();
+				return serializer.Deserialize(type, serializedString);
             }
             catch
             {

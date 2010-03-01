@@ -30,6 +30,7 @@ using System.ComponentModel.DataAnnotations;
 using Radischevo.Wahha.Web.Mvc.Validation;
 using Radischevo.Wahha.Web.Abstractions;
 using System.Text;
+using Radischevo.Wahha.Web.Scripting.Serialization;
 
 public enum Status
 {
@@ -394,6 +395,10 @@ public class MainController : Controller
 	[Maza]
     public ActionResult TestArrayAndCollection(string maza)
     {
+		string ss = @"{ Name: ""Wahha"", Index: 0 }";
+		JavaScriptSerializer s = new JavaScriptSerializer();
+		Section section = (Section)s.Deserialize(typeof(Section), ss);
+
 		var str = new string[] {
 			"wahha", "caitlin", "ksu", "putin"
 		};
@@ -554,6 +559,11 @@ public class Section
             _name = value;
         }
     }
+
+	public Section()
+		: this(null)
+	{
+	}
 
     public Section(string name)
     {

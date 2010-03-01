@@ -493,10 +493,20 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
             return Deserialize(this, input, null, _recursionLimit);
         }
 
+		public object Deserialize(Type type, string input)
+		{
+			return Deserialize(this, input, type, _recursionLimit);
+		}
+
         public T Deserialize<T>(string input)
         {
             return (T)Deserialize(this, input, typeof(T), _recursionLimit);
         }
+
+		public object ConvertToType(Type type, object obj)
+		{
+			return ObjectConverter.ConvertObject(obj, type, this);
+		}
 
         public T ConvertToType<T>(object obj)
         {
