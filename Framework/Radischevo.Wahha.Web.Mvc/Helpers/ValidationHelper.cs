@@ -129,7 +129,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Helper Methods
-        protected ModelValidatorSet GetValidatorsFromExpression(string expression)
+        private ModelValidatorSet GetValidatorsFromExpression(string expression)
         {
 			if (String.IsNullOrEmpty(expression))
 				return new ModelValidatorSet(Context.ViewData.Validator);
@@ -158,34 +158,7 @@ namespace Radischevo.Wahha.Web.Mvc
             return GetValidatorsFromProvider(containerType, modelType ?? typeof(string), propertyName);
         }
 
-		protected ModelValidatorSet GetValidatorsFromExpression<TModel, TValue>(
-			Expression<Func<TModel, TValue>> expression)
-			where TModel : class
-		{
-			Precondition.Require(expression, () => Error.ArgumentNull("expression"));
-
-			Type modelType = typeof(TValue);
-			Type parentModelType = null;
-			string propertyName = null;
-
-			switch (expression.Body.NodeType)
-			{
-				case ExpressionType.Parameter:
-					break;
-
-				case ExpressionType.MemberAccess:
-					MemberExpression memberExpression = (MemberExpression)expression.Body;
-					propertyName = (memberExpression.Member is PropertyInfo) ? memberExpression.Member.Name : null;
-					parentModelType = memberExpression.Member.DeclaringType;
-					break;
-
-				default:
-					throw Error.TemplateExpressionLimitations();
-			}
-			return GetValidatorsFromProvider(parentModelType, modelType, propertyName);
-		}
-
-        protected virtual ModelValidatorSet GetValidatorsFromProvider(Type containerType,
+		protected virtual ModelValidatorSet GetValidatorsFromProvider(Type containerType,
             Type modelType, string propertyName)
         {
 			ModelValidator model = Providers.GetProvider(modelType).GetValidator(modelType);
@@ -279,6 +252,33 @@ namespace Radischevo.Wahha.Web.Mvc
 			Expression<Func<TModel, TValue>> expression)
 		{
 			return GetValidatorsFromExpression(expression).GetValidationRules();
+		}
+
+		private ModelValidatorSet GetValidatorsFromExpression<TModel, TValue>(
+			Expression<Func<TModel, TValue>> expression)
+			where TModel : class
+		{
+			Precondition.Require(expression, () => Error.ArgumentNull("expression"));
+
+			Type modelType = typeof(TValue);
+			Type parentModelType = null;
+			string propertyName = null;
+
+			switch (expression.Body.NodeType)
+			{
+				case ExpressionType.Parameter:
+					break;
+
+				case ExpressionType.MemberAccess:
+					MemberExpression memberExpression = (MemberExpression)expression.Body;
+					propertyName = (memberExpression.Member is PropertyInfo) ? memberExpression.Member.Name : null;
+					parentModelType = memberExpression.Member.DeclaringType;
+					break;
+
+				default:
+					throw Error.TemplateExpressionLimitations();
+			}
+			return GetValidatorsFromProvider(parentModelType, modelType, propertyName);
 		}
 
         /// <summary>

@@ -108,9 +108,14 @@ namespace Radischevo.Wahha.Web.Mvc.UI
 			if (String.IsNullOrEmpty(expression))
 				return Prefix;
 
-            return String.Concat(Prefix, "-", expression
-				.Replace('.', '-').Replace("[", "").Replace("]", "")
-				.Trim('-').ToLowerInvariant());
+			string rightPart = expression.Replace('.', '-')
+				.Replace("[", "").Replace("]", "")
+				.Trim('-').ToLowerInvariant();
+
+			if (String.IsNullOrEmpty(Prefix))
+				return rightPart;
+
+            return String.Concat(Prefix, "-", rightPart);
         }
         #endregion
     }

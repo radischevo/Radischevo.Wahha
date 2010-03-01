@@ -17,7 +17,7 @@
     $().ready(function() {
 		MvcValidation.apply(<%= Validation.Rules("item")
             .Apply("form#default") %>);
-        MvcValidation.apply(<%= Validation.Rules("item", model => model.Title)
+        MvcValidation.apply(<%= Validation.Rules(model => model.Title)
             .Apply("form#default") %>);
         MvcValidation.apply(<%= Validation.Rules("item", model => model.Inner)
             .Apply("form#default") %>);
