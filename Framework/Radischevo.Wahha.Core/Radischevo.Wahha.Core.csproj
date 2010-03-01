@@ -68,14 +68,14 @@
     <Compile Include="Expressions\ParameterExpressionFingerprint.cs" />
     <Compile Include="Expressions\ParserContext.cs" />
     <Compile Include="Expressions\UnaryExpressionFingerprint.cs" />
-    <Compile Include="Extensions\IDictionaryExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\SubsetWrapper.cs" />
     <Compile Include="Extensions\TransformWrapper.cs" />
     <Compile Include="Interfaces\IEnumerableLink`1.cs" />
     <Compile Include="Interfaces\ILink`1.cs" />
     <Compile Include="Link`1.cs" />
     <Compile Include="Extensions\DelegateExtensions.cs" />
-    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
     <Compile Include="Extensions\ValueSetExtensions.cs" />

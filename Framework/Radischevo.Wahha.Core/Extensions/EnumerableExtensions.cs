@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace Radischevo.Wahha.Core
 {
-    public static class IEnumerableExtensions
+    public static class EnumerableExtensions
     {
         public static IEnumerable<T> Convert<T>(this IEnumerable collection)
         {
@@ -16,20 +16,35 @@ namespace Radischevo.Wahha.Core
 
         public static IEnumerable<T> Each<T>(this IEnumerable<T> instance, Action<T> action)
         {
-            foreach (T item in instance)
-                action(item);
-
-			return instance;
+			foreach (T item in instance)
+			{
+				action(item);
+				yield return item;
+			}
         }
 
         public static IEnumerable<T> Each<T>(this IEnumerable<T> instance, Action<T, int> action)
         {
             int index = 0;
-            foreach (T item in instance)
-                action(item, index++);
-
-			return instance;
+			foreach (T item in instance)
+			{
+				action(item, index++);
+				yield return item;
+			}
         }
+
+		public static void ForEach<T>(this IEnumerable<T> instance, Action<T> action)
+		{
+			foreach (T item in instance)
+				action(item);
+		}
+
+		public static void ForEach<T>(this IEnumerable<T> instance, Action<T, int> action)
+		{
+			int index = 0;
+			foreach (T item in instance)
+				action(item, index++);
+		}
 
         public static ReadOnlyCollection<T> AsReadOnly<T>(this IEnumerable<T> collection)
         {

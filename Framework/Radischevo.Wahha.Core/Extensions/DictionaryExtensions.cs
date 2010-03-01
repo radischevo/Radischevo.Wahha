@@ -5,14 +5,14 @@ using System.Reflection;
 
 namespace Radischevo.Wahha.Core
 {
-    public static class IDictionaryExtensions
+    public static class DictionaryExtensions
     {
         #region Nested Types
         public delegate bool TryGetValueDelegate(object dictionary, string key, out object value);
         #endregion
 
         #region Static Fields
-        private static readonly MethodInfo _strongTryGetValueImplInfo = typeof(IDictionaryExtensions)
+        private static readonly MethodInfo _strongTryGetValueImplInfo = typeof(DictionaryExtensions)
             .GetMethod("StrongTryGetValueImpl", BindingFlags.NonPublic | BindingFlags.Static);
         #endregion
 
