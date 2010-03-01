@@ -153,9 +153,11 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Static Methods
-        private static ValueDictionary GetBindingData(
+        public static ValueDictionary GetBindingData(
             ControllerContext context, ParameterSource source)
         {
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
+
             ValueDictionary data = new ValueDictionary();
             HttpParameters parameters = context.Context.Request.Parameters;
 
