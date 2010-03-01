@@ -29,6 +29,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Radischevo.Wahha.Web.Mvc.Validation;
 using Radischevo.Wahha.Web.Abstractions;
+using System.Text;
 
 public enum Status
 {
@@ -382,6 +383,15 @@ public class MainController : Controller
     [AcceptHttpVerbs(HttpMethod.Get)]
     public ActionResult TestArrayAndCollection()
     {
+		var str = new string[] {
+			"wahha", "caitlin", "ksu", "putin"
+		};
+		StringBuilder sb = new StringBuilder();
+		str.Each((item, index) => {
+			sb.Append(index).Append("=").AppendLine(item);
+		});
+
+		ViewData["names"] = str;
         return View("Arrays");
     }
 
@@ -406,6 +416,7 @@ public class MainController : Controller
     {
         int errors = Errors.Count;
 
+		ViewData["names"] = names;
         ViewData["Array"] = indices;
         ViewData["Collection"] = names;
         ViewData["Dictionary"] = dict;

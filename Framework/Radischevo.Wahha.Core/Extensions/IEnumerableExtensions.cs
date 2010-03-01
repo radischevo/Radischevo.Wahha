@@ -17,20 +17,18 @@ namespace Radischevo.Wahha.Core
         public static IEnumerable<T> Each<T>(this IEnumerable<T> instance, Action<T> action)
         {
             foreach (T item in instance)
-            {
                 action(item);
-                yield return item;
-            }
+
+			return instance;
         }
 
         public static IEnumerable<T> Each<T>(this IEnumerable<T> instance, Action<T, int> action)
         {
             int index = 0;
             foreach (T item in instance)
-            {
                 action(item, index++);
-                yield return item;
-            }
+
+			return instance;
         }
 
         public static ReadOnlyCollection<T> AsReadOnly<T>(this IEnumerable<T> collection)

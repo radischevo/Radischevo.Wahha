@@ -47,6 +47,11 @@
         <input type="submit" value="Поехали" />
     </form>
     
+    <% var t = ViewData.GetValue<IEnumerable<string>>("names").Each((item, index) => { %>
+    <%= index %> =&gt; <%= item %><br />
+    <% }); %>
+    
+    
     <% if(ViewContext.Context.Request.HttpMethod == HttpMethod.Post) { %>
     <div style="border:1px solid #555">
         <b>Номера:</b>
