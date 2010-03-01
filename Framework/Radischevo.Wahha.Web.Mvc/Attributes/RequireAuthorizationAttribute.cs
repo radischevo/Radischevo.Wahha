@@ -80,8 +80,8 @@ namespace Radischevo.Wahha.Web.Mvc
 			if (!String.IsNullOrEmpty(_parameterName))
 				query = String.Concat(
 					(_redirectTo.IndexOf('?') > -1) ? "&" : "?",
-					_parameterName, "=", 
-					Uri.EscapeUriString(context.Context.Request.Url.PathAndQuery)
+					_parameterName, "=",
+					Uri.EscapeUriString(context.HttpContext.Request.Url.PathAndQuery)
 				);
 			
 			return url + query;
@@ -92,10 +92,10 @@ namespace Radischevo.Wahha.Web.Mvc
 			if (String.IsNullOrEmpty(url))
 				return false;
 
-			if (context.IsChild)
+			if (context.Context.IsChild)
 				return false;
 
-			if (context.Context.Request.IsAjaxRequest())
+			if (context.HttpContext.Request.IsAjaxRequest())
 				return false;
 
 			return true;
@@ -104,9 +104,9 @@ namespace Radischevo.Wahha.Web.Mvc
         public void OnAuthorization(AuthorizationContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-            if (Validate(context.Context))
+			if (Validate(context.HttpContext))
             {
-                HttpCachePolicyBase cachePolicy = context.Context.Response.Cache;
+				HttpCachePolicyBase cachePolicy = context.HttpContext.Response.Cache;
                 cachePolicy.SetProxyMaxAge(new TimeSpan(0));
                 cachePolicy.AddValidationCallback(CacheValidationHandler, null);
             }

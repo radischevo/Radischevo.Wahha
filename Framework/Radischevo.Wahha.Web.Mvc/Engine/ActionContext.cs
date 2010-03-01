@@ -3,22 +3,26 @@
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Routing;
 using System.Collections.Generic;
+using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public class ActionContext : ControllerContext
+    public class ActionContext
     {
         #region Instance Fields
         private ActionDescriptor _action;
         private ActionResult _result;
+		private ControllerContext _context;
         #endregion
 
         #region Constructors
         protected ActionContext(ControllerContext context, ActionDescriptor action)
-            : base(context)
         {
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
             Precondition.Require(action, () => Error.ArgumentNull("action"));
+
             _action = action;
+			_context = context;
         }
         #endregion
 
@@ -47,6 +51,22 @@ namespace Radischevo.Wahha.Web.Mvc
                 _result = value;
             }
         }
+
+		public ControllerContext Context
+		{
+			get
+			{
+				return _context;
+			}
+		}
+
+		public HttpContextBase HttpContext
+		{
+			get
+			{
+				return _context.Context;
+			}
+		}
         #endregion
 
         #region Static Methods
@@ -66,8 +86,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         #region Constructors
         public ActionExecutionContext(ActionContext context)
-            : base(ActionContext.GetActionContext(context),
-            ActionContext.GetActionContext(context).Action)
+            : base(ActionContext.GetActionContext(context).Context,
+				ActionContext.GetActionContext(context).Action)
         {
         }
 
@@ -101,7 +121,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         #region Constructors
         public ActionExecutedContext(ActionContext context, Exception exception)
-            : base(context, ActionContext.GetActionContext(context).Action)
+            : base(ActionContext.GetActionContext(context).Context, 
+				ActionContext.GetActionContext(context).Action)
         {
             _exception = exception;
         }

@@ -238,7 +238,7 @@ namespace Radischevo.Wahha.Web.Mvc
             ActionExecutionContext exc = new ActionExecutionContext(context, action);
             Func<ActionExecutedContext> continuation = () =>
                 new ActionExecutedContext(exc, null) { 
-					Result = InvokeActionMethod(context, action, exc.Parameters) 
+					Result = InvokeActionMethod(context, action, context.Parameters) 
 				};
 
             Func<ActionExecutedContext> thunk = filters.Reverse().Aggregate(continuation,

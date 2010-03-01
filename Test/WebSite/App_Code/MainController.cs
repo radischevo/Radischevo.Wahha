@@ -48,6 +48,16 @@ public enum AccessModes : int
 	ChangePermissions = 8
 }
 
+[AttributeUsage(AttributeTargets.Method)]
+public class MazaAttribute : ActionFilterAttribute
+{
+	public override void OnExecuting(ActionExecutionContext context)
+	{
+		context.Context.Parameters["maza"] = "Ksu";
+		base.OnExecuting(context);
+	}
+}
+
 [DisplayColumn("ID")]
 public class TemplatedItem : IDataErrorInfo
 {
@@ -381,16 +391,12 @@ public class MainController : Controller
     }
 
     [AcceptHttpVerbs(HttpMethod.Get)]
-    public ActionResult TestArrayAndCollection()
+	[Maza]
+    public ActionResult TestArrayAndCollection(string maza)
     {
 		var str = new string[] {
 			"wahha", "caitlin", "ksu", "putin"
 		};
-		StringBuilder sb = new StringBuilder();
-		str.Each((item, index) => {
-			sb.Append(index).Append("=").AppendLine(item);
-		});
-
 		ViewData["names"] = str;
         return View("Arrays");
     }

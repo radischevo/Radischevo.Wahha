@@ -19,17 +19,17 @@ namespace Radischevo.Wahha.Web.Mvc
 		public void OnAuthorization(AuthorizationContext context)
 		{
 			Precondition.Require(context, () => Error.ArgumentNull("context"));
-			if (!context.Context.Request.IsSecureConnection)
+			if (!context.HttpContext.Request.IsSecureConnection)
 				HandleNonSecureRequest(context);
 		}
 
 		protected virtual void HandleNonSecureRequest(AuthorizationContext context)
 		{
-			if (context.Context.Request.HttpMethod != HttpMethod.Get)
+			if (context.HttpContext.Request.HttpMethod != HttpMethod.Get)
 				throw Error.SecureConnectionRequired();
 
-			string url = "https://" + context.Context.Request.Url.Host 
-				+ context.Context.Request.RawUrl;
+			string url = "https://" + context.HttpContext.Request.Url.Host 
+				+ context.HttpContext.Request.RawUrl;
 
 			context.Cancel = true;
 			context.Result = new RedirectResult(url);

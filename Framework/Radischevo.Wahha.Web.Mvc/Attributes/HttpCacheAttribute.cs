@@ -79,7 +79,7 @@ namespace Radischevo.Wahha.Web.Mvc
         public override void OnExecuting(ActionExecutionContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-            HttpResponseBase response = context.Context.Response;
+			HttpResponseBase response = context.HttpContext.Response;
 
             response.Cache.SetCacheability(_cacheability);
             response.Cache.SetRevalidation(_revalidation);

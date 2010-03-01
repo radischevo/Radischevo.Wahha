@@ -35,8 +35,9 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		{
 			Precondition.Require(context, () => Error.ArgumentNull("context"));
 
-			IAsyncManagerContainer container = (context.Controller as IAsyncManagerContainer);
-			Precondition.Require(container, () => Error.ControllerMustImplementAsyncManagerContainer(context.Controller.GetType()));
+			IAsyncManagerContainer container = (context.Context.Controller as IAsyncManagerContainer);
+			Precondition.Require(container, () => Error.ControllerMustImplementAsyncManagerContainer(
+				context.Context.Controller.GetType()));
 			
 			container.AsyncManager.Timeout = Duration;
 		}

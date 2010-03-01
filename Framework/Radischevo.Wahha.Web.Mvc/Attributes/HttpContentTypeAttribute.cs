@@ -38,10 +38,10 @@ namespace Radischevo.Wahha.Web.Mvc
         public override void OnExecuting(ActionExecutionContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-            if (context.Context.Items[_storeKey] == null)
+            if (context.HttpContext.Items[_storeKey] == null)
             {
-                context.Context.Response.ContentType = _contentType;
-                context.Context.Items[_storeKey] = true;
+                context.HttpContext.Response.ContentType = _contentType;
+                context.HttpContext.Items[_storeKey] = true;
             }
         }
         #endregion

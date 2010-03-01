@@ -60,12 +60,12 @@ namespace Radischevo.Wahha.Web.Mvc
         public void OnAuthorization(AuthorizationContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-            string value = context.Context.Request.Form.GetValue<string>(ValidationFieldName);
+			string value = context.HttpContext.Request.Form.GetValue<string>(ValidationFieldName);
 
             if (String.IsNullOrEmpty(value))
                 throw Error.RequestValidationError();
 
-            RequestValidationToken current = RequestValidationToken.Create(context.Context);
+			RequestValidationToken current = RequestValidationToken.Create(context.HttpContext);
             RequestValidationToken token = RequestValidationToken.Create(value);
 
             if(!token.IsValid(current))

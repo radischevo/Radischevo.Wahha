@@ -59,11 +59,11 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Static Methods
         private string GetCultureCode(ActionContext context)
         {
-            HttpParameters parameters = context.Context.Request.Parameters;
+            HttpParameters parameters = context.HttpContext.Request.Parameters;
 
             if ((_source & ParameterSource.Url) == ParameterSource.Url &&
-                context.RouteData.Values.ContainsKey(_parameterName))
-                return context.RouteData.Values.GetValue<string>(_parameterName);
+                context.Context.RouteData.Values.ContainsKey(_parameterName))
+                return context.Context.RouteData.Values.GetValue<string>(_parameterName);
 
             if ((_source & ParameterSource.Form) == ParameterSource.Form &&
                 parameters.Form.Keys.Any(k => k.Equals(_parameterName, StringComparison.OrdinalIgnoreCase)))
@@ -74,15 +74,15 @@ namespace Radischevo.Wahha.Web.Mvc
                 return parameters.QueryString.GetValue<string>(_parameterName);
 
             if ((_source & ParameterSource.Session) == ParameterSource.Session &&
-                context.Context.Session != null && context.Context.Session[_parameterName] != null)
-                return context.Context.Session[_parameterName].ToString();
+				context.HttpContext.Session != null && context.HttpContext.Session[_parameterName] != null)
+				return context.HttpContext.Session[_parameterName].ToString();
 
             if ((_source & ParameterSource.Cookie) == ParameterSource.Cookie &&
                 parameters.Cookies.Keys.Any(k => k.Equals(_parameterName, StringComparison.OrdinalIgnoreCase)))
                 return parameters.Cookies.GetValue<string>(_parameterName);
 
             if ((_source & ParameterSource.Header) == ParameterSource.Header)
-                return context.Context.Request.UserLanguages.FirstOrDefault() ?? String.Empty;
+				return context.HttpContext.Request.UserLanguages.FirstOrDefault() ?? String.Empty;
             
             return String.Empty;
         }

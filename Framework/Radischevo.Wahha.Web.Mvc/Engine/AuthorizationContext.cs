@@ -24,10 +24,10 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             get
             {
-                if (base.Context == null)
+                if (base.HttpContext == null)
                     return null;
 
-                return base.Context.User;
+                return base.HttpContext.User;
             }
         }
 

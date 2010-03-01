@@ -102,13 +102,13 @@ namespace Radischevo.Wahha.Web.Mvc
             sb.Append("=>{");
 
             IEnumerable<string> collection = (matchAny) ? 
-                (IEnumerable<string>)context.Parameters.Keys : keys;
+                (IEnumerable<string>)context.Context.Parameters.Keys : keys;
 
             foreach (string key in collection)
                 sb.Append(GetParameterKey(context, key));
 
             if (varyByUser)
-                sb.Append("[UserIdentity=").Append(GetUserIdentity(context.Context)).Append("]");
+				sb.Append("[UserIdentity=").Append(GetUserIdentity(context.HttpContext)).Append("]");
 
             sb.Append("}");
             return FormsAuthentication.HashPasswordForStoringInConfigFile(sb.ToString(), "MD5");
@@ -128,8 +128,8 @@ namespace Radischevo.Wahha.Web.Mvc
         private static string GetParameterKey(ActionExecutionContext context, string parameterName)
         {
             object value;
-            context.Parameters.TryGetValue(parameterName, out value);
-                
+            context.Context.Parameters.TryGetValue(parameterName, out value);
+            
             return String.Concat("[", parameterName, "=", 
                 (value == null) ? "<NULL>" : Convert.ToString(value, CultureInfo.InvariantCulture), "]");
         }

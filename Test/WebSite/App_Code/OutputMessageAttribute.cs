@@ -27,7 +27,7 @@ public class OutputMessageAttribute : FilterAttribute, IActionFilter
 
     public void OnExecuting(ActionExecutionContext context)
     {
-        context.Context.Response.Write(_message);
+        context.HttpContext.Response.Write(_message);
     }
 
     #region IActionFilter Members
