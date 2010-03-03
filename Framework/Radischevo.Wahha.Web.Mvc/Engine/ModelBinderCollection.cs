@@ -53,7 +53,21 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
-        public void Add(Type modelType, IModelBinder binder)
+		private bool TryGetBinder(Type modelType, out IModelBinder binder)
+		{
+			binder = null;
+			do
+			{
+				if (_collection.TryGetValue(modelType, out binder))
+					return true;
+
+				modelType = modelType.BaseType;
+			}
+			while(modelType != null);
+			return false;
+		}
+
+		public void Add(Type modelType, IModelBinder binder)
         {
             Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
             _collection.Add(modelType, binder);
@@ -78,8 +92,9 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
 
-            if (_collection.ContainsKey(modelType))
-                return _collection[modelType] ?? DefaultBinder;
+			IModelBinder binder;
+			if (TryGetBinder(modelType, out binder))
+                return binder ?? DefaultBinder;
 
             ModelBinderAttribute[] attrs = modelType.GetCustomAttributes<ModelBinderAttribute>(true).ToArray();
             switch (attrs.Length)

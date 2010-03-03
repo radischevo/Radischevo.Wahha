@@ -15,7 +15,7 @@
 </form>
 <%  Ajax.Scripts.Block("validate", () => { %>
     $().ready(function() {
-		MvcValidation.apply(<%= Validation.Rules("item")
+		MvcValidation.apply(<%= Validation.Rules()
             .Apply("form#default") %>);
         MvcValidation.apply(<%= Validation.Rules(model => model.Title)
             .Apply("form#default") %>);

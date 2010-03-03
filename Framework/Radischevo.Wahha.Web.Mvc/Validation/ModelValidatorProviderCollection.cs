@@ -52,6 +52,20 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         #endregion
 
         #region Instance Methods
+		private bool TryGetProvider(Type modelType, out ModelValidatorProvider provider)
+		{
+			provider = null;
+			do
+			{
+				if (_collection.TryGetValue(modelType, out provider))
+					return true;
+
+				modelType = modelType.BaseType;
+			}
+			while (modelType != null);
+			return false;
+		}
+
         public void Add(Type modelType, ModelValidatorProvider provider)
         {
             Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
@@ -77,8 +91,9 @@ namespace Radischevo.Wahha.Web.Mvc.Validation
         {
             Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
 
-            if (_collection.ContainsKey(modelType))
-                return _collection[modelType] ?? Default;
+			ModelValidatorProvider provider;
+            if (TryGetProvider(modelType, out provider))
+                return provider ?? Default;
 
             return (fallbackToDefault) ? Default : null;
         }
