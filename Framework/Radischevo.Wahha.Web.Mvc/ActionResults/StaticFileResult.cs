@@ -80,7 +80,7 @@ namespace Radischevo.Wahha.Web.Mvc
             if (!appPath.EndsWith("/"))
                 appPath = String.Concat(appPath, "/");
 
-            return context.Server.MapPath(String.Concat(appPath, virtualUrl));
+            return String.Concat(appPath, virtualUrl);
         }
         #endregion
 
@@ -93,7 +93,9 @@ namespace Radischevo.Wahha.Web.Mvc
             if (_contentEncoding != null)
                 context.Context.Response.ContentEncoding = _contentEncoding;
 
-            string filePath = ResolvePath(context.Context, _path);
+            string filePath = context.Context.Server.MapPath(
+				ResolvePath(context.Context, _path));
+
             FileInfo fi = new FileInfo(filePath);
 
             if (fi.Exists)
