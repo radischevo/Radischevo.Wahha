@@ -68,11 +68,10 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Static Methods
         private static string ResolvePath(HttpContextBase context, string virtualUrl)
         {
-            if (!virtualUrl.StartsWith("~/", StringComparison.OrdinalIgnoreCase) &&
-                !virtualUrl.StartsWith("/", StringComparison.OrdinalIgnoreCase))
-                return virtualUrl;
-
-            virtualUrl = virtualUrl.Remove(0, 2);
+			if (!virtualUrl.StartsWith("~/", StringComparison.Ordinal))
+				return virtualUrl;
+   
+			virtualUrl = virtualUrl.Remove(0, 2);
             string appPath = context.Request.ApplicationPath;
 
             if (String.IsNullOrEmpty(appPath))

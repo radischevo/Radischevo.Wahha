@@ -706,12 +706,6 @@
             <param name="connection">The connection instance.</param>
             <param name="action">An action to execute.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.EnumerableExtensions.Total``1(System.Collections.Generic.IEnumerable{``0})">
-            <summary>
-            Returns the total number of elements that can be 
-            retrieved from the sequence.
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Data.IDbDataRecord">
             <summary>
             Provides an extended access to the column values within 
@@ -2525,6 +2519,12 @@
             <typeparam name="T">The type of the object to return.</typeparam>
             <param name="cache"></param>
             <param name="key">The key the object is stored with.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.Total``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns the total number of elements that can be 
+            retrieved from the sequence.
+            </summary>
         </member>
     </members>
 </doc>

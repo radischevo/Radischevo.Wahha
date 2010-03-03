@@ -65,7 +65,7 @@
     <Compile Include="DbFieldLookup.cs" />
     <Compile Include="DbParameterCollection.cs" />
     <Compile Include="DbParameterDescriptor.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\SubsetExtensions.cs" />
     <Compile Include="Interfaces\IDbDataReader.cs" />
     <Compile Include="Interfaces\IDbDataRecord.cs" />
     <Compile Include="Interfaces\IDbMaterializer.cs" />

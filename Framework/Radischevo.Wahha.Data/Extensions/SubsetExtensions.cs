@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Radischevo.Wahha.Data
 {
-	public static class EnumerableExtensions
+	public static class SubsetExtensions
 	{
 		#region Extension Methods
 		/// <summary>
