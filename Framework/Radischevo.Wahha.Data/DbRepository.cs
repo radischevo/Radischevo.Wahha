@@ -83,6 +83,8 @@ namespace Radischevo.Wahha.Data
 
         protected abstract TEntity ExecuteSingle(DbCommandDescriptor command);
 
+		protected abstract TEntity ExecuteLoad(TEntity entity, DbCommandDescriptor command);
+
         protected abstract TEntity ExecuteSave(TEntity entity);
 
         protected abstract TEntity ExecuteDelete(TEntity entity);
@@ -154,6 +156,14 @@ namespace Radischevo.Wahha.Data
             }
             return ExecuteSingle(command);
         }
+
+		public TEntity Load(TEntity entity, DbCommandDescriptor command)
+		{
+			Precondition.Require(entity, () => Error.ArgumentNull("entity"));
+			Precondition.Require(command, () => Error.ArgumentNull("command"));
+			
+			return ExecuteLoad(entity, command);
+		}
 
         public virtual TEntity Save(TEntity entity)
         {

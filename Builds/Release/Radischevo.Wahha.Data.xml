@@ -1516,6 +1516,12 @@
             the collection.
             </summary>
         </member>
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.Total``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns the total number of elements that can be 
+            retrieved from the sequence.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Data.DbCommandResult">
             <summary>
             Acts as a wrapper for the 
@@ -2519,12 +2525,6 @@
             <typeparam name="T">The type of the object to return.</typeparam>
             <param name="cache"></param>
             <param name="key">The key the object is stored with.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.Total``1(System.Collections.Generic.IEnumerable{``0})">
-            <summary>
-            Returns the total number of elements that can be 
-            retrieved from the sequence.
-            </summary>
         </member>
     </members>
 </doc>

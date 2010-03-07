@@ -8,5 +8,7 @@ namespace Radischevo.Wahha.Data
         IEnumerable<TEntity> Select(DbCommandDescriptor command);
 
         TEntity Single(DbCommandDescriptor command);
+
+		TEntity Load(TEntity entity, DbCommandDescriptor command);
     }
 }

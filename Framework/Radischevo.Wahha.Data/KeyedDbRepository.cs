@@ -131,8 +131,6 @@ namespace Radischevo.Wahha.Data
 
 		protected override IEnumerable<TEntity> ExecuteSelect(DbCommandDescriptor command)
 		{
-			Precondition.Require(command, () => Error.ArgumentNull("command"));
-
 			return DataProvider.Execute(command)
 				.Using(CommandBehavior.CloseConnection)
 				.AsDataReader(reader => {
@@ -160,10 +158,21 @@ namespace Radischevo.Wahha.Data
 			return ExecuteSingle(command, false);
 		}
 
+		protected override TEntity ExecuteLoad(TEntity entity, DbCommandDescriptor command)
+		{
+			return DataProvider.Execute(command).Using(CommandBehavior.CloseConnection)
+				.AsDataReader(reader => {
+					IDbDataRecord record = reader.SingleOrDefault();
+
+					if (record != null)
+						return Materializer.Materialize(entity, record);
+
+					return null;
+				});
+		}
+
 		protected virtual TEntity ExecuteSingle(DbCommandDescriptor command, bool isComplete)
 		{
-			Precondition.Require(command, () => Error.ArgumentNull("command"));
-
 			return DataProvider.Execute(command).Using(CommandBehavior.CloseConnection)
 				.AsDataReader(reader => {
 					IDbDataRecord record = reader.SingleOrDefault();
