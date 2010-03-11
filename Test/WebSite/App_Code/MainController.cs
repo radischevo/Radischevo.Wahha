@@ -133,6 +133,7 @@ public class TemplatedItem : IDataErrorInfo
 /// Summary description for MainController
 /// </summary>
 //[OutputMessage(Message = "<h3>Превед, я MainController</h3>")]
+[HttpCompression]
 public class MainController : Controller
 {
     public class Maza
@@ -210,6 +211,8 @@ public class MainController : Controller
 
         var lst = m.Collection.ToList();*/
 
+		Include<MainController>(c => c.List(10));
+
         Maza maza1 = new Maza();
         maza1.Section.Value = new Section("maza1");
 
@@ -237,7 +240,8 @@ public class MainController : Controller
     }
 
     public void List(int page)
-    {          
+    {
+		throw new HttpException(404, "Not found");
         Response.Write(page);
     }
 

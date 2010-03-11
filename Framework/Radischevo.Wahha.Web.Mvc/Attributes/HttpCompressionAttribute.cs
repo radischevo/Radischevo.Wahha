@@ -63,6 +63,9 @@ namespace Radischevo.Wahha.Web.Mvc
         /// <param name="ctx">The context of the current controller action</param>
         public override void OnExecuted(ActionExecutedContext ctx)
         {
+			if (ctx.Exception != null && !ctx.ExceptionHandled)
+				return;
+
 			HttpContextBase context = ctx.HttpContext;
             if (!context.Items.Contains(COMPRESS_ENABLED_KEY))
             {

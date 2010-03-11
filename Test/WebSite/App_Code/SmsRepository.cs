@@ -70,6 +70,11 @@ public class SmsRepository : DbRepository<MessageInfo>
         return Select(descriptor);
     }
 
+	protected override MessageInfo ExecuteLoad(MessageInfo entity, DbCommandDescriptor command)
+	{
+		return entity;
+	}
+
     protected override IEnumerable<MessageInfo> ExecuteSelect(DbCommandDescriptor command)
     {
         return DataProvider.Execute(command).AsDataReader().Select(v => Materializer.Materialize(v)).ToList();

@@ -11,7 +11,8 @@ using Radischevo.Wahha.Data.Caching;
 namespace Radischevo.Wahha.Data
 {
     public abstract class DbRepository<TEntity> 
-        : IRepository<TEntity>, IDbQueryService<TEntity>
+        : IRepository<TEntity>, IDbQueryService<TEntity>,
+		  IDbEntityLoader<TEntity>
     {
         #region Instance Fields
         private ITaggedCacheProvider _cache;

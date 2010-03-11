@@ -68,6 +68,7 @@
     <Compile Include="Extensions\SubsetExtensions.cs" />
     <Compile Include="Interfaces\IDbDataReader.cs" />
     <Compile Include="Interfaces\IDbDataRecord.cs" />
+    <Compile Include="Interfaces\IDbEntityLoader.cs" />
     <Compile Include="Interfaces\IDbMaterializer.cs" />
     <Compile Include="Interfaces\IDbQueryService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
