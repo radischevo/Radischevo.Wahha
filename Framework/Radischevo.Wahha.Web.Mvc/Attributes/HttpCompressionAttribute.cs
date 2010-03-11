@@ -12,7 +12,7 @@ namespace Radischevo.Wahha.Web.Mvc
     /// using standard gzip/deflate.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class HttpCompressionAttribute : ActionFilterAttribute
+    public class HttpCompressionAttribute : ActionFilterAttribute, IExceptionFilter
     {
         #region Instance Fields
         private const string ACCEPT_ENCODING_HEADER = "Accept-Encoding";
@@ -63,9 +63,6 @@ namespace Radischevo.Wahha.Web.Mvc
         /// <param name="ctx">The context of the current controller action</param>
         public override void OnExecuted(ActionExecutedContext ctx)
         {
-			if (ctx.Exception != null && !ctx.ExceptionHandled)
-				return;
-
 			HttpContextBase context = ctx.HttpContext;
             if (!context.Items.Contains(COMPRESS_ENABLED_KEY))
             {
@@ -80,8 +77,22 @@ namespace Radischevo.Wahha.Web.Mvc
                     SetEncoding(context, GZIP);
                 }
                 context.Items.Add(COMPRESS_ENABLED_KEY, true);
+				context.Response.AppendHeader("Vary", "Content-Encoding");
             }
         }
-        #endregion
-    }
+        
+		public void OnException(ExceptionContext ctx)
+		{
+			HttpContextBase context = ctx.Context;
+
+			// We should remove any response filters since
+			// we'll get invalid response if an exception is thrown.
+			if (context.Items.Contains(COMPRESS_ENABLED_KEY))
+			{
+				context.Response.Headers.Remove(CONTENT_ENCODING_HEADER);
+				context.Response.Filter = null;
+			}
+		}
+		#endregion
+	}
 }
