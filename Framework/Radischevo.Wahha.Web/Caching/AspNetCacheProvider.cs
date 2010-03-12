@@ -116,6 +116,9 @@ namespace Radischevo.Wahha.Web.Caching
 					if ((value = Cache.Get(key)) == null)
                     {
                         value = selector();
+						
+						Precondition.Require(value, () => Error.ArgumentNull("value"));
+
                         Cache.Insert(key, value, CreateTagDependency(Cache, tags),
                             expiration, Cache.NoSlidingExpiration,
                             CacheItemPriority.Normal, null);
@@ -136,6 +139,8 @@ namespace Radischevo.Wahha.Web.Caching
 			IEnumerable<string> tags)
         {
             Precondition.Require(key, () => Error.ArgumentNull("key"));
+			Precondition.Require(value, () => Error.ArgumentNull("value"));
+
             object obj = Cache.Add(key, value, CreateTagDependency(Cache, tags),
                 expiration, Cache.NoSlidingExpiration,
                 CacheItemPriority.Normal, null);
@@ -152,6 +157,7 @@ namespace Radischevo.Wahha.Web.Caching
 			IEnumerable<string> tags)
         {
             Precondition.Require(key, () => Error.ArgumentNull("key"));
+			Precondition.Require(value, () => Error.ArgumentNull("value"));
 
             Cache.Insert(key, value, CreateTagDependency(Cache, tags),
                 expiration, Cache.NoSlidingExpiration,

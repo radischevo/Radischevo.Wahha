@@ -89,6 +89,8 @@ namespace Radischevo.Wahha.Web.Caching
         public static T Get<T>(this Cache cache, string key, 
             Func<T> selector, DateTime expiration, params string[] tags)
         {
+			Precondition.Require(key, () => Error.ArgumentNull("key"));
+
 			object value;
 			if ((value = cache.Get(key)) == null)
             {
@@ -97,6 +99,8 @@ namespace Radischevo.Wahha.Web.Caching
 					if ((value = cache.Get(key)) == null)
                     {
                         value = selector();
+						Precondition.Require(value, () => Error.ArgumentNull("value"));
+
                         cache.Insert(key, value, CreateTagDependency(cache, tags), 
                             expiration, Cache.NoSlidingExpiration, 
                             CacheItemPriority.Normal, null);
@@ -134,6 +138,9 @@ namespace Radischevo.Wahha.Web.Caching
         public static void Insert<T>(this Cache cache, string key, 
             T value, TimeSpan timeout, params string[] tags)
         {
+			Precondition.Require(key, () => Error.ArgumentNull("key"));
+			Precondition.Require(value, () => Error.ArgumentNull("value"));
+
             cache.Insert(key, value, CreateTagDependency(cache, tags),
                 DateTime.Now.Add(timeout), Cache.NoSlidingExpiration,
                 CacheItemPriority.Normal, null);
@@ -160,6 +167,9 @@ namespace Radischevo.Wahha.Web.Caching
         public static bool Add<T>(this Cache cache, string key,
             T value, TimeSpan timeout, params string[] tags)
         {
+			Precondition.Require(key, () => Error.ArgumentNull("key"));
+			Precondition.Require(value, () => Error.ArgumentNull("value"));
+
             object obj = cache.Add(key, value, CreateTagDependency(cache, tags),
                 DateTime.Now.Add(timeout), Cache.NoSlidingExpiration,
                 CacheItemPriority.Normal, null);
