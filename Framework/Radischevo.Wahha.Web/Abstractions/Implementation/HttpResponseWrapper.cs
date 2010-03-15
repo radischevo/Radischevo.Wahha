@@ -172,7 +172,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         {
             get
             {
-                return _response.Headers;
+				return _response.Headers;
             }
         }
 

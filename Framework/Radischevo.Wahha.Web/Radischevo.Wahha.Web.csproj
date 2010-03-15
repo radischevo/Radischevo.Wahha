@@ -55,6 +55,7 @@
     <Compile Include="Abstractions\HttpResponseBase.cs" />
     <Compile Include="Abstractions\HttpServerUtilityBase.cs" />
     <Compile Include="Abstractions\HttpSessionStateBase.cs" />
+    <Compile Include="Abstractions\HttpSessionStateExtensions.cs" />
     <Compile Include="Abstractions\HttpStaticObjectsCollectionBase.cs" />
     <Compile Include="Abstractions\Implementation\HttpApplicationStateWrapper.cs" />
     <Compile Include="Abstractions\Implementation\HttpBrowserCapabilitiesWrapper.cs" />
