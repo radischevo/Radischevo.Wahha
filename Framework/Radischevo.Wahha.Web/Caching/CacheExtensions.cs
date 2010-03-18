@@ -94,20 +94,26 @@ namespace Radischevo.Wahha.Web.Caching
 			object value;
 			if ((value = cache.Get(key)) == null)
             {
-                lock (AcquireLock(key))
-                {
-					if ((value = cache.Get(key)) == null)
-                    {
-                        value = selector();
-						Precondition.Require(value, () => Error.ArgumentNull("value"));
-
-                        cache.Insert(key, value, CreateTagDependency(cache, tags), 
-                            expiration, Cache.NoSlidingExpiration, 
-                            CacheItemPriority.Normal, null);
-
-                        ReleaseLock(key);
-                    }
-                }
+				try
+				{
+					lock (AcquireLock(key))
+					{
+						if ((value = cache.Get(key)) == null)
+						{
+							value = selector();
+							if (value != null)
+							{
+								cache.Insert(key, value, CreateTagDependency(cache, tags),
+									expiration, Cache.NoSlidingExpiration,
+									CacheItemPriority.Normal, null);
+							}
+						}
+					}
+				}
+				finally
+				{
+					ReleaseLock(key);
+				}
             }
             return Converter.ChangeType<T>(value);
         }
