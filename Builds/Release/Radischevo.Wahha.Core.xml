@@ -601,6 +601,115 @@
             <param name="d">The delegate containing the method to invoke.</param>
             <param name="args">The argument list of a method.</param>
         </member>
+        <member name="T:Radischevo.Wahha.Core.Cryptography.Crc32">
+            <summary>
+            Provides the implementation of the CRC32 hashing algorithm.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.Cryptography.Crc32"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.#ctor(System.UInt32,System.UInt32)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.Cryptography.Crc32"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.Compute(System.Byte[])">
+            <summary>
+            Computes the hash value for the specified byte array.
+            </summary>
+            <param name="buffer">The input to compute the hash code for.</param>
+            <returns>The computed hash code.</returns>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.Compute(System.UInt32,System.Byte[])">
+            <summary>
+            Computes the hash value for the specified byte array.
+            </summary>
+            <param name="buffer">The input to compute the hash code for.</param>
+            <returns>The computed hash code.</returns>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.Compute(System.UInt32,System.UInt32,System.Byte[])">
+            <summary>
+            Computes the hash value for the specified byte array.
+            </summary>
+            <param name="buffer">The input to compute the hash code for.</param>
+            <returns>The computed hash code.</returns>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.HashCore(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            When overridden in a derived class, routes data written to the object into
+            the hash algorithm for computing the hash.
+            </summary>
+            <param name="buffer">The input to compute the hash code for.</param>
+            <param name="start">The offset into the byte array from which to begin using data.</param>
+            <param name="length">The number of bytes in the byte array to use as data.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.HashFinal">
+            <summary>
+            When overridden in a derived class, finalizes the hash computation after
+            the last data is processed by the cryptographic stream object.
+            </summary>
+            <returns>The computed hash code.</returns>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.Initialize">
+            <summary>
+            Initializes an implementation of the 
+            <see cref="T:System.Security.Cryptography.HashAlgorithm"/> class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Cryptography.Crc32.HashSize">
+            <summary>
+            Gets the size, in bits, of the computed hash code.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Cryptography.Crc64">
+            <summary>
+            Provides the implementation of the CRC64 hashing algorithm.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.Cryptography.Crc64"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.#ctor(System.UInt64)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.Cryptography.Crc64"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.HashCore(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            When overridden in a derived class, routes data written to the object into
+            the hash algorithm for computing the hash.
+            </summary>
+            <param name="buffer">The input to compute the hash code for.</param>
+            <param name="start">The offset into the byte array from which to begin using data.</param>
+            <param name="length">The number of bytes in the byte array to use as data.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.HashFinal">
+            <summary>
+            When overridden in a derived class, finalizes the hash computation after
+            the last data is processed by the cryptographic stream object.
+            </summary>
+            <returns>The computed hash code.</returns>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.Initialize">
+            <summary>
+            Initializes an implementation of the 
+            <see cref="T:System.Security.Cryptography.HashAlgorithm"/> class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Cryptography.Crc64.HashSize">
+            <summary>
+            Gets the size, in bits, of the computed hash code.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Core.Async.SingleEntryGate">
             <summary>
             This class is used to synchronize access 
@@ -807,45 +916,25 @@
             Provides a trigger for the <see cref="T:Radischevo.Wahha.Core.Async.TriggerListener"/> class.
             </summary>
         </member>
-        <member name="T:Radischevo.Wahha.Core.Cryptography.Crc32">
+        <member name="T:Radischevo.Wahha.Core.Cryptography.Elf32">
             <summary>
-            Provides the implementation of the CRC32 hashing algorithm.
+            Provides the implementation of the Elf-32 hashing algorithm.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Core.Cryptography.Crc32"/> class.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.#ctor(System.UInt32,System.UInt32)">
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Elf32.#ctor">
             <summary>
             Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Core.Cryptography.Crc32"/> class.
+            <see cref="T:Radischevo.Wahha.Core.Cryptography.Elf32"/> class.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.Compute(System.Byte[])">
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Elf32.Compute(System.UInt32,System.UInt32,System.Byte[])">
             <summary>
             Computes the hash value for the specified byte array.
             </summary>
             <param name="buffer">The input to compute the hash code for.</param>
             <returns>The computed hash code.</returns>
         </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.Compute(System.UInt32,System.Byte[])">
-            <summary>
-            Computes the hash value for the specified byte array.
-            </summary>
-            <param name="buffer">The input to compute the hash code for.</param>
-            <returns>The computed hash code.</returns>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.Compute(System.UInt32,System.UInt32,System.Byte[])">
-            <summary>
-            Computes the hash value for the specified byte array.
-            </summary>
-            <param name="buffer">The input to compute the hash code for.</param>
-            <returns>The computed hash code.</returns>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.HashCore(System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Elf32.HashCore(System.Byte[],System.Int32,System.Int32)">
             <summary>
             When overridden in a derived class, routes data written to the object into
             the hash algorithm for computing the hash.
@@ -854,64 +943,20 @@
             <param name="start">The offset into the byte array from which to begin using data.</param>
             <param name="length">The number of bytes in the byte array to use as data.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.HashFinal">
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Elf32.HashFinal">
             <summary>
             When overridden in a derived class, finalizes the hash computation after
             the last data is processed by the cryptographic stream object.
             </summary>
             <returns>The computed hash code.</returns>
         </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc32.Initialize">
+        <member name="M:Radischevo.Wahha.Core.Cryptography.Elf32.Initialize">
             <summary>
             Initializes an implementation of the 
             <see cref="T:System.Security.Cryptography.HashAlgorithm"/> class.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Core.Cryptography.Crc32.HashSize">
-            <summary>
-            Gets the size, in bits, of the computed hash code.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Core.Cryptography.Crc64">
-            <summary>
-            Provides the implementation of the CRC64 hashing algorithm.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Core.Cryptography.Crc64"/> class.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.#ctor(System.UInt64)">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Core.Cryptography.Crc64"/> class.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.HashCore(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            When overridden in a derived class, routes data written to the object into
-            the hash algorithm for computing the hash.
-            </summary>
-            <param name="buffer">The input to compute the hash code for.</param>
-            <param name="start">The offset into the byte array from which to begin using data.</param>
-            <param name="length">The number of bytes in the byte array to use as data.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.HashFinal">
-            <summary>
-            When overridden in a derived class, finalizes the hash computation after
-            the last data is processed by the cryptographic stream object.
-            </summary>
-            <returns>The computed hash code.</returns>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Cryptography.Crc64.Initialize">
-            <summary>
-            Initializes an implementation of the 
-            <see cref="T:System.Security.Cryptography.HashAlgorithm"/> class.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Core.Cryptography.Crc64.HashSize">
+        <member name="P:Radischevo.Wahha.Core.Cryptography.Elf32.HashSize">
             <summary>
             Gets the size, in bits, of the computed hash code.
             </summary>

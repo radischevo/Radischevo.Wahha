@@ -55,6 +55,7 @@
     <Compile Include="Async\TriggerListener.cs" />
     <Compile Include="Cryptography\Crc32.cs" />
     <Compile Include="Cryptography\Crc64.cs" />
+    <Compile Include="Cryptography\Elf32.cs" />
     <Compile Include="EnumerableLink`1.cs" />
     <Compile Include="Expressions\BinaryExpressionFingerprint.cs" />
     <Compile Include="Expressions\CachedExpressionCompiler.cs" />
