@@ -73,6 +73,7 @@
     <Compile Include="Async\ReflectedAsyncControllerDescriptor.cs" />
     <Compile Include="Attributes\ActionFilterAttribute.cs" />
     <Compile Include="Attributes\RequireHttpsAttribute.cs" />
+    <Compile Include="Attributes\ResultCacheAttribute.cs" />
     <Compile Include="Engine\ActionDescriptorCreator.cs" />
     <Compile Include="Async\AsyncActionDescriptor.cs" />
     <Compile Include="Async\AsyncActionMethodSelector.cs" />

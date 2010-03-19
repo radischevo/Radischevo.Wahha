@@ -38,8 +38,7 @@ namespace Radischevo.Wahha.Web.Mvc
             {
                 try
                 {
-                    string id = (_context.Session == null) ?
-                        null : _context.Session.SessionID;
+					_context.Session.UpdateSessionId();
 
                     response.Flush();
                     originalFilter = response.Filter;

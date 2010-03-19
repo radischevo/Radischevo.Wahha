@@ -52,11 +52,31 @@ namespace Radischevo.Wahha.Web.Mvc
             
             _evaluator = new ViewDataEvaluator(this);
             _model = dictionary.Model;
-            _template = dictionary.Template;
+            _template = dictionary._template;
+			_metadata = dictionary._metadata;
+			_validator = dictionary._validator;
         }
         #endregion
 
         #region Instance Properties
+		protected virtual ModelMetadataProviderCollection MetadataProviders
+		{
+			get
+			{
+				return Configuration.Configuration.Instance
+					.Models.MetadataProviders;
+			}
+		}
+
+		protected virtual ModelValidatorProviderCollection ValidatorProviders
+		{
+			get
+			{
+				return Configuration.Configuration.Instance
+					.Models.ValidatorProviders;
+			}
+		}
+
         public object Model
         {
             get
@@ -76,8 +96,7 @@ namespace Radischevo.Wahha.Web.Mvc
                 if (_metadata == null && _model != null)
                 {
                     Type modelType = _model.GetType();
-                    _metadata = Configuration.Configuration.Instance.Models
-                        .MetadataProviders.GetProvider(modelType).GetMetadata(modelType);
+                    _metadata = MetadataProviders.GetProvider(modelType).GetMetadata(modelType);
                 }
                 return _metadata;
             }
@@ -94,8 +113,7 @@ namespace Radischevo.Wahha.Web.Mvc
                 if (_validator == null && _model != null)
                 {
                     Type modelType = _model.GetType();
-                    _validator = Configuration.Configuration.Instance.Models
-                        .ValidatorProviders.GetProvider(modelType).GetValidator(modelType);
+                    _validator = ValidatorProviders.GetProvider(modelType).GetValidator(modelType);
                 }
                 return _validator;
             }

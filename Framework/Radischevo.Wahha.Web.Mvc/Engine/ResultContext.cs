@@ -1,24 +1,45 @@
 ﻿using System;
+
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public class ResultContext : ControllerContext
+    public abstract class ResultContext
     {
         #region Instance Fields
+		private ControllerContext _context;
         private ActionResult _result;
         #endregion
 
         #region Constructors
         protected ResultContext(ControllerContext context, ActionResult result)
-            : base(context) 
         {
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
             Precondition.Require(result, () => Error.ArgumentNull("error"));
+
+			_context = context;
             _result = result;
         }
         #endregion
 
         #region Instance Properties
+		public ControllerContext Context
+		{
+			get
+			{
+				return _context;
+			}
+		}
+
+		public HttpContextBase HttpContext
+		{
+			get
+			{
+				return _context.Context;
+			}
+		}
+
         public ActionResult Result
         {
             get
@@ -32,6 +53,14 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
         #endregion       
+
+		#region Static Methods
+		internal static ResultContext GetResultContext(ResultContext context)
+		{
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
+			return context;
+		}
+		#endregion
     }
 
     public class ResultExecutionContext : ResultContext
@@ -41,6 +70,12 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Constructors
+		public ResultExecutionContext(ResultContext context)
+            : this(ResultContext.GetResultContext(context).Context,
+				ResultContext.GetResultContext(context).Result)
+        {
+        }
+
         public ResultExecutionContext(ControllerContext context, ActionResult result)
             : base(context, result) 
         {
@@ -70,6 +105,12 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Constructors
+		public ResultExecutedContext(ResultContext context, Exception exception)
+            : this(ResultContext.GetResultContext(context).Context,
+				ResultContext.GetResultContext(context).Result, exception)
+        {
+        }
+
         public ResultExecutedContext(ControllerContext context, 
             ActionResult result, Exception exception)
             : base(context, result)

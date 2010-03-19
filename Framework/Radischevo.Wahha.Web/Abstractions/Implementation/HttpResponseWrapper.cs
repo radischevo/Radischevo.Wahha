@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Caching;
 
 using Radischevo.Wahha.Core;
+using System.Reflection;
 
 namespace Radischevo.Wahha.Web.Abstractions
 {
@@ -18,9 +19,14 @@ namespace Radischevo.Wahha.Web.Abstractions
     [AspNetHostingPermission(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal), 
      AspNetHostingPermission(SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
     public class HttpResponseWrapper : HttpResponseBase
-    {
-        #region Instance Fields
-        private readonly HttpResponse _response;
+	{
+		#region Static Fields
+		private static IMethodInvoker _switchWriterMethod = typeof(HttpResponse).GetMethod("SwitchWriter", 
+			BindingFlags.Instance | BindingFlags.NonPublic).CreateInvoker();
+		#endregion
+
+		#region Instance Fields
+		private readonly HttpResponse _response;
         #endregion
 
         #region Constructors
@@ -196,8 +202,15 @@ namespace Radischevo.Wahha.Web.Abstractions
         {
             get
             {
-                return _response.Output;
+				return _response.Output;
             }
+			set
+			{
+				Precondition.Require(value, () => Error.ArgumentNull("value"));
+				
+				if (_switchWriterMethod != null)
+					_switchWriterMethod.Invoke(_response, value);
+			}
         }
 
         public override Stream OutputStream

@@ -14,19 +14,26 @@ namespace Radischevo.Wahha.Web.Mvc
         {   }
         #endregion
 
-        #region Instance Methods
-        public object Bind(BindingContext context)
+		#region Instance Methods
+		protected virtual HttpPostedFileBase ExtractFile(string name, 
+			HttpFileCollectionBase collection)
+		{
+			HttpPostedFileBase file = collection[name];
+			if (file == null)
+				return null;
+
+			if (file.ContentLength == 0 && 
+				String.IsNullOrEmpty(file.FileName))
+				return null;
+
+			return file;
+		}
+
+		public object Bind(BindingContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
 
-            HttpPostedFileBase file = context.Context.Request.Files[context.ModelName];
-            if (file == null)
-                return null;
-            
-            if (file.ContentLength == 0 && String.IsNullOrEmpty(file.FileName))
-                return null;
-            
-            return file;
+			return ExtractFile(context.ModelName, context.Context.Request.Files);
         }
         #endregion
     }

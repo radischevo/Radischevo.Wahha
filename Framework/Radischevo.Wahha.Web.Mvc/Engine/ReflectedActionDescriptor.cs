@@ -40,17 +40,6 @@ namespace Radischevo.Wahha.Web.Mvc
         }
         #endregion
 
-        #region Static Methods
-        public static ReflectedActionDescriptor CreateDescriptor(MethodInfo method, 
-            string name, ControllerDescriptor controller)
-        {
-            ReflectedActionDescriptor descriptor = new ReflectedActionDescriptor(method, name, controller, false);
-            ValidateActionMethod(method);
-            
-            return descriptor;
-        }
-        #endregion
-
         #region Instance Properties
         public override ControllerDescriptor Controller
         {
@@ -76,6 +65,17 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
         #endregion
+
+		#region Static Methods
+		public static ReflectedActionDescriptor CreateDescriptor(MethodInfo method,
+			string name, ControllerDescriptor controller)
+		{
+			ReflectedActionDescriptor descriptor = new ReflectedActionDescriptor(method, name, controller, false);
+			ValidateActionMethod(method);
+
+			return descriptor;
+		}
+		#endregion
 
         #region Instance Methods
         public override object[] GetCustomAttributes(bool inherit)

@@ -7,7 +7,7 @@ using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public class ActionContext
+    public abstract class ActionContext
     {
         #region Instance Fields
         private ActionDescriptor _action;
@@ -86,7 +86,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         #region Constructors
         public ActionExecutionContext(ActionContext context)
-            : base(ActionContext.GetActionContext(context).Context,
+            : this(ActionContext.GetActionContext(context).Context,
 				ActionContext.GetActionContext(context).Action)
         {
         }

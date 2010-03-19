@@ -101,7 +101,7 @@ namespace Radischevo.Wahha.Web.Mvc
             filter.OnResultExecuting(context);
 
             if (context.Cancel)
-                return new ResultExecutedContext(context, context.Result, null);
+                return new ResultExecutedContext(context, null);
 
             bool wasError = false;
             ResultExecutedContext postContext = null;
@@ -113,7 +113,7 @@ namespace Radischevo.Wahha.Web.Mvc
             {
                 // This type of exception occurs as a result of Response.Redirect(), but we special-case so that
                 // the filters don't see this as an error.
-                postContext = new ResultExecutedContext(context, context.Result, null);
+                postContext = new ResultExecutedContext(context, null);
                 filter.OnResultExecuted(postContext);
 
                 throw;
@@ -121,7 +121,7 @@ namespace Radischevo.Wahha.Web.Mvc
             catch (Exception ex)
             {
                 wasError = true;
-                postContext = new ResultExecutedContext(context, context.Result, ex);
+                postContext = new ResultExecutedContext(context, ex);
                 filter.OnResultExecuted(postContext);
                 
                 if (!postContext.ExceptionHandled)

@@ -74,6 +74,9 @@ namespace Radischevo.Wahha.Web.Mvc
             }
             set
             {
+				Precondition.Require(value > -1, () => 
+					Error.ArgumentOutOfRange("value"));
+
                 _duration = value;
             }
         }
@@ -136,10 +139,26 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
+		protected virtual string CreateCacheKey(ActionExecutionContext context)
+		{
+			return CreateCacheKey(context, _varyByUser, _keys, _matchAnyKey);
+		}
+
+		protected virtual TValue GetCachedValue<TValue>(string key)
+		{
+			return Cache.Get<TValue>(key);
+		}
+
+		protected virtual void UpdateCachedValue<TValue>(string key, TValue value)
+		{
+			if(value != null)
+				Cache.Insert(key, value, DateTime.UtcNow.AddMinutes(_duration), _tags);
+		}
+
         public override void OnExecuting(ActionExecutionContext context)
         {
-            _cacheKey = CreateCacheKey(context, _varyByUser, _keys, _matchAnyKey);
-            ActionResult cachedResult = Cache.Get<ActionResult>(_cacheKey);
+			_cacheKey = CreateCacheKey(context);
+			ActionResult cachedResult = GetCachedValue<ActionResult>(_cacheKey);
 
             if (cachedResult != null)
             {
@@ -150,8 +169,11 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public override void OnExecuted(ActionExecutedContext context)
         {
-            if (context.Result != null && !String.IsNullOrEmpty(_cacheKey))
-                Cache.Insert(_cacheKey, context.Result, DateTime.UtcNow.AddMinutes(_duration), _tags);
+			if (context.Exception != null)
+				return;
+
+			if (context.Result != null && !String.IsNullOrEmpty(_cacheKey))
+				UpdateCachedValue(_cacheKey, context.Result);
         }
         #endregion
     }

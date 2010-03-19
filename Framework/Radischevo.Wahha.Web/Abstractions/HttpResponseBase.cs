@@ -194,6 +194,10 @@ namespace Radischevo.Wahha.Web.Abstractions
             {
                 throw new NotImplementedException();
             }
+			set
+			{
+				throw new NotImplementedException();
+			}
         }
 
         public virtual Stream OutputStream

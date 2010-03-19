@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.IO.Compression;
 using System.Web;
 
@@ -12,9 +13,9 @@ namespace Radischevo.Wahha.Web.Mvc
     /// using standard gzip/deflate.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class HttpCompressionAttribute : ActionFilterAttribute, IExceptionFilter
+    public sealed class HttpCompressionAttribute : ActionFilterAttribute, IExceptionFilter
     {
-        #region Instance Fields
+        #region Constants
         private const string ACCEPT_ENCODING_HEADER = "Accept-Encoding";
         private const string CONTENT_ENCODING_HEADER = "Content-Encoding";
         private const string GZIP = "gzip";
@@ -22,8 +23,12 @@ namespace Radischevo.Wahha.Web.Mvc
         private const string COMPRESS_ENABLED_KEY = "Radischevo.Wahha.HttpCompressionEnabled";
         #endregion
 
-        #region Constructors
-        /// <summary>
+		#region Instance Fields
+		private Stream _original;
+		#endregion
+
+		#region Constructors
+		/// <summary>
         /// Initializes an instance of the 
         /// <see cref="T:Radischevo.Wahha.Web.Mvc.HttpCompressionAttribute"/> class
         /// </summary>
@@ -56,6 +61,34 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
+		private bool CanAddCompressionFilter(ActionContext context)
+		{
+			if (context.Context.IsChild)
+				return false;
+
+			return (!context.HttpContext.Items.Contains(COMPRESS_ENABLED_KEY));
+		}
+
+		private void AddResponseFilter(HttpResponseBase response, 
+			Func<Stream, Stream> factory)
+		{
+			_original = response.Filter;
+			response.Filter = factory(response.Filter);
+		}
+
+		private void TryRemoveHeaders(HttpContextBase context)
+		{
+			try
+			{
+				context.Response.Headers[CONTENT_ENCODING_HEADER] = String.Empty;
+			}
+			catch (PlatformNotSupportedException)
+			{
+				// we get it if the application is executed under IIS < 7.
+				// There's nothing we can do here.
+			}
+		}
+
 		/// <summary>
         /// Enables the output compression 
         /// using gzip/deflate
@@ -64,16 +97,19 @@ namespace Radischevo.Wahha.Web.Mvc
         public override void OnExecuted(ActionExecutedContext ctx)
         {
 			HttpContextBase context = ctx.HttpContext;
-            if (!context.Items.Contains(COMPRESS_ENABLED_KEY))
+            if (CanAddCompressionFilter(ctx))
             {
                 if (IsEncodingAccepted(context, DEFLATE))
                 {
-                    context.Response.Filter = new DeflateStream(context.Response.Filter, CompressionMode.Compress);
+					AddResponseFilter(context.Response, filter => 
+						new DeflateStream(filter, CompressionMode.Compress));
+
                     SetEncoding(context, DEFLATE);
                 }
                 else if (IsEncodingAccepted(context, GZIP))
                 {
-                    context.Response.Filter = new GZipStream(context.Response.Filter, CompressionMode.Compress);
+					AddResponseFilter(context.Response, filter =>
+						new GZipStream(filter, CompressionMode.Compress));
                     SetEncoding(context, GZIP);
                 }
                 context.Items.Add(COMPRESS_ENABLED_KEY, true);
@@ -89,8 +125,8 @@ namespace Radischevo.Wahha.Web.Mvc
 			// we'll get invalid response if an exception is thrown.
 			if (context.Items.Contains(COMPRESS_ENABLED_KEY))
 			{
-				context.Response.Headers.Remove(CONTENT_ENCODING_HEADER);
-				context.Response.Filter = null;
+				TryRemoveHeaders(context);
+				context.Response.Filter = _original;
 			}
 		}
 		#endregion

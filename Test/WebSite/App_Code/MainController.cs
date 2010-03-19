@@ -95,10 +95,6 @@ public class TemplatedItem : IDataErrorInfo
 		{
 			return _indices;
 		}
-		set
-		{
-			_indices = value;
-		}
 	}
 
 	public Status Status
@@ -241,7 +237,7 @@ public class MainController : Controller
 
     public void List(int page)
     {
-		throw new HttpException(404, "Not found");
+		//throw new HttpException(404, "Not found");
         Response.Write(page);
     }
 

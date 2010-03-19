@@ -266,7 +266,15 @@ namespace Radischevo.Wahha.Web.Mvc
 
 			switch (expression.Body.NodeType)
 			{
+				case ExpressionType.ArrayIndex:
+					break;
+
 				case ExpressionType.Parameter:
+					break;
+
+				case ExpressionType.Call:
+					if (!LinqHelper.IsSingleArgumentIndexer(expression.Body))
+						throw Error.TemplateExpressionLimitations();
 					break;
 
 				case ExpressionType.MemberAccess:

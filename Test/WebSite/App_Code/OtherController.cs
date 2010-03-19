@@ -171,6 +171,7 @@ public class MegaController : AsyncController
 		return View("Views/messages");
 	}
 
+	[ResultCache(Duration = 10)]
 	public ActionResult SimpleAction()
 	{
 		MessageInfo mi = new MessageInfo() {

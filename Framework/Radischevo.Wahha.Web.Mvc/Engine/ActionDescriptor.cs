@@ -9,10 +9,41 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Web.Mvc
 {
     public abstract class ActionDescriptor : ICustomAttributeProvider
-    {
-        #region Static Fields
-        private static readonly ActionSelector[] _emptySelectors = new ActionSelector[0];
+	{
+		#region Nested Types
+		private sealed class AllowMultipleCache : ReaderWriterCache<Type, bool>
+		{
+			#region Constructors
+			public AllowMultipleCache()
+				: base()
+			{
+			}
+			#endregion
+
+			#region Static Fields
+			private static bool AllowsMultiple(Type type)
+			{
+				AttributeUsageAttribute attr = type
+					.GetCustomAttributes<AttributeUsageAttribute>(true)
+					.FirstOrDefault();
+
+				return (attr == null) ? false : attr.AllowMultiple;
+			}
+			#endregion
+
+			#region Instance Methods
+			public bool AllowMultiple(Type type)
+			{
+				return GetOrCreate(type, () => AllowsMultiple(type));
+			}
+			#endregion
+		}
+		#endregion
+
+		#region Static Fields
+		private static readonly ActionSelector[] _emptySelectors = new ActionSelector[0];
 		private static readonly MethodDispatcherCache _staticDispatcherCache = new MethodDispatcherCache();
+		private static readonly AllowMultipleCache _allowMultipleCache = new AllowMultipleCache();
         #endregion
 
 		#region Instance Fields
@@ -126,10 +157,8 @@ namespace Radischevo.Wahha.Web.Mvc
 				}
 				else
 				{
-					AttributeUsageAttribute usageAttr = ((AttributeUsageAttribute[])filterType
-						.GetCustomAttributes(typeof(AttributeUsageAttribute), true))[0];
-
-					attrIndices[filterType] = (usageAttr.AllowMultiple) ? -1 : i;
+					bool allowMultiple = _allowMultipleCache.AllowMultiple(filterType);
+					attrIndices[filterType] = (allowMultiple) ? -1 : i;
 				}
 			}
 			return filtersList.Where(attr => attr != null);

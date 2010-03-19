@@ -9,9 +9,47 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Web.Text
 {
     public sealed class HtmlAttributeDictionary : IEnumerable<KeyValuePair<string, object>>
-    {
-        #region Instance Fields
-        private ValueDictionary _values;
+	{
+		#region Nested Types
+		private static class IdentifierValidator
+		{
+			#region Static Methods
+			private static bool IsAllowableSpecialCharacter(char c)
+			{
+				switch (c)
+				{
+					case '-':
+					case '_':
+					case ':':
+					case '.':
+						return true;
+
+					default:
+						return false;
+				}
+			}
+
+			private static bool IsDigit(char c)
+			{
+				return ('0' <= c && c <= '9');
+			}
+
+			public static bool IsLetter(char c)
+			{
+				return (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z'));
+			}
+
+			public static bool IsValidCharacter(char c)
+			{
+				return (IsLetter(c) || IsDigit(c) || 
+					IsAllowableSpecialCharacter(c));
+			}
+			#endregion
+		}
+		#endregion
+
+		#region Instance Fields
+		private ValueDictionary _values;
         #endregion
 
         #region Constructors
@@ -54,8 +92,26 @@ namespace Radischevo.Wahha.Web.Text
         }
         #endregion
 
-        #region Instance Methods
-        public bool TryGetValue(string key, out object value)
+		#region Static Methods
+		private static bool ValidateIdentifier(string identifier)
+		{
+			if(String.IsNullOrEmpty(identifier))
+				return false;
+
+			if (!IdentifierValidator.IsLetter(identifier[0]))
+				return false;
+
+			for (int i = 1; i < identifier.Length; ++i)
+			{
+				if (!IdentifierValidator.IsValidCharacter(identifier[i]))
+					return false;
+			}
+			return true;
+		}
+		#endregion
+
+		#region Instance Methods
+		public bool TryGetValue(string key, out object value)
         {
             return _values.TryGetValue(key, out value);
         }
@@ -129,6 +185,10 @@ namespace Radischevo.Wahha.Web.Text
             {
                 string value = (attr.Value == null) ? String.Empty : 
                     HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
+
+				if (attr.Key.Equals("id", StringComparison.OrdinalIgnoreCase)
+					&& !ValidateIdentifier(value))
+					continue;
 
                 sb.AppendFormat(" {0}=\"{1}\"", 
                     attr.Key.ToLowerInvariant(), value);
