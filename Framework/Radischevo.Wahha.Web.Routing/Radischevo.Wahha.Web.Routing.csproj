@@ -44,11 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Configuration.cs" />
-    <Compile Include="Configuration\RouteTableProviderConfigurationElement.cs" />
-    <Compile Include="Configuration\RouteConstraintConfigurationElement.cs" />
-    <Compile Include="Configuration\RouteConfigurationElement.cs" />
-    <Compile Include="Configuration\SettingsSection.cs" />
+    <Compile Include="Configurations\Configuration.cs" />
+    <Compile Include="Configurations\RouteTableProviderConfigurationElement.cs" />
+    <Compile Include="Configurations\RouteConstraintConfigurationElement.cs" />
+    <Compile Include="Configurations\RouteConfigurationElement.cs" />
+    <Compile Include="Configurations\SettingsSection.cs" />
     <Compile Include="Constraints\HttpMethodConstraint.cs" />
     <Compile Include="Constraints\RegexConstraint.cs" />
     <Compile Include="Extensions\HttpRoutingHandler.cs" />

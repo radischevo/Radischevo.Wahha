@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Web.Mvc.Html;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc.UI
 {
@@ -94,7 +95,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
 					if (item != null)
 						itemType = item.GetType().MakeNonNullableType();
 					
-					ModelMetadata metadata = Configuration.Configuration.Instance.Models
+					ModelMetadata metadata = Configuration.Instance.Models
 						.MetadataProviders.GetProvider(itemType).GetMetadata(itemType);
 
 					string fieldName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", oldPrefix, index++);

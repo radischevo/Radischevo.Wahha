@@ -2,7 +2,7 @@
 using System.Reflection;
 
 using Radischevo.Wahha.Core;
-using Config = Radischevo.Wahha.Data.Configuration;
+using Config = Radischevo.Wahha.Data.Configurations;
 
 namespace Radischevo.Wahha.Data
 {

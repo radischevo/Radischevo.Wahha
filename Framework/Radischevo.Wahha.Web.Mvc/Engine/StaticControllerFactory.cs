@@ -2,6 +2,7 @@
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Routing;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -72,9 +73,9 @@ namespace Radischevo.Wahha.Web.Mvc
 			Precondition.Defined(controllerName, () => Error.InvalidArgument("controllerName"));
 
             Type type;
-            if (!Configuration.Configuration.Instance
+            if (!Configuration.Instance
                 .Controllers.Mappings.TryGetValue(controllerName, out type))
-                if (!Configuration.Configuration.Instance
+                if (!Configuration.Instance
                     .Controllers.Mappings.TryGetValue(
                     String.Concat(controllerName, "Controller"), out type))
                     throw Error.CouldNotCreateController(controllerName);

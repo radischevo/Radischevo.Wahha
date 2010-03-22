@@ -7,6 +7,7 @@ using System.Reflection;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Mvc.UI;
 using Radischevo.Wahha.Web.Mvc.Validation;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -55,7 +56,7 @@ namespace Radischevo.Wahha.Web.Mvc
             get
             {
                 if (_providers == null)
-                    _providers = Configuration.Configuration.Instance.Models.ValidatorProviders;
+                    _providers = Configuration.Instance.Models.ValidatorProviders;
 
                 return _providers;
             }

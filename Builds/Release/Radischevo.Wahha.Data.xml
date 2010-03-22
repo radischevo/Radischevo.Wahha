@@ -1454,29 +1454,6 @@
             </summary>
             <param name="command">The object, describing the command to execute.</param>
         </member>
-        <member name="T:Radischevo.Wahha.Data.Configuration.Configuration">
-            <summary>
-            Represents module configuration 
-            settings.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Configuration.Configuration.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.Configuration.Configuration"/> class
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Configuration.Configuration.Instance">
-            <summary>
-            Gets the current module configuration
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Configuration.Configuration.ConnectionStrings">
-            <summary>
-            Gets the collection of connection strings, 
-            declared within the configuration file
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Data.DbDataRecordEnumerator">
             <summary>
             Acts as a decorator for the 
@@ -1638,6 +1615,29 @@
             <summary>
             Gets or sets the <see cref="T:Radischevo.Wahha.Data.DbCommandDescriptor"/> 
             describing the command to execute.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.Configurations.Configuration">
+            <summary>
+            Represents module configuration 
+            settings.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Configurations.Configuration.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.Configurations.Configuration"/> class
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Configurations.Configuration.Instance">
+            <summary>
+            Gets the current module configuration
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Configurations.Configuration.ConnectionStrings">
+            <summary>
+            Gets the collection of connection strings, 
+            declared within the configuration file
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbDataRecord">

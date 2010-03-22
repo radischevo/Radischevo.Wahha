@@ -10,18 +10,18 @@ using Radischevo.Wahha.Web.Scripting.Serialization;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public class JsonModelBinder : DefaultModelBinder
+    public class JsonModelBinder : ModelBinderBase
     {
         #region Nested Types
         private delegate object JavaScriptDeserializationExecutor(string value);
         #endregion
 
         #region Instance Methods
-        public override object Bind(BindingContext context)
+        protected override object ExecuteBind(BindingContext context)
         {
-            Precondition.Require(context, () => Error.ArgumentNull("context"));
             object value;
-            context.TryGetValue(out value);
+			if (!context.TryGetValue(out value))
+				return null;
 
             return context.Model = Deserialize(context.ModelType, 
                 Convert.ToString(value, CultureInfo.InvariantCulture));

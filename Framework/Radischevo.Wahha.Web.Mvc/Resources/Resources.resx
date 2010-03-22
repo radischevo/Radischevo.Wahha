@@ -318,4 +318,7 @@
   <data name="Error_HttpPostedFileSetTypeLimitations" xml:space="preserve">
     <value>Invalid output type '{0}'. Only objects of type 'HttpPostedFileBase' can be retrieved from the HttpPostedFileSet.</value>
   </data>
+  <data name="Error_TypeArgumentCountMismatch" xml:space="preserve">
+    <value>The open model type '{0}' has {1} generic type argument(s), but the open binder type '{2}' has {3} generic type argument(s). The binder type must not be an open generic type or must have the same number of generic arguments as the open model type.</value>
+  </data>
 </root>

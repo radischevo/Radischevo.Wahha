@@ -8,12 +8,11 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public class XmlModelBinder : DefaultModelBinder
+    public class XmlModelBinder : ModelBinderBase
     {
         #region Instance Methods
-        public override object Bind(BindingContext context)
+        protected override object ExecuteBind(BindingContext context)
         {
-            Precondition.Require(context, () => Error.ArgumentNull("context"));
             object value;
             if (!context.TryGetValue(out value))
                 return null;

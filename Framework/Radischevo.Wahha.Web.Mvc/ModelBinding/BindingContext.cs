@@ -6,10 +6,11 @@ using System.Web.SessionState;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Web.Mvc.Validation;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public sealed class BindingContext : ControllerContext
+    public class BindingContext : ControllerContext
     {
         #region Instance Fields
         private object _model;
@@ -40,25 +41,36 @@ namespace Radischevo.Wahha.Web.Mvc
             _source = source;
             _updateFilter = updateFilter;
             _errors = errors;
-            
         }
+
+		public BindingContext(BindingContext parent)
+			: base(parent)
+		{
+			_data = parent._data;
+			_modelType = parent._modelType;
+			_modelName = parent._modelName;
+			_source = parent._source;
+			_updateFilter = parent._updateFilter;
+			_errors = parent._errors;
+			_model = parent._model;
+		}
         #endregion
 
         #region Instance Properties
-		private ModelMetadataProviderCollection MetadataProviders
+		protected ModelMetadataProviderCollection MetadataProviders
 		{
 			get
 			{
-				return Configuration.Configuration.Instance
+				return Configuration.Instance
 					.Models.MetadataProviders;
 			}
 		}
 
-		private ModelValidatorProviderCollection ValidatorProviders
+		protected ModelValidatorProviderCollection ValidatorProviders
 		{
 			get
 			{
-				return Configuration.Configuration.Instance
+				return Configuration.Instance
 					.Models.ValidatorProviders;
 			}
 		}
@@ -103,7 +115,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public ValueDictionary Data
+        public virtual ValueDictionary Data
         {
             get
             {
@@ -231,7 +243,7 @@ namespace Radischevo.Wahha.Web.Mvc
             return Data.TryGetValue(_modelName, out value);
         }
 
-        public bool AllowMemberUpdate(string memberName)
+        public virtual bool AllowMemberUpdate(string memberName)
         {
             return (_updateFilter == null || _updateFilter(memberName));
         }

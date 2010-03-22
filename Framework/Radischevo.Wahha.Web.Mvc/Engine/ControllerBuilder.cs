@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -18,7 +19,7 @@ namespace Radischevo.Wahha.Web.Mvc
         public ControllerBuilder()
         {
             IControllerFactory configuredFactory = 
-                Configuration.Configuration.Instance.Controllers.Factory;
+                Configuration.Instance.Controllers.Factory;
 
             if (configuredFactory == null)
                 SetDefaultControllerFactory();

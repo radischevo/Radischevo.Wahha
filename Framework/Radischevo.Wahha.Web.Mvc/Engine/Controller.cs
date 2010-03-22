@@ -9,6 +9,7 @@ using System.Web.SessionState;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Routing;
 using Radischevo.Wahha.Web.Scripting.Serialization;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -366,10 +367,10 @@ namespace Radischevo.Wahha.Web.Mvc
 		/// Returns a <see cref="Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
 		/// which redirects to the specified route.
 		/// </summary>
-		/// <param name="values">An object containing the parameters for a route.</param>
-		protected ActionResult Route(string routeKey)
+		/// <param name="routeName">The name of the route.</param>
+		protected ActionResult Route(string routeName)
 		{
-			return Route(routeKey, null, null);
+			return Route(routeName, null, null);
 		}
 
         /// <summary>
@@ -398,11 +399,11 @@ namespace Radischevo.Wahha.Web.Mvc
         /// which redirects to the specified route.
         /// </summary>
         /// <param name="values">An object containing the parameters for a route.</param>
-        /// <param name="routeKey">The name of the route</param>
-        protected ActionResult Route(string routeKey, object values)
+        /// <param name="routeName">The name of the route</param>
+        protected ActionResult Route(string routeName, object values)
         {
             ValueDictionary rvd = new ValueDictionary(values);
-            return Route(routeKey, rvd, null);
+            return Route(routeName, rvd, null);
         }
 
         /// <summary>
@@ -410,10 +411,10 @@ namespace Radischevo.Wahha.Web.Mvc
         /// which redirects to the specified route.
         /// </summary>
         /// <param name="values">An object containing the parameters for a route.</param>
-        /// <param name="routeKey">The name of the route</param>
-        protected ActionResult Route(string routeKey, ValueDictionary values)
+        /// <param name="routeName">The name of the route</param>
+        protected ActionResult Route(string routeName, ValueDictionary values)
         {
-            return Route(routeKey, values, null);
+            return Route(routeName, values, null);
         }
 
         /// <summary>
@@ -421,20 +422,56 @@ namespace Radischevo.Wahha.Web.Mvc
         /// which redirects to the specified route.
         /// </summary>
         /// <param name="values">An object containing the parameters for a route.</param>
-        /// <param name="routeKey">The name of the route</param>
+        /// <param name="routeName">The name of the route</param>
         /// <param name="suffix">An optional suffix, which will be added to the resulting URL.</param>
-        protected virtual ActionResult Route(string routeKey, 
+        protected virtual ActionResult Route(string routeName, 
             ValueDictionary values, string suffix)
         {
 			values = values ?? new ValueDictionary();
 
-            VirtualPathData vp = RouteTable.Routes.GetVirtualPath(Context, routeKey, values);
+            VirtualPathData vp = RouteTable.Routes.GetVirtualPath(Context, routeName, values);
             if (vp != null)
                 return new RedirectResult(String.Concat(vp.VirtualPath, suffix));
 
             return EmptyResult.Instance;
         }
-        
+
+		protected ActionResult Route<TController>(
+			Expression<Action<TController>> action)
+			where TController : IController
+		{
+			return Route<TController>(null, action, null);
+		}
+
+		protected ActionResult Route<TController>(string routeName,
+			Expression<Action<TController>> action)
+			where TController : IController
+		{
+			return Route<TController>(routeName, action, null);
+		}
+
+		protected ActionResult Route<TController>(string routeName, 
+			Expression<Action<TController>> action, string suffix)
+			where TController : IController
+		{
+			Precondition.Require(action, () => Error.ArgumentNull("action"));
+
+			MethodCallExpression mexp = (action.Body as MethodCallExpression);
+			if (mexp == null)
+				throw Error.ExpressionMustBeAMethodCall("action");
+
+			if (mexp.Object != action.Parameters[0])
+				throw Error.MethodCallMustTargetLambdaArgument("action");
+
+			ValueDictionary values = LinqHelper.ExtractArgumentsToDictionary(mexp);
+			values = (values != null) ? values : new ValueDictionary();
+
+			values["controller"] = typeof(TController).Name;
+			values["action"] = ActionMethodSelector.GetNameOrAlias(mexp.Method);
+
+			return Route(routeName, values, suffix);
+		}
+
         /// <summary>
         /// Returns a <see cref="Radischevo.Wahha.Web.Mvc.ViewResult"/> 
         /// which renders a view to the response.
@@ -733,7 +770,7 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             ValueDictionary data = (values == null) ? null : new ValueDictionary(values);
 
-            IModelBinder binder = Configuration.Configuration.Instance
+            IModelBinder binder = Configuration.Instance
                 .Models.Binders.GetBinder(typeof(TModel));
 
             BindingContext bc = new BindingContext(Context, typeof(TModel),

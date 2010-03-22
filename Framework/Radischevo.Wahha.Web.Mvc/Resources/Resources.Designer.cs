@@ -502,6 +502,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The open model type &apos;{0}&apos; has {1} generic type argument(s), but the open binder type &apos;{2}&apos; has {3} generic type argument(s). The binder type must not be an open generic type or must have the same number of generic arguments as the open model type..
+        /// </summary>
+        internal static string Error_TypeArgumentCountMismatch {
+            get {
+                return ResourceManager.GetString("Error_TypeArgumentCountMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The type &apos;{0}&apos; must derive from &apos;{1}&apos;..
         /// </summary>
         internal static string Error_TypeMustDeriveFromType {

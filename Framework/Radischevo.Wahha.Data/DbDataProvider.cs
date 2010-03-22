@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Reflection;
 
-using Config = Radischevo.Wahha.Data.Configuration;
-using System.Collections.Generic;
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data.Configurations;
 
 namespace Radischevo.Wahha.Data
 {
@@ -82,10 +82,10 @@ namespace Radischevo.Wahha.Data
         /// <param name="useTransaction">True to use a transaction.</param>
         public static DbDataProvider Resolve(string providerName, bool useTransaction)
         {
-            if (Config.Configuration.Instance.ConnectionStrings.Count < 1)
+            if (Configuration.Instance.ConnectionStrings.Count < 1)
                 throw Error.ConnectionStringNotConfigured();
 
-            return Resolve(providerName, Config.Configuration.Instance.ConnectionStrings[0]);
+            return Resolve(providerName, Configuration.Instance.ConnectionStrings[0]);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Radischevo.Wahha.Data
         public static DbDataProvider Resolve(string providerName, 
             string connectionString, bool useTransaction)
         {
-            IDbDataProvider provider = Config.Configuration.Instance
+            IDbDataProvider provider = Configuration.Instance
                 .Providers.Factory.CreateProvider(providerName);
             return new DbDataProvider(provider, connectionString, useTransaction);
         }
@@ -133,10 +133,10 @@ namespace Radischevo.Wahha.Data
         /// <param name="useTransaction">True to use a transaction.</param>
         public static DbDataProvider Create(bool useTransaction)
         {
-            if (Config.Configuration.Instance.ConnectionStrings.Count < 1)
+            if (Configuration.Instance.ConnectionStrings.Count < 1)
                 throw Error.ConnectionStringNotConfigured();
 
-            return Create(Config.Configuration.Instance.ConnectionStrings[0], false);
+            return Create(Configuration.Instance.ConnectionStrings[0], false);
         }
 
         /// <summary>
@@ -157,11 +157,11 @@ namespace Radischevo.Wahha.Data
         /// <param name="useTransaction">True to use a transaction.</param>
         public static DbDataProvider Create(string connectionString, bool useTransaction)
         {
-            Type type = Config.Configuration.Instance
+            Type type = Configuration.Instance
                 .Providers.Mappings.Default;
             Precondition.Require(type, () => Error.ProviderNotConfigured());
 
-            IDbDataProvider provider = Config.Configuration.Instance
+            IDbDataProvider provider = Configuration.Instance
                 .Providers.Factory.CreateProvider(type);
             return new DbDataProvider(provider, connectionString, useTransaction);
         }
@@ -184,11 +184,11 @@ namespace Radischevo.Wahha.Data
         public static DbDataProvider Create<TProvider>(bool useTransaction)
             where TProvider : IDbDataProvider
         {
-            if (Config.Configuration.Instance.ConnectionStrings.Count < 1)
+            if (Configuration.Instance.ConnectionStrings.Count < 1)
                 throw Error.ConnectionStringNotConfigured();
 
             return Create<TProvider>(
-                Config.Configuration.Instance.ConnectionStrings[0], useTransaction);
+                Configuration.Instance.ConnectionStrings[0], useTransaction);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Radischevo.Wahha.Data
             string connectionString, bool useTransaction)
             where TProvider : IDbDataProvider
         {
-            IDbDataProvider provider = Config.Configuration.Instance
+            IDbDataProvider provider = Configuration.Instance
                 .Providers.Factory.CreateProvider(typeof(TProvider));
 
             return new DbDataProvider(provider, connectionString, useTransaction);
@@ -320,7 +320,7 @@ namespace Radischevo.Wahha.Data
 
         private void Dispose(bool disposing)
         {
-            Config.Configuration.Instance
+            Configuration.Instance
                 .Providers.Factory.DisposeProvider(_provider);
         }
         #endregion

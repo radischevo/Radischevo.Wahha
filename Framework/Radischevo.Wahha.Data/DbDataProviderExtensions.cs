@@ -59,7 +59,7 @@ namespace Radischevo.Wahha.Data
 			DbCommandDescriptor command)
 		{
 			Precondition.Require(provider, () => Error.ArgumentNull("provider"));
-			command.Timeout = Configuration.Configuration
+			command.Timeout = Configurations.Configuration
 				.Instance.Providers.CommandTimeout;
 
 			return new DbCommandResult(provider, command);

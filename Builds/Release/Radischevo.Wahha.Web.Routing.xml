@@ -226,6 +226,18 @@
               Looks up a localized string similar to A RoutableUserControl can only be used inside pages that derive from RoutablePage..
             </summary>
         </member>
+        <member name="T:Radischevo.Wahha.Web.Routing.Configurations.RouteTableProviderConfigurationElement">
+            <summary>
+            Describes the route provider 
+            configuration element.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.Configurations.RouteTableProviderConfigurationElement.Type">
+            <summary>
+            Gets the string representation 
+            of the type of route persistence provider.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Web.Routing.IRouteHandler">
             <summary>
             Defines the contract for 
@@ -239,6 +251,19 @@
             for the current request
             </summary>
             <param name="requestContext">The current request context</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Routing.Configurations.SettingsSection">
+            <summary>
+            Describes the configuration section, 
+            storing the routing provider settings
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.Configurations.SettingsSection.Provider">
+            <summary>
+            Gets the configuration element, 
+            which provides the information required for  
+            <see cref="T:Radischevo.Wahha.Web.Routing.IRouteTableProvider"/> instantiation.
+            </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Routing.RequestContext">
             <summary>
@@ -344,18 +369,6 @@
             <summary>
             Gets or sets the <see cref="T:Radischevo.Wahha.Web.Routing.IRouteHandler"/> 
             which handles the current request
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Routing.Configuration.RouteTableProviderConfigurationElement">
-            <summary>
-            Describes the route provider 
-            configuration element.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Routing.Configuration.RouteTableProviderConfigurationElement.Type">
-            <summary>
-            Gets the string representation 
-            of the type of route persistence provider.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Routing.RouteCollection">
@@ -515,22 +528,6 @@
             stored in this instance
             </summary>
         </member>
-        <member name="T:Radischevo.Wahha.Web.Routing.Configuration.Configuration">
-            <summary>
-            Stores the routing configuration
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Routing.Configuration.Configuration.Instance">
-            <summary>
-            Gets the current routing configuration
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Routing.Configuration.Configuration.Provider">
-            <summary>
-            Gets the configured route 
-            persistence provider
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Web.Routing.UrlRoutingHandler">
             <summary>
             Provides an <see cref="T:System.Web.IHttpHandler"/> 
@@ -576,17 +573,20 @@
             </summary>
             <param name="context">The current HTTP request context</param>
         </member>
-        <member name="T:Radischevo.Wahha.Web.Routing.Configuration.SettingsSection">
+        <member name="T:Radischevo.Wahha.Web.Routing.Configurations.Configuration">
             <summary>
-            Describes the configuration section, 
-            storing the routing provider settings
+            Stores the routing configuration
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Routing.Configuration.SettingsSection.Provider">
+        <member name="P:Radischevo.Wahha.Web.Routing.Configurations.Configuration.Instance">
             <summary>
-            Gets the configuration element, 
-            which provides the information required for  
-            <see cref="T:Radischevo.Wahha.Web.Routing.IRouteTableProvider"/> instantiation.
+            Gets the current routing configuration
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.Configurations.Configuration.Provider">
+            <summary>
+            Gets the configured route 
+            persistence provider
             </summary>
         </member>
     </members>

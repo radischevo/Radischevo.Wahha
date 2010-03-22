@@ -6,7 +6,7 @@ using System.Threading;
 using System.Web;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Routing.Configuration;
+using Radischevo.Wahha.Web.Routing.Configurations;
 
 namespace Radischevo.Wahha.Web.Routing.Providers
 {
@@ -80,7 +80,7 @@ namespace Radischevo.Wahha.Web.Routing.Providers
                 new Dictionary<string, RouteBase>();
 
             foreach (RouteConfigurationElement element in
-                Configuration.Configuration.Instance.Routes)
+                Configurations.Configuration.Instance.Routes)
                 routes.Add(element.Name, ProcessRoute(element));
             
             return routes;

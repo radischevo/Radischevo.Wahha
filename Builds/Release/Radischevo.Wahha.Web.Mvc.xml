@@ -220,24 +220,6 @@
             </summary>
             <param name="settings">A settings list for the current instance.</param>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.ControllerConfigurationElement.FactoryType">
-            <summary>
-            Gets the string representation 
-            of the type of controller factory which 
-            will be used by default
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.ControllerConfigurationElement.Mappings">
-            <summary>
-            Gets the predefined controller name-to-type mappings
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Configuration.Configuration.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Web.Mvc.Configuration.Configuration"/> class
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Web.Mvc.ViewResultBase">
             <summary>
             Base class used to supply the model to the view 
@@ -536,7 +518,7 @@
             Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.RedirectResult"/> 
             which redirects to the specified route.
             </summary>
-            <param name="values">An object containing the parameters for a route.</param>
+            <param name="routeName">The name of the route.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(System.Object)">
             <summary>
@@ -558,7 +540,7 @@
             which redirects to the specified route.
             </summary>
             <param name="values">An object containing the parameters for a route.</param>
-            <param name="routeKey">The name of the route</param>
+            <param name="routeName">The name of the route</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(System.String,Radischevo.Wahha.Core.ValueDictionary)">
             <summary>
@@ -566,7 +548,7 @@
             which redirects to the specified route.
             </summary>
             <param name="values">An object containing the parameters for a route.</param>
-            <param name="routeKey">The name of the route</param>
+            <param name="routeName">The name of the route</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Route(System.String,Radischevo.Wahha.Core.ValueDictionary,System.String)">
             <summary>
@@ -574,7 +556,7 @@
             which redirects to the specified route.
             </summary>
             <param name="values">An object containing the parameters for a route.</param>
-            <param name="routeKey">The name of the route</param>
+            <param name="routeName">The name of the route</param>
             <param name="suffix">An optional suffix, which will be added to the resulting URL.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.Controller.View(System.String)">
@@ -728,6 +710,12 @@
         <member name="M:Radischevo.Wahha.Web.Mvc.BlockRenderer.Capture(System.Action)">
             <summary>Renders the action and returns a string.</summary>
             <param name="renderer">The delegate to render.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Configurations.Configuration.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Mvc.Configurations.Configuration"/> class
+            </summary>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.UI.ViewPage.InitHelpers(Radischevo.Wahha.Web.Mvc.ViewContext)">
             <summary>
@@ -1034,6 +1022,11 @@
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_TemplateExpressionLimitations">
             <summary>
               Looks up a localized string similar to Templates can be used only with field and property accessor expressions..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_TypeArgumentCountMismatch">
+            <summary>
+              Looks up a localized string similar to The open model type &apos;{0}&apos; has {1} generic type argument(s), but the open binder type &apos;{2}&apos; has {3} generic type argument(s). The binder type must not be an open generic type or must have the same number of generic arguments as the open model type..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_TypeMustDeriveFromType">
@@ -1548,6 +1541,27 @@
             for use in rendering HTML controls within a view.
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configurations.SettingsSection.Controllers">
+            <summary>
+            Gets the configuration element, 
+            which provides the information required for  
+            controller instantiation
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configurations.SettingsSection.Views">
+            <summary>
+            Gets the configuration element, 
+            which provides the information required for  
+            view discovery and instantiation.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configurations.SettingsSection.Models">
+            <summary>
+            Gets the configuration element, 
+            which provides the information required for  
+            model binding.
+            </summary>
+        </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.HttpRequestExtensions.IsAjaxRequest(Radischevo.Wahha.Web.Abstractions.HttpRequestBase)">
             <summary>
             Gets a value indicating whether the 
@@ -1575,25 +1589,16 @@
             <param name="context">The current 
             <see cref="T:Radischevo.Wahha.Web.Mvc.ControllerContext"/></param>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.SettingsSection.Controllers">
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configurations.ControllerConfigurationElement.FactoryType">
             <summary>
-            Gets the configuration element, 
-            which provides the information required for  
-            controller instantiation
+            Gets the string representation 
+            of the type of controller factory which 
+            will be used by default
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.SettingsSection.Views">
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configurations.ControllerConfigurationElement.Mappings">
             <summary>
-            Gets the configuration element, 
-            which provides the information required for  
-            view discovery and instantiation.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.SettingsSection.Models">
-            <summary>
-            Gets the configuration element, 
-            which provides the information required for  
-            model binding.
+            Gets the predefined controller name-to-type mappings
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.Ajax.ScriptManager.#ctor(Radischevo.Wahha.Web.Mvc.ViewContext)">
@@ -1791,17 +1796,6 @@
             instance for the current request.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.ControllerMappingConfigurationElement.Name">
-            <summary>
-            Gets the name assigned to the specified controller
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Configuration.ControllerMappingConfigurationElement.ControllerType">
-            <summary>
-            Gets the string representation 
-            of the type of controller
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Web.Mvc.ViewResult">
             <summary>
             Class used to render a view using an <see cref="T:Radischevo.Wahha.Web.Mvc.IView"/> 
@@ -1815,6 +1809,17 @@
             used to render the view.
             </summary>
             <param name="context"></param>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configurations.ControllerMappingConfigurationElement.Name">
+            <summary>
+            Gets the name assigned to the specified controller
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Configurations.ControllerMappingConfigurationElement.ControllerType">
+            <summary>
+            Gets the string representation 
+            of the type of controller
+            </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Mvc.FormCollection">
             <summary>

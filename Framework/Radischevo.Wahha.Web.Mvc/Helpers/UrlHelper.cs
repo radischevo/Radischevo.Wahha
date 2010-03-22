@@ -233,6 +233,8 @@ namespace Radischevo.Wahha.Web.Mvc
             Expression<Action<TController>> action)
             where TController : IController
         {
+			Precondition.Require(action, () => Error.ArgumentNull("action"));
+
             MethodCallExpression mexp = (action.Body as MethodCallExpression);
             if (mexp == null)
                 throw Error.ExpressionMustBeAMethodCall("action");

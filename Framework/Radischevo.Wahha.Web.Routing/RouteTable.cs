@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Radischevo.Wahha.Web.Routing.Providers;
+using Radischevo.Wahha.Web.Routing.Configurations;
 
 namespace Radischevo.Wahha.Web.Routing
 {
@@ -37,7 +38,7 @@ namespace Radischevo.Wahha.Web.Routing
             get
             {
                 IRouteTableProvider provider = 
-                    Configuration.Configuration.Instance.Provider;
+                    Configuration.Instance.Provider;
 
                 if (provider == null)
                     return _defaultProvider;

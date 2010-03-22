@@ -403,5 +403,12 @@ namespace Radischevo.Wahha.Web.Mvc
 			return new InvalidOperationException(String.Format(Resources.Resources
 				.Error_HttpPostedFileSetTypeLimitations, type.FullName));
 		}
+
+		internal static Exception TypeArgumentCountMismatch(Type modelType, Type binderType)
+		{
+			return new ArgumentException(String.Format(Resources.Resources.Error_TypeArgumentCountMismatch,
+				modelType.FullName, modelType.GetGenericArguments().Length, 
+				binderType.FullName, binderType.GetGenericArguments().Length));
+		}
 	}
 }

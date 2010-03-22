@@ -41,6 +41,7 @@ namespace Radischevo.Wahha.Web.Mvc
             {
                 response.StatusCode = (int)_statusCode;
                 response.StatusDescription = _message ?? String.Empty;
+				response.TrySkipIisCustomErrors = true;
             }
         }
         #endregion

@@ -250,11 +250,11 @@ public class MainController : Controller
     [AcceptHttpVerbs(HttpMethod.Get)]
     public ActionResult TemplatedItemTest()
     {
-        Radischevo.Wahha.Web.Mvc.Configuration.Configuration
+        Radischevo.Wahha.Web.Mvc.Configurations.Configuration
             .Instance.Models.MetadataProviders
             .Default = new DataAnnotationsMetadataProvider();
 
-		Radischevo.Wahha.Web.Mvc.Configuration.Configuration
+		Radischevo.Wahha.Web.Mvc.Configurations.Configuration
             .Instance.Models.ValidatorProviders
             .Default = new DataAnnotationsValidatorProvider();
 

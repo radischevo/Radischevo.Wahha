@@ -9,6 +9,7 @@ using System.Web;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Web.Routing;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -59,7 +60,7 @@ namespace Radischevo.Wahha.Web.Mvc
             get
             {
                 if (_binders == null)
-                    _binders = Configuration.Configuration.Instance.Models.Binders;
+                    _binders = Configuration.Instance.Models.Binders;
 
                 return _binders;
             }

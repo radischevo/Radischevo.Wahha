@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -12,7 +13,7 @@ using System.Web.UI.WebControls;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Web.Mvc.UI;
-using System.IO;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -29,7 +30,7 @@ namespace Radischevo.Wahha.Web.Mvc
             public ActionCacheItem(string viewName)
             {
                 _action = (html, viewData) => {
-                    ViewEngineResult result = Configuration.Configuration.Instance
+                    ViewEngineResult result = Configuration.Instance
                         .Views.ViewEngines.FindView(html.Context, viewName);                    
 
                     result.View.Render(new ViewContext(html.Context, result.View, 
@@ -201,10 +202,10 @@ namespace Radischevo.Wahha.Web.Mvc
         internal static ModelMetadata GetMetadata(Type containerType, Type modelType, string propertyName)
         {
             return (containerType != null && !String.IsNullOrEmpty(propertyName))
-                ? Configuration.Configuration.Instance.Models.MetadataProviders.GetProvider(containerType)
+                ? Configuration.Instance.Models.MetadataProviders.GetProvider(containerType)
                     .GetMetadata(containerType).Properties.Single(p => String.Equals(p.PropertyName, propertyName, 
                         StringComparison.InvariantCultureIgnoreCase))
-                : Configuration.Configuration.Instance.Models.MetadataProviders.GetProvider(modelType).GetMetadata(modelType);
+                : Configuration.Instance.Models.MetadataProviders.GetProvider(modelType).GetMetadata(modelType);
         }
         #endregion
 
@@ -269,7 +270,7 @@ namespace Radischevo.Wahha.Web.Mvc
                 }
                 else
                 {
-                    ViewEngineResult result = Configuration.Configuration.Instance
+                    ViewEngineResult result = Configuration.Instance
                         .Views.ViewEngines.FindView(Context, fullViewName);
 
                     if (result != null && result.View != null)

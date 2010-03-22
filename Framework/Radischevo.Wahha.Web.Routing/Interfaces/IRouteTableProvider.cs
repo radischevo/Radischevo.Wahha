@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Routing.Configuration;
+using Radischevo.Wahha.Web.Routing.Configurations;
 
 namespace Radischevo.Wahha.Web.Routing
 {

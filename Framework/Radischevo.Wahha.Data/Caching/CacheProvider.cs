@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data.Configurations;
 
 namespace Radischevo.Wahha.Data.Caching
 {
@@ -40,9 +41,7 @@ namespace Radischevo.Wahha.Data.Caching
                     {
                         if (_instance == null)
                         {
-                            Configuration.CacheSettings settings =
-                                Configuration.Configuration.Instance.Caching;
-
+                            CacheSettings settings = Configuration.Instance.Caching;
                             _instance = Create(settings.ProviderType, settings.Settings);
                         }
                     }

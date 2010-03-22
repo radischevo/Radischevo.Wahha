@@ -77,7 +77,7 @@ namespace Radischevo.Wahha.Web.Mvc
             get
             {
                 if (_viewEngines == null)
-                    _viewEngines = Configuration
+                    _viewEngines = Configurations
                         .Configuration.Instance.Views.ViewEngines;
 
                 return _viewEngines;

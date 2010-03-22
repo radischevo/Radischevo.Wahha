@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Mvc.UI;
 using Radischevo.Wahha.Web.Mvc.Validation;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -63,7 +64,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		{
 			get
 			{
-				return Configuration.Configuration.Instance
+				return Configuration.Instance
 					.Models.MetadataProviders;
 			}
 		}
@@ -72,7 +73,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		{
 			get
 			{
-				return Configuration.Configuration.Instance
+				return Configuration.Instance
 					.Models.ValidatorProviders;
 			}
 		}

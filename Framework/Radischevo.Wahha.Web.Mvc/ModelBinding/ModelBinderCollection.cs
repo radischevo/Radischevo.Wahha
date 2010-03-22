@@ -41,7 +41,7 @@ namespace Radischevo.Wahha.Web.Mvc
             get
             {
                 if (_defaultBinder == null)
-                    _defaultBinder = new DefaultModelBinder();
+                    _defaultBinder = new ModelBinderRouter();
 
                 return _defaultBinder;
             }
