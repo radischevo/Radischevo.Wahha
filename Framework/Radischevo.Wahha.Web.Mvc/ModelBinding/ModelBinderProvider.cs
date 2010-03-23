@@ -2,28 +2,28 @@
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-	public abstract class ModelBinderSelector
+	public abstract class ModelBinderProvider
 	{
 		#region Instance Fields
-		private int _priority;
+		private int _order;
 		#endregion
 
 		#region Constructors
-		protected ModelBinderSelector()
+		protected ModelBinderProvider()
 		{
 		}
 		#endregion
 
 		#region Instance Properties
-		public int Priority
+		public int Order
 		{
 			get
 			{
-				return _priority;
+				return _order;
 			}
 			set
 			{
-				_priority = value;
+				_order = value;
 			}
 		}
 		#endregion

@@ -408,6 +408,7 @@ public class MainController : Controller
 
 	public class TestClass
 	{
+		[SkipBinding]
 		public HttpPostedFileBase File
 		{
 			get;

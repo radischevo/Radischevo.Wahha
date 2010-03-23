@@ -2,9 +2,9 @@
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Interface |
-        AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Class,
-        AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Interface | 
+		AttributeTargets.Property | AttributeTargets.Enum | AttributeTargets.Struct | 
+		AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed class SkipBindingAttribute : ModelBinderAttribute
     {
         #region Nested Types

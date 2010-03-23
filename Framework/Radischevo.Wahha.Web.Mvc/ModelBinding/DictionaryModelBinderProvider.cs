@@ -5,10 +5,10 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-	public class DictionaryModelBinderSelector : GenericModelBinderSelector
+	public class DictionaryModelBinderProvider : GenericModelBinderProvider
 	{
 		#region Constructors
-		public DictionaryModelBinderSelector()
+		public DictionaryModelBinderProvider()
 			: base(typeof(IDictionary<,>), typeof(DictionaryModelBinder<,>))
 		{
 		}

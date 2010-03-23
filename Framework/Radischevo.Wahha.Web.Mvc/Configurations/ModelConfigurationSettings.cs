@@ -6,7 +6,6 @@ using System.Web;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Web.Mvc.Validation;
-using Radischevo.Wahha.Web.Text;
 
 namespace Radischevo.Wahha.Web.Mvc.Configurations
 {
@@ -25,14 +24,8 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             _metadataProviders = new ModelMetadataProviderCollection();
             _validatorProviders = new ModelValidatorProviderCollection();
 
-            _binders.Add(typeof(HttpPostedFileBase), new HttpPostedFileBinder());
-            _binders.Add(typeof(HttpPostedFileBase[]), new HttpPostedFileCollectionBinder());
-            _binders.Add(typeof(IEnumerable<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
-            _binders.Add(typeof(IList<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
-            _binders.Add(typeof(List<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
-            _binders.Add(typeof(ICollection<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
-            _binders.Add(typeof(Collection<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
-            _binders.Add(typeof(FormCollection), new FormCollectionBinder());
+			InitDefaultBinders();
+			InitDefaultBinderProviders();
         }
         #endregion
 
@@ -98,6 +91,37 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         #endregion
 
         #region Instance Methods
+		private void InitDefaultBinders()
+		{
+			_binders.Add(typeof(HttpPostedFileBase), new HttpPostedFileBinder());
+			_binders.Add(typeof(HttpPostedFileBase[]), new HttpPostedFileCollectionBinder());
+			_binders.Add(typeof(IEnumerable<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
+			_binders.Add(typeof(IList<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
+			_binders.Add(typeof(List<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
+			_binders.Add(typeof(ICollection<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
+			_binders.Add(typeof(Collection<HttpPostedFileBase>), new HttpPostedFileCollectionBinder());
+			_binders.Add(typeof(FormCollection), new FormCollectionBinder());
+		}
+
+		private void InitDefaultBinderProviders()
+		{
+			_binders.Add(new SimpleTypeModelBinderProvider() {
+				Order = 16
+			});
+			_binders.Add(new ArrayModelBinderProivider() {
+				Order = 17
+			});
+			_binders.Add(new DictionaryModelBinderProvider() {
+				Order = 18
+			});
+			_binders.Add(new CollectionModelBinderProvider() {
+				Order = 19
+			});
+			_binders.Add(new EnumerableModelBinderProvider() {
+				Order = 20
+			});
+		}
+
         internal void Init(ModelConfigurationElementCollection element)
         {
             Precondition.Require(element, () => Error.ArgumentNull("element"));

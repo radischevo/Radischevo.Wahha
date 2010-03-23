@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 using Radischevo.Wahha.Core;
 
@@ -98,11 +99,17 @@ namespace Radischevo.Wahha.Web.Mvc
 				if (String.IsNullOrEmpty(formKey))
 					continue;
 
+				string keyField = CreateSubMemberName(context.ModelName, "key");
+
 				BindingContext keyContext = new BindingContext(context, keyType,
-					"key", ParameterSource.Form, CreateKeyBindingData("key", formKey),
+					keyField, ParameterSource.Form, CreateKeyBindingData(keyField, formKey),
 					null, context.Errors);
 
-				TKey key = Converter.ChangeType<TKey>(KeyBinder.Bind(keyContext));
+				object boundKey = KeyBinder.Bind(keyContext);
+				if (boundKey == null)
+					continue;
+
+				TKey key = Converter.ChangeType<TKey>(boundKey);
 				if (!valueType.IsSimple() && convertedValues.ContainsKey(key))
 					continue;
 

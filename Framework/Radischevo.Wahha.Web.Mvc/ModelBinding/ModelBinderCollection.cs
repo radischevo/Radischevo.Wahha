@@ -10,38 +10,25 @@ namespace Radischevo.Wahha.Web.Mvc
     {
         #region Instance Fields
         private IModelBinder _defaultBinder;
-        private Dictionary<Type, IModelBinder> _collection;
+        private Dictionary<Type, IModelBinder> _mappings;
+		private List<ModelBinderProvider> _providers;
         #endregion
 
         #region Constructors
         public ModelBinderCollection()
         {
-            _collection = new Dictionary<Type, IModelBinder>();
+            _mappings = new Dictionary<Type, IModelBinder>();
+			_providers = new List<ModelBinderProvider>();
         }
         #endregion
 
         #region Instance Properties
-        public IModelBinder this[Type modelType]
-        {
-            get
-            {
-                if (_collection.ContainsKey(modelType))
-                    return _collection[modelType];
-
-                return null;
-            }
-            set
-            {
-                _collection[modelType] = value;
-            }
-        }
-
         public IModelBinder DefaultBinder
         {
             get
             {
                 if (_defaultBinder == null)
-                    _defaultBinder = new ModelBinderRouter();
+                    _defaultBinder = new ComplexTypeModelBinder();
 
                 return _defaultBinder;
             }
@@ -53,34 +40,56 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
-		private bool TryGetBinder(Type modelType, out IModelBinder binder)
+		private IModelBinder GetAttributedBinder(Type modelType)
 		{
-			binder = null;
-			do
-			{
-				if (_collection.TryGetValue(modelType, out binder))
-					return true;
+			ModelBinderAttribute[] attrs = modelType
+				.GetCustomAttributes<ModelBinderAttribute>(true).ToArray();
 
-				modelType = modelType.BaseType;
+			switch (attrs.Length)
+			{
+				case 0:
+					return null;
+				case 1:
+					return attrs[0].GetBinder();
+				default:
+					throw Error.MultipleModelBinderAttributes(modelType);
 			}
-			while(modelType != null);
-			return false;
+		}
+
+		private IModelBinder GetMappedBinder(Type modelType)
+		{
+			IModelBinder binder;
+			if (_mappings.TryGetValue(modelType, out binder))
+				return binder;
+
+			return null;
+		}
+
+		private IModelBinder GetProvidedBinder(Type modelType)
+		{
+			return _providers.OrderBy(s => s.Order)
+				.Select(s => s.GetBinder(modelType))
+				.Where(b => b != null).FirstOrDefault();
 		}
 
 		public void Add(Type modelType, IModelBinder binder)
         {
             Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
-            _collection.Add(modelType, binder);
+			Precondition.Require(binder, () => Error.ArgumentNull("binder"));
+
+            _mappings.Add(modelType, binder);
         }
+
+		public void Add(ModelBinderProvider provider)
+		{
+			Precondition.Require(provider, () => Error.ArgumentNull("provider"));
+			_providers.Add(provider);
+		}
 
         public void Clear()
         {
-            _collection.Clear();
-        }
-
-        public bool Contains(Type type)
-        {
-            return _collection.ContainsKey(type);
+            _mappings.Clear();
+			_providers.Clear();
         }
 
         public IModelBinder GetBinder(Type modelType)
@@ -92,26 +101,22 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
 
-			IModelBinder binder;
-			if (TryGetBinder(modelType, out binder))
-                return binder ?? DefaultBinder;
+			IModelBinder binder = GetAttributedBinder(modelType) 
+				?? GetMappedBinder(modelType) 
+				?? GetProvidedBinder(modelType);
 
-            ModelBinderAttribute[] attrs = modelType.GetCustomAttributes<ModelBinderAttribute>(true).ToArray();
-            switch (attrs.Length)
-            {
-                case 0:
-                    return (fallbackToDefault) ? DefaultBinder : null;
-                case 1:
-                    return attrs[0].GetBinder();
-                default:
-                    throw Error.MultipleModelBinderAttributes(modelType);
-            }
+			return binder ?? ((fallbackToDefault) ? DefaultBinder : null);
         }
 
         public void Remove(Type modelType)
         {
-            _collection.Remove(modelType);
+            _mappings.Remove(modelType);
         }
+
+		public void Remove(ModelBinderProvider provider)
+		{
+			_providers.Remove(provider);
+		}
         #endregion
     }
 }

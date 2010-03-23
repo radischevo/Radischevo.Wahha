@@ -4,10 +4,10 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-	public class SimpleTypeModelBinderSelector : ModelBinderSelector
+	public class SimpleTypeModelBinderProvider : ModelBinderProvider
 	{
 		#region Constructors
-		public SimpleTypeModelBinderSelector()
+		public SimpleTypeModelBinderProvider()
 			: base()
 		{
 		}
@@ -16,6 +16,8 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Instance Methods
 		public override IModelBinder GetBinder(Type modelType)
 		{
+			Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
+
 			if (modelType.IsSimple() || modelType.IsEnum)
 				return new SimpleTypeModelBinder();
 

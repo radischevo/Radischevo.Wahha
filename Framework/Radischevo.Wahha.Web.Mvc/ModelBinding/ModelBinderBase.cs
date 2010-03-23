@@ -116,15 +116,14 @@ namespace Radischevo.Wahha.Web.Mvc
 		protected virtual bool VerifyValueUsability(BindingContext context, string elementKey, 
 			Type elementType, object value)
 		{
-			if (value == null && !elementType.IsNullable() && !context.Errors.Any(
-				k => k.Member.Equals(elementKey, StringComparison.InvariantCultureIgnoreCase)))
+			if (value == null && !elementType.IsNullable() && context.Errors.IsValid(elementKey))
 			{
 				string message = GetValueRequiredResource(context);
 				context.Errors.Add(elementKey, new ValidationError(message, value, null));
 
 				return false;
 			}
-			return true;
+			return context.Errors.IsValid(elementKey);
 		}
 
 		public object Bind(BindingContext context)

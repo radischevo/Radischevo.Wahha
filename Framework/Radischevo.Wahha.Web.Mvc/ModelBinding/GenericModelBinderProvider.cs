@@ -4,7 +4,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-	public abstract class GenericModelBinderSelector : ModelBinderSelector
+	public abstract class GenericModelBinderProvider : ModelBinderProvider
 	{
 		#region Instance Fields
 		private Type _type;
@@ -12,7 +12,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		#endregion
 
 		#region Constructors
-		protected GenericModelBinderSelector(Type type, IModelBinder binder) 
+		protected GenericModelBinderProvider(Type type, IModelBinder binder) 
 		{
 			Precondition.Require(type, () => Error.ArgumentNull("type"));
 			Precondition.Require(binder, () => Error.ArgumentNull("binder"));
@@ -23,7 +23,7 @@ namespace Radischevo.Wahha.Web.Mvc
             _factory = (args) => binder;
         }
 
-        protected GenericModelBinderSelector(Type type, Type binderType) 
+        protected GenericModelBinderProvider(Type type, Type binderType) 
 		{
 			Precondition.Require(type, () => Error.ArgumentNull("type"));
 			Precondition.Require(binderType, () => Error.ArgumentNull("binderType"));
@@ -38,7 +38,7 @@ namespace Radischevo.Wahha.Web.Mvc
             };
         }
 
-		protected GenericModelBinderSelector(Type type, Func<Type[], IModelBinder> factory)
+		protected GenericModelBinderProvider(Type type, Func<Type[], IModelBinder> factory)
 		{
 			Precondition.Require(type, () => Error.ArgumentNull("type"));
 			Precondition.Require(factory, () => Error.ArgumentNull("factory"));
@@ -92,6 +92,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Instance Methods
 		public override IModelBinder GetBinder(Type modelType)
 		{
+			Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
 			Type[] args = null;
 
 			if (Type.IsInterface)

@@ -51,7 +51,7 @@ namespace Radischevo.Wahha.Web.Mvc
             if (!filter(property.Name))
                 return false;
 
-            return true;
+			return !property.Attributes.OfType<SkipBindingAttribute>().Any();
         }
         #endregion
 
@@ -163,13 +163,10 @@ namespace Radischevo.Wahha.Web.Mvc
 			ModelValidationContext validation = new ModelValidationContext(context, 
 				context.Metadata, context.Model, value);
 
-            bool isUsable = true;
             foreach (ModelValidationResult result in propertyValidator.Validate(validation))
-            {
                 context.Errors.Add(propertyKey, new ValidationError(result.Message, value, null));
-                isUsable = false;
-            }
-            return isUsable && VerifyValueUsability(context, propertyKey, property.PropertyType, value);
+            
+            return VerifyValueUsability(context, propertyKey, property.PropertyType, value);
         }
 
         protected void SetProperty(BindingContext context, PropertyDescriptor property, object value)
