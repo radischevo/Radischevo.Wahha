@@ -597,9 +597,9 @@ namespace Radischevo.Wahha.Web.Text
                     Write('\u201e');
                     _quotes.Push('\u201e');
                 }
-                else // первая открывающаяся
+                else // первая открывающая
                 {
-                    Write('\u00ab');
+					Write('\u00ab');
                     _quotes.Push('\u00ab');
                 }
             }
