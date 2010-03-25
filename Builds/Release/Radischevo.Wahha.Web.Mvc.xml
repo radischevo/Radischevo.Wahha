@@ -844,6 +844,11 @@
               Looks up a localized string similar to The view found at &apos;{0}&apos; could not be created..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CouldNotDeserializeModelState">
+            <summary>
+              Looks up a localized string similar to Deserialization failed. Verify that the data is being deserialized using the same SerializationMode with which it was serialized. Otherwise see the inner exception..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CouldNotFindAsyncCompletionMethod">
             <summary>
               Looks up a localized string similar to Could not locate the completion action method named &apos;{0}&apos; on controller type {1}..
@@ -914,6 +919,11 @@
               Looks up a localized string similar to The expression compiler was unable to evaluate the indexer expression &apos;{0}&apos; because it references the model parameter &apos;{1}&apos; which is unavailable..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidModelStateSerializationMode">
+            <summary>
+              Looks up a localized string similar to The provided SerializationMode &apos;{0}&apos; is invalid..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_InvalidMvcAction">
             <summary>
               Looks up a localized string similar to A public action method &apos;{0}&apos; could not be found on controller &apos;{1}&apos;..
@@ -967,6 +977,11 @@
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MultipleModelBinderAttributes_Parameter">
             <summary>
               Looks up a localized string similar to The parameter &apos;{0}&apos; contains multiple attributes inheriting from ModelBinderAttribute..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MustOverrideGetBinderToUseEmptyType">
+            <summary>
+              Looks up a localized string similar to The GetBinder method on the ModelBinderAttribute class must be overridden if the binder type is not initialized in the constructor..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MvcActionCannotBeGeneric">

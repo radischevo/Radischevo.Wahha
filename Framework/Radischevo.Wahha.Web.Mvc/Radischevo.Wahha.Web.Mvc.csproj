@@ -72,6 +72,7 @@
     <Compile Include="Async\ReflectedAsyncActionDescriptor.cs" />
     <Compile Include="Async\ReflectedAsyncControllerDescriptor.cs" />
     <Compile Include="Attributes\ActionFilterAttribute.cs" />
+    <Compile Include="Attributes\DeserializeAttribute.cs" />
     <Compile Include="Attributes\RequireHttpsAttribute.cs" />
     <Compile Include="Attributes\ResultCacheAttribute.cs" />
     <Compile Include="Engine\ActionDescriptorCreator.cs" />
@@ -125,6 +126,9 @@
     <Compile Include="Engine\ActionFilterInfo.cs" />
     <Compile Include="Engine\ActionSelector.cs" />
     <Compile Include="Engine\AssemblyResourceViewEngine.cs" />
+    <Compile Include="Helpers\ModelStateSerializer.cs" />
+    <Compile Include="Helpers\SerializationExtensions.cs" />
+    <Compile Include="Helpers\SerializationMode.cs" />
     <Compile Include="ModelBinding\ArrayModelBinder.cs" />
     <Compile Include="ModelBinding\ArrayModelBinderProvider.cs" />
     <Compile Include="ModelBinding\EnumerableModelBinderProvider.cs" />

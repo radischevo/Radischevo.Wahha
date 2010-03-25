@@ -10,6 +10,7 @@
 <asp:Content ContentPlaceHolderID="main" runat="server">
 <form action="/wahha-test/template" method="post" id="default">    
     <%= Html.Templates.Editor(model => model, null, "item") %>
+    <%= Html.Serialize("state", Model) %>
     <input type="submit" value="Save" />
     <% Validation.Messages("item-title", errors => { %><ul class="error"><% foreach(var error in errors) { %><li><%= error.Message %></li><% } %></ul><% }); %>
 </form>

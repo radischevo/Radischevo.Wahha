@@ -59,7 +59,7 @@ public class MazaAttribute : ActionFilterAttribute
 	}
 }
 
-[DisplayColumn("ID")]
+[DisplayColumn("ID"), Serializable]
 public class TemplatedItem : IDataErrorInfo
 {
 	private List<int> _indices = new List<int>();
@@ -291,7 +291,7 @@ public class MainController : Controller
     }
 
     [AcceptHttpVerbs(HttpMethod.Post)]
-    public ActionResult TemplatedItemTest([Bind(Name="item-id")]int id)
+    public ActionResult TemplatedItemTest([Bind(Name="item-id")]int id, [Deserialize]TemplatedItem state)
     {
 		TemplatedItem item = new TemplatedItem();
 		item = BindModel(item, "item");

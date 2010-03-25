@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Linq.Expressions;
 using System.Net;
 using System.Web;
+using System.Runtime.Serialization;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -409,6 +410,23 @@ namespace Radischevo.Wahha.Web.Mvc
 			return new ArgumentException(String.Format(Resources.Resources.Error_TypeArgumentCountMismatch,
 				modelType.FullName, modelType.GetGenericArguments().Length, 
 				binderType.FullName, binderType.GetGenericArguments().Length));
+		}
+
+		internal static Exception CouldNotDeserializeModelState(Exception inner)
+		{
+			return new SerializationException(Resources.Resources
+				.Error_CouldNotDeserializeModelState, inner);
+		}
+
+		internal static Exception InvalidModelStateSerializationMode(SerializationMode mode)
+		{
+			return new ArgumentOutOfRangeException("mode", String.Format(
+				Resources.Resources.Error_InvalidModelStateSerializationMode, mode));
+		}
+
+		internal static Exception MustOverrideGetBinderToUseEmptyType()
+		{
+			return new InvalidOperationException(Resources.Resources.Error_MustOverrideGetBinderToUseEmptyType);
 		}
 	}
 }

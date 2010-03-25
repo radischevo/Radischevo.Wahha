@@ -178,6 +178,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deserialization failed. Verify that the data is being deserialized using the same SerializationMode with which it was serialized. Otherwise see the inner exception..
+        /// </summary>
+        internal static string Error_CouldNotDeserializeModelState {
+            get {
+                return ResourceManager.GetString("Error_CouldNotDeserializeModelState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not locate the completion action method named &apos;{0}&apos; on controller type {1}..
         /// </summary>
         internal static string Error_CouldNotFindAsyncCompletionMethod {
@@ -304,6 +313,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The provided SerializationMode &apos;{0}&apos; is invalid..
+        /// </summary>
+        internal static string Error_InvalidModelStateSerializationMode {
+            get {
+                return ResourceManager.GetString("Error_InvalidModelStateSerializationMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A public action method &apos;{0}&apos; could not be found on controller &apos;{1}&apos;..
         /// </summary>
         internal static string Error_InvalidMvcAction {
@@ -399,6 +417,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         internal static string Error_MultipleModelBinderAttributes_Parameter {
             get {
                 return ResourceManager.GetString("Error_MultipleModelBinderAttributes_Parameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The GetBinder method on the ModelBinderAttribute class must be overridden if the binder type is not initialized in the constructor..
+        /// </summary>
+        internal static string Error_MustOverrideGetBinderToUseEmptyType {
+            get {
+                return ResourceManager.GetString("Error_MustOverrideGetBinderToUseEmptyType", resourceCulture);
             }
         }
         

@@ -321,4 +321,13 @@
   <data name="Error_TypeArgumentCountMismatch" xml:space="preserve">
     <value>The open model type '{0}' has {1} generic type argument(s), but the open binder type '{2}' has {3} generic type argument(s). The binder type must not be an open generic type or must have the same number of generic arguments as the open model type.</value>
   </data>
+  <data name="Error_CouldNotDeserializeModelState" xml:space="preserve">
+    <value>Deserialization failed. Verify that the data is being deserialized using the same SerializationMode with which it was serialized. Otherwise see the inner exception.</value>
+  </data>
+  <data name="Error_InvalidModelStateSerializationMode" xml:space="preserve">
+    <value>The provided SerializationMode '{0}' is invalid.</value>
+  </data>
+  <data name="Error_MustOverrideGetBinderToUseEmptyType" xml:space="preserve">
+    <value>The GetBinder method on the ModelBinderAttribute class must be overridden if the binder type is not initialized in the constructor.</value>
+  </data>
 </root>

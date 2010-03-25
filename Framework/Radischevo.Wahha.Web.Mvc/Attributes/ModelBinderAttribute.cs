@@ -14,6 +14,10 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
         
         #region Constructors
+		protected ModelBinderAttribute()
+		{
+		}
+
         public ModelBinderAttribute(Type binderType)
         {
             Precondition.Require(binderType, () => Error.ArgumentNull("binderType"));
@@ -34,6 +38,9 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public virtual IModelBinder GetBinder()
         {
+			if (_binderType == null)
+				throw Error.MustOverrideGetBinderToUseEmptyType();
+
             if (_binderType.GetInterface(typeof(IModelBinder).Name) == null)
                 throw Error.IncompatibleModelBinderType(_binderType);
 
