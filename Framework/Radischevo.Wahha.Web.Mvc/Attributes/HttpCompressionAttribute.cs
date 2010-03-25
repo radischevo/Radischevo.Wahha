@@ -82,6 +82,10 @@ namespace Radischevo.Wahha.Web.Mvc
 			{
 				context.Response.Headers[CONTENT_ENCODING_HEADER] = String.Empty;
 			}
+			catch (HttpException)
+			{
+				// we get it if we are inside a child method.
+			}
 			catch (PlatformNotSupportedException)
 			{
 				// we get it if the application is executed under IIS < 7.
