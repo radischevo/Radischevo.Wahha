@@ -562,6 +562,11 @@
               Looks up a localized string similar to The offset in the array should be less than its length..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_OperationTimeout">
+            <summary>
+              Looks up a localized string similar to The operation has timed out after {0}..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_ParameterMustBeGreaterThan">
             <summary>
               Looks up a localized string similar to The value of the &apos;{0}&apos; parameter should be greater than {1}..

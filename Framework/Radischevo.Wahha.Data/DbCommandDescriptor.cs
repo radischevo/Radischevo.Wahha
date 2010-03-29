@@ -36,6 +36,21 @@ namespace Radischevo.Wahha.Data
             _parameters = new DbParameterCollection();
         }
 
+		public DbCommandDescriptor(string text, IValueSet parameters)
+			: this(text, CommandType.Text, parameters)
+		{
+		}
+
+		public DbCommandDescriptor(string text, object parameters)
+			: this(text, CommandType.Text, parameters)
+		{
+		}
+
+		public DbCommandDescriptor(string text, object[] parameters)
+			: this(text, CommandType.Text, parameters)
+		{
+		}
+
         public DbCommandDescriptor(string text, 
             CommandType type, IValueSet parameters)
             : this(text, type)
