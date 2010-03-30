@@ -85,7 +85,8 @@ namespace Radischevo.Wahha.Data
             if (Configuration.Instance.ConnectionStrings.Count < 1)
                 throw Error.ConnectionStringNotConfigured();
 
-            return Resolve(providerName, Configuration.Instance.ConnectionStrings[0]);
+            return Resolve(providerName, Configuration.Instance
+				.ConnectionStrings[0], useTransaction);
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace Radischevo.Wahha.Data
             if (Configuration.Instance.ConnectionStrings.Count < 1)
                 throw Error.ConnectionStringNotConfigured();
 
-            return Create(Configuration.Instance.ConnectionStrings[0], false);
+            return Create(Configuration.Instance.ConnectionStrings[0], useTransaction);
         }
 
         /// <summary>

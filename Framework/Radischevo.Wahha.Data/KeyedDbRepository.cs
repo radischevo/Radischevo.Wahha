@@ -12,7 +12,7 @@ namespace Radischevo.Wahha.Data
 		where TEntity : class
 	{
 		#region Nested Types
-		private class CachedDbEntry<TEntity>
+		private class CachedDbEntry
 		{
 			#region Instance Fields
 			private TEntity _entity;
@@ -117,8 +117,8 @@ namespace Radischevo.Wahha.Data
 			{
 				TKey key = ExtractKey(values);
 
-				CachedDbEntry<TEntity> instance = Cache.Get(CreateCacheKey(key),
-					() => new CachedDbEntry<TEntity>(_materializer.Materialize(values), isComplete),
+				CachedDbEntry instance = Cache.Get(CreateCacheKey(key),
+					() => new CachedDbEntry(_materializer.Materialize(values), isComplete),
 					DateTime.Now.Add(ExpirationTimeout), Tags.ToArray());
 
 				if (isComplete && !instance.Complete)

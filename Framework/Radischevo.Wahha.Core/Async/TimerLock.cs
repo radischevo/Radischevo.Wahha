@@ -51,7 +51,7 @@ namespace Radischevo.Wahha.Core.Async
 			if (!Monitor.TryEnter(obj, timeout))
 			{
 				#if DEBUG
-				GC.SuppressFinalize(tl._leakDetector);
+				GC.SuppressFinalize(timedLock._leakDetector);
 				#endif
 				throw Error.OperationTimeout(timeout);
 			}
