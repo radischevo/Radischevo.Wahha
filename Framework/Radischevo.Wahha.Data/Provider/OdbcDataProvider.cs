@@ -108,8 +108,6 @@ namespace Radischevo.Wahha.Data.Provider
 		{
 			if (_transaction != null)
 				_transaction.Commit();
-
-			_transaction = null;
 		}
 
 		/// <summary>
@@ -121,8 +119,6 @@ namespace Radischevo.Wahha.Data.Provider
 		{
 			if (_transaction != null)
 				_transaction.Rollback();
-
-			_transaction = null;
 		}
 
 		/// <summary>
@@ -147,7 +143,7 @@ namespace Radischevo.Wahha.Data.Provider
 			{
 				_connection.Open();
 
-				if (_useTransaction)
+				if (_useTransaction && _transaction == null)
 					_transaction = _connection.BeginTransaction();
 			}
 		}

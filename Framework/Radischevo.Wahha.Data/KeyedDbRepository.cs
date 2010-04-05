@@ -194,7 +194,9 @@ namespace Radischevo.Wahha.Data
 			if (_dataProvider != null)
 				_dataProvider.Dispose();
 
-			_dataProvider = null;
+			IDisposable dm = (_materializer as IDisposable);
+			if (dm != null)
+				dm.Dispose();
 		}
 		#endregion
 	}

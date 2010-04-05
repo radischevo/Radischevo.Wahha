@@ -107,9 +107,7 @@ namespace Radischevo.Wahha.Data.Provider
         public virtual void Commit()
         {
 			if (_transaction != null)
-				_transaction.Commit();
-
-			_transaction = null;			
+				_transaction.Commit();	
         }
 
         /// <summary>
@@ -121,8 +119,6 @@ namespace Radischevo.Wahha.Data.Provider
         {
 			if (_transaction != null)
 				_transaction.Rollback();
-
-			_transaction = null;
         }
 
         /// <summary>
@@ -160,7 +156,6 @@ namespace Radischevo.Wahha.Data.Provider
             if (_transaction == null)
                 return;
 
-            Open();
             _transaction.Save(savePointName);
         }
 
@@ -175,7 +170,7 @@ namespace Radischevo.Wahha.Data.Provider
             {
                 _connection.Open();
 
-                if (_useTransaction)
+                if (_useTransaction && _transaction == null)
                     _transaction = _connection.BeginTransaction();
             }
         }
@@ -262,11 +257,11 @@ namespace Radischevo.Wahha.Data.Provider
         protected virtual void Dispose(bool disposing)
         {
             Close();
-            
-            if(_transaction != null)
-                _transaction.Dispose();
 
-            _connection.Dispose();
+			if (_transaction != null)
+				_transaction.Dispose();
+
+			_connection.Dispose();
         }
         #endregion
     }

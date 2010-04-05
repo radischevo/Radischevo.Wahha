@@ -159,11 +159,10 @@ namespace Radischevo.Wahha.Data
             {
                 _reader.Close();
                 _reader.Dispose();
+
+				_reader = null;
+				_disposed = true;
             }
-            _reader = null;
-            _lookup = null;
-            _accessedFields = null;
-            _disposed = true;
         }
         #endregion
 
