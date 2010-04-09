@@ -120,8 +120,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			// иначе частичная инициализация объекта не удастся.
 			object value = property.PropertyType.CreateInstance();
 
-			if (context.Data.Any(k => k.Key.StartsWith(propertyKey,
-				StringComparison.InvariantCultureIgnoreCase)))
+			if (context.Contains(propertyKey))
 			{
 				ModelMetadata propertyMetadata = context.Metadata.GetPropertyMetadata(property.Name);
 				ModelValidator propertyValidator = context.Validator.GetPropertyValidator(property.Name);

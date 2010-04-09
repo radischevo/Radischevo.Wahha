@@ -55,8 +55,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			if(String.IsNullOrEmpty(context.ModelName))
 				return (context.Data.Count > 0);
 
-			return context.Data.Any(k => k.Key.StartsWith(context.ModelName, 
-				StringComparison.InvariantCultureIgnoreCase));
+			return context.Contains(context.ModelName);
 		}
 
 		protected static string CreateSubMemberName(string prefix, string propertyName)

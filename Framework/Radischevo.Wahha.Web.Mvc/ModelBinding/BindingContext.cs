@@ -243,6 +243,25 @@ namespace Radischevo.Wahha.Web.Mvc
             return Data.TryGetValue(_modelName, out value);
         }
 
+		public virtual bool Contains(string prefix)
+		{
+			foreach (string key in Data.Keys)
+			{
+				if (key != null)
+				{
+					if (prefix.Length == 0)
+						return true;
+
+					if (key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+					{
+						if (key.Length == prefix.Length || key[prefix.Length] == '-')
+							return true;
+					}
+				}
+			}
+			return false;
+		}
+
         public virtual bool AllowMemberUpdate(string memberName)
         {
             return (_updateFilter == null || _updateFilter(memberName));
