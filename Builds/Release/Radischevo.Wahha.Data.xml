@@ -1447,6 +1447,29 @@
             <param name="commandText">The text of the query to execute.</param>
             <param name="parameters">The list of command parameters.</param>
         </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProviderExtensions.Execute``1(Radischevo.Wahha.Data.IDbDataProvider,System.String,Radischevo.Wahha.Data.IDbColumnMapper{``0},``0)">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbCommand"/> instance, which is 
+            appropriate for the current provider, using the specified 
+            <paramref name="commandText"/> and <paramref name="parameters"/> 
+            and returns a <see cref="T:Radischevo.Wahha.Data.DbCommandResult"/> wrapper.
+            </summary>
+            <param name="commandText">The text of the query to execute.</param>
+            <param name="mapper">The object-to-column mapper for the specified object.</param>
+            <param name="entity">The object storing the data to be converted.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbDataProviderExtensions.Execute``1(Radischevo.Wahha.Data.IDbDataProvider,System.String,Radischevo.Wahha.Data.IDbColumnMapper{``0},``0,Radischevo.Wahha.Data.DbQueryType)">
+            <summary>
+            Creates a <see cref="T:System.Data.IDbCommand"/> instance, which is 
+            appropriate for the current provider, using the specified 
+            <paramref name="commandText"/> and <paramref name="parameters"/> 
+            and returns a <see cref="T:Radischevo.Wahha.Data.DbCommandResult"/> wrapper.
+            </summary>
+            <param name="commandText">The text of the query to execute.</param>
+            <param name="mapper">The object-to-column mapper for the specified object.</param>
+            <param name="entity">The object storing the data to be converted.</param>
+            <param name="type">The type of the database query to create mapping for.</param>
+        </member>
         <member name="M:Radischevo.Wahha.Data.DbDataProviderExtensions.Execute(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.DbCommandDescriptor)">
             <summary>
             Creates a <see cref="T:Radischevo.Wahha.Data.DbCommandResult"/> wrapper for 

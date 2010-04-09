@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Radischevo.Wahha.Core
 {
+	[Serializable]
     public class Interval<T>
     {
         #region Nested Types
@@ -46,6 +48,12 @@ namespace Radischevo.Wahha.Core
         {
             _from = from;
             _to = to;
+        }
+
+		protected Interval(SerializationInfo info, StreamingContext context)
+        {
+            _from = (T)info.GetValue("from", typeof(T));
+			_to = (T)info.GetValue("to", typeof(T));
         }
         #endregion
 
@@ -108,6 +116,12 @@ namespace Radischevo.Wahha.Core
 
             _from = (isRightOrder) ? left : right;
             _to = (isRightOrder) ? right : left;
+        }
+
+		protected virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("from", _from, typeof(T));
+			info.AddValue("to", _to, typeof(T));
         }
 
         protected virtual bool Equals(Interval<T> other)
