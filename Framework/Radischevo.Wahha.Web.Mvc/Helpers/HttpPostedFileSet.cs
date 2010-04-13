@@ -54,12 +54,8 @@ namespace Radischevo.Wahha.Web.Mvc
 		#endregion
 
 		#region Instance Methods
-		public TValue GetValue<TValue>(string key)
-		{
-			return GetValue<TValue>(key, default(TValue));
-		}
-
-		public TValue GetValue<TValue>(string key, TValue defaultValue)
+		public TValue GetValue<TValue>(string key, TValue defaultValue, 
+			IFormatProvider provider)
 		{
 			Type type = typeof(TValue);
 

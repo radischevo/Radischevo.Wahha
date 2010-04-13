@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Data.Configurations;
@@ -78,7 +79,8 @@ namespace Radischevo.Wahha.Data.Caching
             ICacheProvider provider = (ICacheProvider)Activator.CreateInstance(providerType);
             provider.Init(settings);
 
-            return new CacheProvider(provider, settings.GetValue<int>("timeout", _timeout));
+            return new CacheProvider(provider, settings.GetValue<int>("timeout", 
+				_timeout, CultureInfo.InvariantCulture));
         }
 
         public static CacheProvider Create<TProvider>(IValueSet settings)
@@ -87,7 +89,8 @@ namespace Radischevo.Wahha.Data.Caching
             ICacheProvider provider = new TProvider();
             provider.Init(settings);
 
-            return new CacheProvider(provider, settings.GetValue<int>("timeout", _timeout));
+			return new CacheProvider(provider, settings.GetValue<int>("timeout", 
+				_timeout, CultureInfo.InvariantCulture));
         }
         #endregion
 

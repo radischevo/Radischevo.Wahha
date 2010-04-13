@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -116,18 +117,14 @@ namespace Radischevo.Wahha.Core
 			return _cache.GetAccessor(memberName);
 		}
 
-        public TValue GetValue<TValue>(string memberName)
-        {
-			return GetValue<TValue>(memberName, default(TValue));
-        }
-
-		public virtual TValue GetValue<TValue>(string memberName, TValue defaultValue)
+		public virtual TValue GetValue<TValue>(string memberName, 
+			TValue defaultValue, IFormatProvider provider)
 		{
 			IDynamicAccessor accessor = GetAccessor(memberName);
 			if (accessor == null)
 				return defaultValue;
 
-			return Converter.ChangeType<TValue>(accessor.GetValue(_instance));
+			return Converter.ChangeType<TValue>(accessor.GetValue(_instance), provider);
 		}
 
         public virtual void SetValue<TValue>(string memberName, TValue value)

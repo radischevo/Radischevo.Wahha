@@ -445,35 +445,27 @@ namespace Radischevo.Wahha.Data
             return null;
         }
 
-        /// <summary>
-        /// Gets the strongly-typed value of the 
-        /// specified column.
-        /// </summary>
-        /// <typeparam name="TValue">A type of column value.</typeparam>
-        /// <param name="index">The zero-based column ordinal.</param>
-        public TValue GetValue<TValue>(int ordinal)
-        {
-            return GetValue<TValue>(ordinal, default(TValue));
-        }
-
-        /// <summary>
-        /// Gets the strongly-typed value of the 
-        /// specified column.
-        /// </summary>
-        /// <typeparam name="TValue">A type of column value.</typeparam>
-        /// <param name="index">The zero-based column ordinal.</param>
-        /// <param name="defaultValue">The default value of the variable.</param>
-        public TValue GetValue<TValue>(int ordinal, TValue defaultValue)
-        {
-            string name;
-            if (_lookup.TryGetName(ordinal, out name))
-            {
-                MarkAccessedField(name);
-                return Converter.ChangeType<TValue>(
-                    _dataRecord.GetValue(ordinal), defaultValue);
-            }
-            return defaultValue;
-        }
+		/// <summary>
+		/// Gets the strongly-typed value of the 
+		/// specified column.
+		/// </summary>
+		/// <typeparam name="TValue">A type of column value.</typeparam>
+		/// <param name="index">The zero-based column ordinal.</param>
+		/// <param name="defaultValue">The default value of the variable.</param>
+		/// <param name="provider">An <see cref="IFormatProvider" /> interface implementation that 
+		/// supplies culture-specific formatting information.</param>
+		public TValue GetValue<TValue>(int ordinal, TValue defaultValue,
+			IFormatProvider provider)
+		{
+			string name;
+			if (_lookup.TryGetName(ordinal, out name))
+			{
+				MarkAccessedField(name);
+				return Converter.ChangeType<TValue>(_dataRecord.GetValue(ordinal),
+					defaultValue, provider);
+			}
+			return defaultValue;
+		}
 
         /// <summary>
         /// Gets all the attribute fields in the collection 
@@ -712,35 +704,27 @@ namespace Radischevo.Wahha.Data
             return null;
         }
 
-        /// <summary>
-        /// Gets the strongly-typed value of the result 
-        /// column which has the specified name.
-        /// </summary>
-        /// <typeparam name="TValue">A type of column value.</typeparam>
-        /// <param name="key">The name of the column to find.</param>
-        public TValue GetValue<TValue>(string name)
-        {
-            return GetValue<TValue>(name, default(TValue));
-        }
-
-        /// <summary>
-        /// Gets the strongly-typed value of the result 
-        /// column which has the specified name.
-        /// </summary>
-        /// <typeparam name="TValue">A type of column value.</typeparam>
-        /// <param name="key">The name of the column to find.</param>
-        /// <param name="defaultValue">The default value of the variable.</param>
-        public TValue GetValue<TValue>(string name, TValue defaultValue)
-        {
-            int index;
-            if (_lookup.TryGetOrdinal(name, out index))
-            {
-                MarkAccessedField(name);
-                return Converter.ChangeType<TValue>(
-                    _dataRecord.GetValue(index), defaultValue);
-            }
-            return defaultValue;
-        }
+		/// <summary>
+		/// Gets the strongly-typed value of the result 
+		/// column which has the specified name.
+		/// </summary>
+		/// <typeparam name="TValue">A type of column value.</typeparam>
+		/// <param name="key">The name of the column to find.</param>
+		/// <param name="defaultValue">The default value of the variable.</param>
+		/// <param name="provider">An <see cref="IFormatProvider" /> interface implementation that 
+		/// supplies culture-specific formatting information.</param>
+		public TValue GetValue<TValue>(string name, TValue defaultValue,
+			IFormatProvider provider)
+		{
+			int index;
+			if (_lookup.TryGetOrdinal(name, out index))
+			{
+				MarkAccessedField(name);
+				return Converter.ChangeType<TValue>(_dataRecord.GetValue(index),
+					defaultValue, provider);
+			}
+			return defaultValue;
+		}
         #endregion
 
         #region IValueSet Members

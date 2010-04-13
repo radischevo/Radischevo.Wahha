@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using Radischevo.Wahha.Core;
@@ -41,7 +42,7 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             get
             {
-                return GetValue<object>(key);
+                return GetValue<object>(key, null, CultureInfo.CurrentCulture);
             }
         }
 
@@ -55,33 +56,29 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
-        public TValue GetValue<TValue>(string key)
-        {
-            return GetValue<TValue>(key, default(TValue));
-        }
-
-        public TValue GetValue<TValue>(string key, TValue defaultValue)
+        public TValue GetValue<TValue>(string key, TValue defaultValue, 
+			IFormatProvider provider)
         {
             if (!ContainsKey(key))
                 return defaultValue;
 
 			object value = _session[key];
 
-            if (typeof(TValue) == typeof(bool))
-            {
-                switch (value.ToString().ToLower())
-                {
-                    case "on":
-                    case "yes":
-                    case "true":
-                        value = true;
-                        break;
-                    default:
-                        value = false;
-                        break;
-                }
-            }
-            return Converter.ChangeType<TValue>(value, defaultValue);
+			if (typeof(TValue) == typeof(bool) && value is string)
+			{
+				switch (((string)value).Define().ToLowerInvariant())
+				{
+					case "on":
+					case "yes":
+					case "true":
+						value = true;
+						break;
+					default:
+						value = false;
+						break;
+				}
+			}
+            return Converter.ChangeType<TValue>(value, defaultValue, provider);
         }
 
 		public bool ContainsKey(string key)

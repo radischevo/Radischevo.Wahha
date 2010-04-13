@@ -289,20 +289,39 @@
             associated with the specified member.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Core.IValueSet.GetValue``1(System.String)">
+        <member name="M:Radischevo.Wahha.Core.ValueSetExtensions.GetValue``1(Radischevo.Wahha.Core.IValueSet,System.String)">
             <summary>
-            Gets the typed value with the specified key
+            Gets the typed value with the specified key.
             </summary>
-            <typeparam name="TValue">The type of value</typeparam>
-            <param name="key">The key to find</param>
+            <typeparam name="TValue">The type of value.</typeparam>
+            <param name="key">The key to find.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Core.IValueSet.GetValue``1(System.String,``0)">
+        <member name="M:Radischevo.Wahha.Core.ValueSetExtensions.GetValue``1(Radischevo.Wahha.Core.IValueSet,System.String,``0)">
             <summary>
-            Gets the typed value with the specified key
+            Gets the typed value with the specified key.
             </summary>
-            <typeparam name="TValue">The type of value</typeparam>
-            <param name="key">The key to find</param>
-            <param name="defaultValue">The default value of the variable</param>
+            <typeparam name="TValue">The type of value.</typeparam>
+            <param name="key">The key to find.</param>
+            <param name="defaultValue">The default value of the variable.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueSetExtensions.GetValue``1(Radischevo.Wahha.Core.IValueSet,System.String,System.IFormatProvider)">
+            <summary>
+            Gets the typed value with the specified key.
+            </summary>
+            <typeparam name="TValue">The type of value.</typeparam>
+            <param name="key">The key to find.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.IValueSet.GetValue``1(System.String,``0,System.IFormatProvider)">
+            <summary>
+            Gets the typed value with the specified key.
+            </summary>
+            <typeparam name="TValue">The type of value.</typeparam>
+            <param name="key">The key to find.</param>
+            <param name="defaultValue">The default value of the variable.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
         </member>
         <member name="T:Radischevo.Wahha.Core.EnumerableLink`1">
             <summary>
@@ -419,22 +438,16 @@
             <param name="values">An object, whose property values 
             will be used to populate the dictionary</param>
         </member>
-        <member name="M:Radischevo.Wahha.Core.ValueDictionary.GetValue``1(System.String)">
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.GetValue``1(System.String,``0,System.IFormatProvider)">
             <summary>
             Gets the typed value with the 
-            specified key
+            specified key.
             </summary>
-            <typeparam name="TValue">The type of value</typeparam>
-            <param name="key">The key to find</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.ValueDictionary.GetValue``1(System.String,``0)">
-            <summary>
-            Gets the typed value with the 
-            specified key
-            </summary>
-            <typeparam name="TValue">The type of value</typeparam>
-            <param name="key">The key to find</param>
-            <param name="defaultValue">The default value of the variable</param>
+            <typeparam name="TValue">The type of value.</typeparam>
+            <param name="key">The key to find.</param>
+            <param name="defaultValue">The default value of the variable.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
         </member>
         <member name="M:Radischevo.Wahha.Core.ValueDictionary.Merge(System.Object)">
             <summary>

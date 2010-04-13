@@ -1880,15 +1880,7 @@
             </summary>
             <param name="index">The zero-based column ordinal.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.Int32)">
-            <summary>
-            Gets the strongly-typed value of the 
-            specified column.
-            </summary>
-            <typeparam name="TValue">A type of column value.</typeparam>
-            <param name="index">The zero-based column ordinal.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.Int32,``0)">
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.Int32,``0,System.IFormatProvider)">
             <summary>
             Gets the strongly-typed value of the 
             specified column.
@@ -1896,6 +1888,8 @@
             <typeparam name="TValue">A type of column value.</typeparam>
             <param name="index">The zero-based column ordinal.</param>
             <param name="defaultValue">The default value of the variable.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValues(System.Object[])">
             <summary>
@@ -2023,15 +2017,7 @@
             </summary>
             <param name="key">The name of the column to find.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.String)">
-            <summary>
-            Gets the strongly-typed value of the result 
-            column which has the specified name.
-            </summary>
-            <typeparam name="TValue">A type of column value.</typeparam>
-            <param name="key">The name of the column to find.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.String,``0)">
+        <member name="M:Radischevo.Wahha.Data.DbDataRecord.GetValue``1(System.String,``0,System.IFormatProvider)">
             <summary>
             Gets the strongly-typed value of the result 
             column which has the specified name.
@@ -2039,6 +2025,8 @@
             <typeparam name="TValue">A type of column value.</typeparam>
             <param name="key">The name of the column to find.</param>
             <param name="defaultValue">The default value of the variable.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
         </member>
         <member name="P:Radischevo.Wahha.Data.DbDataRecord.Item(System.Int32)">
             <summary>
@@ -2333,15 +2321,7 @@
             </summary>
             <param name="index">The zero-based column ordinal.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.Int32)">
-            <summary>
-            Gets the strongly-typed value of the 
-            specified column.
-            </summary>
-            <typeparam name="TValue">A type of column value.</typeparam>
-            <param name="index">The zero-based column ordinal.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.Int32,``0)">
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.Int32,``0,System.IFormatProvider)">
             <summary>
             Gets the strongly-typed value of the 
             specified column.
@@ -2349,6 +2329,8 @@
             <typeparam name="TValue">A type of column value.</typeparam>
             <param name="index">The zero-based column ordinal.</param>
             <param name="defaultValue">The default value of the variable.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValues(System.Object[])">
             <summary>
@@ -2476,15 +2458,7 @@
             </summary>
             <param name="key">The name of the column to find.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.String)">
-            <summary>
-            Gets the strongly-typed value of the result 
-            column which has the specified name.
-            </summary>
-            <typeparam name="TValue">A type of column value.</typeparam>
-            <param name="key">The name of the column to find.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.String,``0)">
+        <member name="M:Radischevo.Wahha.Data.DbDataReader.GetValue``1(System.String,``0,System.IFormatProvider)">
             <summary>
             Gets the strongly-typed value of the result 
             column which has the specified name.
@@ -2492,6 +2466,8 @@
             <typeparam name="TValue">A type of column value.</typeparam>
             <param name="key">The name of the column to find.</param>
             <param name="defaultValue">The default value of the variable.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
         </member>
         <member name="P:Radischevo.Wahha.Data.DbDataReader.Item(System.Int32)">
             <summary>

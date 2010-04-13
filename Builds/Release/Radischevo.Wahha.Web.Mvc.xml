@@ -1179,15 +1179,7 @@
             rendering HTML controls within a strongly-typed view.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.TempDataDictionary.GetValue``1(System.String)">
-            <summary>
-            Gets the typed value with the 
-            specified key
-            </summary>
-            <typeparam name="TValue">The type of value</typeparam>
-            <param name="key">The key to find</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.TempDataDictionary.GetValue``1(System.String,``0)">
+        <member name="M:Radischevo.Wahha.Web.Mvc.TempDataDictionary.GetValue``1(System.String,``0,System.IFormatProvider)">
             <summary>
             Gets the typed value with the 
             specified key

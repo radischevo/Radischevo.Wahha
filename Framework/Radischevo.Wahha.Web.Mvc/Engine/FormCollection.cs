@@ -59,14 +59,10 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
-        public TValue GetValue<TValue>(string key)
+        public TValue GetValue<TValue>(string key, TValue defaultValue, 
+			IFormatProvider provider)
         {
-            return GetValue<TValue>(key, default(TValue));
-        }
-
-        public TValue GetValue<TValue>(string key, TValue defaultValue)
-        {
-            return _collection.GetValue<TValue>(key, defaultValue);
+            return _collection.GetValue<TValue>(key, defaultValue, provider);
         }
         #endregion
     }

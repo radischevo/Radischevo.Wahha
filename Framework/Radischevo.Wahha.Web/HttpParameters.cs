@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -13,7 +14,7 @@ namespace Radischevo.Wahha.Web
     /// Incapsulates the collection 
     /// of HTTP request variables
     /// </summary>
-    public class HttpParameters
+    public class HttpParameters : IValueSet
     {
         #region Nested Types
         private sealed class CollectionWrapper<TCollection> : IHttpValueSet
@@ -54,7 +55,7 @@ namespace Radischevo.Wahha.Web
             {
                 get
                 {
-                    return GetValue<object>(key);
+                    return GetValue<object>(key, null, CultureInfo.CurrentCulture);
                 }
             }
 
@@ -68,39 +69,35 @@ namespace Radischevo.Wahha.Web
             #endregion
 
             #region Instance Methods
-            public TValue GetValue<TValue>(string key)
-            {
-                return GetValue<TValue>(key, default(TValue));
-            }
-
-            public TValue GetValue<TValue>(string key, TValue defaultValue)
+            public TValue GetValue<TValue>(string key, TValue defaultValue, 
+				IFormatProvider provider)
             {
                 if (!ContainsKey(key))
                     return defaultValue;
 
                 object value = _selector(_collection, key);
 
-                if (typeof(TValue) == typeof(bool))
-                {
-                    switch (value.ToString().ToLower())
-                    {
-                        case "on":
-                        case "yes":
-                        case "true":
-                            value = true;
-                            break;
-                        default:
-                            value = false;
-                            break;
-                    }
-                }
+				if (typeof(TValue) == typeof(bool) && value is string)
+				{
+					switch (((string)value).Define().ToLowerInvariant())
+					{
+						case "on":
+						case "yes":
+						case "true":
+							value = true;
+							break;
+						default:
+							value = false;
+							break;
+					}
+				}
                 return Converter.ChangeType<TValue>(value, defaultValue);
             }
 
 			public IEnumerable<TValue> GetValues<TValue>(string key)
 			{
 				List<TValue> list = new List<TValue>();
-				string keyValue = GetValue<string>(key);
+				string keyValue = GetValue<string>(key, null, CultureInfo.CurrentCulture);
 
 				if (keyValue == null)
 					return list;
@@ -117,6 +114,7 @@ namespace Radischevo.Wahha.Web
 						{
 							case "on":
 							case "yes":
+							case "true":
 								value = true;
 								break;
 							case "off":
@@ -203,7 +201,7 @@ namespace Radischevo.Wahha.Web
         {
             get
             {
-                return GetValue<object>(key);
+                return GetValue<object>(key, null, CultureInfo.CurrentCulture);
             }
         }
 
@@ -272,37 +270,40 @@ namespace Radischevo.Wahha.Web
         /// </summary>
         /// <typeparam name="TValue">The type of the value</typeparam>
         /// <param name="key">The name of the variable</param>
-        public TValue GetValue<TValue>(string key)
-        {
-            return GetValue<TValue>(key, default(TValue));
-        }
-
-        /// <summary>
-        /// Gets the typed value of the 
-        /// specified query string, form or 
-        /// header variable
-        /// </summary>
-        /// <typeparam name="TValue">The type of the value</typeparam>
-        /// <param name="key">The name of the variable</param>
         /// <param name="defaultValue">The default value of the variable</param>
-        public TValue GetValue<TValue>(string key, TValue defaultValue)
+		/// <param name="provider">An <see cref="IFormatProvider" /> interface implementation that 
+		/// supplies culture-specific formatting information.</param>
+        public TValue GetValue<TValue>(string key, TValue defaultValue, 
+			IFormatProvider provider)
         {
             if (_form.ContainsKey(key))
-                return _form.GetValue<TValue>(key, defaultValue);
+                return _form.GetValue<TValue>(key, defaultValue, provider);
 
             if (_queryString.ContainsKey(key))
-                return _queryString.GetValue<TValue>(key, defaultValue);
+                return _queryString.GetValue<TValue>(key, defaultValue, provider);
 
             if (_cookies.ContainsKey(key))
-                return _cookies.GetValue<TValue>(key, defaultValue);
+                return _cookies.GetValue<TValue>(key, defaultValue, provider);
 
             if (_headers.ContainsKey(key))
-                return _headers.GetValue<TValue>(key, defaultValue);
+                return _headers.GetValue<TValue>(key, defaultValue, provider);
 
             return defaultValue;
         }
         #endregion
-    }
+
+		#region IValueSet Members
+		IEnumerable<string> IValueSet.Keys
+		{
+			get
+			{
+				return Headers.Keys.Concat(Cookies.Keys)
+					.Concat(QueryString.Keys)
+					.Concat(Form.Keys).Distinct();
+			}
+		}
+		#endregion
+	}
 
     /// <summary>
     /// Provides extension methods for the 

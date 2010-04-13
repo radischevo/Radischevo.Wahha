@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Radischevo.Wahha.Core
@@ -42,7 +43,7 @@ namespace Radischevo.Wahha.Core
         {
             get
             {
-                return GetValue<object>(key);
+                return GetValue<object>(key, null, CultureInfo.CurrentCulture);
             }
         }
 
@@ -56,16 +57,12 @@ namespace Radischevo.Wahha.Core
         #endregion
 
         #region Instance Methods
-        public TValue GetValue<TValue>(string key)
-        {
-            return GetValue<TValue>(key, default(TValue));
-        }
-
-        public TValue GetValue<TValue>(string key, TValue defaultValue)
+        public TValue GetValue<TValue>(string key, TValue defaultValue, 
+			IFormatProvider provider)
         {
 			string mappedKey;
 			if(Map.TryGetValue(key, out mappedKey))
-				return _collection.GetValue<TValue>(mappedKey, defaultValue);
+				return _collection.GetValue<TValue>(mappedKey, defaultValue, provider);
 
 			return defaultValue;
         }

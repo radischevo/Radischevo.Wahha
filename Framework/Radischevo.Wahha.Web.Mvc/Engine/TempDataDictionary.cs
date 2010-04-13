@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
@@ -143,19 +144,24 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
 		#region Static Methods
-		private static TValue ConvertValue<TValue>(object value, TValue defaultValue)
+		private static TValue ConvertValue<TValue>(object value, TValue defaultValue, 
+			IFormatProvider provider)
 		{
-			if (value != null && typeof(TValue) == typeof(bool))
+			if (typeof(TValue) == typeof(bool) && value is string)
 			{
-				switch (value.ToString().ToLower())
+				switch (((string)value).Define().ToLowerInvariant())
 				{
 					case "on":
 					case "yes":
+					case "true":
 						value = true;
+						break;
+					default:
+						value = false;
 						break;
 				}
 			}
-			return Converter.ChangeType<TValue>(value, defaultValue);
+			return Converter.ChangeType<TValue>(value, defaultValue, provider);
 		}
 		#endregion
 
@@ -194,17 +200,24 @@ namespace Radischevo.Wahha.Web.Mvc
 
 		public TValue Peek<TValue>(string key)
 		{
-			return Peek<TValue>(key, default(TValue));
+			return Peek<TValue>(key, default(TValue), 
+				CultureInfo.CurrentCulture);
 		}
 
 		public TValue Peek<TValue>(string key, TValue defaultValue)
+		{
+			return Peek<TValue>(key, defaultValue, CultureInfo.CurrentCulture);
+		}
+
+		public TValue Peek<TValue>(string key, TValue defaultValue, 
+			IFormatProvider provider)
 		{
 			object value;
 
 			if (!_data.TryGetValue(key, out value))
 				return defaultValue;
 
-			return ConvertValue(value, defaultValue);
+			return ConvertValue(value, defaultValue, provider);
 		}
 
         public void Save(ControllerContext context, ITempDataProvider provider)
@@ -240,26 +253,16 @@ namespace Radischevo.Wahha.Web.Mvc
         /// </summary>
         /// <typeparam name="TValue">The type of value</typeparam>
         /// <param name="key">The key to find</param>
-        public TValue GetValue<TValue>(string key)
-        {
-            return GetValue<TValue>(key, default(TValue));
-        }
-
-        /// <summary>
-        /// Gets the typed value with the 
-        /// specified key
-        /// </summary>
-        /// <typeparam name="TValue">The type of value</typeparam>
-        /// <param name="key">The key to find</param>
         /// <param name="defaultValue">The default value of the variable</param>
-        public TValue GetValue<TValue>(string key, TValue defaultValue)
+        public TValue GetValue<TValue>(string key, TValue defaultValue, 
+			IFormatProvider provider)
         {
             object value;
 
             if (!TryGetValue(key, out value))
                 return defaultValue;
 
-			return ConvertValue(value, defaultValue);
+			return ConvertValue(value, defaultValue, provider);
         }
 
         public bool ContainsAll(params string[] keys)
