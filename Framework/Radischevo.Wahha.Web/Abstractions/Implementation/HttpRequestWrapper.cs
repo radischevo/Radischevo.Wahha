@@ -158,7 +158,7 @@ namespace Radischevo.Wahha.Web.Abstractions
             }
         }
 
-        public override IValueSet Form
+        public override IHttpValueSet Form
         {
             get
             {
@@ -166,7 +166,7 @@ namespace Radischevo.Wahha.Web.Abstractions
             }
         }
 
-        public override IValueSet Headers
+        public override IHttpValueSet Headers
         {
             get
             {
@@ -274,7 +274,7 @@ namespace Radischevo.Wahha.Web.Abstractions
             }
         }
 
-        public override IValueSet QueryString
+        public override IHttpValueSet QueryString
         {
             get
             {

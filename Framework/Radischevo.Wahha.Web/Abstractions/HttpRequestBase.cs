@@ -156,7 +156,7 @@ namespace Radischevo.Wahha.Web.Abstractions
             }
         }
 
-        public virtual IValueSet Form
+        public virtual IHttpValueSet Form
         {
             get
             {
@@ -164,7 +164,7 @@ namespace Radischevo.Wahha.Web.Abstractions
             }
         }
 
-        public virtual IValueSet Headers
+        public virtual IHttpValueSet Headers
         {
             get
             {
@@ -268,7 +268,7 @@ namespace Radischevo.Wahha.Web.Abstractions
             }
         }
 
-        public virtual IValueSet QueryString
+        public virtual IHttpValueSet QueryString
         {
             get
             {
