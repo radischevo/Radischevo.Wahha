@@ -1522,6 +1522,38 @@
             retrieved from the sequence.
             </summary>
         </member>
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.CastSubset``2(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Converts the elements of an <see cref="T:Radischevo.Wahha.Data.ISubset"/> 
+            to the specified type.
+            </summary>
+            <typeparam name="TInput">The type to convert the elements of source from.</typeparam>
+            <typeparam name="TOutput">The type to convert the elements of source to.</typeparam>
+            <param name="collection">The <see cref="T:Radischevo.Wahha.Data.ISubset"/>
+            that contains the elements to be converted.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.ConvertSubset``2(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Converts the elements of an <see cref="T:Radischevo.Wahha.Data.ISubset"/> 
+            to the specified type.
+            </summary>
+            <typeparam name="TInput">The type to convert the elements of source from.</typeparam>
+            <typeparam name="TOutput">The type to convert the elements of source to.</typeparam>
+            <param name="collection">The <see cref="T:Radischevo.Wahha.Data.ISubset"/>
+            that contains the elements to be converted.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.ConvertSubset``2(System.Collections.Generic.IEnumerable{``0},System.IFormatProvider)">
+            <summary>
+            Converts the elements of an <see cref="T:Radischevo.Wahha.Data.ISubset"/> 
+            to the specified type.
+            </summary>
+            <typeparam name="TInput">The type to convert the elements of source from.</typeparam>
+            <typeparam name="TOutput">The type to convert the elements of source to.</typeparam>
+            <param name="collection">The <see cref="T:Radischevo.Wahha.Data.ISubset"/>
+            that contains the elements to be converted.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation 
+            that supplies culture-specific formatting information.</param>
+        </member>
         <member name="T:Radischevo.Wahha.Data.DbCommandResult">
             <summary>
             Acts as a wrapper for the 

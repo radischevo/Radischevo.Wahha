@@ -10,9 +10,14 @@ namespace Radischevo.Wahha.Core
     {
         public static IEnumerable<T> Convert<T>(this IEnumerable collection)
         {
-            foreach (object item in collection)
-                yield return Converter.ChangeType<T>(item, CultureInfo.InvariantCulture);
+			return Convert<T>(collection, CultureInfo.CurrentCulture);
         }
+
+		public static IEnumerable<T> Convert<T>(this IEnumerable collection, IFormatProvider provider)
+		{
+			foreach (object item in collection)
+				yield return Converter.ChangeType<T>(item, provider);
+		}
 
         public static IEnumerable<T> Each<T>(this IEnumerable<T> instance, Action<T> action)
         {
