@@ -188,6 +188,14 @@ namespace Radischevo.Wahha.Web.Abstractions
             }
         }
 
+		public virtual bool IsAjaxRequest
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+
         public virtual bool IsAuthenticated
         {
             get

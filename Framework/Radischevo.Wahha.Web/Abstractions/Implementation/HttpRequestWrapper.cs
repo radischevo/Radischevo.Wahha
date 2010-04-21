@@ -20,6 +20,11 @@ namespace Radischevo.Wahha.Web.Abstractions
      AspNetHostingPermission(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal)]
     public class HttpRequestWrapper : HttpRequestBase
     {
+		#region Constants
+		private const string AjaxHeaderName = "X-Requested-With";
+		private const string AjaxHeaderValue = "XMLHttpRequest";
+		#endregion
+
         #region Instance Fields
         private readonly HttpRequest _request;
         private HttpParameters _parameters;
@@ -190,6 +195,14 @@ namespace Radischevo.Wahha.Web.Abstractions
                 return _request.InputStream;
             }
         }
+
+		public override bool IsAjaxRequest
+		{
+			get
+			{
+				return CheckAjaxRequest(_request);
+			}
+		}
 
         public override bool IsAuthenticated
         {
@@ -367,8 +380,20 @@ namespace Radischevo.Wahha.Web.Abstractions
         }
         #endregion
 
-        #region Instance Methods
-        public override byte[] BinaryRead(int count)
+		#region Static Methods
+		private static bool CheckAjaxRequest(HttpRequest request)
+		{
+			Precondition.Require(request, () => Error.ArgumentNull("request"));
+			if (request.Headers == null)
+				return false;
+
+			return String.Equals(request.Headers[AjaxHeaderName],
+				AjaxHeaderValue, StringComparison.Ordinal);
+		}
+		#endregion
+
+		#region Instance Methods
+		public override byte[] BinaryRead(int count)
         {
             return _request.BinaryRead(count);
         }

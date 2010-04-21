@@ -1,46 +1,83 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Globalization;
-using System.Linq.Expressions;
-using System.Reflection;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Scripting.Serialization;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public class JsonModelBinder : ModelBinderBase
+    public class JsonModelBinder : ComplexTypeModelBinder
     {
-        #region Nested Types
-        private delegate object JavaScriptDeserializationExecutor(string value);
-        #endregion
+		#region Static Methods
+		private static string MakeArrayKey(string prefix, int index)
+		{
+			return prefix + "-" + index.ToString(CultureInfo.InvariantCulture);
+		}
 
-        #region Instance Methods
-        protected override object ExecuteBind(BindingContext context)
+		private static string MakePropertyKey(string prefix, string propertyName)
+		{
+			return (String.IsNullOrEmpty(prefix)) ? propertyName : prefix + "-" + propertyName;
+		}
+
+		private static void AppendBindingData(IDictionary<string, object> store, string prefix, object value)
+		{
+			IDictionary<string, object> dict = (value as IDictionary<string, object>);
+			if (dict != null)
+			{
+				foreach (KeyValuePair<string, object> entry in dict)
+					AppendBindingData(store, MakePropertyKey(prefix, entry.Key), entry.Value);
+
+				return;
+			}
+
+			IList list = (value as IList);
+			if (list != null)
+			{
+				for (int i = 0; i < list.Count; i++)
+					AppendBindingData(store, MakeArrayKey(prefix, i), list[i]);
+
+				return;
+			}
+			store[prefix] = value;
+		}
+
+		private static ValueDictionary CreateBindingData(string serializedValue)
+		{
+			if (String.IsNullOrEmpty(serializedValue))
+				return null;
+
+			ValueDictionary data = new ValueDictionary();
+			try
+			{
+				JavaScriptSerializer serializer = new JavaScriptSerializer();
+				object value = serializer.DeserializeObject(serializedValue);
+
+				AppendBindingData(data, String.Empty, value);
+				return data;
+			}
+			catch
+			{
+				return null;
+			}
+		}
+		#endregion
+
+		#region Instance Methods
+		protected override object ExecuteBind(BindingContext context)
         {
             object value;
 			if (!context.TryGetValue(out value))
 				return null;
 
-            return context.Model = Deserialize(context.ModelType, 
-                Convert.ToString(value, CultureInfo.InvariantCulture));
-        }
+			ValueDictionary data = CreateBindingData(Convert.ToString(value, 
+				CultureInfo.InvariantCulture)) ?? new ValueDictionary();
 
-        private object Deserialize(Type type, string serializedString)
-        {
-            if (String.IsNullOrEmpty(serializedString))
-                return null;
+			BindingContext inner = new BindingContext(context, context.ModelType,
+				String.Empty, context.Source, data, context.AllowMemberUpdate, context.Errors);
 
-            try
-            {
-				JavaScriptSerializer serializer = new JavaScriptSerializer();
-				return serializer.Deserialize(type, serializedString);
-            }
-            catch
-            {
-                return null;
-            }
+			return base.ExecuteBind(inner);
         }
         #endregion
     }

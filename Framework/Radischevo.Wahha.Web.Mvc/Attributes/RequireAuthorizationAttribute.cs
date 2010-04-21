@@ -95,7 +95,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			if (context.Context.IsChild)
 				return false;
 
-			if (context.HttpContext.Request.IsAjaxRequest())
+			if (context.HttpContext.Request.IsAjaxRequest)
 				return false;
 
 			return true;

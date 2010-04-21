@@ -229,6 +229,15 @@ public class MainController : Controller
 
         ints.Normalize();
 
+		ValueDictionary data = new ValueDictionary();
+		data.Add("item", "{ Count: 'bcd', ID: 100, IsActive: true, IsViewed: true, Message: \"test\", Title: \"test\", Status: \"Active\", Indices: [ 3, 4, 5, 8 ], Inner: { Count: 5, ID: 750, IsActive: false, IsViewed: null, Message: \"test inner\", Title: \"test inner\", Status: \"Active\", Indices: [ 3, 9, 1 ] } }");
+
+		BindingContext context = new BindingContext(Context, typeof(TemplatedItem), "item", ParameterSource.Default,
+			data, null, Errors);
+
+		JsonModelBinder binder = new JsonModelBinder();
+		object bound = binder.Bind(context);
+
         //Response.ContentType = "application/xhtml+xml";
 
         return View("Default", new TemplatedItem() { Count = 10, Date = DateTime.Now, 

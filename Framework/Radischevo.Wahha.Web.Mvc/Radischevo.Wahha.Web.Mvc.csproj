@@ -216,7 +216,6 @@
     <Compile Include="Helpers\BlockRenderer.cs" />
     <Compile Include="Helpers\HtmlControlHelper.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
-    <Compile Include="Helpers\HttpRequestExtensions.cs" />
     <Compile Include="Helpers\LinqHelper.cs" />
     <Compile Include="Helpers\RequestValidationException.cs" />
     <Compile Include="Helpers\RequestValidationToken.cs" />

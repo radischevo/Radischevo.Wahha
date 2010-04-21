@@ -32,7 +32,7 @@ namespace Radischevo.Wahha.Web.Mvc
         /// <param name="actionMethod">The method, currently being executed.</param>
         public override bool IsValid(ControllerContext context, MethodInfo actionMethod)
         {
-            return context.Context.Request.IsAjaxRequest();
+            return context.Context.Request.IsAjaxRequest;
         }
         #endregion
     }

@@ -1569,13 +1569,6 @@
             model binding.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.HttpRequestExtensions.IsAjaxRequest(Radischevo.Wahha.Web.Abstractions.HttpRequestBase)">
-            <summary>
-            Gets a value indicating whether the 
-            current resource is requested through 
-            the XmlHttpRequest.
-            </summary>
-        </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.Async.AsyncManager.Finish">
             <summary>
             Signals that all operations are complete.
