@@ -1088,12 +1088,6 @@
             </summary>
             <param name="inner">The selector function.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlStringParser.Radischevo#Wahha#Core#IHideObjectMembers#GetType">
-            <summary>
-            Provides an XML document processing 
-            using the specified parsing rules.
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Text.HtmlStringParser.ProcessingMode">
             <summary>
             Gets or sets the <see cref="T:Radischevo.Wahha.Web.Text.HtmlProcessingMode"/> 

@@ -175,12 +175,6 @@
             <remarks>If the <paramref name="domainLevel"/> equals to zero, 
             the current domain is returned.</remarks>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UrlHelper.Radischevo#Wahha#Core#IHideObjectMembers#GetType">
-            <summary>
-            Class containing convenience 
-            methods for URL generation.
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.UrlHelper.Context">
             <summary>
             Gets the current 
@@ -1153,12 +1147,6 @@
             </summary>
             <param name="value">An extended value to store in the token.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlControlHelper.Radischevo#Wahha#Core#IHideObjectMembers#GetType">
-            <summary>
-            Class containing convenience methods for use in 
-            rendering HTML controls within a view.
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.UI.HtmlControlHelper.Context">
             <summary>
             Gets the current 
@@ -1777,12 +1765,6 @@
             </summary>
             <param name="json">The JSON string to be deserialized.</param>
             <typeparam name="T">The type of the resulting object.</typeparam>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Radischevo#Wahha#Core#IHideObjectMembers#GetType">
-            <summary>
-            Class containing convenience methods for use in 
-            rendering HTML for use in Ajax scenarios within a view.
-            </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper.Context">
             <summary>

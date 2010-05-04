@@ -1653,13 +1653,6 @@
             <param name="materializer">A materialization service used to convert the data row to 
             an instance of the specified type.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbCommandResult.Radischevo#Wahha#Core#IHideObjectMembers#GetType">
-            <summary>
-            Acts as a wrapper for the 
-            <see cref="T:System.Data.IDbCommand"/> object 
-            for executing various queries.
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Data.DbCommandResult.Provider">
             <summary>
             Gets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
