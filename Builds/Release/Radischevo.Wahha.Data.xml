@@ -44,19 +44,6 @@
             Closes the underlying database connection.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Rollback(System.String)">
-            <summary>
-            Restores the current transaction to 
-            the <paramref name="savePointName"/> savepoint
-            </summary>
-            <param name="savePointName">The savepoint name</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.IDbDataProvider.CreateSavePoint(System.String)">
-            <summary>
-            Creates a savepoint with name <paramref name="savePointName"/>
-            </summary>
-            <param name="savePointName">The savepoint name</param>
-        </member>
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Execute``1(System.Data.IDbCommand,System.Func{System.Data.IDbCommand,``0})">
             <summary>
             Executes the <paramref name="command"/> against the current data source 
@@ -210,25 +197,6 @@
             <summary>
             Closes the underlying database connection.
             </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataProvider.Rollback(System.String)">
-            <summary>
-            Restores the current transaction to 
-            the <paramref name="savePointName"/> savepoint
-            </summary>
-            <param name="savePointName">The savepoint name</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.ArgumentException"></exception>
-            <exception cref="T:System.NotSupportedException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbDataProvider.CreateSavePoint(System.String)">
-            <summary>
-            Creates a savepoint with name <paramref name="savePointName"/>
-            </summary>
-            <param name="savePointName">The savepoint name</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.Exception"></exception>
-            <exception cref="T:System.NotSupportedException"></exception>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbDataProvider.CreateDataAdapter">
             <summary>
@@ -400,7 +368,7 @@
         </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_UnsupportedCommandType">
             <summary>
-              Looks up a localized string similar to The database command type &apos;{0}&apos; is not supported by the provider. The type &apos;{1}&apos; is required for this operation..
+              Looks up a localized string similar to The database command type &apos;{0}&apos; is not supported by the provider..
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbCommandExtensions">
@@ -451,113 +419,13 @@
         <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.#ctor">
             <summary>
             Creates a new instance of 
-            the <see cref="T:Radischevo.Wahha.Data.Provider.OdbcDataProvider"/> class
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Initialize(System.String,System.Boolean)">
-            <summary>
-            Initializes an instance of 
             the <see cref="T:Radischevo.Wahha.Data.Provider.OdbcDataProvider"/> class.
             </summary>
-            <param name="connectionString">The database connection string.</param>
-            <param name="useTransaction">True to use a transaction.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.BeginTransaction(System.Data.IsolationLevel)">
-            <summary>
-            Starts the database transaction with the specified isolation level.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Commit">
-            <summary>
-            Commits the current transaction (if present).
-            </summary>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.Exception"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Rollback">
-            <summary>
-            Rolls back the current transaction.
-            </summary>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.ArgumentException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Close">
-            <summary>
-            Closes the underlying database connection.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Open">
-            <summary>
-            Ensures the current database connection is opened.
-            </summary>
-            <exception cref="T:System.Data.Odbc.OdbcException"></exception>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Execute``1(System.Data.IDbCommand,System.Func{System.Data.IDbCommand,``0})">
-            <summary>
-            Executes the <paramref name="command"/> against the current 
-            <see cref="!:Radischevo.Wahha.Data.IDataProvider"/> and converts the 
-            result using the specified <paramref name="converter"/>.
-            </summary>
-            <param name="command">The <see cref="T:System.Data.IDbCommand"/> 
-            command to execute.</param>
-            <param name="converter">The action to perform convertion with.</param>
-            <typeparam name="TR">The type of the returning value.</typeparam>
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.CreateDataAdapter">
             <summary>
             Creates a <see cref="T:System.Data.IDbDataAdapter"/> instance, 
             which is supported by the current provider.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.CreateCommand">
-            <summary>
-            Creates an <see cref="T:System.Data.IDbCommand"/> instance, 
-            which is supported by the current provider.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Dispose">
-            <summary>
-            Performs tasks associated 
-            with freeing, releasing or 
-            resetting unmanaged resources.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Dispose(System.Boolean)">
-            <summary>
-            Performs tasks associated 
-            with freeing, releasing or 
-            resetting unmanaged resources.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Radischevo#Wahha#Data#IDbDataProvider#Rollback(System.String)">
-            <summary>
-            Generates the <see cref="T:System.NotSupportedException"/> exception
-            </summary>
-            <exception cref="T:System.NotSupportedException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OdbcDataProvider.Radischevo#Wahha#Data#IDbDataProvider#CreateSavePoint(System.String)">
-            <summary>
-            Generates the <see cref="T:System.NotSupportedException"/> exception
-            </summary>
-            <exception cref="T:System.NotSupportedException"></exception>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Provider.OdbcDataProvider.UseTransaction">
-            <summary>
-            Gets or sets the value indicating 
-            whether the transaction will be used
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Provider.OdbcDataProvider.State">
-            <summary>
-            Gets the current connection state
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Provider.OdbcDataProvider.IsOpened">
-            <summary>
-            Gets the value indicating 
-            whether the current connection 
-            is opened
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.Provider.SqlDbDataProvider">
@@ -569,118 +437,13 @@
         <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.#ctor">
             <summary>
             Creates a new instance of 
-            the <see cref="!:SqlDataProvider"/> class
+            the <see cref="T:Radischevo.Wahha.Data.Provider.SqlDbDataProvider"/> class.
             </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Initialize(System.String,System.Boolean)">
-            <summary>
-            Initializes an instance of 
-            the <see cref="!:SqlDataProvider"/> class
-            </summary>
-            <param name="connectionString">The database connection string</param>
-            <param name="useTransaction">True to use a transaction</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.BeginTransaction(System.Data.IsolationLevel)">
-            <summary>
-            Starts the database transaction with the specified isolation level
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Commit">
-            <summary>
-            Commits the current transaction (if present)
-            </summary>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.Exception"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Rollback">
-            <summary>
-            Rolls back the current transaction
-            </summary>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.ArgumentException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Close">
-            <summary>
-            Closes the underlying database connection.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Rollback(System.String)">
-            <summary>
-            Restores the current transaction to 
-            the <paramref name="savePointName"/> savepoint
-            </summary>
-            <param name="savePointName">The savepoint name</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.ArgumentException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.CreateSavePoint(System.String)">
-            <summary>
-            Creates a savepoint with name <paramref name="savePointName"/>
-            </summary>
-            <param name="savePointName">The savepoint name</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.Exception"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Open">
-            <summary>
-            Ensures the current connection is opened
-            </summary>
-            <exception cref="T:System.Data.SqlClient.SqlException"></exception>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Execute``1(System.Data.IDbCommand,System.Func{System.Data.IDbCommand,``0})">
-            <summary>
-            Executes the <paramref name="command"/> against the current 
-            <see cref="!:Radischevo.Wahha.Data.IDataProvider"/> and converts the 
-            result using the specified <paramref name="converter"/>.
-            </summary>
-            <param name="command">The <see cref="T:System.Data.IDbCommand"/> 
-            command to execute.</param>
-            <param name="converter">The action to perform convertion with.</param>
-            <typeparam name="TR">The type of the returning value.</typeparam>
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.CreateDataAdapter">
             <summary>
             Creates a <see cref="T:System.Data.IDbDataAdapter"/> instance, 
             which is supported by the current provider.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.CreateCommand">
-            <summary>
-            Creates an <see cref="T:System.Data.IDbCommand"/> instance, 
-            which is supported by the current provider.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Dispose">
-            <summary>
-            Performs tasks associated 
-            with freeing, releasing or 
-            resetting unmanaged resources
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.Dispose(System.Boolean)">
-            <summary>
-            Performs tasks associated 
-            with freeing, releasing or 
-            resetting unmanaged resources
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.UseTransaction">
-            <summary>
-            Gets or sets the value indicating 
-            whether the transaction will be used
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.State">
-            <summary>
-            Gets the current connection state
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.IsOpened">
-            <summary>
-            Gets the value, indicating 
-            whether the connection is opened 
-            at the moment
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbConnectionExtensions">
@@ -1216,113 +979,13 @@
         <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.#ctor">
             <summary>
             Creates a new instance of 
-            the <see cref="T:Radischevo.Wahha.Data.Provider.OleDbDataProvider"/> class
+            the <see cref="T:Radischevo.Wahha.Data.Provider.OleDbDataProvider"/> class.
             </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Initialize(System.String,System.Boolean)">
-            <summary>
-            Initializes an instance of 
-            the <see cref="T:Radischevo.Wahha.Data.Provider.OleDbDataProvider"/> class
-            </summary>
-            <param name="connectionString">The database connection string</param>
-            <param name="useTransaction">True to use a transaction</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.BeginTransaction(System.Data.IsolationLevel)">
-            <summary>
-            Starts the database transaction with the specified isolation level
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Commit">
-            <summary>
-            Commits the current transaction (if present)
-            </summary>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.Exception"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Rollback">
-            <summary>
-            Rolls back the current transaction
-            </summary>
-            <exception cref="T:System.InvalidOperationException"></exception>
-            <exception cref="T:System.ArgumentException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Close">
-            <summary>
-            Closes the underlying database connection.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Open">
-            <summary>
-            Ensures the current database connection is opened
-            </summary>
-            <exception cref="T:System.Data.OleDb.OleDbException"></exception>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Execute``1(System.Data.IDbCommand,System.Func{System.Data.IDbCommand,``0})">
-            <summary>
-            Executes the <paramref name="command"/> against the current 
-            <see cref="!:Radischevo.Wahha.Data.IDataProvider"/> and converts the 
-            result using the specified <paramref name="converter"/>.
-            </summary>
-            <param name="command">The <see cref="T:System.Data.IDbCommand"/> 
-            command to execute.</param>
-            <param name="converter">The action to perform convertion with.</param>
-            <typeparam name="TR">The type of the returning value.</typeparam>
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.CreateDataAdapter">
             <summary>
             Creates a <see cref="T:System.Data.IDbDataAdapter"/> instance, 
             which is supported by the current provider.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.CreateCommand">
-            <summary>
-            Creates an <see cref="T:System.Data.IDbCommand"/> instance, 
-            which is supported by the current provider
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Dispose">
-            <summary>
-            Performs tasks associated 
-            with freeing, releasing or 
-            resetting unmanaged resources
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Dispose(System.Boolean)">
-            <summary>
-            Performs tasks associated 
-            with freeing, releasing or 
-            resetting unmanaged resources
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Radischevo#Wahha#Data#IDbDataProvider#Rollback(System.String)">
-            <summary>
-            Generates the <see cref="T:System.NotSupportedException"/> exception
-            </summary>
-            <exception cref="T:System.NotSupportedException"></exception>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.Radischevo#Wahha#Data#IDbDataProvider#CreateSavePoint(System.String)">
-            <summary>
-            Generates the <see cref="T:System.NotSupportedException"/> exception
-            </summary>
-            <exception cref="T:System.NotSupportedException"></exception>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Provider.OleDbDataProvider.UseTransaction">
-            <summary>
-            Gets or sets the value indicating 
-            whether the transaction will be used
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Provider.OleDbDataProvider.State">
-            <summary>
-            Gets the current connection state
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Provider.OleDbDataProvider.IsOpened">
-            <summary>
-            Gets the value indicating 
-            whether the current connection 
-            is opened
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbFieldLookup">

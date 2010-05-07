@@ -98,6 +98,7 @@
     <Compile Include="Interfaces\ISubset.cs" />
     <Compile Include="KeyedDbRepository.cs" />
     <Compile Include="DbDataProviderExtensions.cs" />
+    <Compile Include="Provider\CommonDbDataProvider.cs" />
     <Compile Include="Provider\OdbcDataProvider.cs" />
     <Compile Include="Subset.cs" />
     <Compile Include="Provider\DefaultDbDataProviderFactory.cs" />

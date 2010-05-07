@@ -268,7 +268,7 @@ namespace Radischevo.Wahha.Data.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The database command type &apos;{0}&apos; is not supported by the provider. The type &apos;{1}&apos; is required for this operation..
+        ///   Looks up a localized string similar to The database command type &apos;{0}&apos; is not supported by the provider..
         /// </summary>
         internal static string Error_UnsupportedCommandType {
             get {

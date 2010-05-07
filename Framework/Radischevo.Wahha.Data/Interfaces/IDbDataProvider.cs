@@ -58,19 +58,6 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         void Close();
 
-        /// <summary>
-        /// Restores the current transaction to 
-        /// the <paramref name="savePointName"/> savepoint
-        /// </summary>
-        /// <param name="savePointName">The savepoint name</param>
-        void Rollback(string savePointName);
-
-        /// <summary>
-        /// Creates a savepoint with name <paramref name="savePointName"/>
-        /// </summary>
-        /// <param name="savePointName">The savepoint name</param>
-        void CreateSavePoint(string savePointName);
-
 		/// <summary>
 		/// Executes the <paramref name="command"/> against the current data source 
 		/// and converts the result using the specified <paramref name="converter"/>.

@@ -266,31 +266,6 @@ namespace Radischevo.Wahha.Data
         }
 
         /// <summary>
-        /// Restores the current transaction to 
-        /// the <paramref name="savePointName"/> savepoint
-        /// </summary>
-        /// <param name="savePointName">The savepoint name</param>
-        /// <exception cref="System.InvalidOperationException"></exception>
-        /// <exception cref="System.ArgumentException"></exception>
-        /// <exception cref="System.NotSupportedException"></exception>
-        public void Rollback(string savePointName)
-        {
-            _provider.Rollback(savePointName);
-        }
-
-        /// <summary>
-        /// Creates a savepoint with name <paramref name="savePointName"/>
-        /// </summary>
-        /// <param name="savePointName">The savepoint name</param>
-        /// <exception cref="System.InvalidOperationException"></exception>
-        /// <exception cref="System.Exception"></exception>
-        /// <exception cref="System.NotSupportedException"></exception>
-        public void CreateSavePoint(string savePointName)
-        {
-            _provider.CreateSavePoint(savePointName);
-        }
-
-        /// <summary>
         /// Creates a <see cref="System.Data.IDbDataAdapter"/> instance, 
         /// which is supported by the current provider.
         /// </summary>

@@ -97,10 +97,10 @@ namespace Radischevo.Wahha.Data
             return new InvalidOperationException(Resources.Resources.Error_CannotEnumerateMoreThanOnce);
         }
 
-        internal static Exception UnsupportedCommandType(Type requiredType, Type actualType)
+        internal static Exception UnsupportedCommandType(Type actualType)
         {
             return new InvalidOperationException(String.Format(
-                Resources.Resources.Error_UnsupportedCommandType, actualType.FullName, requiredType.Name));
+                Resources.Resources.Error_UnsupportedCommandType, actualType.FullName));
         }
 
         internal static Exception CommandIsNotInitialized(string propertyName)

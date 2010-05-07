@@ -187,6 +187,6 @@
     <value>Could not parse the configuration file. See the inner exception for details.</value>
   </data>
   <data name="Error_UnsupportedCommandType" xml:space="preserve">
-    <value>The database command type '{0}' is not supported by the provider. The type '{1}' is required for this operation.</value>
+    <value>The database command type '{0}' is not supported by the provider.</value>
   </data>
 </root>
