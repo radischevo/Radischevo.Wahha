@@ -7,7 +7,7 @@
     <title>SGML Parser Test</title>
 </head>
 <body>
-    <form action="/TestSite/sgml" method="post">
+    <form action="/wahha-test/sgml" method="post">
         <%= Html.Controls.TextArea("text", new { Rows = 7, Cols = 40 }) %><br />
         <input type="submit" value="парс" />
     </form>

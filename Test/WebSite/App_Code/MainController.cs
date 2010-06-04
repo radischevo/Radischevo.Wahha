@@ -311,8 +311,10 @@ public class MainController : Controller
     }
 
     [AcceptHttpVerbs(HttpMethod.Post)]
-    public ActionResult TestSgml(HtmlProcessor text)
+    public ActionResult TestSgml([Bind(Name = "text")]string str)
     {
+		HtmlProcessor text = new HtmlProcessor();
+		
         HtmlElementFlags allowFlags = HtmlElementFlags.Allowed | HtmlElementFlags.Recursive;
         text.Parser.ProcessingMode = HtmlProcessingMode.DenyByDefault;
         text.Parser.DefaultElementFlags = HtmlElementFlags.AllowContent | HtmlElementFlags.UseTypography;
@@ -320,10 +322,16 @@ public class MainController : Controller
         text.Parser.Add(a => a.Attributes("xmlns", "ns").As(HtmlAttributeFlags.Denied));
         text.Parser.Add(e => e.Elements("i", "b", "u", "em", "strong", "pre", "acronym", "h1", "h2", "h3", "h4", "h5", "h6")
                 .As(allowFlags | HtmlElementFlags.Text | HtmlElementFlags.UseTypography))
+			.With(e => e.Element("noindex").As(allowFlags | HtmlElementFlags.Container))
             .With(e => e.Element("script").As(HtmlElementFlags.Denied | HtmlElementFlags.Recursive))
             .With(e => e.Element("a")
                 .As(allowFlags | HtmlElementFlags.Text)
-                .Convert(elem => { 
+                .Convert(elem => {
+					if (elem.ParentNode.LocalName.Equals("noindex"))
+						return elem;
+
+					XmlElement noindex = elem.OwnerDocument.CreateElement("noindex");
+
                     if(elem.InnerText.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && 
                         elem.InnerText.Length > 30) { 
                         XmlAttribute title = elem.GetAttributeNode("title") ?? 
@@ -331,7 +339,8 @@ public class MainController : Controller
                         title.Value = elem.InnerText;
                         elem.InnerXml = elem.InnerText.Substring(0, 30) + "...";
                     }
-                    return elem; 
+					noindex.AppendChild(elem);
+                    return noindex; 
                 })
                 .With(a => a.Attribute("href").Validate("#url")
                     .Convert(attr => {
@@ -390,7 +399,7 @@ public class MainController : Controller
             .Replace(@"(?'before'\d+)\s*\*\s*(?'after'\-?\d+)",
                 "${before}&times;${after}", StringReplacementMode.Regex);
 
-        ViewData["Output"] = text.ToString();
+        ViewData["Output"] = text.Parse(str);
         
         return View("Test");
     }

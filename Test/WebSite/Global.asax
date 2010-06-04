@@ -34,6 +34,9 @@
 			   Controller = "OtherController", Action = "Posts", Count = 12
 		   });
 
+		RouteTable.Routes.MapRoute<MainController>("sgml-test", "~/sgml",
+			a => a.TestSgml());
+
 		RouteTable.Routes.MapRoute("data_item", "~/data",
 		   new {
 			   Controller = "MainController", Action = "Database"
