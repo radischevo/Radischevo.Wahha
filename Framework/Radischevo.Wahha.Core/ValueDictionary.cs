@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.Serialization;
 
@@ -9,11 +10,11 @@ namespace Radischevo.Wahha.Core
     /// Represents a collection of 
     /// keys and values
     /// </summary>
-    [Serializable]
+	[Serializable, DebuggerDisplay("Count = {Count}")]
     public class ValueDictionary : Dictionary<string, object>, IValueSet
-    {
-        #region Constructors
-        /// <summary>
+	{
+		#region Constructors
+		/// <summary>
         /// Initializes a new instance of the 
         /// <see cref="ValueDictionary"/> class
         /// </summary>
@@ -29,19 +30,7 @@ namespace Radischevo.Wahha.Core
         /// should be copied into a new dictionary</param>
         public ValueDictionary(IDictionary<string, object> dictionary)
             : base(dictionary, StringComparer.OrdinalIgnoreCase)
-        { }
-
-        /// <summary>
-        /// Initializes a new instance of the 
-        /// <see cref="ValueDictionary"/> class with serialized data
-        /// </summary>
-        /// <param name="info">An object containing the information required to 
-        /// serialize the dictionary</param>
-        /// <param name="context">A structure containing the source and destination 
-        /// of the serialized stream associated with the dictionary</param>
-        protected ValueDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        { }
+        { }        
 
         /// <summary>
         /// Initializes a new instance of the 
@@ -52,8 +41,7 @@ namespace Radischevo.Wahha.Core
         public ValueDictionary(IValueSet values)
             : base(StringComparer.OrdinalIgnoreCase)
         {
-            if (values != null)
-                AddValues(values);
+            Initialize(values);
         }
 
         /// <summary>
@@ -65,13 +53,59 @@ namespace Radischevo.Wahha.Core
         public ValueDictionary(object values)
             : base(StringComparer.OrdinalIgnoreCase)
         {
-            if (values != null)
-                AddValues(values);
+            Initialize(values);
         }
+
+		/// <summary>
+		/// Initializes a new instance of the 
+		/// <see cref="ValueDictionary"/> class with serialized data
+		/// </summary>
+		/// <param name="info">An object containing the information required to 
+		/// serialize the dictionary</param>
+		/// <param name="context">A structure containing the source and destination 
+		/// of the serialized stream associated with the dictionary</param>
+		protected ValueDictionary(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+		}
         #endregion
 
-        #region Instance Methods
-        /// <summary>
+		#region Static Methods
+		private static string NullKey(string key)
+		{
+			// since Dictionary implementation doesn't
+			// allow null keys, we should make a substitution.
+			return key ?? String.Empty;
+		}
+		#endregion
+
+		#region Instance Methods
+		private void SafeAdd(string key, object value)
+		{
+			base.Add(NullKey(key), value);
+		}
+
+		private void SafeInsert(string key, object value)
+		{
+			base[NullKey(key)] = value;
+		}
+
+		private bool SafeContainsKey(string key)
+		{
+			return base.ContainsKey(NullKey(key));
+		}
+
+		private bool SafeRemove(string key)
+		{
+			return base.Remove(NullKey(key));
+		}
+
+		private bool SafeTryGetValue(string key, out object value)
+		{
+			return base.TryGetValue(NullKey(key), out value);
+		}
+
+		/// <summary>
         /// Gets the typed value with the 
         /// specified key.
         /// </summary>
@@ -84,8 +118,8 @@ namespace Radischevo.Wahha.Core
 			IFormatProvider provider)
         {
             object value;
-
-            if (!base.TryGetValue(key, out value))
+			
+            if (!SafeTryGetValue(key, out value))
                 return defaultValue;
 
             if (typeof(TValue) == typeof(bool) && value is string)
@@ -106,31 +140,31 @@ namespace Radischevo.Wahha.Core
         }
 
         /// <summary>
-        /// Merges two collections and returns a result
+        /// Merges two collections and returns a result.
         /// </summary>
         /// <param name="values">An object, whose property values 
-        /// will be used to populate the dictionary</param>
+        /// will be used to populate the dictionary.</param>
         public ValueDictionary Merge(object values)
         {
             return Merge(values, true);
         }
 
         /// <summary>
-        /// Merges two collections and returns a result
+        /// Merges two collections and returns a result.
         /// </summary>
         /// <param name="values">An object, whose property values 
-        /// will be used to populate the dictionary</param>
-        /// <param name="replace">True to replace existing values</param>
+        /// will be used to populate the dictionary.</param>
+        /// <param name="replace">True to replace existing values.</param>
         public ValueDictionary Merge(object values, bool replace)
         {
-            return Merge((IValueSet)new ValueDictionary(values), replace);
+			return Merge((IDictionary<string, object>)new ValueDictionary(values), replace);
         }
 
         /// <summary>
         /// Merges two collections and returns the result.
         /// </summary>
         /// <param name="dictionary">The collection, which keys and values 
-        /// should be merged with the dictionary</param>
+        /// should be merged with the dictionary.</param>
         public ValueDictionary Merge(IDictionary<string, object> dictionary)
         {
             return Merge(dictionary, true);
@@ -149,10 +183,10 @@ namespace Radischevo.Wahha.Core
 
             foreach (KeyValuePair<string, object> kvp in dictionary)
             {
-                if (ContainsKey(kvp.Key) && !replace)
+				if (SafeContainsKey(kvp.Key) && !replace)
                     continue;
 
-                this[kvp.Key] = kvp.Value;
+                SafeInsert(kvp.Key, kvp.Value);
             }
             return this;
         }
@@ -180,36 +214,36 @@ namespace Radischevo.Wahha.Core
 
             foreach (string key in values.Keys)
             {
-                if (ContainsKey(key) && !replace)
+                if (SafeContainsKey(key) && !replace)
                     continue;
 
-                this[key] = values[key];
+                SafeInsert(key, values[key]);
             }
             return this;
         }        
 
-        protected void AddValues(IValueSet values)
+        protected void Initialize(IValueSet values)
         {
             if (values == null)
                 return;
 
             foreach (string key in values.Keys)
-                base.Add(key, values[key]);
+                SafeAdd(key, values[key]);
         }
 
-        protected void AddValues(object values)
+        protected void Initialize(object values)
         {
             if (values == null)
                 return;
 
             foreach (KeyValuePair<string, object> kvp in
                 Converter.ToDictionary(values))
-                base.Add(kvp.Key, kvp.Value);
+                SafeAdd(kvp.Key, kvp.Value);
         }
         #endregion
 
         #region IValueSet Members
-        IEnumerable<string> IValueSet.Keys
+		IEnumerable<string> IValueSet.Keys
         {
             get 
             {
@@ -217,5 +251,5 @@ namespace Radischevo.Wahha.Core
             }
         }
         #endregion
-    }
+	}
 }

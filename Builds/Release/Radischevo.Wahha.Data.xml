@@ -1179,6 +1179,22 @@
             the collection.
             </summary>
         </member>
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.ToSubset``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates a subset over the provided collection.
+            </summary>
+            <typeparam name="T">The type of collection elements.</typeparam>
+            <param name="collection">The collection to wrap.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.ToSubset``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Creates a subset over the provided collection.
+            </summary>
+            <typeparam name="T">The type of collection elements.</typeparam>
+            <param name="collection">The collection to wrap.</param>
+            <param name="total">The total number of elements that can be retrieved 
+            from the sequence.</param>
+        </member>
         <member name="M:Radischevo.Wahha.Data.SubsetExtensions.Total``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Returns the total number of elements that can be 

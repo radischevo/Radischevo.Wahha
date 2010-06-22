@@ -11,6 +11,28 @@ namespace Radischevo.Wahha.Data
 	{
 		#region Extension Methods
 		/// <summary>
+		/// Creates a subset over the provided collection.
+		/// </summary>
+		/// <typeparam name="T">The type of collection elements.</typeparam>
+		/// <param name="collection">The collection to wrap.</param>
+		public static ISubset<T> ToSubset<T>(this IEnumerable<T> collection)
+		{
+			return ToSubset(collection, -1);
+		}
+
+		/// <summary>
+		/// Creates a subset over the provided collection.
+		/// </summary>
+		/// <typeparam name="T">The type of collection elements.</typeparam>
+		/// <param name="collection">The collection to wrap.</param>
+		/// <param name="total">The total number of elements that can be retrieved 
+		/// from the sequence.</param>
+		public static ISubset<T> ToSubset<T>(this IEnumerable<T> collection, int total)
+		{
+			return new Subset<T>(collection, total);
+		}
+
+		/// <summary>
 		/// Returns the total number of elements that can be 
 		/// retrieved from the sequence.
 		/// </summary>

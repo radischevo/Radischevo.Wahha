@@ -68,8 +68,8 @@ namespace Radischevo.Wahha.Web
             }
             #endregion
 
-            #region Instance Methods
-            public TValue GetValue<TValue>(string key, TValue defaultValue, 
+			#region Instance Methods
+			public TValue GetValue<TValue>(string key, TValue defaultValue, 
 				IFormatProvider provider)
             {
                 if (!ContainsKey(key))
