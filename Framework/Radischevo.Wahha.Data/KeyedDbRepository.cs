@@ -175,11 +175,9 @@ namespace Radischevo.Wahha.Data
 		{
 			return DataProvider.Execute(command).Using(CommandBehavior.CloseConnection)
 				.AsDataReader(reader => {
-					IDbDataRecord record = reader.SingleOrDefault();
-
-					if (record != null)
-						return Materialize(record, isComplete);
-
+					if(reader.Read())
+						return Materialize(reader, isComplete);
+					
 					return null;
 				});
 		}
