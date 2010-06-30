@@ -175,7 +175,7 @@ namespace Radischevo.Wahha.Web.Mvc.Ajax
         {
             TextWriter writer = _context.Context.Response.Output;
             HtmlElementBuilder builder = new HtmlElementBuilder("script", 
-				new { Type = "application/javascript" }, String.Empty);
+				new { Type = "text/javascript" }, String.Empty);
 
             foreach (string path in _includes.Values)
             {

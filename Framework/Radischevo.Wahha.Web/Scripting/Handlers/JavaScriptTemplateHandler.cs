@@ -243,7 +243,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 				new UTF8Encoding(false).GetString(encodedBytes));
 
 			string physicalPath = context.Server.MapPath(info.VirtualPath);
-			context.Response.ContentType = "application/javascript";
+			context.Response.ContentType = "text/javascript";
 			context.Response.AddFileDependency(physicalPath);
 			SetHttpCachePolicy(context.Response.Cache, info);
 
