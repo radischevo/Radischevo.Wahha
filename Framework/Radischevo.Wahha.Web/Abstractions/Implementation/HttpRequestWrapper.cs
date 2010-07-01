@@ -388,7 +388,7 @@ namespace Radischevo.Wahha.Web.Abstractions
 				return false;
 
 			return String.Equals(request.Headers[AjaxHeaderName],
-				AjaxHeaderValue, StringComparison.Ordinal);
+				AjaxHeaderValue, StringComparison.OrdinalIgnoreCase);
 		}
 		#endregion
 
