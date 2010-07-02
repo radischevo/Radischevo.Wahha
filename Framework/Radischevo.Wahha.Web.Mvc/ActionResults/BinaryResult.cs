@@ -2,6 +2,7 @@
 using System.Web;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -72,7 +73,11 @@ namespace Radischevo.Wahha.Web.Mvc
             if (!String.IsNullOrEmpty(_fileName))
                 context.Context.Response.AddHeader("content-disposition",
                     String.Concat("attachment; filename=", HttpUtility.UrlPathEncode(_fileName)));
+
+			Write(context.Context);
         }
+
+		protected abstract void Write(HttpContextBase context);
         #endregion
     }
 }

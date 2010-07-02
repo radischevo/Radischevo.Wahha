@@ -85,27 +85,24 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
-        public override void Execute(ControllerContext context)
+        protected override void Write(HttpContextBase context)
         {
-            Precondition.Require(context, () => Error.ArgumentNull("context"));
-            base.Execute(context);
-
             if (_contentEncoding != null)
-                context.Context.Response.ContentEncoding = _contentEncoding;
+                context.Response.ContentEncoding = _contentEncoding;
 
-            string filePath = context.Context.Server.MapPath(
-				ResolvePath(context.Context, _path));
+            string filePath = context.Server.MapPath(
+				ResolvePath(context, _path));
 
             FileInfo fi = new FileInfo(filePath);
 
             if (fi.Exists)
             {
-                context.Context.Response.AddHeader("Last-Modified",
+                context.Response.AddHeader("Last-Modified",
                     fi.LastWriteTimeUtc.ToString("r"));
-                context.Context.Response.AddHeader("Content-Length",
+                context.Response.AddHeader("Content-Length",
                     fi.Length.ToString());
             }
-            context.Context.Response.TransmitFile(filePath);
+            context.Response.TransmitFile(filePath);
         }
         #endregion
     }

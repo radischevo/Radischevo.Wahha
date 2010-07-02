@@ -2,6 +2,7 @@
 using System.IO;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -66,12 +67,9 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Methods
-        public override void Execute(ControllerContext context)
+        protected override void Write(HttpContextBase context)
         {
-            Precondition.Require(context, () => Error.ArgumentNull("context"));
-            base.Execute(context);
-
-            Stream output = context.Context.Response.OutputStream;
+            Stream output = context.Response.OutputStream;
             using (_stream)
             {
                 byte[] buffer = new byte[4096];
