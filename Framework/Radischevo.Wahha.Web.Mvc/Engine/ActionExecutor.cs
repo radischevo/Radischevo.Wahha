@@ -314,8 +314,10 @@ namespace Radischevo.Wahha.Web.Mvc
                 return false;
 
             ActionFilterInfo filters = GetFilters(context, currentAction);
-            context.Parameters.Merge(GetParameterValues(context, currentAction))
-                .Merge(values);
+
+			context.Parameters.Merge(values); 
+			// we should make sure that all the values were bound using the model binders
+            context.Parameters.Merge(GetParameterValues(context, currentAction));
 
             try
             {

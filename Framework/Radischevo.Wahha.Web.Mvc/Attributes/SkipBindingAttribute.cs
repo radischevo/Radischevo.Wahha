@@ -18,7 +18,17 @@ namespace Radischevo.Wahha.Web.Mvc
             #region Instance Methods
             public object Bind(BindingContext context)
             {
-                return null;
+				// Rewrite the provided context to ensure all the parameters 
+				// provided by user is set correctly.
+				BindingContext inner = new BindingContext(context, 
+					context.ModelType, context.ModelName, ParameterSource.Custom, 
+					null, null, context.Errors);
+
+				object value;
+				if (inner.TryGetValue(out value))
+					return value;
+
+				return null;
             }
             #endregion
         }

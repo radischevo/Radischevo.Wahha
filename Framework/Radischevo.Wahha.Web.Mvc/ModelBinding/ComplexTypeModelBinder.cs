@@ -189,10 +189,25 @@ namespace Radischevo.Wahha.Web.Mvc
         {
         }
 
+		private object BindObject(BindingContext context)
+		{
+			// if the model type is System.Object, 
+			// we can not bind it using the default strategy,
+			// so here we return the only value we have.
+
+			object value;
+			if (context.TryGetValue(out value))
+				return value;
+
+			return null;
+		}
+
 		protected override object ExecuteBind(BindingContext context)
 		{
-			object result = CreateModelInstance(context);
+			if (context.ModelType == typeof(object))
+				return BindObject(context);
 
+			object result = CreateModelInstance(context);
 			if (result == null)
 				return null;
 

@@ -207,7 +207,10 @@ namespace Radischevo.Wahha.Web.Mvc
                 data.Merge(parameters.Form).Merge(new HttpPostedFileSet(context.Context.Request.Files));
 
             if ((source & ParameterSource.Url) == ParameterSource.Url)
-                data.Merge((IValueSet)context.RouteData.Values);
+                data.Merge((IDictionary<string, object>)context.RouteData.Values);
+
+			if ((source & ParameterSource.Custom) == ParameterSource.Custom)
+				data.Merge((IDictionary<string, object>)context.Parameters);
 
             return data;
         }
