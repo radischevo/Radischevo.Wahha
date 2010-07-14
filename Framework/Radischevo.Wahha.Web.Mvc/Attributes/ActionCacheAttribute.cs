@@ -94,54 +94,52 @@ namespace Radischevo.Wahha.Web.Mvc
         }
         #endregion
 
-        #region Static Methods
-        private static string CreateCacheKey(ActionExecutionContext context, 
-            bool varyByUser, string[] keys, bool matchAny)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(context.Action.Method.ReflectedType.FullName)
-                .Append("::").Append(ActionMethodSelector.GetNameOrAlias(context.Action.Method));
-
-            sb.Append("=>{");
-
-            IEnumerable<string> collection = (matchAny) ? 
-                (IEnumerable<string>)context.Context.Parameters.Keys : keys;
-
-            foreach (string key in collection)
-                sb.Append(GetParameterKey(context, key));
-
-            if (varyByUser)
-				sb.Append("[UserIdentity=").Append(GetUserIdentity(context.HttpContext)).Append("]");
-
-            sb.Append("}");
-            return FormsAuthentication.HashPasswordForStoringInConfigFile(sb.ToString(), "MD5");
-        }
-
-        private static string GetUserIdentity(HttpContextBase context)
-        {
-            if (context.User == null || context.User.Identity == null)
-                return "<NULL>";
-
-            if (context.User.Identity.IsAuthenticated)
-                return context.User.Identity.Name;
-
-            return "<ANONYMOUS-USER>";
-        }
-
-        private static string GetParameterKey(ActionExecutionContext context, string parameterName)
-        {
-            object value;
-            context.Context.Parameters.TryGetValue(parameterName, out value);
-            
-            return String.Concat("[", parameterName, "=", 
-                (value == null) ? "<NULL>" : Convert.ToString(value, CultureInfo.InvariantCulture), "]");
-        }
-        #endregion
-
         #region Instance Methods
 		protected virtual string CreateCacheKey(ActionExecutionContext context)
 		{
-			return CreateCacheKey(context, _varyByUser, _keys, _matchAnyKey);
+			StringBuilder sb = new StringBuilder();
+			sb.Append(context.Action.Method.ReflectedType.FullName)
+				.Append("::").Append(ActionMethodSelector.GetNameOrAlias(context.Action.Method));
+
+			sb.Append("=>{");
+
+			IEnumerable<string> collection = (_matchAnyKey) ?
+				(IEnumerable<string>)context.Context.Parameters.Keys : _keys;
+
+			foreach (string key in collection)
+				sb.Append(CreateParameterKey(context.Context.Parameters, key));
+
+			if (_varyByUser)
+				sb.Append("[UserIdentity=").Append(GetUserIdentity(context.HttpContext)).Append("]");
+
+			sb.Append("}");
+			return FormsAuthentication.HashPasswordForStoringInConfigFile(sb.ToString(), "MD5");
+		}
+
+		protected virtual string GetUserIdentity(HttpContextBase context)
+		{
+			if (context.User == null || context.User.Identity == null)
+				return "<NULL>";
+
+			if (context.User.Identity.IsAuthenticated)
+				return context.User.Identity.Name;
+
+			return "<ANONYMOUS-USER>";
+		}
+
+		protected virtual string CreateParameterKey(ValueDictionary parameters, 
+			string parameterName)
+		{
+			object value;
+			parameters.TryGetValue(parameterName, out value);
+
+			string stringValue = (value == null) ? "<NULL>" : Convert.ToString(value, CultureInfo.InvariantCulture);
+			string typeName = (value == null) ? null : value.GetType().FullName;
+
+			if (String.Equals(stringValue, typeName, StringComparison.OrdinalIgnoreCase))
+				return String.Empty;
+
+			return String.Concat("[", parameterName, "=", stringValue, "]");
 		}
 
 		protected virtual TValue GetCachedValue<TValue>(string key)
