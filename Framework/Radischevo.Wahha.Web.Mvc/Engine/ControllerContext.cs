@@ -18,6 +18,7 @@ namespace Radischevo.Wahha.Web.Mvc
 	{
 		#region Constants
 		public const string ParentContextKey = "ParentActionContext";
+		public const string ParentCounterKey = "ParentActionCounter";
 		#endregion
 
 		#region Instance Fields

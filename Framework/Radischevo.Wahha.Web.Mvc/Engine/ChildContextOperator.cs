@@ -17,7 +17,7 @@ namespace Radischevo.Wahha.Web.Mvc
 				Error.ArgumentNull("context"));
 
 			_context = context;
-			_context.RouteData.Tokens[ControllerContext.ParentContextKey] = context;
+			Init();
 		}
 		#endregion
 
@@ -32,9 +32,26 @@ namespace Radischevo.Wahha.Web.Mvc
 		#endregion
 
 		#region Instance Methods
+		private void Init()
+		{
+			int counter = _context.RouteData.GetValue<int>(ControllerContext.ParentCounterKey, 0);
+			
+			_context.RouteData.Tokens[ControllerContext.ParentContextKey] = _context;
+			_context.RouteData.Tokens[ControllerContext.ParentCounterKey] = ++counter;
+		}
+
 		public void Dispose()
 		{
-			_context.RouteData.Tokens.Remove(ControllerContext.ParentContextKey);
+			int counter = _context.RouteData.Tokens.GetValue<int>(
+				ControllerContext.ParentCounterKey, 0);
+
+			if (--counter == 0)
+			{
+				_context.RouteData.Tokens.Remove(ControllerContext.ParentContextKey);
+				_context.RouteData.Tokens.Remove(ControllerContext.ParentCounterKey);
+			}
+			else
+				_context.RouteData.Tokens[ControllerContext.ParentCounterKey] = counter;
 		}
 		#endregion
 	}
