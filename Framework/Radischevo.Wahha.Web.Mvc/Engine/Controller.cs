@@ -199,10 +199,11 @@ namespace Radischevo.Wahha.Web.Mvc
 				Controller c = (controller as Controller);
 				Precondition.Require(c, () => Error.TargetMustSubclassController(controllerName));
 
-				c.InitializeChildRequest(Context);
-
-				if (!c.ActionExecutor.InvokeAction(c.Context, actionName, arguments))
-					c.HandleUnknownAction(actionName);
+				using (ChildContextOperator child = c.InitializeChildRequest(Context))
+				{
+					if (!c.ActionExecutor.InvokeAction(c.Context, actionName, arguments))
+						c.HandleUnknownAction(actionName);
+				}
 			}
 			catch (HttpException ex)
 			{

@@ -231,17 +231,16 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual void Initialize(RequestContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-
             _context = new ControllerContext(context, this);
         }
 
-        protected virtual void InitializeChildRequest(ControllerContext context)
+        protected virtual ChildContextOperator InitializeChildRequest(ControllerContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-			context.RouteData.Tokens[ControllerContext.ParentContextKey] = context;
 			_tempData = context.Controller.TempData;
-
 			Initialize(context);
+
+			return new ChildContextOperator(context);
         }
 
         protected abstract void ProcessRequest();

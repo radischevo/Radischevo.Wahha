@@ -147,6 +147,7 @@
     <Compile Include="Engine\ActionFilterInfo.cs" />
     <Compile Include="Engine\ActionSelector.cs" />
     <Compile Include="Engine\AssemblyResourceViewEngine.cs" />
+    <Compile Include="Engine\ChildContextOperator.cs" />
     <Compile Include="Helpers\ModelStateSerializer.cs" />
     <Compile Include="Helpers\SerializationExtensions.cs" />
     <Compile Include="Helpers\SerializationMode.cs" />

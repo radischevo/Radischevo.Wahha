@@ -27,7 +27,8 @@ namespace Radischevo.Wahha.Web.Mvc.UI
                 string controllerName, string actionName, ValueDictionary arguments)
             {
                 Precondition.Require(context, () => Error.ArgumentNull("context"));
-                InitializeChildRequest(context);
+				
+				Initialize(context);
                 Include(controllerName, actionName, arguments);
             }
 
@@ -37,7 +38,8 @@ namespace Radischevo.Wahha.Web.Mvc.UI
             {
                 Precondition.Require(action, () => Error.ArgumentNull("action"));
                 Precondition.Require(context, () => Error.ArgumentNull("context"));
-                InitializeChildRequest(context);
+
+				Initialize(context);
                 Include<TController>(action);
             }            
             #endregion
