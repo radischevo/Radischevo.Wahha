@@ -11,7 +11,6 @@ using Radischevo.Wahha.Web.Routing;
 /// </summary>
 public class SmallComponent : Controller
 {
-    [ActionCache("message", Duration = 10, VaryByUser = true)]
     public ActionResult WriteMessage(string message)
     {
         return View("Bar", message);

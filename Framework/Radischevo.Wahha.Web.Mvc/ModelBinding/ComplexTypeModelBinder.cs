@@ -202,12 +202,29 @@ namespace Radischevo.Wahha.Web.Mvc
 			return null;
 		}
 
+		private bool TryBindExactValue(BindingContext context, out object value)
+		{
+			value = BindObject(context);
+			if (context.ModelType == typeof(object))
+				return true;
+
+			if (value == null)
+				return false;
+
+			Type valueType = value.GetType();
+			if (context.ModelType.IsAssignableFrom(valueType))
+				return true;
+
+			return false;
+		}
+
 		protected override object ExecuteBind(BindingContext context)
 		{
-			if (context.ModelType == typeof(object))
-				return BindObject(context);
+			object result;
+			if (TryBindExactValue(context, out result))
+				return result;
 
-			object result = CreateModelInstance(context);
+			result = CreateModelInstance(context);
 			if (result == null)
 				return null;
 
