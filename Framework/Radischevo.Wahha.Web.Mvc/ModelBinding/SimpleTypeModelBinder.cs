@@ -78,6 +78,13 @@ namespace Radischevo.Wahha.Web.Mvc
 			return BindValue(context, CultureInfo.CurrentCulture);
 		}
 
+		protected override bool TryBindExactValue(BindingContext context, out object value)
+		{
+			// here we need to override the default behaviour.
+			value = null;
+			return false;
+		}
+
 		protected virtual object BindValue(BindingContext context, CultureInfo culture)
 		{
 			object value = ExtractValue(context);
