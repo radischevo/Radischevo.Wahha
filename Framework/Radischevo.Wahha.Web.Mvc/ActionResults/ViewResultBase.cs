@@ -139,27 +139,27 @@ namespace Radischevo.Wahha.Web.Mvc
         public override void Execute(ControllerContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-            if (String.IsNullOrEmpty(_viewName))
-                _viewName = context.RouteData.GetRequiredValue<string>("action");
+            if (String.IsNullOrEmpty(ViewName))
+                ViewName = context.RouteData.GetRequiredValue<string>("action");
 
             ViewEngineResult result = null;
-            if (_view == null)
+            if (View == null)
             {
                 result = FindView(context);
-                _view = result.View;
+                View = result.View;
             }
 
-            ViewContext vc = new ViewContext(context, _view, _viewData, _tempData);
-            vc.Errors = _errors;
+            ViewContext vc = new ViewContext(context, View, ViewData, TempData);
+            vc.Errors = Errors;
 
             try
             {
-                _view.Render(vc, context.Context.Response.Output);
+                View.Render(vc, context.Context.Response.Output);
             }
             finally
             {
                 if(result != null)
-                    result.Engine.ReleaseView(context, _view);
+                    result.Engine.ReleaseView(context, View);
             }
         }
 
