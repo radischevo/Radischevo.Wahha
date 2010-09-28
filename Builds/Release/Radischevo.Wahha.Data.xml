@@ -1179,6 +1179,108 @@
             the collection.
             </summary>
         </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
+            <summary>
+            Creates a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.KeyedDbRepository`2"/> class.
+            </summary>
+            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
+            used to transform database query results into objects.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.#ctor(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.IDbMaterializer{`0})">
+            <summary>
+            Creates a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.KeyedDbRepository`2"/> class.
+            </summary>
+            <param name="dataProvider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            used to perform database queries.</param>
+            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
+            used to transform database query results into objects.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.CreateEntitySelector(`1)">
+            <summary>
+            When overridden in a derived class, creates a 
+            <see cref="T:Radischevo.Wahha.Data.DbCommandDescriptor"/> used to 
+            select a single entity by its unique key.
+            </summary>
+            <param name="key">The unique key of the entity.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExtractKey(`0)">
+            <summary>
+            When overridden in a derived class, gets the unique key 
+            value of the provided entity.
+            </summary>
+            <param name="entity">The entity to extract key from.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.Materialize(Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Creates and materializes a new entity object using the 
+            provided <paramref name="values">data source</paramref>.
+            </summary>
+            <param name="values">An <see cref="T:Radischevo.Wahha.Core.IValueSet"/> 
+            containing the data for entity materialization.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.Load(`0)">
+            <summary>
+            Executes the select query and updates the 
+            data properties of the provided entity.
+            </summary>
+            <param name="entity">The entity to update.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExecuteSelect(Radischevo.Wahha.Data.DbCommandDescriptor)">
+            <summary>
+            Executes the select query described by the provided <paramref name="command"/> 
+            and transforms the query result into the collection of entities.
+            </summary>
+            <param name="command">The unique key of the entity.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExecuteSingle(`1)">
+            <summary>
+            Selects a single entity using the provided unique key.
+            </summary>
+            <param name="key">An object describing the command to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExecuteLoad(`0,Radischevo.Wahha.Data.DbCommandDescriptor)">
+            <summary>
+            Executes the select query and updates the data properties of the provided 
+            entity using the first element of the result set.
+            </summary>
+            <param name="entity">The entity to update.</param>
+            <param name="command">An object describing the command to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExecuteSingle(Radischevo.Wahha.Data.DbCommandDescriptor)">
+            <summary>
+            Executes the select query described by the provided <paramref name="command"/> 
+            and transforms the first element of the resultset into entity.
+            </summary>
+            <param name="command">An object describing the command to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.Dispose(System.Boolean)">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or
+            resetting unmanaged resources.
+            </summary>
+            <param name="disposing">A value indicating whether 
+            the disposal is called explicitly.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.KeyedDbRepository`2.SelectBufferSize">
+            <summary>
+            Gets the initial size of the entity collections.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.KeyedDbRepository`2.Materializer">
+            <summary>
+            Gets or sets the <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
+            used to transform database query results into objects.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.KeyedDbRepository`2.DataProvider">
+            <summary>
+            Gets or sets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            used to perform database queries. If no data provider is set, 
+            the default instance will be used.
+            </summary>
+        </member>
         <member name="M:Radischevo.Wahha.Data.SubsetExtensions.ToSubset``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Creates a subset over the provided collection.
