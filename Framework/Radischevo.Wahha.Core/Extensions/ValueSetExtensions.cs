@@ -79,6 +79,9 @@ namespace Radischevo.Wahha.Core
 		public static bool ContainsAny(this IValueSet values, 
 			IEqualityComparer<string> comparer, params string[] keys)
 		{
+			if (keys == null || keys.Length < 1)
+				return ContainsAny(values);
+
 			foreach (string key in keys)
 				if (values.Keys.Contains(key, comparer))
 					return true;

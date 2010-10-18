@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 using Radischevo.Wahha.Core;
 
@@ -240,7 +241,9 @@ namespace Radischevo.Wahha.Data
         public IEnumerable<TEntity> AsEntitySet<TEntity>(Func<IDbDataRecord, TEntity> converter)
         {
             Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
-            return new ObjectReader<TEntity>(Execute<IDbDataReader>(DataReaderConverter), converter);
+
+			return Execute((command) => DataReaderConverter(command, reader => 
+				new ObjectReader<TEntity>(reader, converter).ToList()));
         }
 
 		/// <summary>
@@ -256,7 +259,8 @@ namespace Radischevo.Wahha.Data
 			Precondition.Require(_command, () => Error.CommandIsNotInitialized("Command"));
 			Precondition.Require(materializer, () => Error.ArgumentNull("materializer"));
 
-			return new ObjectReader<TEntity>(Execute<IDbDataReader>(DataReaderConverter), materializer.Materialize);
+			return Execute((command) => DataReaderConverter(command, reader =>
+				new ObjectReader<TEntity>(reader, materializer.Materialize).ToList()));
 		}
         #endregion
 

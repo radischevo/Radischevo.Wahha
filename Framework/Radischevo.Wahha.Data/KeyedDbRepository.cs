@@ -41,8 +41,6 @@ namespace Radischevo.Wahha.Data
 		{
 			Precondition.Require(materializer, () => Error.ArgumentNull("materializer"));
 
-			Dictionary<string, object> d = new Dictionary<string, object>();
-
 			_dataProvider = dataProvider;
 			_materializer = materializer;
 		}

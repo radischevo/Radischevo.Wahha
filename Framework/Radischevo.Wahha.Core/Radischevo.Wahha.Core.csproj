@@ -75,9 +75,15 @@
     <Compile Include="Async\Trigger.cs" />
     <Compile Include="Async\TriggerListener.cs" />
     <Compile Include="Async\WaitFor.cs" />
+    <Compile Include="Configurations\Configuration.cs" />
+    <Compile Include="Configurations\ServiceLocationConfigurationElement.cs" />
+    <Compile Include="Configurations\ServiceLocationSettings.cs" />
+    <Compile Include="Configurations\SettingsSection.cs" />
     <Compile Include="Cryptography\Crc32.cs" />
     <Compile Include="Cryptography\Crc64.cs" />
     <Compile Include="Cryptography\Elf32.cs" />
+    <Compile Include="DefaultServiceLocator.cs" />
+    <Compile Include="DelegatedServiceLocator.cs" />
     <Compile Include="EnumerableLink`1.cs" />
     <Compile Include="Expressions\BinaryExpressionFingerprint.cs" />
     <Compile Include="Expressions\CachedExpressionCompiler.cs" />
@@ -96,6 +102,7 @@
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\SubsetWrapper.cs" />
     <Compile Include="Extensions\TransformWrapper.cs" />
+    <Compile Include="Interfaces\IServiceLocator.cs" />
     <Compile Include="Interfaces\IEnumerableLink`1.cs" />
     <Compile Include="Interfaces\ILink`1.cs" />
     <Compile Include="Link`1.cs" />
@@ -134,6 +141,8 @@
     <Compile Include="Reflection\DynamicAccessor.cs" />
     <Compile Include="Reflection\FieldAccessor.cs" />
     <Compile Include="Reflection\PropertyAccessor.cs" />
+    <Compile Include="ServiceLocator.cs" />
+    <Compile Include="ServiceLocatorExtensions.cs" />
     <Compile Include="Tuple.cs" />
     <Compile Include="ValueDictionary.cs" />
   </ItemGroup>

@@ -132,6 +132,9 @@
   <data name="Error_EncodedStringLengthMustBeOdd" xml:space="preserve">
     <value>The length of the base-16 encoded string must be an odd number.</value>
   </data>
+  <data name="Error_IncompatibleServiceLocatorType" xml:space="preserve">
+    <value>The service locator type '{0}' must implement the IServiceLocator interface.</value>
+  </data>
   <data name="Error_InvalidBindingExpressionFormat" xml:space="preserve">
     <value>Specified binding expression is invalid.</value>
   </data>
@@ -173,5 +176,8 @@
   </data>
   <data name="Error_TargetTypeIsNotNullable" xml:space="preserve">
     <value>Could not convert the '{0}' argument to the specified type. Type'{1}' does not allow null values.</value>
+  </data>
+  <data name="Error_UnableToLoadConfiguration" xml:space="preserve">
+    <value>Could not parse the configuration file. See the inner exception for details.</value>
   </data>
 </root>

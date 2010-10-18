@@ -76,7 +76,7 @@ namespace Radischevo.Wahha.Data.Configurations
                 if (!typeof(IDbDataProviderFactory).IsAssignableFrom(type))
                     throw Error.IncompatibleDataProviderFactoryType(type);
 
-                _factory = (IDbDataProviderFactory)Activator.CreateInstance(type);
+                _factory = (IDbDataProviderFactory)ServiceLocator.Instance.GetService(type);
             }
             else
                 _factory = new DefaultDbDataProviderFactory();

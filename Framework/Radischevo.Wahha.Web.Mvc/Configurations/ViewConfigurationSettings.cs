@@ -39,7 +39,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             if (!typeof(IViewEngine).IsAssignableFrom(type))
                 throw Error.IncompatibleViewEngineType(type);
 
-            IViewEngine engine = (IViewEngine)Activator.CreateInstance(type);
+			IViewEngine engine = (IViewEngine)ServiceLocator.Instance.GetService(type);
             if (engine == null)
                 throw Error.IncompatibleViewEngineType(type);
 

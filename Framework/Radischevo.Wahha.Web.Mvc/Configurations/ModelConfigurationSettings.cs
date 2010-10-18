@@ -62,7 +62,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             if (!typeof(IModelBinder).IsAssignableFrom(type))
                 throw Error.IncompatibleModelBinderType(type);
 
-            return (IModelBinder)Activator.CreateInstance(type);
+			return (IModelBinder)ServiceLocator.Instance.GetService(type);
         }
 
         private static ModelMetadataProvider CreateMetadataProvider(Type type)
@@ -71,7 +71,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             if (!typeof(ModelMetadataProvider).IsAssignableFrom(type))
                 throw Error.IncompatibleModelMetadataProviderType(type);
 
-            ModelMetadataProvider p = (ModelMetadataProvider)Activator.CreateInstance(type);
+			ModelMetadataProvider p = (ModelMetadataProvider)ServiceLocator.Instance.GetService(type);
             p.Init();
 
             return p;
@@ -83,7 +83,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             if (!typeof(ModelValidatorProvider).IsAssignableFrom(type))
                 throw Error.IncompatibleModelValidatorProviderType(type);
 
-            ModelValidatorProvider p = (ModelValidatorProvider)Activator.CreateInstance(type);
+			ModelValidatorProvider p = (ModelValidatorProvider)ServiceLocator.Instance.GetService(type);
             p.Init();
 
             return p;

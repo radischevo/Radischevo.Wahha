@@ -65,10 +65,7 @@ namespace Radischevo.Wahha.Web.Mvc
             if (!typeof(IControllerFactory).IsAssignableFrom(type))
                 throw Error.IncompatibleControllerFactoryType(type);
 
-            _factoryThunk = delegate()
-            {
-                return (IControllerFactory)Activator.CreateInstance(type);
-            };
+            _factoryThunk = () => (IControllerFactory)ServiceLocator.Instance.GetService(type);
         }
         #endregion
     }

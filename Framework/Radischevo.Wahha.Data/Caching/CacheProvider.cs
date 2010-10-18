@@ -57,13 +57,8 @@ namespace Radischevo.Wahha.Data.Caching
         {
             Precondition.Require(type, () => Error.ArgumentNull("type"));
 
-            if (type.IsAbstract || type.IsInterface ||
-                type.IsGenericTypeDefinition || type.IsGenericType ||
-                type.GetInterface(typeof(ICacheProvider).Name) == null ||
+            if (!typeof(ICacheProvider).IsAssignableFrom(type) ||
                 type == typeof(CacheProvider))
-                return false;
-
-            if (type.GetConstructor(Type.EmptyTypes) == null)
                 return false;
 
             return true;
@@ -76,7 +71,7 @@ namespace Radischevo.Wahha.Data.Caching
             if (!IsProvider(providerType))
                 throw Error.IncompatibleCacheProviderType(providerType);
 
-            ICacheProvider provider = (ICacheProvider)Activator.CreateInstance(providerType);
+			ICacheProvider provider = (ICacheProvider)ServiceLocator.Instance.GetService(providerType);
             provider.Init(settings);
 
             return new CacheProvider(provider, settings.GetValue<int>("timeout", 
@@ -84,9 +79,9 @@ namespace Radischevo.Wahha.Data.Caching
         }
 
         public static CacheProvider Create<TProvider>(IValueSet settings)
-            where TProvider : ICacheProvider, new()
+            where TProvider : ICacheProvider
         {
-            ICacheProvider provider = new TProvider();
+			ICacheProvider provider = ServiceLocator.Instance.GetService<TProvider>();
             provider.Init(settings);
 
 			return new CacheProvider(provider, settings.GetValue<int>("timeout", 

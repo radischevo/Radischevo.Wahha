@@ -136,5 +136,17 @@ namespace Radischevo.Wahha.Core
 			return new TimeoutException(String.Format(
 				Res.Error_OperationTimeout, timeout));
 		}
+
+		internal static Exception UnableToLoadConfiguration(Exception inner)
+		{
+			return new InvalidOperationException(
+				Res.Error_UnableToLoadConfiguration, inner);
+		}
+
+		internal static Exception IncompatibleServiceLocatorType(Type type)
+		{
+			return new ArgumentException(String.Format(
+				Res.Error_IncompatibleServiceLocatorType, type.Name));
+		}
 	}
 }

@@ -535,6 +535,11 @@
               Looks up a localized string similar to The length of the base-16 encoded string must be an odd number..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_IncompatibleServiceLocatorType">
+            <summary>
+              Looks up a localized string similar to The service locator type &apos;{0}&apos; must implement the IServiceLocator interface..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_InvalidBindingExpressionFormat">
             <summary>
               Looks up a localized string similar to Specified binding expression is invalid..
@@ -603,6 +608,11 @@
         <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_TargetTypeIsNotNullable">
             <summary>
               Looks up a localized string similar to Could not convert the &apos;{0}&apos; argument to the specified type. Type&apos;{1}&apos; does not allow null values..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_UnableToLoadConfiguration">
+            <summary>
+              Looks up a localized string similar to Could not parse the configuration file. See the inner exception for details..
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Core.Precondition">
@@ -977,6 +987,23 @@
         <member name="T:Radischevo.Wahha.Core.Async.Trigger">
             <summary>
             Provides a trigger for the <see cref="T:Radischevo.Wahha.Core.Async.TriggerListener"/> class.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Configurations.Configuration">
+            <summary>
+            Represents module configuration 
+            settings.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Configurations.Configuration.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.Configurations.Configuration"/> class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Configurations.Configuration.Instance">
+            <summary>
+            Gets the current module configuration.
             </summary>
         </member>
     </members>

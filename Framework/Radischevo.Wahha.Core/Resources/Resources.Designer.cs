@@ -106,6 +106,15 @@ namespace Radischevo.Wahha.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The service locator type &apos;{0}&apos; must implement the IServiceLocator interface..
+        /// </summary>
+        internal static string Error_IncompatibleServiceLocatorType {
+            get {
+                return ResourceManager.GetString("Error_IncompatibleServiceLocatorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specified binding expression is invalid..
         /// </summary>
         internal static string Error_InvalidBindingExpressionFormat {
@@ -228,6 +237,15 @@ namespace Radischevo.Wahha.Core.Resources {
         internal static string Error_TargetTypeIsNotNullable {
             get {
                 return ResourceManager.GetString("Error_TargetTypeIsNotNullable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not parse the configuration file. See the inner exception for details..
+        /// </summary>
+        internal static string Error_UnableToLoadConfiguration {
+            get {
+                return ResourceManager.GetString("Error_UnableToLoadConfiguration", resourceCulture);
             }
         }
     }

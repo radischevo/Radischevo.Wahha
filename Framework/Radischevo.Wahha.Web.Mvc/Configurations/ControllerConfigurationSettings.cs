@@ -53,7 +53,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
                 if (!typeof(IControllerFactory).IsAssignableFrom(type))
                     throw Error.IncompatibleControllerFactoryType(type);
 
-                _factory = (IControllerFactory)Activator.CreateInstance(type);
+				_factory = (IControllerFactory)ServiceLocator.Instance.GetService(type);
             }
             else
             {

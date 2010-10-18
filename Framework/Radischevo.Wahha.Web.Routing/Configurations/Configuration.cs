@@ -96,7 +96,7 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
             if (!typeof(IRouteTableProvider).IsAssignableFrom(providerType))
                 throw Error.IncompatibleRouteTableProvider(providerType);
 
-            _provider = (IRouteTableProvider)Activator.CreateInstance(providerType);
+            _provider = (IRouteTableProvider)ServiceLocator.Instance.GetService(providerType);
 
             ValueDictionary settings = new ValueDictionary();
             foreach (string key in element.Settings.AllKeys)
@@ -105,8 +105,7 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
             _provider.Init(settings);
         }
 
-        private void LoadRouteTable(
-            RouteConfigurationElementCollection routes)
+        private void LoadRouteTable(RouteConfigurationElementCollection routes)
         {
             if (routes == null)
                 return;

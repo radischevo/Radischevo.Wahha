@@ -301,7 +301,7 @@ namespace Radischevo.Wahha.Data
         }
         #endregion
 
-        #region Static Methods
+        #region Helper Methods
         /// <summary>
         /// Checks whether the <paramref name="connection"/> 
         /// is available

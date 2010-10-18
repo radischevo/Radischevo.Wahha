@@ -16,13 +16,8 @@ namespace Radischevo.Wahha.Data
         #region Static Methods
         private static bool IsDataProvider(Type type)
         {
-            if (type.IsAbstract || type.IsInterface ||
-                type.IsGenericTypeDefinition || type.IsGenericType ||
-                type.GetInterface(typeof(IDbDataProvider).Name) == null ||
+            if (!typeof(IDbDataProvider).IsAssignableFrom(type) ||
                 type == typeof(DbDataProvider))
-                return false;
-
-            if (type.GetConstructor(Type.EmptyTypes) == null)
                 return false;
 
             return true;
@@ -39,7 +34,7 @@ namespace Radischevo.Wahha.Data
 
             try
             {
-                return (IDbDataProvider)Activator.CreateInstance(providerType);
+				return (IDbDataProvider)ServiceLocator.Instance.GetService(providerType);
             }
             catch (TargetInvocationException te)
             {
