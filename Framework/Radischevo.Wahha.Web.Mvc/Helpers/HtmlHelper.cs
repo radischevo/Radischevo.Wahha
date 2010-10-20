@@ -23,6 +23,12 @@ namespace Radischevo.Wahha.Web.Mvc.UI
             #endregion
 
             #region Instance Methods
+			public void RenderView(ControllerContext context,
+				string viewName, object model, ViewDataDictionary viewData)
+			{
+				View(viewName, model, viewData).Execute(context);
+			}
+
             public void RenderAction(ControllerContext context, 
                 string controllerName, string actionName, ValueDictionary arguments)
             {
@@ -277,6 +283,39 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         #endregion
 
         #region Component Rendering Methods
+		/// <summary>
+		/// Renders the specified view against the current context.
+		/// </summary>
+		/// <param name="viewName">The name of the view to render.</param>
+		public void Include(string viewName)
+		{
+			Include(viewName, null, _context.ViewData);
+		}
+
+		/// <summary>
+		/// Renders the specified view against the current context.
+		/// </summary>
+		/// <param name="viewName">The name of the view to render.</param>
+		/// <param name="model">The model object supplied to the view.</param>
+		public void Include(string viewName, object model)
+		{
+			Include(viewName, model, _context.ViewData);
+		}
+
+		/// <summary>
+		/// Renders the specified view against the current context.
+		/// </summary>
+		/// <param name="viewName">The name of the view to render.</param>
+		/// <param name="model">The model object supplied to the view.</param>
+		/// <param name="viewData">The view data supplied to the view.</param>
+		public void Include(string viewName, object model, ViewDataDictionary viewData)
+		{
+			Precondition.Defined(viewName, () => Error.ArgumentNull("viewName"));
+
+			ComponentController component = new ComponentController();
+			component.RenderView(_context, viewName, model, viewData);
+		}
+
         /// <summary>
         /// Executes the specified action against the current context.
         /// </summary>
@@ -326,104 +365,6 @@ namespace Radischevo.Wahha.Web.Mvc.UI
         {
             ComponentController component = new ComponentController();
             component.RenderAction<TController>(Context, action);
-        }
-
-        /// <summary>
-        /// Renders the <see cref="Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
-        /// of specified type against the current context and captures the output string.
-        /// </summary>
-        /// <typeparam name="TControl">The type of control to render.</typeparam>
-        /// <param name="viewData">The view data supplied to the view control.</param>
-        /// <param name="settings">The object, containing values for the control's properties.</param>
-        public string Control<TControl>(ViewDataDictionary viewData, object settings)
-            where TControl : ViewUserControl
-        {
-            return ViewHelper.RenderControl<TControl>(_context, viewData, settings);
-        }
-
-        /// <summary>
-        /// Renders the <see cref="Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
-        /// with the specified virtual path against the current context and captures 
-        /// the output string.
-        /// </summary>
-        /// <param name="virtualPath">The virtual path of the view control.</param>
-        public string Control(string virtualPath)
-        {
-            return ViewHelper.RenderControl(virtualPath, _context);
-        }
-
-        /// <summary>
-        /// Renders the <see cref="Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
-        /// with the specified virtual path against the current context and captures 
-        /// the output string.
-        /// </summary>
-        /// <param name="virtualPath">The virtual path of the view control.</param>
-        /// <param name="viewData">The view data supplied to the view control.</param>
-        public string Control(string virtualPath, ViewDataDictionary viewData)
-        {
-            return ViewHelper.RenderControl(virtualPath, _context, viewData, null);
-        }
-
-        /// <summary>
-        /// Renders the <see cref="Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
-        /// with the specified virtual path against the current context and captures 
-        /// the output string.
-        /// </summary>
-        /// <param name="virtualPath">The virtual path of the view control.</param>
-        /// <param name="viewData">The view data supplied to the view control.</param>
-        /// <param name="settings">The object, containing values for the control's properties.</param>
-        public string Control(string virtualPath, ViewDataDictionary viewData, object settings)
-        {
-            return ViewHelper.RenderControl(virtualPath, _context, viewData, settings);
-        }
-
-        /// <summary>
-        /// Renders the <see cref="Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
-        /// of specified type against the current context and captures the output string.
-        /// </summary>
-        /// <typeparam name="TPage">The type of view page to render.</typeparam>
-        /// <param name="viewData">The view data supplied to the view page.</param>
-        /// <param name="settings">The object, containing values for the page properties.</param>
-        public string Page<TPage>(ViewDataDictionary viewData, object settings)
-            where TPage : ViewPage
-        {
-            return ViewHelper.RenderPage<TPage>(_context, viewData, settings);
-        }
-
-        /// <summary>
-        /// Renders the <see cref="Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
-        /// with the specified virtual path against the current context and captures 
-        /// the output string.
-        /// </summary>
-        /// <param name="virtualPath">The virtual path of the view page.</param>
-        public string Page(string virtualPath)
-        {
-            return ViewHelper.RenderPage(virtualPath, _context);
-        }
-
-        /// <summary>
-        /// Renders the <see cref="Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
-        /// with the specified virtual path against the current context and captures 
-        /// the output string.
-        /// </summary>
-        /// <param name="virtualPath">The virtual path of the view page.</param>
-        /// <param name="viewData">The view data supplied to the view page.</param>
-        public string Page(string virtualPath, ViewDataDictionary viewData)
-        {
-            return ViewHelper.RenderPage(virtualPath, _context, viewData, null);
-        }
-
-        /// <summary>
-        /// Renders the <see cref="Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
-        /// with the specified virtual path against the current context and captures 
-        /// the output string.
-        /// </summary>
-        /// <param name="virtualPath">The virtual path of the view page.</param>
-        /// <param name="viewData">The view data supplied to the view page.</param>
-        /// <param name="settings">The object, containing values for the page properties.</param>
-        public string Page(string virtualPath, ViewDataDictionary viewData, object settings)
-        {
-            return ViewHelper.RenderPage(virtualPath, _context, viewData, settings);
         }
         #endregion
     }

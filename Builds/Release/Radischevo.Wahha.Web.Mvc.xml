@@ -1416,6 +1416,27 @@
             <param name="arg3">The third argument of the action.</param>
             <param name="arg4">The fourth argument of the action.</param>
         </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Include(System.String)">
+            <summary>
+            Renders the specified view against the current context.
+            </summary>
+            <param name="viewName">The name of the view to render.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Include(System.String,System.Object)">
+            <summary>
+            Renders the specified view against the current context.
+            </summary>
+            <param name="viewName">The name of the view to render.</param>
+            <param name="model">The model object supplied to the view.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Include(System.String,System.Object,Radischevo.Wahha.Web.Mvc.ViewDataDictionary)">
+            <summary>
+            Renders the specified view against the current context.
+            </summary>
+            <param name="viewName">The name of the view to render.</param>
+            <param name="model">The model object supplied to the view.</param>
+            <param name="viewData">The view data supplied to the view.</param>
+        </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Component(System.String,System.String)">
             <summary>
             Executes the specified action against the current context.
@@ -1445,78 +1466,6 @@
             </summary>
             <typeparam name="TController">The type of the controller.</typeparam>
             <param name="action">The expression containing the action and its parameters.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Control``1(Radischevo.Wahha.Web.Mvc.ViewDataDictionary,System.Object)">
-            <summary>
-            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
-            of specified type against the current context and captures the output string.
-            </summary>
-            <typeparam name="TControl">The type of control to render.</typeparam>
-            <param name="viewData">The view data supplied to the view control.</param>
-            <param name="settings">The object, containing values for the control's properties.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Control(System.String)">
-            <summary>
-            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
-            with the specified virtual path against the current context and captures 
-            the output string.
-            </summary>
-            <param name="virtualPath">The virtual path of the view control.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Control(System.String,Radischevo.Wahha.Web.Mvc.ViewDataDictionary)">
-            <summary>
-            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
-            with the specified virtual path against the current context and captures 
-            the output string.
-            </summary>
-            <param name="virtualPath">The virtual path of the view control.</param>
-            <param name="viewData">The view data supplied to the view control.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Control(System.String,Radischevo.Wahha.Web.Mvc.ViewDataDictionary,System.Object)">
-            <summary>
-            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewUserControl">ViewUserControl</see> 
-            with the specified virtual path against the current context and captures 
-            the output string.
-            </summary>
-            <param name="virtualPath">The virtual path of the view control.</param>
-            <param name="viewData">The view data supplied to the view control.</param>
-            <param name="settings">The object, containing values for the control's properties.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Page``1(Radischevo.Wahha.Web.Mvc.ViewDataDictionary,System.Object)">
-            <summary>
-            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
-            of specified type against the current context and captures the output string.
-            </summary>
-            <typeparam name="TPage">The type of view page to render.</typeparam>
-            <param name="viewData">The view data supplied to the view page.</param>
-            <param name="settings">The object, containing values for the page properties.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Page(System.String)">
-            <summary>
-            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
-            with the specified virtual path against the current context and captures 
-            the output string.
-            </summary>
-            <param name="virtualPath">The virtual path of the view page.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Page(System.String,Radischevo.Wahha.Web.Mvc.ViewDataDictionary)">
-            <summary>
-            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
-            with the specified virtual path against the current context and captures 
-            the output string.
-            </summary>
-            <param name="virtualPath">The virtual path of the view page.</param>
-            <param name="viewData">The view data supplied to the view page.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Page(System.String,Radischevo.Wahha.Web.Mvc.ViewDataDictionary,System.Object)">
-            <summary>
-            Renders the <see cref="T:Radischevo.Wahha.Web.Mvc.UI.ViewPage">ViewPage</see> 
-            with the specified virtual path against the current context and captures 
-            the output string.
-            </summary>
-            <param name="virtualPath">The virtual path of the view page.</param>
-            <param name="viewData">The view data supplied to the view page.</param>
-            <param name="settings">The object, containing values for the page properties.</param>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper.Context">
             <summary>

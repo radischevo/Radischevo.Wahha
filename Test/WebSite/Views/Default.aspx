@@ -8,7 +8,7 @@
     <div>
         &#8594;<a href="<%= Url.Route<MainController>(p => p.Section("caitlin-ryan", MainController.SectionType.Simple)) %>">Новости, однако</a>.
     </div>
-    
+
     <%= Html.Templates.Display("this") %>
     <% Html.Component<MegaController>(a => a.MessagesAsync(10)); %>
     <% Html.Component<MegaController>(a => a.SimpleAction()); %>

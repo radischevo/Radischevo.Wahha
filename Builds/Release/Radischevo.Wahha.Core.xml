@@ -271,6 +271,23 @@
             <param name="instance">An object whose field value will be set</param>
             <param name="value">The value to assign to the field</param>
         </member>
+        <member name="T:Radischevo.Wahha.Core.Configurations.Configuration">
+            <summary>
+            Represents module configuration 
+            settings.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Configurations.Configuration.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.Configurations.Configuration"/> class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Configurations.Configuration.Instance">
+            <summary>
+            Gets the current module configuration.
+            </summary>
+        </member>
         <member name="M:Radischevo.Wahha.Core.MemberInfoExtensions.GetCustomAttributes``1(System.Reflection.MemberInfo)">
             <summary>
             Helper method used to find attributes of type <typeparamref name="TAttribute"/>, 
@@ -395,7 +412,7 @@
         <member name="T:Radischevo.Wahha.Core.ValueDictionary">
             <summary>
             Represents a collection of 
-            keys and values
+            keys and values.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Core.ValueDictionary.#ctor">
@@ -411,6 +428,14 @@
             </summary>
             <param name="dictionary">The collection, which keys and values 
             should be copied into a new dictionary</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ValueDictionary.#ctor(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> class.
+            </summary>
+            <param name="collection">The collection, which keys and values 
+            should be copied into a new dictionary.</param>
         </member>
         <member name="M:Radischevo.Wahha.Core.ValueDictionary.#ctor(Radischevo.Wahha.Core.IValueSet)">
             <summary>
@@ -987,23 +1012,6 @@
         <member name="T:Radischevo.Wahha.Core.Async.Trigger">
             <summary>
             Provides a trigger for the <see cref="T:Radischevo.Wahha.Core.Async.TriggerListener"/> class.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Core.Configurations.Configuration">
-            <summary>
-            Represents module configuration 
-            settings.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Configurations.Configuration.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Core.Configurations.Configuration"/> class.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Core.Configurations.Configuration.Instance">
-            <summary>
-            Gets the current module configuration.
             </summary>
         </member>
     </members>

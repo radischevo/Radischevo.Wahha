@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.Serialization;
@@ -8,7 +9,7 @@ namespace Radischevo.Wahha.Core
 {
     /// <summary>
     /// Represents a collection of 
-    /// keys and values
+    /// keys and values.
     /// </summary>
 	[Serializable, DebuggerDisplay("Count = {Count}")]
     public class ValueDictionary : Dictionary<string, object>, IValueSet
@@ -30,7 +31,19 @@ namespace Radischevo.Wahha.Core
         /// should be copied into a new dictionary</param>
         public ValueDictionary(IDictionary<string, object> dictionary)
             : base(dictionary, StringComparer.OrdinalIgnoreCase)
-        { }        
+        { }
+
+		/// <summary>
+		/// Initializes a new instance of the 
+		/// <see cref="ValueDictionary"/> class.
+		/// </summary>
+		/// <param name="collection">The collection, which keys and values 
+		/// should be copied into a new dictionary.</param>
+		public ValueDictionary(NameValueCollection collection)
+			: base(StringComparer.OrdinalIgnoreCase)
+		{
+			Initialize(collection);
+		}
 
         /// <summary>
         /// Initializes a new instance of the 
@@ -222,14 +235,23 @@ namespace Radischevo.Wahha.Core
             return this;
         }        
 
-        protected void Initialize(IValueSet values)
+        protected void Initialize(NameValueCollection values)
         {
             if (values == null)
                 return;
 
-            foreach (string key in values.Keys)
-                SafeAdd(key, values[key]);
+			foreach (string key in values.Keys)
+				SafeAdd(key, values.Get(key));
         }
+
+		protected void Initialize(IValueSet values)
+		{
+			if (values == null)
+				return;
+
+			foreach (string key in values.Keys)
+				SafeAdd(key, values[key]);
+		}
 
         protected void Initialize(object values)
         {

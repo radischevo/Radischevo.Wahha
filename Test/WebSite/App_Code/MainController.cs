@@ -209,34 +209,25 @@ public class MainController : Controller
 
 		Include<MainController>(c => c.List(10));
 
-        Maza maza1 = new Maza();
-        maza1.Section.Value = new Section("maza1");
+		//Maza maza1 = new Maza();
+		//maza1.Section.Value = new Section("maza1");
 
-        Maza maza2 = new Maza();
-        maza2.Section.Value = new Section("maza2");
+		//Maza maza2 = new Maza();
+		//maza2.Section.Value = new Section("maza2");
 
-        Func<Maza,string> func1 = CachedExpressionCompiler.Compile<Maza, string>(p => p.Section.Value.Name);
-        Func<Maza, string> func2 = CachedExpressionCompiler.Compile<Maza, string>(p => p.Section.Value.Name);
+		//Func<Maza,string> func1 = CachedExpressionCompiler.Compile<Maza, string>(p => p.Section.Value.Name);
+		//Func<Maza, string> func2 = CachedExpressionCompiler.Compile<Maza, string>(p => p.Section.Value.Name);
 
-        string maza1Name = func1(maza1);
-        string maza2Name = func1(maza2);
-        string maza3Name = func2(maza1);
+		//string maza1Name = func1(maza1);
+		//string maza2Name = func1(maza2);
+		//string maza3Name = func2(maza1);
 
-        // Тестируем Interval
-        Interval<int> ints = new Interval<int>(5, 10);
-        ints.From = 35;
-        ints.To = 25;
+		//// Тестируем Interval
+		//Interval<int> ints = new Interval<int>(5, 10);
+		//ints.From = 35;
+		//ints.To = 25;
 
-        ints.Normalize();
-
-		ValueDictionary data = new ValueDictionary();
-		data.Add("item", "{ Count: 'bcd', ID: 100, IsActive: true, IsViewed: true, Message: \"test\", Title: \"test\", Status: \"Active\", Indices: [ 3, 4, 5, 8 ], Inner: { Count: 5, ID: 750, IsActive: false, IsViewed: null, Message: \"test inner\", Title: \"test inner\", Status: \"Active\", Indices: [ 3, 9, 1 ] } }");
-
-		BindingContext context = new BindingContext(Context, typeof(TemplatedItem), "item", ParameterSource.Default,
-			data, null, Errors);
-
-		JsonModelBinder binder = new JsonModelBinder();
-		object bound = binder.Bind(context);
+		//ints.Normalize();
 
         //Response.ContentType = "application/xhtml+xml";
 

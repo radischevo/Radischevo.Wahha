@@ -140,9 +140,9 @@ public class BlogRepository : KeyedDbRepository<Blog, int>
 			CommandType.Text, new { id = key });
 	}
 
-	protected override int ExtractKey(IValueSet values)
+	protected override int ExtractKey(Blog blog)
 	{
-		return values.GetValue<int>("Id");
+		return blog.Id;
 	}
 
 	protected override Blog ExecuteSave(Blog entity)
@@ -171,9 +171,9 @@ public class BlogPostRepository : KeyedDbRepository<BlogPost, int>
 			CommandType.Text, new { id = key });
 	}
 
-	protected override int ExtractKey(IValueSet values)
+	protected override int ExtractKey(BlogPost entity)
 	{
-		return values.GetValue<int>("Id");
+		return entity.Id;
 	}
 
 	protected override BlogPost ExecuteSave(BlogPost entity)
