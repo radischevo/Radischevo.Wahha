@@ -251,12 +251,10 @@ public class MainController : Controller
     public ActionResult TemplatedItemTest()
     {
         Radischevo.Wahha.Web.Mvc.Configurations.Configuration
-            .Instance.Models.MetadataProviders
-            .Default = new DataAnnotationsMetadataProvider();
+            .Instance.Models.MetadataProvider = new DataAnnotationsMetadataProvider();
 
 		Radischevo.Wahha.Web.Mvc.Configurations.Configuration
-            .Instance.Models.ValidatorProviders
-            .Default = new DataAnnotationsValidatorProvider();
+            .Instance.Models.ValidatorProvider = new DataAnnotationsValidatorProvider();
 
 		var ti = new TemplatedItem() {
 			ID = 500,

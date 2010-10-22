@@ -868,6 +868,11 @@
               Looks up a localized string similar to Invalid output type &apos;{0}&apos;. Only objects of type &apos;HttpPostedFileBase&apos; can be retrieved from the HttpPostedFileSet..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleControllerActivatorType">
+            <summary>
+              Looks up a localized string similar to The controller activator type &apos;{0}&apos; must implement the IControllerActivator interface..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleControllerFactoryType">
             <summary>
               Looks up a localized string similar to The controller factory type &apos;{0}&apos; must implement the IControllerFactory interface..
@@ -956,11 +961,6 @@
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MissingParameterlessConstructor">
             <summary>
               Looks up a localized string similar to Cannot create an instance of type &apos;{0}&apos; since it does not provide a default constructor..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ModelBinderMustHaveDefaultConstructor">
-            <summary>
-              Looks up a localized string similar to The model binder type &apos;{0}&apos; must have a parameterless public constructor..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_MultipleModelBinderAttributes">

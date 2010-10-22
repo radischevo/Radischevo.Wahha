@@ -232,6 +232,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The controller activator type &apos;{0}&apos; must implement the IControllerActivator interface..
+        /// </summary>
+        internal static string Error_IncompatibleControllerActivatorType {
+            get {
+                return ResourceManager.GetString("Error_IncompatibleControllerActivatorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The controller factory type &apos;{0}&apos; must implement the IControllerFactory interface..
         /// </summary>
         internal static string Error_IncompatibleControllerFactoryType {
@@ -390,15 +399,6 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         internal static string Error_MissingParameterlessConstructor {
             get {
                 return ResourceManager.GetString("Error_MissingParameterlessConstructor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The model binder type &apos;{0}&apos; must have a parameterless public constructor..
-        /// </summary>
-        internal static string Error_ModelBinderMustHaveDefaultConstructor {
-            get {
-                return ResourceManager.GetString("Error_ModelBinderMustHaveDefaultConstructor", resourceCulture);
             }
         }
         

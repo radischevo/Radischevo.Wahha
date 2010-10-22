@@ -15,7 +15,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         #region Constructors
         internal ControllerConfigurationSettings()
         {
-            _factory = new DefaultControllerFactory();
             _mappings = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
         }
         #endregion
@@ -25,6 +24,9 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         {
             get
             {
+				if (_factory == null)
+					_factory = new DefaultControllerFactory();
+
                 return _factory;
             }
             set
@@ -46,25 +48,26 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         internal void Init(ControllerConfigurationElement element)
         {
             Precondition.Require(element, () => Error.ArgumentNull("element"));
-
-            Type type = Type.GetType(element.FactoryType, false, true);
-            if (type != null)
-            {
-                if (!typeof(IControllerFactory).IsAssignableFrom(type))
-                    throw Error.IncompatibleControllerFactoryType(type);
-
-				_factory = (IControllerFactory)ServiceLocator.Instance.GetService(type);
-            }
-            else
-            {
-                _factory = new DefaultControllerFactory();
-            }
-
-            _factory.Init(element.Parameters);
+			CreateFactory(element);
 
             foreach (ControllerMappingConfigurationElement nm in element.Mappings)
                 _mappings.Add(nm.Name, Type.GetType(nm.ControllerType, true, true));
         }
+
+		private void CreateFactory(ControllerConfigurationElement element)
+		{
+			Type type = Type.GetType(element.FactoryType, false, true);
+			if (type != null)
+			{
+				if (!typeof(IControllerFactory).IsAssignableFrom(type))
+					throw Error.IncompatibleControllerFactoryType(type);
+
+				_factory = (IControllerFactory)ServiceLocator.Instance.GetService(type);
+				_factory.Init(element.Parameters);
+			}
+			else
+				_factory = new DefaultControllerFactory();
+		}
         #endregion
     }
 }

@@ -57,21 +57,21 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Properties
-		protected ModelMetadataProviderCollection MetadataProviders
+		protected ModelMetadataProvider MetadataProvider
 		{
 			get
 			{
 				return Configuration.Instance
-					.Models.MetadataProviders;
+					.Models.MetadataProvider;
 			}
 		}
 
-		protected ModelValidatorProviderCollection ValidatorProviders
+		protected ModelValidatorProvider ValidatorProvider
 		{
 			get
 			{
 				return Configuration.Instance
-					.Models.ValidatorProviders;
+					.Models.ValidatorProvider;
 			}
 		}
 
@@ -154,8 +154,7 @@ namespace Radischevo.Wahha.Web.Mvc
             get
             {
                 if(_metadata == null)
-                    _metadata = MetadataProviders
-						.GetProvider(ModelType).GetMetadata(ModelType);
+                    _metadata = MetadataProvider.GetMetadata(ModelType);
 
                 return _metadata;
             }
@@ -170,8 +169,7 @@ namespace Radischevo.Wahha.Web.Mvc
             get
             {
                 if (_validator == null)
-                    _validator = ValidatorProviders
-						.GetProvider(ModelType).GetValidator(ModelType);
+                    _validator = ValidatorProvider.GetValidator(ModelType);
 
                 return _validator;
             }

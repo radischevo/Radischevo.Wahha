@@ -46,10 +46,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         private void SetDefaultControllerFactory()
         {
-            DefaultControllerFactory factory = new DefaultControllerFactory();
-            factory.Builder = this;
-
-            SetControllerFactory(factory);
+			SetControllerFactory(new DefaultControllerFactory());
         }
 
         public void SetControllerFactory(IControllerFactory factory)

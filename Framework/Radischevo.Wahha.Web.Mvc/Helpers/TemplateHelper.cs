@@ -202,10 +202,10 @@ namespace Radischevo.Wahha.Web.Mvc
         internal static ModelMetadata GetMetadata(Type containerType, Type modelType, string propertyName)
         {
             return (containerType != null && !String.IsNullOrEmpty(propertyName))
-                ? Configuration.Instance.Models.MetadataProviders.GetProvider(containerType)
-                    .GetMetadata(containerType).Properties.Single(p => String.Equals(p.PropertyName, propertyName, 
+                ? Configuration.Instance.Models.MetadataProvider.GetMetadata(containerType)
+					.Properties.Single(p => String.Equals(p.PropertyName, propertyName, 
                         StringComparison.InvariantCultureIgnoreCase))
-                : Configuration.Instance.Models.MetadataProviders.GetProvider(modelType).GetMetadata(modelType);
+                : Configuration.Instance.Models.MetadataProvider.GetMetadata(modelType);
         }
         #endregion
 

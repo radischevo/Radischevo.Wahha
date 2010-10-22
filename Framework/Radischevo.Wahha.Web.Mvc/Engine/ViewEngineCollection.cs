@@ -60,7 +60,7 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             foreach (IViewEngine engine in _list)
             {
-                ViewEngineResult result = engine.CreateView(context, viewName);
+                ViewEngineResult result = engine.FindView(context, viewName);
                 if (result != null)
                     return result;
             }

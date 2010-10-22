@@ -141,10 +141,21 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
+		protected virtual IModelBinder GetPropertyBinder(PropertyDescriptor property)
+		{
+			ModelBinderAttribute attribute = property.Attributes
+				.OfType<ModelBinderAttribute>().FirstOrDefault();
+
+			if (attribute == null)
+				return Binders.GetBinder(property.PropertyType);
+
+			return attribute.GetBinder();
+		}
+
         protected virtual object GetPropertyValue(BindingContext context, 
             PropertyDescriptor property)
         {
-			IModelBinder binder = Binders.GetBinder(property.PropertyType);
+			IModelBinder binder = GetPropertyBinder(property);
             object value = binder.Bind(context);
 
             if ((context.Metadata.ConvertEmptyStringToNull) 

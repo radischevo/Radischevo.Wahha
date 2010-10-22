@@ -6,7 +6,6 @@ using System.Web.Hosting;
 using System.Web.Security;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Mvc.UI;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -104,7 +103,24 @@ namespace Radischevo.Wahha.Web.Mvc
 			return VirtualPathProvider.FileExists(virtualPath);
 		}
 
-        protected abstract ViewEngineResult CreateView(ControllerContext context, string viewName);
+		protected virtual bool? IsValidPath(ControllerContext context, string virtualPath)
+		{
+			return null;
+		}
+
+		protected virtual ViewEngineResult FindView(ControllerContext context, string viewName)
+		{
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
+			Precondition.Defined(viewName, () => Error.ArgumentNull("viewName"));
+
+			string viewPath = GetViewPath(context, viewName);
+			if (String.IsNullOrEmpty(viewPath))
+				return null;
+
+			return new ViewEngineResult(CreateView(context, viewPath), this);
+		}
+
+		protected abstract IView CreateView(ControllerContext context, string virtualPath);
 
 		protected virtual string MakeCanonicalControllerName(string controllerName)
 		{
@@ -120,7 +136,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			return controllerName;
 		}
 
-        protected string GetViewPath(ControllerContext context, string viewName)
+        private string GetViewPath(ControllerContext context, string viewName)
         {
             if (String.IsNullOrEmpty(viewName))
                 return String.Empty;
@@ -138,7 +154,7 @@ namespace Radischevo.Wahha.Web.Mvc
             if (_locationFormats.Count < 1)
                 throw Error.ViewLocationFormatsAreEmpty();
 
-            result = (isSpecific) ? GetViewPathFromSpecificName(context, viewName) : 
+            result = (isSpecific) ? GetViewPathFromSpecificName(context, viewName, true) : 
                 GetViewPathFromGeneralName(context, controllerName, viewName);
 
             LocationCache.SetVirtualPath(key, result);
@@ -156,12 +172,18 @@ namespace Radischevo.Wahha.Web.Mvc
             return String.Empty;
         }
 
-        private string GetViewPathFromSpecificName(ControllerContext context, string viewName)
+        private string GetViewPathFromSpecificName(ControllerContext context, string viewName, bool checkValidity)
         {
-            if (!FileExists(context, viewName))
-                return String.Empty;
-
-            return viewName;
+			if (FileExists(context, viewName))
+			{
+				if (checkValidity)
+				{
+					bool? isValid = IsValidPath(context, viewName);
+					return (isValid.GetValueOrDefault()) ? viewName : String.Empty;
+				}
+				return viewName;
+			}
+            return String.Empty;
         }
 
         public virtual void ReleaseView(ControllerContext context, IView view)
@@ -173,9 +195,9 @@ namespace Radischevo.Wahha.Web.Mvc
 	    #endregion
 
         #region IViewEngine Members
-        ViewEngineResult IViewEngine.CreateView(ControllerContext context, string viewName)
+        ViewEngineResult IViewEngine.FindView(ControllerContext context, string viewName)
         {
-            return CreateView(context, viewName);
+            return FindView(context, viewName);
         }
 
         void IViewEngine.Init(IValueSet settings)

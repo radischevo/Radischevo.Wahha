@@ -96,7 +96,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
 						itemType = item.GetType().MakeNonNullableType();
 					
 					ModelMetadata metadata = Configuration.Instance.Models
-						.MetadataProviders.GetProvider(itemType).GetMetadata(itemType);
+						.MetadataProvider.GetMetadata(itemType);
 
 					string fieldName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", oldPrefix, index++);
 					result.Append(html.Templates.Render(DataBoundControlMode.ReadOnly, metadata, null, fieldName, item));

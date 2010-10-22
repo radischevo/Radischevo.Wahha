@@ -14,7 +14,7 @@ namespace Radischevo.Wahha.Web.Mvc
     public class ValidationHelper
 	{
 		#region Instance Fields
-		private ModelValidatorProviderCollection _providers;
+		private ModelValidatorProvider _provider;
         private ViewContext _context;
         #endregion
 
@@ -51,14 +51,14 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public ModelValidatorProviderCollection Providers
+        public ModelValidatorProvider Provider
         {
             get
             {
-                if (_providers == null)
-                    _providers = Configuration.Instance.Models.ValidatorProviders;
+                if (_provider == null)
+                    _provider = Configuration.Instance.Models.ValidatorProvider;
 
-                return _providers;
+                return _provider;
             }
         }
         #endregion
@@ -162,10 +162,9 @@ namespace Radischevo.Wahha.Web.Mvc
 		protected virtual ModelValidatorSet GetValidatorsFromProvider(Type containerType,
             Type modelType, string propertyName)
         {
-			ModelValidator model = Providers.GetProvider(modelType).GetValidator(modelType);
+			ModelValidator model = Provider.GetValidator(modelType);
 			ModelValidator container = (containerType == null || String.IsNullOrEmpty(propertyName))
-				? null : Providers.GetProvider(containerType).GetValidator(containerType)
-					.GetPropertyValidator(propertyName);
+				? null : Provider.GetValidator(containerType).GetPropertyValidator(propertyName);
 
 			return new ModelValidatorSet(model, container);
         }

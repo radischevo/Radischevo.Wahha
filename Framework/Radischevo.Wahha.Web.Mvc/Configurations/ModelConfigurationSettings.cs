@@ -13,17 +13,15 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
     {
         #region Instance Fields
         private ModelBinderCollection _binders;
-        private ModelMetadataProviderCollection _metadataProviders;
-        private ModelValidatorProviderCollection _validatorProviders;
+		private ModelMetadataProvider _metadataProvider;
+		private ModelValidatorProvider _validatorProvider;
         #endregion
 
         #region Constructors
         internal ModelConfigurationSettings()
         {
             _binders = new ModelBinderCollection();
-            _metadataProviders = new ModelMetadataProviderCollection();
-            _validatorProviders = new ModelValidatorProviderCollection();
-
+            
 			InitDefaultBinders();
 			InitDefaultBinderProviders();
         }
@@ -38,21 +36,35 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             }
         }
 
-        public ModelMetadataProviderCollection MetadataProviders
-        {
-            get
-            {
-                return _metadataProviders;
-            }
-        }
+		public ModelMetadataProvider MetadataProvider
+		{
+			get
+			{
+				if (_metadataProvider == null)
+					_metadataProvider = new EmptyModelMetadataProvider();
 
-        public ModelValidatorProviderCollection ValidatorProviders
-        {
-            get
-            {
-                return _validatorProviders;
-            }
-        }
+				return _metadataProvider;
+			}
+			set
+			{
+				_metadataProvider = value;
+			}
+		}
+
+		public ModelValidatorProvider ValidatorProvider
+		{
+			get
+			{
+				if (_validatorProvider == null)
+					_validatorProvider = new EmptyModelValidatorProvider();
+
+				return _validatorProvider;
+			}
+			set
+			{
+				_validatorProvider = value;
+			}
+		}
         #endregion
 
         #region Static Methods
@@ -131,11 +143,11 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
                     Type.GetType(element.BinderType, true, true));
 
             if (!String.IsNullOrEmpty(element.MetadataProviderType))
-                _metadataProviders.Default = CreateMetadataProvider(
+                _metadataProvider = CreateMetadataProvider(
                     Type.GetType(element.MetadataProviderType, true, true));
 
             if (!String.IsNullOrEmpty(element.ValidatorProviderType))
-                _validatorProviders.Default = CreateValidatorProvider(
+                _validatorProvider = CreateValidatorProvider(
                     Type.GetType(element.ValidatorProviderType, true, true));
 
             foreach (ModelConfigurationElement elem in element)
@@ -145,14 +157,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
                 if(!String.IsNullOrEmpty(elem.BinderType))
                     _binders.Add(modelType,
                         CreateModelBinder(Type.GetType(elem.BinderType, true, true)));
-
-                if(!String.IsNullOrEmpty(elem.MetadataProviderType))
-                    _metadataProviders.Add(modelType, 
-                        CreateMetadataProvider(Type.GetType(elem.MetadataProviderType, true, true)));
-
-                if(!String.IsNullOrEmpty(elem.ValidatorProviderType))
-                    _validatorProviders.Add(modelType,
-                        CreateValidatorProvider(Type.GetType(elem.ValidatorProviderType, true, true)));
             }
         }
         #endregion

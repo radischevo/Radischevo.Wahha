@@ -104,6 +104,12 @@ namespace Radischevo.Wahha.Web.Mvc
                 Res.Error_IncompatibleControllerFactoryType, type.Name));
         }
 
+		internal static Exception IncompatibleControllerActivatorType(Type type)
+		{
+			return new ArgumentException(String.Format(
+				Res.Error_IncompatibleControllerActivatorType, type.Name));
+		}
+
         internal static Exception DuplicateControllerName(string name)
         {
             return new InvalidOperationException(String.Format(
@@ -243,12 +249,6 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             return new ArgumentException(String.Format(
                 Res.Error_IncompatibleModelBinderType, type.Name));
-        }
-
-        internal static Exception ModelBinderMustHaveDefaultConstructor(Type type)
-        {
-            return new ArgumentException(String.Format(
-                Res.Error_ModelBinderMustHaveDefaultConstructor, type.Name));
         }
 
         internal static Exception RequestValidationError()

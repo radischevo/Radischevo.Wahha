@@ -21,6 +21,7 @@ namespace Radischevo.Wahha.Web.Text
         private bool _insertNoBreakTags;
         private bool _extractLinks;
         private bool _encodeSpecialSymbols;
+		private bool _applyPunctuationRules;
         private HtmlElementFormatter _formatter;
         #endregion
 
@@ -31,6 +32,7 @@ namespace Radischevo.Wahha.Web.Text
             _extractLinks = true;
             _insertNoBreakTags = true;
             _encodeSpecialSymbols = true;
+			_applyPunctuationRules = true;
             _replacements = new List<StringReplacementRule>();
             _quotes = new Stack<char>();
         }
@@ -88,6 +90,18 @@ namespace Radischevo.Wahha.Web.Text
                 _extractLinks = value;
             }
         }
+
+		public bool ApplyPunctuationRules
+		{
+			get
+			{
+				return _applyPunctuationRules;
+			}
+			set
+			{
+				_applyPunctuationRules = value;
+			}
+		}
 
         public HtmlElementFormatter Formatter
         {
@@ -417,9 +431,17 @@ namespace Radischevo.Wahha.Web.Text
                 Write(ch);
         }
 
-        private void ProcessPunctuation(char ch)
+		private void ProcessPunctuation(char ch)
+		{
+			if (ApplyPunctuationRules)
+				ProcessPunctuationWithRules(ch);
+			else
+				Write(ch);
+		}
+
+        private void ProcessPunctuationWithRules(char ch)
         {
-            if (Char.IsWhiteSpace(_input.Offset(1)) || Char.IsLetterOrDigit(_input.Offset(1)))
+			if (Char.IsWhiteSpace(_input.Offset(1)) || Char.IsLetterOrDigit(_input.Offset(1)))
                 while (_output.Length > 0 && Char.IsWhiteSpace(_output[_output.Length - 1]))
                     _output.Length--;
 

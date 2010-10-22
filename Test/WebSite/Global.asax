@@ -50,7 +50,7 @@
         RouteTable.Routes.MapRoute("array_test", "~/array",
             new { Controller = "MainController", Action = "TestArrayAndCollection" });
         
-        RouteTable.Routes.MapRoute("news_section", "/TestSite/news/{section}",
+        RouteTable.Routes.MapRoute("news_section", "~/news/{section}",
             new { Controller = "MainController", Action = "Section", Page = 1 },
             new HttpMethodConstraint(HttpMethod.Get | HttpMethod.Head),
             new RegexConstraint("section", "[A-Za-z]+[A-Za-z0-9\\-_]*"));

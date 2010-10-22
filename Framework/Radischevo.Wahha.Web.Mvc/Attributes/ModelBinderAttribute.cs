@@ -5,8 +5,9 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Web.Mvc
 {
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Interface | 
-        AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Class, 
-        AllowMultiple = false, Inherited = false)]
+        AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Class | 
+		AttributeTargets.Property | AttributeTargets.Parameter, 
+		AllowMultiple = false, Inherited = false)]
     public class ModelBinderAttribute : Attribute
     {
         #region Instance Fields
@@ -41,13 +42,10 @@ namespace Radischevo.Wahha.Web.Mvc
 			if (_binderType == null)
 				throw Error.MustOverrideGetBinderToUseEmptyType();
 
-            if (_binderType.GetInterface(typeof(IModelBinder).Name) == null)
+            if (!typeof(IModelBinder).IsAssignableFrom(_binderType))
                 throw Error.IncompatibleModelBinderType(_binderType);
 
-            if (_binderType.GetConstructor(Type.EmptyTypes) == null)
-                throw Error.ModelBinderMustHaveDefaultConstructor(_binderType);
-
-            return (IModelBinder)Activator.CreateInstance(_binderType);
+			return (IModelBinder)ServiceLocator.Instance.GetService(_binderType);
         }
         #endregion
     }

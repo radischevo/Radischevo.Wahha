@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Net;
-using System.Web;
+
+using Radischevo.Wahha.Web.Mvc.UI;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public class WebFormViewEngine : VirtualPathViewEngine
+    public class WebFormViewEngine : BuildManagerViewEngine
 	{
 		#region Instance Fields
 		private IBuildManager _buildManager;
@@ -39,35 +37,17 @@ namespace Radischevo.Wahha.Web.Mvc
 		#endregion
 
 		#region Instance Methods
-		protected override bool FileExists(ControllerContext context, string virtualPath)
+		protected override bool IsValidCompiledType(ControllerContext context, string virtualPath, Type type)
 		{
-			try
-			{
-				object viewInstance = BuildManager.CreateInstanceFromVirtualPath(virtualPath, typeof(object));
-				return (viewInstance != null);
-			}
-			catch (HttpException he)
-			{
-				if (he is HttpParseException)
-				{
-					throw;
-				}
-				if (he.GetHttpCode() == (int)HttpStatusCode.NotFound)
-				{
-					if (!base.FileExists(context, virtualPath))
-						return false;
-				}
-				throw;
-			}
+			if (!typeof(ViewPage).IsAssignableFrom(type))
+				return typeof(ViewUserControl).IsAssignableFrom(type);
+			
+			return true;
 		}
 
-        protected override ViewEngineResult CreateView(ControllerContext context, string viewName)
+        protected override IView CreateView(ControllerContext context, string virtualPath)
         {
-            string path = base.GetViewPath(context, viewName);
-            if (String.IsNullOrEmpty(path))
-                return null;
-
-            return new ViewEngineResult(new WebFormView(path), this);
+			return new WebFormView(virtualPath, BuildManager);
         }
         #endregion
     }

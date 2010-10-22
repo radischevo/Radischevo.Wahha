@@ -1,7 +1,8 @@
 ﻿using System;
 
-using Radischevo.Wahha.Web.Routing;
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Web.Routing;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -16,31 +17,24 @@ namespace Radischevo.Wahha.Web.Mvc
         private IBuildManager _buildManager;
         private ControllerBuilder _builder;
         private ControllerTypeCache _instanceTypeCache;
+		private IControllerActivator _activator;
         #endregion
 
         #region Constructors
-        public DefaultControllerFactory()
+		public DefaultControllerFactory()
+			: this(new DefaultControllerActivator())
+		{
+		}
+
+        public DefaultControllerFactory(IControllerActivator activator)
         {
+			Precondition.Require(activator, () => Error.ArgumentNull("activator"));
+			_activator = activator;
         }
         #endregion
 
         #region Instance Properties
-        internal ControllerBuilder Builder
-        {
-            get
-            {
-                if (_builder == null)
-                    _builder = ControllerBuilder.Instance;
-
-                return _builder;
-            }
-            set
-            {
-                _builder = value;
-            }
-        }
-
-        internal IBuildManager BuildManager
+        public IBuildManager BuildManager
         {
             get
             {
@@ -54,6 +48,14 @@ namespace Radischevo.Wahha.Web.Mvc
                 _buildManager = value;
             }
         }
+
+		public IControllerActivator Activator
+		{
+			get
+			{
+				return _activator;
+			}
+		}
 
         internal ControllerTypeCache TypeCache
         {
@@ -82,7 +84,7 @@ namespace Radischevo.Wahha.Web.Mvc
             Precondition.Require(context, () => Error.ArgumentNull("context"));
             Precondition.Defined(controllerName, () => Error.InvalidArgument("controllerName"));
             
-            return GetControllerInstance(GetControllerType(controllerName));
+            return GetControllerInstance(context, GetControllerType(controllerName));
         }
 
         protected virtual void ReleaseController(IController controller)
@@ -92,17 +94,14 @@ namespace Radischevo.Wahha.Web.Mvc
                 d.Dispose();
         }
 
-        protected virtual IController GetControllerInstance(Type type)
+        protected virtual IController GetControllerInstance(RequestContext context, Type type)
         {
             Precondition.Require(type, () => Error.ArgumentNull("type"));
 
             if (!typeof(IController).IsAssignableFrom(type))
                 throw Error.InvalidControllerType(type.Name);
 
-            if (type.GetConstructor(Type.EmptyTypes) == null)
-                throw Error.ControllerMustHaveDefaultConstructor(type);
-            
-            return (IController)Activator.CreateInstance(type);
+			return Activator.Create(context, type);
         }
 
         protected virtual Type GetControllerType(string controllerName)

@@ -190,8 +190,8 @@ namespace Radischevo.Wahha.Web.Text
 					&& !ValidateIdentifier(value))
 					continue;
 
-                sb.AppendFormat(" {0}=\"{1}\"", 
-                    attr.Key.ToLowerInvariant(), value);
+                sb.AppendFormat(" {0}=\"{1}\"", attr.Key
+					.Replace('_', '-').ToLowerInvariant(), value);
             }
             return sb.ToString();
         }

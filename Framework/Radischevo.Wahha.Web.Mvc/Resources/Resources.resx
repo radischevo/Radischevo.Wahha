@@ -171,9 +171,6 @@
   <data name="Error_MissingParameterlessConstructor" xml:space="preserve">
     <value>Cannot create an instance of type '{0}' since it does not provide a default constructor.</value>
   </data>
-  <data name="Error_ModelBinderMustHaveDefaultConstructor" xml:space="preserve">
-    <value>The model binder type '{0}' must have a parameterless public constructor.</value>
-  </data>
   <data name="Error_MultipleModelBinderAttributes" xml:space="preserve">
     <value>The type '{0}' contains multiple attributes inheriting from ModelBinderAttribute.</value>
   </data>
@@ -329,5 +326,8 @@
   </data>
   <data name="Error_MustOverrideGetBinderToUseEmptyType" xml:space="preserve">
     <value>The GetBinder method on the ModelBinderAttribute class must be overridden if the binder type is not initialized in the constructor.</value>
+  </data>
+  <data name="Error_IncompatibleControllerActivatorType" xml:space="preserve">
+    <value>The controller activator type '{0}' must implement the IControllerActivator interface.</value>
   </data>
 </root>
