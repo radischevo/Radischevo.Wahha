@@ -185,6 +185,15 @@ public class MainController : Controller
         m.Section.Load(); 
         Section s = m.Section.Value;
 
+		HtmlProcessor p = new HtmlProcessor();
+		p.Parser.Add(f => f.Element("a").As(HtmlElementFlags.Allowed | HtmlElementFlags.AllowContent)
+			.With(e => e.Attribute("href").As(HtmlAttributeFlags.Allowed).Validate("#url")));
+
+		string input = @"www.google.com <a href=""ed2k://sovserv.net/link/16aut2hyu7s621"">ed2k</a><a href=""ftp://user:pass@ftp.ya.ru:21/topics"">Topics</a>";
+		string output = p.Parse(input);
+
+		Response.Write(output);
+
         // Тестируем lazy-enumerable...
         /*m.Collection.Source = () => {
             using (DbDataProvider provider = DbDataProvider.Resolve("sql"))

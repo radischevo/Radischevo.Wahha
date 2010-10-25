@@ -141,17 +141,50 @@ namespace Radischevo.Wahha.Web.Text
             return true;
         }
 
-        private static bool ContainsUrl(string value)
+		private static string RemoveSpecialChars(string value)
+		{
+			if (String.IsNullOrEmpty(value))
+				return null;
+
+			int length = value.Length;
+			char[] array = new char[length];
+			int index = 0;
+
+			for (int i = 0; i < length; ++i)
+			{
+				if (Char.IsLetterOrDigit(value[i]) ||
+					Char.IsPunctuation(value[i]))
+					array[index++] = value[i];
+			}
+			return new String(array, 0, index);
+		}
+
+		private static string ExtractUrlScheme(string value)
+		{
+			Uri uri;
+			string scheme = null;
+			int index = -1;
+
+			if (Uri.TryCreate(value, UriKind.Absolute, out uri))
+				scheme = uri.Scheme;
+			else if ((index = value.IndexOf(':')) > -1)
+				scheme = value.Substring(0, index);
+
+			return RemoveSpecialChars(scheme);
+		}
+
+		private static bool ContainsUrl(string value)
         {
             if (String.IsNullOrEmpty(value))
                 return true;
 
-            Uri uri;
-            if (!Uri.TryCreate(value, UriKind.Absolute, out uri))
-                return (value[0] == '/' || Char.IsLetterOrDigit(value, 0));
+			string scheme = ExtractUrlScheme(value);
 
-            return (!String.Equals("javascript", uri.Scheme,
-                StringComparison.InvariantCultureIgnoreCase));
+			if (String.Equals("javascript", scheme,
+				StringComparison.InvariantCultureIgnoreCase))
+				return false;
+
+            return (value[0] == '/' || Char.IsLetterOrDigit(value, 0));            
         }
         #endregion
 
