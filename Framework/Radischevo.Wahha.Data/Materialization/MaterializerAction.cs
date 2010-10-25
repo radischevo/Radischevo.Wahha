@@ -38,7 +38,7 @@ namespace Radischevo.Wahha.Data
 			#region Instance Methods
 			public bool Valid(IValueSet source)
 			{
-				return true;
+				return source.ContainsAny();
 			}
 			#endregion
 		}
