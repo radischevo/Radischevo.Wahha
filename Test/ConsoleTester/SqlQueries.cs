@@ -34,5 +34,10 @@ namespace ConsoleTester
 			SELECT [d].* 
 			FROM [dbo].[workle.product.data.1] AS [d]
 			WHERE [d].[productId] = @id";
+
+		internal static string CollectionDataQuery = @"
+			SELECT [d].* 
+			FROM [dbo].[workle.product.data.1] AS [d]
+			WHERE [d].[productId] = @id";
 	}
 }

@@ -8,6 +8,7 @@ namespace ConsoleTester
 		public Item()
 		{
 			_data = new Link<ItemData>();
+			_values = new EnumerableLink<ItemData>();
 		}
 
 		public long Id
@@ -44,6 +45,16 @@ namespace ConsoleTester
 		{
 			get;
 			set;
+		}
+
+		private EnumerableLink<ItemData> _values;
+
+		public EnumerableLink<ItemData> Values
+		{
+			get
+			{
+				return _values;
+			}
 		}
 
 		private Link<ItemData> _data;

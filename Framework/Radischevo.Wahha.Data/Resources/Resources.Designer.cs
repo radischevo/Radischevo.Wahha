@@ -196,6 +196,15 @@ namespace Radischevo.Wahha.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expression parameter &apos;{0}&apos; must target the lambda argument..
+        /// </summary>
+        internal static string Error_MethodCallMustTargetLambdaArgument {
+            get {
+                return ResourceManager.GetString("Error_MethodCallMustTargetLambdaArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot access the &apos;{0}&apos;. The object is disposed..
         /// </summary>
         internal static string Error_ObjectDisposed {
@@ -246,6 +255,15 @@ namespace Radischevo.Wahha.Data.Resources {
         internal static string Error_ReaderIsEmpty {
             get {
                 return ResourceManager.GetString("Error_ReaderIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selector expression &apos;{0}&apos; must be a method call..
+        /// </summary>
+        internal static string Error_SelectorMustBeAMethodCall {
+            get {
+                return ResourceManager.GetString("Error_SelectorMustBeAMethodCall", resourceCulture);
             }
         }
         

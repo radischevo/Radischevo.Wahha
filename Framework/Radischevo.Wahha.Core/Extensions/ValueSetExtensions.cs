@@ -56,7 +56,7 @@ namespace Radischevo.Wahha.Core
 			return ContainsAll(values, StringComparer.OrdinalIgnoreCase, keys);
 		}
 
-		public static bool ContainsAll(this IValueSet values, 
+		public static bool ContainsAll(this IValueSet values,
 			IEqualityComparer<string> comparer, params string[] keys)
 		{
 			foreach (string key in keys)

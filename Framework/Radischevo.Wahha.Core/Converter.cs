@@ -453,7 +453,7 @@ namespace Radischevo.Wahha.Core
 					return defaultValue;
 				}
 			}
-
+			
 			if (value != null && !type.IsAssignableFrom(value.GetType()))
 				return defaultValue;
 

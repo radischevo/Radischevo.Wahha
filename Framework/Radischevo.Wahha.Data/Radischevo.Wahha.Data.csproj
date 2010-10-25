@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IValueSetTransformer.cs" />
+    <Compile Include="Interfaces\IValueSetValidator.cs" />
+    <Compile Include="Materialization\Associator`1.cs" />
+    <Compile Include="Materialization\CollectionAssociator`1.cs" />
+    <Compile Include="Materialization\CollectionSelectorAction`2.cs" />
+    <Compile Include="Materialization\Fluent.cs" />
     <Compile Include="Caching\CacheItemSelector.cs" />
     <Compile Include="Caching\CacheProvider.cs" />
     <Compile Include="Caching\ICacheProvider.cs" />
@@ -98,7 +104,13 @@
     <Compile Include="Interfaces\ISubset.cs" />
     <Compile Include="KeyedDbRepository.cs" />
     <Compile Include="DbDataProviderExtensions.cs" />
-    <Compile Include="ObjectMaterializer`1.cs" />
+    <Compile Include="Materialization\AssociatorAction`1.cs" />
+    <Compile Include="Materialization\MaterializerAction.cs" />
+    <Compile Include="Materialization\ObjectMaterializer`1.cs" />
+    <Compile Include="Materialization\SelectorAction.cs" />
+    <Compile Include="Materialization\SingleAssociator`1.cs" />
+    <Compile Include="Materialization\SubsetSchemeValidator.cs" />
+    <Compile Include="Materialization\SubsetMapper.cs" />
     <Compile Include="Provider\CommonDbDataProvider.cs" />
     <Compile Include="Provider\OdbcDataProvider.cs" />
     <Compile Include="Subset.cs" />

@@ -162,6 +162,9 @@
   <data name="Error_IncompatibleProviderType" xml:space="preserve">
     <value>The type '{0}' must implement the IDbDataProvider interface and have a public parameterless constructor.</value>
   </data>
+  <data name="Error_MethodCallMustTargetLambdaArgument" xml:space="preserve">
+    <value>Expression parameter '{0}' must target the lambda argument.</value>
+  </data>
   <data name="Error_ObjectDisposed" xml:space="preserve">
     <value>Cannot access the '{0}'. The object is disposed.</value>
   </data>
@@ -179,6 +182,9 @@
   </data>
   <data name="Error_ReaderIsEmpty" xml:space="preserve">
     <value>Cannot read the result set from the closed data reader.</value>
+  </data>
+  <data name="Error_SelectorMustBeAMethodCall" xml:space="preserve">
+    <value>Selector expression '{0}' must be a method call.</value>
   </data>
   <data name="Error_UnableToConnect" xml:space="preserve">
     <value>Data provider could not connect to the specified data source.</value>

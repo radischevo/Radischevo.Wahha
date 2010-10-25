@@ -19,11 +19,8 @@ namespace ConsoleTester
 		static void Main(string[] args)
 		{
 			Program p = new Program();
-			//p.MultipleThreadTest();
-			for (int i = 0; i < 10; ++i)
-			{
-				p.SingleThreadTest();
-			}
+			p.MultipleThreadTest();
+			p.SingleThreadTest();
 
 			Console.ReadKey();
 		}
@@ -70,20 +67,23 @@ namespace ConsoleTester
 
 		public void Output(IEnumerable<Item> items)
 		{
-			//try
-			//{
+			try
+			{
 				foreach (Item item in items)
 				{
 					Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}",
 						item.Id, item.Alias, item.Name, item.DateCreated.ToString("dd.MM.yyyy"),
-						item.DateLastModified.ToString("dd.MM.yyyy"),
+						item.DateLastModified.ToString("dd.MM.yyyy"), 
 						item.Data.Value.Comments);
+
+					foreach (ItemData data in item.Values)
+						Console.WriteLine("data => {0}", data.Comments);
 				}
-			//}
-			//catch
-			//{
-			//	Console.WriteLine("!!! Thread conflict occured");
-			//}
+			}
+			catch
+			{
+				Console.WriteLine("!!! Thread conflict occured");
+			}
 		}
 
 		public void MultipleThreadTestCallback()

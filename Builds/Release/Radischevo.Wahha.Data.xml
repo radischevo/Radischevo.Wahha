@@ -326,6 +326,11 @@
               Looks up a localized string similar to The type &apos;{0}&apos; must implement the IDbDataProvider interface and have a public parameterless constructor..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_MethodCallMustTargetLambdaArgument">
+            <summary>
+              Looks up a localized string similar to Expression parameter &apos;{0}&apos; must target the lambda argument..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ObjectDisposed">
             <summary>
               Looks up a localized string similar to Cannot access the &apos;{0}&apos;. The object is disposed..
@@ -354,6 +359,11 @@
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ReaderIsEmpty">
             <summary>
               Looks up a localized string similar to Cannot read the result set from the closed data reader..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_SelectorMustBeAMethodCall">
+            <summary>
+              Looks up a localized string similar to Selector expression &apos;{0}&apos; must be a method call..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_UnableToConnect">
