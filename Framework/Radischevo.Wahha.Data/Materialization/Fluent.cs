@@ -19,9 +19,9 @@ namespace Radischevo.Wahha.Data
 		: IHideObjectMembers
 		where TAssociation : class
 	{
-		ISingleAssociationBuilder<TAssociation> Subset(string prefix);
+		ISingleAssociationBuilder<TAssociation> Subset(IValueSetTransformer transformer);
 
-		ISingleAssociationBuilder<TAssociation> Scheme(params string[] keys);
+		ISingleAssociationBuilder<TAssociation> Validate(IValueSetValidator validator);
 
 		Link<TAssociation> Apply();
 
@@ -51,9 +51,9 @@ namespace Radischevo.Wahha.Data
 		: IHideObjectMembers
 		where TAssociation : class
 	{
-		IEntityAssociationBuilder<TAssociation> Subset(string prefix);
+		IEntityAssociationBuilder<TAssociation> Subset(IValueSetTransformer transformer);
 
-		IEntityAssociationBuilder<TAssociation> Scheme(params string[] keys);
+		IEntityAssociationBuilder<TAssociation> Validate(IValueSetValidator validator);
 
 		TAssociation Apply(IValueSet source);
 
@@ -68,8 +68,8 @@ namespace Radischevo.Wahha.Data
 	{
 		#region Instance Fields
 		private SingleLinkAssociator<TAssociation> _associator;
-		private SubsetMapper _mapper;
-		private SubsetSchemeValidator _validator;
+		private IValueSetTransformer _transformer;
+		private IValueSetValidator _validator;
 		#endregion
 
 		#region Constructors
@@ -81,15 +81,15 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public ISingleAssociationBuilder<TAssociation> Subset(string prefix)
+		public ISingleAssociationBuilder<TAssociation> Subset(IValueSetTransformer transformer)
 		{
-			_mapper = new SubsetMapper(prefix);
+			_transformer = transformer;
 			return this;
 		}
 
-		public ISingleAssociationBuilder<TAssociation> Scheme(params string[] keys)
+		public ISingleAssociationBuilder<TAssociation> Validate(IValueSetValidator validator)
 		{
-			_validator = new SubsetSchemeValidator(keys);
+			_validator = validator;
 			return this;
 		}
 
@@ -107,7 +107,7 @@ namespace Radischevo.Wahha.Data
 
 		private Link<TAssociation> Apply(LinkMaterializerAction<TAssociation> action)
 		{
-			action.Transformer = _mapper;
+			action.Transformer = _transformer;
 			action.Validator = _validator;
 			action.Order = 2;
 
@@ -184,8 +184,8 @@ namespace Radischevo.Wahha.Data
 	{
 		#region Instance Fields
 		private EntityAssociator<TAssociation> _associator;
-		private SubsetMapper _mapper;
-		private SubsetSchemeValidator _validator;
+		private IValueSetTransformer _transformer;
+		private IValueSetValidator _validator;
 		#endregion
 
 		#region Constructors
@@ -196,21 +196,21 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public IEntityAssociationBuilder<TAssociation> Subset(string prefix)
+		public IEntityAssociationBuilder<TAssociation> Subset(IValueSetTransformer transformer)
 		{
-			_mapper = new SubsetMapper(prefix);
+			_transformer = transformer;
 			return this;
 		}
 
-		public IEntityAssociationBuilder<TAssociation> Scheme(params string[] keys)
+		public IEntityAssociationBuilder<TAssociation> Validate(IValueSetValidator validator)
 		{
-			_validator = new SubsetSchemeValidator(keys);
+			_validator = validator;
 			return this;
 		}
 
 		private TAssociation Apply(EntityMaterializerAction<TAssociation> action)
 		{
-			action.Transformer = _mapper;
+			action.Transformer = _transformer;
 			action.Validator = _validator;
 			action.Order = 1;
 

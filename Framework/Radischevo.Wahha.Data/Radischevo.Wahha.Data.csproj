@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\AssociatorExtensions.cs" />
     <Compile Include="Interfaces\IValueSetTransformer.cs" />
     <Compile Include="Interfaces\IValueSetValidator.cs" />
     <Compile Include="Materialization\AssociatorAction`1.cs" />
