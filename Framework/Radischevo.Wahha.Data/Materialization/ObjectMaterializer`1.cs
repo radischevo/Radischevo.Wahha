@@ -34,7 +34,7 @@ namespace Radischevo.Wahha.Data
 			where TAssociation : class
 		{
 			return new SingleAssociationBuilder<TAssociation>(
-				new SingleAssociator<TAssociation>(link));
+				new SingleLinkAssociator<TAssociation>(link));
 		}
 
 		protected ICollectionAssociationSelectorBuilder<TAssociation> 
@@ -42,7 +42,15 @@ namespace Radischevo.Wahha.Data
 			where TAssociation : class
 		{
 			return new CollectionAssociationBuilder<TAssociation>(
-				new CollectionAssociator<TAssociation>(link));
+				new CollectionLinkAssociator<TAssociation>(link));
+		}
+
+		protected IEntityAssociationBuilder<TAssociation>
+			Associate<TAssociation>(TAssociation association)
+			where TAssociation : class
+		{
+			return new EntityAssociationBuilder<TAssociation>(
+				new EntityAssociator<TAssociation>(association));
 		}
 		#endregion
 	}

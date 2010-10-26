@@ -3,11 +3,12 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	public class SingleAssociator<TAssociation> : Associator<TAssociation>
+	public class SingleLinkAssociator<TAssociation> 
+		: LinkAssociator<TAssociation>
 		where TAssociation : class
 	{
 		#region Constructors
-		public SingleAssociator(Link<TAssociation> link)
+		public SingleLinkAssociator(Link<TAssociation> link)
 			: base(link)
 		{
 		}

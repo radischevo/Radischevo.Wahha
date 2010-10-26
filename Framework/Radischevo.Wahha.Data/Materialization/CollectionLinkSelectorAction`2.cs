@@ -6,13 +6,13 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	public class CollectionSelectorAction<TAssociation, TRepository>
-		: SelectorAction<IEnumerable<TAssociation>>
+	public class CollectionLinkSelectorAction<TAssociation, TRepository>
+		: LinkSelectorAction<IEnumerable<TAssociation>>
 		where TAssociation : class
 		where TRepository : IRepository<TAssociation>
 	{
 		#region Constructors
-		public CollectionSelectorAction(Expression<Func<TRepository, 
+		public CollectionLinkSelectorAction(Expression<Func<TRepository, 
 			IEnumerable<TAssociation>>> selector)
 			: base(ConvertExpression(selector))
 		{

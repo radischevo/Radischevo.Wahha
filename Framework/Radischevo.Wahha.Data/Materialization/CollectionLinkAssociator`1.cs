@@ -5,12 +5,12 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	public class CollectionAssociator<TAssociation> 
-		: Associator<IEnumerable<TAssociation>>
+	public class CollectionLinkAssociator<TAssociation> 
+		: LinkAssociator<IEnumerable<TAssociation>>
 		where TAssociation : class
 	{
 		#region Constructors
-		public CollectionAssociator(EnumerableLink<TAssociation> link)
+		public CollectionLinkAssociator(EnumerableLink<TAssociation> link)
 			: base(link)
 		{
 		}

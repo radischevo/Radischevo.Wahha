@@ -19,7 +19,7 @@ namespace ConsoleTester
 		static void Main(string[] args)
 		{
 			Program p = new Program();
-			p.MultipleThreadTest();
+			//p.MultipleThreadTest();
 			p.SingleThreadTest();
 
 			Console.ReadKey();

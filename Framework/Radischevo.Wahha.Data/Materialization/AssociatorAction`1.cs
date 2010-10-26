@@ -1,5 +1,4 @@
 ﻿using System;
-using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
@@ -28,10 +27,6 @@ namespace Radischevo.Wahha.Data
 				_order = value;
 			}
 		}
-		#endregion
-
-		#region Instance Methods
-		public abstract void Execute(ILink<TAssociation> link);
 		#endregion
 	}
 }

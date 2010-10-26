@@ -2,17 +2,18 @@
 
 namespace Radischevo.Wahha.Data
 {
-	public abstract class Associator<TAssociation>
+	public abstract class EntityAssociatorAction<TAssociation>
+		: AssociatorAction<TAssociation>
 		where TAssociation : class
 	{
 		#region Constructors
-		protected Associator()
+		protected EntityAssociatorAction()
 		{
 		}
 		#endregion
 
 		#region Instance Methods
-		public abstract void Execute();
+		public abstract void Execute(TAssociation entity);
 		#endregion
 	}
 }

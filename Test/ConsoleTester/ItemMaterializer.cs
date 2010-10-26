@@ -40,6 +40,8 @@ namespace ConsoleTester
 			Associate(entity.Values)
 				.With<IItemDataRepository>(r => r.Select(entity)).Apply();
 
+			Associate(entity.RawData).Subset("data.").Scheme("field_1_value").Apply(source);
+
 			return entity;
 		}
 	}

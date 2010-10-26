@@ -8,7 +8,8 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	public abstract class SelectorAction<TAssociation> : AssociatorAction<TAssociation>
+	public abstract class LinkSelectorAction<TAssociation> 
+		: LinkAssociatorAction<TAssociation>
 		where TAssociation : class
 	{
 		#region Instance Fields
@@ -16,7 +17,7 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Constructors
-		protected SelectorAction(MethodCallExpression selector)
+		protected LinkSelectorAction(MethodCallExpression selector)
 			: base()
 		{
 			Precondition.Require(selector, () => Error.ArgumentNull("selector"));
@@ -109,7 +110,7 @@ namespace Radischevo.Wahha.Data
 	}
 
 	public class SelectorAction<TAssociation, TRepository> 
-		: SelectorAction<TAssociation>
+		: LinkSelectorAction<TAssociation>
 		where TAssociation : class
 		where TRepository : IRepository<TAssociation>
 	{

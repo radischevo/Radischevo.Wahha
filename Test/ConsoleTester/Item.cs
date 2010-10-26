@@ -9,6 +9,7 @@ namespace ConsoleTester
 		{
 			_data = new Link<ItemData>();
 			_values = new EnumerableLink<ItemData>();
+			RawData = new ItemData();
 		}
 
 		public long Id
@@ -42,6 +43,12 @@ namespace ConsoleTester
 		}
 
 		public DateTime DateLastModified
+		{
+			get;
+			set;
+		}
+
+		public ItemData RawData
 		{
 			get;
 			set;
