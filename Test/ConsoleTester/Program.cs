@@ -76,8 +76,8 @@ namespace ConsoleTester
 						item.DateLastModified.ToString("dd.MM.yyyy"), 
 						item.Data.Value.Comments);
 
-					foreach (ItemData data in item.Values)
-						Console.WriteLine("data => {0}", data.Comments);
+					//foreach (ItemData data in item.Values)
+					//	Console.WriteLine("data => {0}", data.Comments);
 				}
 			}
 			catch

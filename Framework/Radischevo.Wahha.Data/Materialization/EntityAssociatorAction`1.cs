@@ -11,9 +11,5 @@ namespace Radischevo.Wahha.Data
 		{
 		}
 		#endregion
-
-		#region Instance Methods
-		public abstract void Execute(TAssociation entity);
-		#endregion
 	}
 }

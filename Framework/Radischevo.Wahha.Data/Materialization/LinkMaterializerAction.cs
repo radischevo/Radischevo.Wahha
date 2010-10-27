@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Core.Expressions;
@@ -11,8 +12,8 @@ namespace Radischevo.Wahha.Data
 	{
 		#region Instance Fields
 		private IValueSet _source;
-		private IValueSetTransformer _transformer;
-		private IValueSetValidator _validator;
+		private List<IValueSetTransformer> _transformers;
+		private List<IValueSetValidator> _validators;
 		#endregion
 
 		#region Constructors
@@ -21,37 +22,27 @@ namespace Radischevo.Wahha.Data
 		{
 			Precondition.Require(source, () => Error.ArgumentNull("source"));
 			_source = source;
+			_transformers = new List<IValueSetTransformer>();
+			_validators = new List<IValueSetValidator>();
+
+			_validators.Add(new NullValueSetValidator());
 		}
 		#endregion
 
 		#region Instance Properties
-		public IValueSetTransformer Transformer
+		public ICollection<IValueSetTransformer> Transformers
 		{
 			get
 			{
-				if (_transformer == null)
-					_transformer = new NullValueSetTransformer();
-
-				return _transformer;
-			}
-			set
-			{
-				_transformer = value;
+				return _transformers;
 			}
 		}
 
-		public IValueSetValidator Validator
+		public ICollection<IValueSetValidator> Validators
 		{
 			get
 			{
-				if (_validator == null)
-					_validator = new NullValueSetValidator();
-
-				return _validator;
-			}
-			set
-			{
-				_validator = value;
+				return _validators;
 			}
 		}
 
@@ -81,14 +72,28 @@ namespace Radischevo.Wahha.Data
 			return new LinkValueInitializer<TAssociation>(type);
 		}
 
-		public override void Execute(ILink<TAssociation> link)
+		protected virtual bool Validate(IValueSet values)
+		{
+			foreach (IValueSetValidator validator in Validators)
+				if (!validator.Valid(values))
+					return false;
+
+			return true;
+		}
+
+		public override ILink<TAssociation> Execute(ILink<TAssociation> link)
 		{
 			Link<TAssociation> association = ConvertLink(link);
 			LinkValueInitializer<TAssociation> initializer = CreateInitializer();
-			IValueSet subset = Transformer.Transform(Source);
+			IValueSet subset = Source;
 
-			if (Validator.Valid(subset) && initializer != null)
+			foreach (IValueSetTransformer transformer in Transformers)
+				subset = transformer.Transform(subset);
+
+			if (Validate(subset) && initializer != null)
 				initializer.Initialize(association, subset);
+
+			return association;
 		}
 		#endregion
 	}

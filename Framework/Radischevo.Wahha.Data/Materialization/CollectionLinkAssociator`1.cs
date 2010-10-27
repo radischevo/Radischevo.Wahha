@@ -10,19 +10,9 @@ namespace Radischevo.Wahha.Data
 		where TAssociation : class
 	{
 		#region Constructors
-		public CollectionLinkAssociator(EnumerableLink<TAssociation> link)
-			: base(link)
+		public CollectionLinkAssociator()
+			: base()
 		{
-		}
-		#endregion
-
-		#region Instance Properties
-		public new EnumerableLink<TAssociation> Link
-		{
-			get
-			{
-				return (base.Link as EnumerableLink<TAssociation>);
-			}
 		}
 		#endregion
 	}

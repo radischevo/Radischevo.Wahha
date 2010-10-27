@@ -99,12 +99,13 @@ namespace Radischevo.Wahha.Data
 			return func.Compile();
 		}
 
-		public override void Execute(ILink<TAssociation> link)
+		public override ILink<TAssociation> Execute(ILink<TAssociation> link)
 		{
 			Precondition.Require(link, () => Error.ArgumentNull("link"));
 			Func<TAssociation> selector = CreateSelector();
 
 			link.Source = (selector == null) ? () => null : selector;
+			return link;
 		}
 		#endregion
 	}

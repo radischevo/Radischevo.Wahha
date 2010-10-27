@@ -6,15 +6,6 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	public interface ISingleAssociationSelectorBuilder<TAssociation>
-		: IHideObjectMembers
-		where TAssociation : class
-	{
-		ISingleAssociationBuilder<TAssociation> With<TRepository>(
-			Expression<Func<TRepository, TAssociation>> selector)
-			where TRepository : IRepository<TAssociation>;
-	}
-
 	public interface ISingleAssociationBuilder<TAssociation>
 		: IHideObjectMembers
 		where TAssociation : class
@@ -29,6 +20,15 @@ namespace Radischevo.Wahha.Data
 
 		Link<TAssociation> Apply<TMaterializer>(IValueSet source)
 			where TMaterializer : IDbMaterializer<TAssociation>;
+	}
+
+	public interface ISingleAssociationSelectorBuilder<TAssociation>
+		: ISingleAssociationBuilder<TAssociation>
+		where TAssociation : class
+	{
+		ISingleAssociationBuilder<TAssociation> With<TRepository>(
+			Expression<Func<TRepository, TAssociation>> selector)
+			where TRepository : IRepository<TAssociation>;
 	}
 
 	public interface ICollectionAssociationSelectorBuilder<TAssociation>
@@ -67,29 +67,32 @@ namespace Radischevo.Wahha.Data
 		where TAssociation : class
 	{
 		#region Instance Fields
+		private Link<TAssociation> _association;
 		private SingleLinkAssociator<TAssociation> _associator;
-		private IValueSetTransformer _transformer;
-		private IValueSetValidator _validator;
+		private List<IValueSetTransformer> _transformers;
+		private List<IValueSetValidator> _validators;
 		#endregion
 
 		#region Constructors
-		internal SingleAssociationBuilder(
-			SingleLinkAssociator<TAssociation> associator)
+		internal SingleAssociationBuilder(Link<TAssociation> association)
 		{
-			_associator = associator;
+			_association = association;
+			_associator = new SingleLinkAssociator<TAssociation>();
+			_transformers = new List<IValueSetTransformer>();
+			_validators = new List<IValueSetValidator>();
 		}
 		#endregion
 
 		#region Instance Methods
 		public ISingleAssociationBuilder<TAssociation> Subset(IValueSetTransformer transformer)
 		{
-			_transformer = transformer;
+			_transformers.Add(transformer);
 			return this;
 		}
 
 		public ISingleAssociationBuilder<TAssociation> Validate(IValueSetValidator validator)
 		{
-			_validator = validator;
+			_validators.Add(validator);
 			return this;
 		}
 
@@ -107,8 +110,12 @@ namespace Radischevo.Wahha.Data
 
 		private Link<TAssociation> Apply(LinkMaterializerAction<TAssociation> action)
 		{
-			action.Transformer = _transformer;
-			action.Validator = _validator;
+			foreach(IValueSetTransformer transformer in _transformers)
+				action.Transformers.Add(transformer);
+
+			foreach (IValueSetValidator validator in _validators)
+				action.Validators.Add(validator);
+			
 			action.Order = 2;
 
 			_associator.Actions.Add(action);
@@ -117,8 +124,7 @@ namespace Radischevo.Wahha.Data
 
 		public Link<TAssociation> Apply()
 		{
-			_associator.Execute();
-			return _associator.Link;
+			return (Link<TAssociation>)_associator.Execute(_association);
 		}
 
 		public Link<TAssociation> Apply(IValueSet source)
@@ -146,14 +152,16 @@ namespace Radischevo.Wahha.Data
 		where TAssociation : class
 	{
 		#region Instance Fields
+		private EnumerableLink<TAssociation> _association;
 		private CollectionLinkAssociator<TAssociation> _associator;
 		#endregion
 
 		#region Constructors
 		internal CollectionAssociationBuilder(
-			CollectionLinkAssociator<TAssociation> associator)
+			EnumerableLink<TAssociation> association)
 		{
-			_associator = associator;
+			_association = association;
+			_associator = new CollectionLinkAssociator<TAssociation>();
 		}
 		#endregion
 
@@ -172,8 +180,7 @@ namespace Radischevo.Wahha.Data
 
 		public EnumerableLink<TAssociation> Apply()
 		{
-			_associator.Execute();
-			return _associator.Link;
+			return (EnumerableLink<TAssociation>)_associator.Execute(_association);
 		}
 		#endregion
 	}
@@ -183,41 +190,47 @@ namespace Radischevo.Wahha.Data
 		where TAssociation : class
 	{
 		#region Instance Fields
+		private TAssociation _association;
 		private EntityAssociator<TAssociation> _associator;
-		private IValueSetTransformer _transformer;
-		private IValueSetValidator _validator;
+		private List<IValueSetTransformer> _transformers;
+		private List<IValueSetValidator> _validators;
 		#endregion
 
 		#region Constructors
-		internal EntityAssociationBuilder(EntityAssociator<TAssociation> associator)
+		internal EntityAssociationBuilder(TAssociation association)
 		{
-			_associator = associator;
+			_association = association;
+			_associator = new EntityAssociator<TAssociation>();
+			_transformers = new List<IValueSetTransformer>();
+			_validators = new List<IValueSetValidator>();
 		}
 		#endregion
 
 		#region Instance Methods
 		public IEntityAssociationBuilder<TAssociation> Subset(IValueSetTransformer transformer)
 		{
-			_transformer = transformer;
+			_transformers.Add(transformer);
 			return this;
 		}
 
 		public IEntityAssociationBuilder<TAssociation> Validate(IValueSetValidator validator)
 		{
-			_validator = validator;
+			_validators.Add(validator);
 			return this;
 		}
 
 		private TAssociation Apply(EntityMaterializerAction<TAssociation> action)
 		{
-			action.Transformer = _transformer;
-			action.Validator = _validator;
+			foreach (IValueSetTransformer transformer in _transformers)
+				action.Transformers.Add(transformer);
+
+			foreach (IValueSetValidator validator in _validators)
+				action.Validators.Add(validator);
+
 			action.Order = 1;
-
 			_associator.Actions.Add(action);
-			_associator.Execute();
 
-			return _associator.Entity;
+			return _associator.Execute(_association);
 		}
 
 		public TAssociation Apply(IValueSet source)

@@ -2,8 +2,8 @@
 
 namespace Radischevo.Wahha.Data
 {
-	public abstract class AssociatorAction<TAssociation>
-		where TAssociation : class
+	public abstract class AssociatorAction<T>
+		where T : class
 	{
 		#region Instance Fields
 		private int _order;
@@ -27,6 +27,10 @@ namespace Radischevo.Wahha.Data
 				_order = value;
 			}
 		}
+		#endregion
+
+		#region Instance Methods
+		public abstract T Execute(T entity);
 		#endregion
 	}
 }
