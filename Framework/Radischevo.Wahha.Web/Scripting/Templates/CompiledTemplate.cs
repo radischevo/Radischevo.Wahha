@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
+using System.IO;
 
 using Radischevo.Wahha.Core;
 
@@ -56,13 +56,13 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		#endregion
 
 		#region Instance Methods
-		public void Execute(HttpContext context, object[] parameters)
+		public void Execute(TemplateContext context)
 		{
 			Precondition.Require(context, () => Error.ArgumentNull("context"));
-			ExecuteInternal(context, parameters);
+			ExecuteInternal(context);
 		}
 
-		protected abstract void ExecuteInternal(HttpContext context, object[] parameters);
+		protected abstract void ExecuteInternal(TemplateContext context);
 		#endregion
 	}
 }

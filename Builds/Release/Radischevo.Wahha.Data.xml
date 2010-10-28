@@ -306,6 +306,11 @@
               Looks up a localized string similar to Connection string cannot be null or an empty string..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_CouldNotMaterializeCollectionLink">
+            <summary>
+              Looks up a localized string similar to The provided link can not be materialized since it can not be explicitly converted to the &apos;Link&lt;TAssociation&gt;&apos; type..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_FormatParameterMismatch">
             <summary>
               Looks up a localized string similar to Index (zero based) must be greater than or equal to zero and less than the size of the argument list..
@@ -314,6 +319,11 @@
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_IncompatibleCacheProviderType">
             <summary>
               Looks up a localized string similar to The type &apos;{0}&apos; must implement the ICacheProvider or ITaggedCacheProvider interface and have a public parameterless constructor..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_IncompatibleMaterializerType">
+            <summary>
+              Looks up a localized string similar to The type &apos;{0}&apos; must implement the IDbMaterializer interface..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_IncompatibleProviderFactoryType">

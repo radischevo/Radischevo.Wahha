@@ -112,6 +112,8 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		protected virtual string ConstructPhysicalPath(string path, out string virtualPath)
 		{
 			string appPhysicalPath = HostingEnvironment.ApplicationPhysicalPath;
+			string appVirtualPath = HostingEnvironment.ApplicationVirtualPath ?? "/";
+
 			if (!IsAbsolutePhysicalPath(path))
 			{
 				try
@@ -132,11 +134,11 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 			}
 			else
 			{
-				string relativePath = "~/" + path.Replace(appPhysicalPath,
-					String.Empty).Replace('\\', '/');
+				string relativePath = (String.IsNullOrEmpty(appPhysicalPath))
+					? "~/" + Path.GetFileName(path)
+					: "~/" + path.Replace(appPhysicalPath, String.Empty).Replace('\\', '/');
 
-				virtualPath = VirtualPathUtility.ToAbsolute(relativePath,
-					HostingEnvironment.ApplicationVirtualPath);
+				virtualPath = VirtualPathUtility.ToAbsolute(relativePath, appVirtualPath);
 			}
 			return path;
 		}

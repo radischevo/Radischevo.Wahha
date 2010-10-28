@@ -279,7 +279,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 				_builder = new StringBuilder();
 
 			if (Debug) // in debug mode, we prefer to render each code block on a new line. 
-				code = String.Concat(code, Environment.NewLine);
+				_builder.Insert(0, Environment.NewLine);
 
 			_builder.Insert(0, code);
 		}

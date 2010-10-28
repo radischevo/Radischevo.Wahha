@@ -160,6 +160,15 @@ namespace Radischevo.Wahha.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The provided link can not be materialized since it can not be explicitly converted to the &apos;Link&lt;TAssociation&gt;&apos; type..
+        /// </summary>
+        internal static string Error_CouldNotMaterializeCollectionLink {
+            get {
+                return ResourceManager.GetString("Error_CouldNotMaterializeCollectionLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Index (zero based) must be greater than or equal to zero and less than the size of the argument list..
         /// </summary>
         internal static string Error_FormatParameterMismatch {
@@ -174,6 +183,15 @@ namespace Radischevo.Wahha.Data.Resources {
         internal static string Error_IncompatibleCacheProviderType {
             get {
                 return ResourceManager.GetString("Error_IncompatibleCacheProviderType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The type &apos;{0}&apos; must implement the IDbMaterializer interface..
+        /// </summary>
+        internal static string Error_IncompatibleMaterializerType {
+            get {
+                return ResourceManager.GetString("Error_IncompatibleMaterializerType", resourceCulture);
             }
         }
         

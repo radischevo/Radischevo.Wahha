@@ -150,11 +150,17 @@
   <data name="Error_ConnectionStringNotInitialized" xml:space="preserve">
     <value>Connection string cannot be null or an empty string.</value>
   </data>
+  <data name="Error_CouldNotMaterializeCollectionLink" xml:space="preserve">
+    <value>The provided link can not be materialized since it can not be explicitly converted to the 'Link&lt;TAssociation&gt;' type.</value>
+  </data>
   <data name="Error_FormatParameterMismatch" xml:space="preserve">
     <value>Index (zero based) must be greater than or equal to zero and less than the size of the argument list.</value>
   </data>
   <data name="Error_IncompatibleCacheProviderType" xml:space="preserve">
     <value>The type '{0}' must implement the ICacheProvider or ITaggedCacheProvider interface and have a public parameterless constructor.</value>
+  </data>
+  <data name="Error_IncompatibleMaterializerType" xml:space="preserve">
+    <value>The type '{0}' must implement the IDbMaterializer interface.</value>
   </data>
   <data name="Error_IncompatibleProviderFactoryType" xml:space="preserve">
     <value>The type '{0}' must implement the IDbDataProviderFactory interface and have a public parameterless constructor.</value>

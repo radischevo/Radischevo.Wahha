@@ -45,6 +45,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -74,6 +75,18 @@
     <ProjectReference Include="..\..\Framework\Radischevo.Wahha.Data\Radischevo.Wahha.Data.csproj">
       <Project>{C7346189-E495-4A61-9398-F90B69AB619A}</Project>
       <Name>Radischevo.Wahha.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Radischevo.Wahha.Web.Mvc\Radischevo.Wahha.Web.Mvc.csproj">
+      <Project>{713B1B11-C690-46C7-9971-FC4F68126519}</Project>
+      <Name>Radischevo.Wahha.Web.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Radischevo.Wahha.Web.Routing\Radischevo.Wahha.Web.Routing.csproj">
+      <Project>{63510543-829A-44CF-9D34-5A039BC78811}</Project>
+      <Name>Radischevo.Wahha.Web.Routing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Radischevo.Wahha.Web\Radischevo.Wahha.Web.csproj">
+      <Project>{2DEB7611-864B-48C4-9CE7-5100F314371D}</Project>
+      <Name>Radischevo.Wahha.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -59,7 +59,7 @@ namespace Radischevo.Wahha.Web.Abstractions
         {
             get
             {
-                return _request.ApplicationPath;
+                return _request.ApplicationPath ?? "/";
             }
         }
 

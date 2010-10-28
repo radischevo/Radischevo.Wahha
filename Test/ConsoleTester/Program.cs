@@ -9,6 +9,10 @@ using System.Threading;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Data;
 using System.Diagnostics;
+using System.IO;
+using Radischevo.Wahha.Web.Scripting.Templates;
+using Radischevo.Wahha.Web.Routing;
+using Radischevo.Wahha.Web.Mvc;
 
 namespace ConsoleTester
 {

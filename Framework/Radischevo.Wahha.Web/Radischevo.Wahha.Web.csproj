@@ -125,6 +125,7 @@
     <Compile Include="Scripting\Templates\LiteralExpression.cs" />
     <Compile Include="Scripting\Templates\ParsedTemplate.cs" />
     <Compile Include="Scripting\Templates\TemplateCompiler.cs" />
+    <Compile Include="Scripting\Templates\TemplateContext.cs" />
     <Compile Include="Scripting\Templates\TemplateExpression.cs" />
     <Compile Include="Scripting\Templates\TemplateExpressionType.cs" />
     <Compile Include="Scripting\Templates\TemplateParameter.cs" />

@@ -161,12 +161,13 @@ namespace Radischevo.Wahha.Data
 
 		internal static Exception IncompatibleMaterializerType(Type type)
 		{
-			throw new NotImplementedException();
+			return new InvalidOperationException(
+				String.Format(Res.Error_IncompatibleMaterializerType, type.FullName));
 		}
 
 		internal static Exception CouldNotMaterializeCollectionLink(string parameter)
 		{
-			throw new NotImplementedException();
+			return new ArgumentException(Res.Error_CouldNotMaterializeCollectionLink, parameter);
 		}
 	}
 }

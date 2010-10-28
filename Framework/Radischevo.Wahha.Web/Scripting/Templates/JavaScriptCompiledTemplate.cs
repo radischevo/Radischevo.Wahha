@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web;
+using System.IO;
 
 namespace Radischevo.Wahha.Web.Scripting.Templates
 {
@@ -19,7 +19,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		#endregion
 
 		#region Instance Methods
-		protected override void ExecuteInternal(HttpContext context, object[] parameters)
+		protected override void ExecuteInternal(TemplateContext context)
 		{
 		}
 		#endregion
