@@ -13,6 +13,8 @@ using System.IO;
 using Radischevo.Wahha.Web.Scripting.Templates;
 using Radischevo.Wahha.Web.Routing;
 using Radischevo.Wahha.Web.Mvc;
+using System.Globalization;
+using Radischevo.Wahha.Web;
 
 namespace ConsoleTester
 {
@@ -25,7 +27,7 @@ namespace ConsoleTester
 			Program p = new Program();
 			//p.MultipleThreadTest();
 			p.SingleThreadTest();
-
+			
 			Console.ReadKey();
 		}
 

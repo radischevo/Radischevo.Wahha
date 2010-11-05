@@ -135,6 +135,9 @@
   <data name="Error_IncompatibleServiceLocatorType" xml:space="preserve">
     <value>The service locator type '{0}' must implement the IServiceLocator interface.</value>
   </data>
+  <data name="Error_InvalidArgumentType" xml:space="preserve">
+    <value>The value of the '{1}' argument must be of '{0}' type. </value>
+  </data>
   <data name="Error_InvalidBindingExpressionFormat" xml:space="preserve">
     <value>Specified binding expression is invalid.</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="Error_TargetTypeIsNotNullable" xml:space="preserve">
     <value>Could not convert the '{0}' argument to the specified type. Type'{1}' does not allow null values.</value>
+  </data>
+  <data name="Error_TypeIsNotTuple" xml:space="preserve">
+    <value>Type '{0}' is not a tuple</value>
   </data>
   <data name="Error_UnableToLoadConfiguration" xml:space="preserve">
     <value>Could not parse the configuration file. See the inner exception for details.</value>

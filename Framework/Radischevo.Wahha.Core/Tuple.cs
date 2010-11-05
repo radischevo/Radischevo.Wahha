@@ -1,10 +1,34 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Radischevo.Wahha.Core
 {
-	public static class Tuple
+	public abstract class Tuple : IStructuralEquatable, 
+		IStructuralComparable, IComparable, ITuple
 	{
+		#region Constructors
+		protected Tuple()
+		{
+		}
+		#endregion
+
+		#region Instance Properties
+		protected abstract int Size
+		{
+			get;
+		}
+		#endregion
+
 		#region Static Methods
+		protected static int CombineHashCodes(int h1, int h2)
+		{
+			return (((h1 << 5) + h1) ^ h2);
+		}
+		#endregion
+
+		#region Factory Methods
 		public static Tuple<T1> Create<T1>(T1 item1)
 		{
 			return new Tuple<T1>(item1);
@@ -15,8 +39,7 @@ namespace Radischevo.Wahha.Core
 			return new Tuple<T1, T2>(item1, item2);
 		}
 
-		public static Tuple<T1, T2, T3> Create<T1, T2, T3>(
-			T1 item1, T2 item2, T3 item3)
+		public static Tuple<T1, T2, T3> Create<T1, T2, T3>(T1 item1, T2 item2, T3 item3)
 		{
 			return new Tuple<T1, T2, T3>(item1, item2, item3);
 		}
@@ -42,98 +65,158 @@ namespace Radischevo.Wahha.Core
 		public static Tuple<T1, T2, T3, T4, T5, T6, T7> Create<T1, T2, T3, T4, T5, T6, T7>(
 			T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7)
 		{
-			return new Tuple<T1, T2, T3, T4, T5, T6, T7>(
-				item1, item2, item3, item4, item5, item6, item7);
+			return new Tuple<T1, T2, T3, T4, T5, T6, T7>(item1, item2, 
+				item3, item4, item5, item6, item7);
 		}
 
-		public static Tuple<T1, T2, T3, T4, T5, T6, T7, TOther> Create<T1, T2, T3, T4, T5, T6, T7, TOther>(
-			T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, TOther item8)
+		public static Tuple<T1, T2, T3, T4, T5, T6, T7, Tuple<T8>> Create<T1, T2, T3, T4, T5, T6, T7, T8>(
+			T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, T8 item8)
 		{
-			return new Tuple<T1, T2, T3, T4, T5, T6, T7, TOther>(
-				item1, item2, item3, item4, item5, item6, item7, item8);
+			return new Tuple<T1, T2, T3, T4, T5, T6, T7, Tuple<T8>>(item1, item2, 
+				item3, item4, item5, item6, item7, new Tuple<T8>(item8));
+		}
+		#endregion
+
+		#region Instance Methods
+		protected abstract int CompareTo(object other, IComparer comparer);
+
+		protected abstract bool Equals(object other, IEqualityComparer comparer);
+
+		protected abstract int GetHashCode(IEqualityComparer comparer);
+
+		protected abstract string ToString(StringBuilder builder);
+
+		public override bool Equals(object obj)
+		{
+			return Equals(obj, EqualityComparer<object>.Default);
+		}
+
+		public override int GetHashCode()
+		{
+			return GetHashCode(EqualityComparer<object>.Default);
+		}
+
+		public override string ToString()
+		{
+			StringBuilder builder = new StringBuilder();
+			builder.Append("(");
+
+			return ((ITuple)this).ToString(builder);
+		}
+		#endregion
+
+		#region Interface Implementations
+		int ITuple.Size
+		{
+			get
+			{
+				return Size;
+			}
+		}
+
+		int IComparable.CompareTo(object obj)
+		{
+			return CompareTo(obj, Comparer<object>.Default);
+		}
+
+		int IStructuralComparable.CompareTo(object other, IComparer comparer)
+		{
+			return CompareTo(other, comparer);
+		}
+
+		bool IStructuralEquatable.Equals(object other, IEqualityComparer comparer)
+		{
+			return Equals(other, comparer);
+		}
+
+		int ITuple.GetHashCode(IEqualityComparer comparer)
+		{
+			return GetHashCode(comparer);
+		}
+
+		int IStructuralEquatable.GetHashCode(IEqualityComparer comparer)
+		{
+			return GetHashCode(comparer);
+		}
+
+		string ITuple.ToString(StringBuilder builder)
+		{
+			return ToString(builder);
 		}
 		#endregion
 	}
 
-	public class Tuple<T1>
+	[Serializable]
+	public class Tuple<T1> : Tuple
 	{
 		#region Instance Fields
-		private T1 _item1;
+		private readonly T1 _item1;
 		#endregion
 
 		#region Constructors
-		public Tuple()
-			: this(default(T1))
-		{
-		}
-
 		public Tuple(T1 item1)
+			: base()
 		{
 			_item1 = item1;
 		}
 		#endregion
 
 		#region Instance Properties
+		protected override int Size
+		{
+			get
+			{
+				return 1;
+			}
+		}
+
 		public T1 Item1
 		{
 			get
 			{
 				return _item1;
 			}
-			set
-			{
-				_item1 = value;
-			}
 		}
 		#endregion
 
 		#region Instance Methods
-		public override bool Equals(object obj)
+		protected override int CompareTo(object other, IComparer comparer)
 		{
-			if(Object.ReferenceEquals(obj, this))
-				return true;
+			if (other == null)
+				return 1;
 
-			Tuple<T1> tuple = (obj as Tuple<T1>);
-			if (Object.ReferenceEquals(tuple, null))
-				return false;
+			Tuple<T1> tuple = (other as Tuple<T1>);
+			Precondition.Require(tuple, () => Error.TypeIsNotTuple(other, "other"));
 
-			if (Object.ReferenceEquals(null, _item1))
-				return Object.ReferenceEquals(null, tuple._item1);
-
-			return _item1.Equals(tuple._item1);
+			return comparer.Compare(Item1, tuple.Item1);
 		}
 
-		public override int GetHashCode()
+		protected override bool Equals(object other, IEqualityComparer comparer)
 		{
-			return (GetType().GetHashCode() << 5) ^ 
-				((_item1 == null) ? 0 : _item1.GetHashCode());
+			Tuple<T1> tuple = (other as Tuple<T1>);
+			return (tuple == null) ? false : comparer.Equals(Item1, tuple.Item1);
 		}
 
-		public override string ToString()
+		protected override int GetHashCode(IEqualityComparer comparer)
 		{
-			return String.Format("({0})", Item1);
+			return comparer.GetHashCode(Item1);
+		}
+
+		protected override string ToString(StringBuilder builder)
+		{
+			return builder.Append(Item1).Append(")").ToString();
 		}
 		#endregion
 	}
 
-	public class Tuple<T1, T2> 
-		: Tuple<T1>
+	[Serializable]
+	public class Tuple<T1, T2> : Tuple<T1>
 	{
 		#region Instance Fields
-		private T2 _item2;
+		private readonly T2 _item2;
 		#endregion
 
 		#region Constructors
-		public Tuple()
-			: this(default(T1))
-		{
-		}
-
-		public Tuple(T1 item1)
-			: this(item1, default(T2))
-		{
-		}
-
 		public Tuple(T1 item1, T2 item2)
 			: base(item1)
 		{
@@ -148,64 +231,68 @@ namespace Radischevo.Wahha.Core
 			{
 				return _item2;
 			}
-			set
+		}
+
+		protected override int Size
+		{
+			get
 			{
-				_item2 = value;
+				return 2;
 			}
 		}
 		#endregion
 
 		#region Instance Methods
-		public override bool Equals(object obj)
+		protected override int CompareTo(object other, IComparer comparer)
 		{
-			bool equalsBase = base.Equals(obj);
+			if (other == null)
+				return 1;
 
-			Tuple<T1, T2> tuple = (obj as Tuple<T1, T2>);
-			if (Object.ReferenceEquals(tuple, null))
+			Tuple<T1, T2> tuple = (other as Tuple<T1, T2>);
+			Precondition.Require(tuple, () => Error.TypeIsNotTuple(other, "other"));
+
+			int result = base.CompareTo(other, comparer);
+			if (result != 0)
+				return result;
+
+			return comparer.Compare(Item2, tuple.Item2);
+		}
+
+		protected override bool Equals(object other, IEqualityComparer comparer)
+		{
+			if (other == null)
 				return false;
 
-			if (Object.ReferenceEquals(null, _item2))
-				return (equalsBase && Object.ReferenceEquals(null, tuple._item2));
-			
-			return (equalsBase && _item2.Equals(tuple._item2));
+			Tuple<T1, T2> tuple = (other as Tuple<T1, T2>);
+			if (tuple == null)
+				return false;
+
+			return base.Equals(other, comparer) &&
+				comparer.Equals(Item2, tuple.Item2);
 		}
 
-		public override int GetHashCode()
+		protected override int GetHashCode(IEqualityComparer comparer)
 		{
-			return (base.GetHashCode() << 4) ^
-				((_item2 == null) ? 0 : _item2.GetHashCode());
+			return CombineHashCodes(base.GetHashCode(comparer), 
+				comparer.GetHashCode(Item2));
 		}
 
-		public override string ToString()
+		protected override string ToString(StringBuilder builder)
 		{
-			return String.Format("({0}, {1})", Item1, Item2);
+			return builder.Append(Item1).Append(", ")
+				.Append(Item2).Append(")").ToString();
 		}
 		#endregion
 	}
 
-	public class Tuple<T1, T2, T3> 
-		: Tuple<T1, T2>
+	[Serializable]
+	public class Tuple<T1, T2, T3> : Tuple<T1, T2>
 	{
 		#region Instance Fields
-		private T3 _item3;
+		private readonly T3 _item3;
 		#endregion
 
 		#region Constructors
-		public Tuple()
-			: this(default(T1))
-		{
-		}
-
-		public Tuple(T1 item1)
-			: this(item1, default(T2))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2)
-			: this(item1, item2, default(T3))
-		{
-		}
-
 		public Tuple(T1 item1, T2 item2, T3 item3)
 			: base(item1, item2)
 		{
@@ -220,72 +307,71 @@ namespace Radischevo.Wahha.Core
 			{
 				return _item3;
 			}
-			set
+		}
+
+		protected override int Size
+		{
+			get
 			{
-				_item3 = value;
+				return 3;
 			}
 		}
 		#endregion
 
 		#region Instance Methods
-		public override bool Equals(object obj)
+		protected override int CompareTo(object other, IComparer comparer)
 		{
-			bool equalsBase = base.Equals(obj);
+			if (other == null)
+				return 1;
 
-			Tuple<T1, T2, T3> tuple = (obj as Tuple<T1, T2, T3>);
-			if (Object.ReferenceEquals(tuple, null))
+			Tuple<T1, T2, T3> tuple = (other as Tuple<T1, T2, T3>);
+			Precondition.Require(tuple, () => Error.TypeIsNotTuple(other, "other"));
+
+			int result = base.CompareTo(other, comparer);
+			if (result != 0)
+				return result;
+
+			return comparer.Compare(Item3, tuple.Item3);
+		}
+
+		protected override bool Equals(object other, IEqualityComparer comparer)
+		{
+			if (other == null)
 				return false;
 
-			if (Object.ReferenceEquals(null, _item3))
-				return (equalsBase && Object.ReferenceEquals(null, tuple._item3));
+			Tuple<T1, T2, T3> tuple = (other as Tuple<T1, T2, T3>);
+			if (tuple == null)
+				return false;
 
-			return (equalsBase && _item3.Equals(tuple._item3));
+			return base.Equals(other, comparer) &&
+				comparer.Equals(Item3, tuple.Item3);
 		}
 
-		public override int GetHashCode()
+		protected override int GetHashCode(IEqualityComparer comparer)
 		{
-			return (base.GetHashCode() << 4) ^
-				((_item3 == null) ? 0 : _item3.GetHashCode());
+			return Tuple.CombineHashCodes(
+				base.GetHashCode(comparer),
+				comparer.GetHashCode(Item3));
 		}
 
-		public override string ToString()
+		protected override string ToString(StringBuilder builder)
 		{
-			return String.Format("({0}, {1}, {2})",
-				Item1, Item2, Item3);
+			return builder.Append(Item1)
+				.Append(", ").Append(Item2).Append(", ")
+				.Append(Item3).Append(")").ToString();
 		}
 		#endregion
 	}
 
-	public class Tuple<T1, T2, T3, T4> 
-		: Tuple<T1, T2, T3>
+	[Serializable]
+	public class Tuple<T1, T2, T3, T4> : Tuple<T1, T2, T3>
 	{
 		#region Instance Fields
-		private T4 _item4;
+		private readonly T4 _item4;
 		#endregion
 
 		#region Constructors
-		public Tuple()
-			: this(default(T1))
-		{
-		}
-
-		public Tuple(T1 item1)
-			: this(item1, default(T2))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2)
-			: this(item1, item2, default(T3))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, T3 item3)
-			: this(item1, item2, item3, default(T4))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, 
-			T3 item3, T4 item4)
+		public Tuple(T1 item1, T2 item2, T3 item3, T4 item4)
 			: base(item1, item2, item3)
 		{
 			_item4 = item4;
@@ -299,77 +385,73 @@ namespace Radischevo.Wahha.Core
 			{
 				return _item4;
 			}
-			set
+		}
+
+		protected override int Size
+		{
+			get
 			{
-				_item4 = value;
+				return 4;
 			}
 		}
 		#endregion
 
 		#region Instance Methods
-		public override bool Equals(object obj)
+		protected override int CompareTo(object other, IComparer comparer)
 		{
-			bool equalsBase = base.Equals(obj);
+			if (other == null)
+				return 1;
 
-			Tuple<T1, T2, T3, T4> tuple = (obj as Tuple<T1, T2, T3, T4>);
-			if (Object.ReferenceEquals(tuple, null))
+			Tuple<T1, T2, T3, T4> tuple = (other as Tuple<T1, T2, T3, T4>);
+			Precondition.Require(tuple, () => Error.TypeIsNotTuple(other, "other"));
+
+			int result = base.CompareTo(other, comparer);
+			if(result != 0)
+				return result;
+
+			return comparer.Compare(Item4, tuple.Item4);
+		}
+
+		protected override bool Equals(object other, IEqualityComparer comparer)
+		{
+			if (other == null)
 				return false;
 
-			if (Object.ReferenceEquals(null, _item4))
-				return (equalsBase && Object.ReferenceEquals(null, tuple._item4));
+			Tuple<T1, T2, T3, T4> tuple = (other as Tuple<T1, T2, T3, T4>);
+			if (tuple == null)
+				return false;
 
-			return (equalsBase && _item4.Equals(tuple._item4));
+			return base.Equals(other, comparer) &&
+				comparer.Equals(Item4, tuple.Item4);
 		}
 
-		public override int GetHashCode()
+		protected override int GetHashCode(IEqualityComparer comparer)
 		{
-			return (base.GetHashCode() << 4) ^
-				((_item4 == null) ? 0 : _item4.GetHashCode());
+			return CombineHashCodes(
+				base.GetHashCode(comparer),
+				comparer.GetHashCode(Item4));
 		}
 
-		public override string ToString()
+		protected override string ToString(StringBuilder builder)
 		{
-			return String.Format("({0}, {1}, {2}, {3})",
-				Item1, Item2, Item3, Item4);
+			return builder.Append(Item1).Append(", ")
+				.Append(Item2).Append(", ")
+				.Append(Item3).Append(", ")
+				.Append(Item4).Append(")")
+				.ToString();
 		}
 		#endregion
 	}
 
-	public class Tuple<T1, T2, T3, T4, T5> 
-		: Tuple<T1, T2, T3, T4>
+	[Serializable]
+	public class Tuple<T1, T2, T3, T4, T5> : Tuple<T1, T2, T3, T4>
 	{
 		#region Instance Fields
-		private T5 _item5;
+		private readonly T5 _item5;
 		#endregion
 
 		#region Constructors
-		public Tuple()
-			: this(default(T1))
-		{
-		}
-
-		public Tuple(T1 item1)
-			: this(item1, default(T2))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2)
-			: this(item1, item2, default(T3))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, T3 item3)
-			: this(item1, item2, item3, default(T4))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, T3 item3, T4 item4)
-			: this(item1, item2, item3, item4, default(T5))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5)
+		public Tuple(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5)
 			: base(item1, item2, item3, item4)
 		{
 			_item5 = item5;
@@ -383,84 +465,74 @@ namespace Radischevo.Wahha.Core
 			{
 				return _item5;
 			}
-			set
+		}
+
+		protected override int Size
+		{
+			get
 			{
-				_item5 = value;
+				return 5;
 			}
 		}
 		#endregion
 
 		#region Instance Methods
-		public override bool Equals(object obj)
+		protected override int CompareTo(object other, IComparer comparer)
 		{
-			bool equalsBase = base.Equals(obj);
+			if (other == null)
+				return 1;
 
-			Tuple<T1, T2, T3, T4, T5> tuple = (obj as Tuple<T1, T2, T3, T4, T5>);
-			if (Object.ReferenceEquals(tuple, null))
+			Tuple<T1, T2, T3, T4, T5> tuple = (other as Tuple<T1, T2, T3, T4, T5>);
+			Precondition.Require(tuple, () => Error.TypeIsNotTuple(other, "other"));
+
+			int result = base.CompareTo(other, comparer);
+			if (result != 0)
+				return result;
+
+			return comparer.Compare(Item5, tuple.Item5);
+		}
+
+		protected override bool Equals(object other, IEqualityComparer comparer)
+		{
+			if (other == null)
 				return false;
 
-			if (Object.ReferenceEquals(null, _item5))
-				return (equalsBase && Object.ReferenceEquals(null, tuple._item5));
+			Tuple<T1, T2, T3, T4, T5> tuple = (other as Tuple<T1, T2, T3, T4, T5>);
+			if (tuple == null)
+				return false;
 
-			return (equalsBase && _item5.Equals(tuple._item5));
+			return base.Equals(other, comparer) && 
+				comparer.Equals(Item5, tuple.Item5);
 		}
 
-		public override int GetHashCode()
+		protected override int GetHashCode(IEqualityComparer comparer)
 		{
-			return (base.GetHashCode() << 4) ^
-				((_item5 == null) ? 0 : _item5.GetHashCode());
+			return CombineHashCodes(
+				base.GetHashCode(comparer),
+				comparer.GetHashCode(Item5));
 		}
 
-		public override string ToString()
+		protected override string ToString(StringBuilder builder)
 		{
-			return String.Format("({0}, {1}, {2}, {3}, {4})",
-				Item1, Item2, Item3, Item4, Item5);
+			return builder.Append(Item1).Append(", ")
+				.Append(Item2).Append(", ")
+				.Append(Item3).Append(", ")
+				.Append(Item4).Append(", ")
+				.Append(Item5).Append(")")
+				.ToString();
 		}
 		#endregion
 	}
 
-	public class Tuple<T1, T2, T3, T4, T5, T6> 
-		: Tuple<T1, T2, T3, T4, T5>
+	[Serializable]
+	public class Tuple<T1, T2, T3, T4, T5, T6> : Tuple<T1, T2, T3, T4, T5>
 	{
 		#region Instance Fields
-		private T6 _item6;
+		private readonly T6 _item6;
 		#endregion
 
 		#region Constructors
-		public Tuple()
-			: this(default(T1))
-		{
-		}
-
-		public Tuple(T1 item1)
-			: this(item1, default(T2))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2)
-			: this(item1, item2, default(T3))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, T3 item3)
-			: this(item1, item2, item3, default(T4))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, T3 item3, T4 item4)
-			: this(item1, item2, item3, item4, default(T5))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5)
-			: this(item1, item2, item3, item4, item5, 
-				default(T6))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5, T6 item6)
+		public Tuple(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6)
 			: base(item1, item2, item3, item4, item5)
 		{
 			_item6 = item6;
@@ -474,91 +546,75 @@ namespace Radischevo.Wahha.Core
 			{
 				return _item6;
 			}
-			set
+		}
+
+		protected override int Size
+		{
+			get
 			{
-				_item6 = value;
+				return 6;
 			}
 		}
 		#endregion
 
 		#region Instance Methods
-		public override bool Equals(object obj)
+		protected override int CompareTo(object other, IComparer comparer)
 		{
-			bool equalsBase = base.Equals(obj);
+			if (other == null)
+				return 1;
 
-			Tuple<T1, T2, T3, T4, T5, T6> tuple = (obj as Tuple<T1, T2, T3, T4, T5, T6>);
-			if (Object.ReferenceEquals(tuple, null))
+			Tuple<T1, T2, T3, T4, T5, T6> tuple = (other as Tuple<T1, T2, T3, T4, T5, T6>);
+			Precondition.Require(tuple, () => Error.TypeIsNotTuple(other, "other"));
+
+			int result = base.CompareTo(other, comparer);
+			if (result != 0)
+				return result;
+
+			return comparer.Compare(Item6, tuple.Item6);
+		}
+
+		protected override bool Equals(object other, IEqualityComparer comparer)
+		{
+			if (other == null)
 				return false;
 
-			if (Object.ReferenceEquals(null, _item6))
-				return (equalsBase && Object.ReferenceEquals(null, tuple._item6));
+			Tuple<T1, T2, T3, T4, T5, T6> tuple = (other as Tuple<T1, T2, T3, T4, T5, T6>);
+			if (tuple == null)
+				return false;
 
-			return (equalsBase && _item6.Equals(tuple._item6));
+			return base.Equals(other, comparer) &&
+				comparer.Equals(Item6, tuple.Item6);
 		}
 
-		public override int GetHashCode()
+		protected override int GetHashCode(IEqualityComparer comparer)
 		{
-			return (base.GetHashCode() << 4) ^
-				((_item6 == null) ? 0 : _item6.GetHashCode());
+			return CombineHashCodes(
+				base.GetHashCode(comparer),
+				comparer.GetHashCode(Item6));
 		}
 
-		public override string ToString()
+		protected override string ToString(StringBuilder builder)
 		{
-			return String.Format("({0}, {1}, {2}, {3}, {4}, {5})",
-				Item1, Item2, Item3, Item4, Item5, Item6);
+			return builder.Append(Item1).Append(", ")
+				.Append(Item2).Append(", ")
+				.Append(Item3).Append(", ")
+				.Append(Item4).Append(", ")
+				.Append(Item5).Append(", ")
+				.Append(Item6).Append(")")
+				.ToString();
 		}
-		#endregion
+		#endregion		
 	}
 
-	public class Tuple<T1, T2, T3, T4, T5, T6, T7> 
-		: Tuple<T1, T2, T3, T4, T5, T6>
+	[Serializable]
+	public class Tuple<T1, T2, T3, T4, T5, T6, T7> : Tuple<T1, T2, T3, T4, T5, T6>
 	{
 		#region Instance Fields
-		private T7 _item7;
+		private readonly T7 _item7;
 		#endregion
 
 		#region Constructors
-		public Tuple()
-			: this(default(T1))
-		{
-		}
-
-		public Tuple(T1 item1)
-			: this(item1, default(T2))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2)
-			: this(item1, item2, default(T3))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, T3 item3)
-			: this(item1, item2, item3, default(T4))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, T3 item3, T4 item4)
-			: this(item1, item2, item3, item4, default(T5))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5)
-			: this(item1, item2, item3, item4, item5,
-				default(T6))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5, T6 item6)
-			: this(item1, item2, item3, item4, item5,
-				item6, default(T7))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5, T6 item6, T7 item7)
+		public Tuple(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7)
 			: base(item1, item2, item3, item4, item5, item6)
 		{
 			_item7 = item7;
@@ -572,144 +628,151 @@ namespace Radischevo.Wahha.Core
 			{
 				return _item7;
 			}
-			set
+		}
+
+		protected override int Size
+		{
+			get
 			{
-				_item7 = value;
+				return 7;
 			}
 		}
 		#endregion
 
 		#region Instance Methods
-		public override bool Equals(object obj)
+		protected override int CompareTo(object other, IComparer comparer)
 		{
-			bool equalsBase = base.Equals(obj);
+			if (other == null)
+				return 1;
 
-			Tuple<T1, T2, T3, T4, T5, T6, T7> tuple = (obj as Tuple<T1, T2, T3, T4, T5, T6, T7>);
-			if (Object.ReferenceEquals(tuple, null))
+			Tuple<T1, T2, T3, T4, T5, T6, T7> tuple = (other as Tuple<T1, T2, T3, T4, T5, T6, T7>);
+			Precondition.Require(tuple, () => Error.TypeIsNotTuple(other, "other"));
+
+			int result = base.CompareTo(other, comparer);
+			if (result != 0)
+				return result;
+
+			return comparer.Compare(Item7, tuple.Item7);
+		}
+
+		protected override bool Equals(object other, IEqualityComparer comparer)
+		{
+			if (other == null)
 				return false;
 
-			if (Object.ReferenceEquals(null, _item7))
-				return (equalsBase && Object.ReferenceEquals(null, tuple._item7));
+			Tuple<T1, T2, T3, T4, T5, T6, T7> tuple = (other as Tuple<T1, T2, T3, T4, T5, T6, T7>);
+			if (tuple == null)
+				return false;
 
-			return (equalsBase && _item7.Equals(tuple._item7));
+			return base.Equals(other, comparer) &&
+				comparer.Equals(Item7, tuple.Item7);
 		}
 
-		public override int GetHashCode()
+		protected override int GetHashCode(IEqualityComparer comparer)
 		{
-			return (base.GetHashCode() << 4) ^
-				((_item7 == null) ? 0 : _item7.GetHashCode());
+			return CombineHashCodes(
+				base.GetHashCode(comparer),
+				comparer.GetHashCode(Item7));
 		}
 
-		public override string ToString()
+		protected override string ToString(StringBuilder builder)
 		{
-			return String.Format("({0}, {1}, {2}, {3}, {4}, {5}, {6})",
-				Item1, Item2, Item3, Item4, Item5, Item6, Item7);
+			return builder.Append(Item1).Append(", ")
+				.Append(Item2).Append(", ")
+				.Append(Item3).Append(", ")
+				.Append(Item4).Append(", ")
+				.Append(Item5).Append(", ")
+				.Append(Item6).Append(", ")
+				.Append(Item7).Append(")")
+				.ToString();
 		}
 		#endregion
 	}
 
-	public class Tuple<T1, T2, T3, T4, T5, T6, T7, TOther> 
-		: Tuple<T1, T2, T3, T4, T5, T6, T7>
+	[Serializable]
+	public class Tuple<T1, T2, T3, T4, T5, T6, T7, TRest> : Tuple<T1, T2, T3, T4, T5, T6, T7>
+		where TRest : ITuple
 	{
 		#region Instance Fields
-		private TOther _item8;
+		private readonly TRest _rest;
 		#endregion
 
 		#region Constructors
-		public Tuple()
-			: this(default(T1))
-		{
-		}
-
-		public Tuple(T1 item1)
-			: this(item1, default(T2))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2)
-			: this(item1, item2, default(T3))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, T3 item3)
-			: this(item1, item2, item3, default(T4))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2, T3 item3, T4 item4)
-			: this(item1, item2, item3, item4, default(T5))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5)
-			: this(item1, item2, item3, item4, item5,
-				default(T6))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5, T6 item6)
-			: this(item1, item2, item3, item4, item5,
-				item6, default(T7))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5, T6 item6, T7 item7)
-			: this(item1, item2, item3, item4, item5,
-				item6, item7, default(TOther))
-		{
-		}
-
-		public Tuple(T1 item1, T2 item2,
-			T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, TOther item8)
+		public Tuple(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, TRest rest)
 			: base(item1, item2, item3, item4, item5, item6, item7)
 		{
-			_item8 = item8;
+			_rest = rest;
 		}
 		#endregion
 
 		#region Instance Properties
-		public TOther Item8
+		public TRest Rest
 		{
 			get
 			{
-				return _item8;
+				return _rest;
 			}
-			set
+		}
+
+		protected override int Size
+		{
+			get
 			{
-				_item8 = value;
+				return 7 + _rest.Size;
 			}
 		}
 		#endregion
 
 		#region Instance Methods
-		public override bool Equals(object obj)
+		protected override int CompareTo(object other, IComparer comparer)
 		{
-			bool equalsBase = base.Equals(obj);
+			if (other == null)
+				return 1;
 
-			Tuple<T1, T2, T3, T4, T5, T6, T7, TOther> tuple = 
-				(obj as Tuple<T1, T2, T3, T4, T5, T6, T7, TOther>);
-			if (Object.ReferenceEquals(tuple, null))
+			Tuple<T1, T2, T3, T4, T5, T6, T7, TRest> tuple = 
+				(other as Tuple<T1, T2, T3, T4, T5, T6, T7, TRest>);
+			Precondition.Require(tuple, () => Error.TypeIsNotTuple(other, "other"));
+
+			int result = base.CompareTo(other, comparer);
+			if (result != 0)
+				return result;
+
+			return comparer.Compare(Rest, tuple.Rest);
+		}
+
+		protected override bool Equals(object other, IEqualityComparer comparer)
+		{
+			if (other == null)
 				return false;
 
-			if (Object.ReferenceEquals(null, _item8))
-				return (equalsBase && Object.ReferenceEquals(null, tuple._item8));
+			Tuple<T1, T2, T3, T4, T5, T6, T7, TRest> tuple = 
+				(other as Tuple<T1, T2, T3, T4, T5, T6, T7, TRest>);
+			if (tuple == null)
+				return false;
 
-			return (equalsBase && _item8.Equals(tuple._item8));
+			return base.Equals(other, comparer) && 
+				comparer.Equals(Rest, tuple.Rest);
 		}
 
-		public override int GetHashCode()
+		protected override int GetHashCode(IEqualityComparer comparer)
 		{
-			return (base.GetHashCode() << 4) ^
-				((_item8 == null) ? 0 : _item8.GetHashCode());
+			if (Rest.Size >= 8)
+				return Rest.GetHashCode(comparer);
+
+			return CombineHashCodes(base.GetHashCode(comparer), Rest.GetHashCode(comparer));
 		}
 
-		public override string ToString()
+		protected override string ToString(StringBuilder builder)
 		{
-			return String.Format("({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})",
-				Item1, Item2, Item3, Item4, Item5, Item6, Item7, Item8);
+			builder.Append(Item1).Append(", ")
+				.Append(Item2).Append(", ")
+				.Append(Item3).Append(", ")
+				.Append(Item4).Append(", ")
+				.Append(Item5).Append(", ")
+				.Append(Item6).Append(", ")
+				.Append(Item7).Append(", ");
+
+			return Rest.ToString(builder);
 		}
 		#endregion
 	}

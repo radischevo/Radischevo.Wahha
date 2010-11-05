@@ -115,6 +115,15 @@ namespace Radischevo.Wahha.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value of the &apos;{1}&apos; argument must be of &apos;{0}&apos; type. .
+        /// </summary>
+        internal static string Error_InvalidArgumentType {
+            get {
+                return ResourceManager.GetString("Error_InvalidArgumentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specified binding expression is invalid..
         /// </summary>
         internal static string Error_InvalidBindingExpressionFormat {
@@ -237,6 +246,15 @@ namespace Radischevo.Wahha.Core.Resources {
         internal static string Error_TargetTypeIsNotNullable {
             get {
                 return ResourceManager.GetString("Error_TargetTypeIsNotNullable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; is not a tuple.
+        /// </summary>
+        internal static string Error_TypeIsNotTuple {
+            get {
+                return ResourceManager.GetString("Error_TypeIsNotTuple", resourceCulture);
             }
         }
         

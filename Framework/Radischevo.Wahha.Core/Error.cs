@@ -148,5 +148,17 @@ namespace Radischevo.Wahha.Core
 			return new ArgumentException(String.Format(
 				Res.Error_IncompatibleServiceLocatorType, type.Name));
 		}
+
+		internal static Exception InvalidArgumentType(Type type, string parameterName)
+		{
+			return new ArgumentException(String.Format(
+				Res.Error_InvalidArgumentType, type.Name, parameterName));
+		}
+
+		internal static Exception TypeIsNotTuple(object argument, string parameterName)
+		{
+			return new ArgumentException(String.Format(Res.Error_TypeIsNotTuple, 
+				argument.GetType().Name), "other");
+		}
 	}
 }

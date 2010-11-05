@@ -565,6 +565,11 @@
               Looks up a localized string similar to The service locator type &apos;{0}&apos; must implement the IServiceLocator interface..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_InvalidArgumentType">
+            <summary>
+              Looks up a localized string similar to The value of the &apos;{1}&apos; argument must be of &apos;{0}&apos; type. .
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_InvalidBindingExpressionFormat">
             <summary>
               Looks up a localized string similar to Specified binding expression is invalid..
@@ -633,6 +638,11 @@
         <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_TargetTypeIsNotNullable">
             <summary>
               Looks up a localized string similar to Could not convert the &apos;{0}&apos; argument to the specified type. Type&apos;{1}&apos; does not allow null values..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_TypeIsNotTuple">
+            <summary>
+              Looks up a localized string similar to Type &apos;{0}&apos; is not a tuple.
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_UnableToLoadConfiguration">

@@ -105,6 +105,9 @@
     <Compile Include="Interfaces\IServiceLocator.cs" />
     <Compile Include="Interfaces\IEnumerableLink`1.cs" />
     <Compile Include="Interfaces\ILink`1.cs" />
+    <Compile Include="Interfaces\IStructuralComparable.cs" />
+    <Compile Include="Interfaces\IStructuralEquatable.cs" />
+    <Compile Include="Interfaces\ITuple.cs" />
     <Compile Include="Link`1.cs" />
     <Compile Include="Extensions\DelegateExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />

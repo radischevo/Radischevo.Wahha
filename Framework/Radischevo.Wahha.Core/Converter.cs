@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 using System.Threading;
 
 namespace Radischevo.Wahha.Core
@@ -94,9 +92,75 @@ namespace Radischevo.Wahha.Core
             }
             #endregion
         }
+
+		private interface IBoxedConverter
+		{
+			bool CanConvert
+			{
+				get;
+			}
+
+			object Convert(object value);
+		}
+
+		private class BoxedConverter<F, T> : IBoxedConverter
+		{
+			#region Nested Types
+			private delegate T CastMethod(F value);
+			#endregion
+
+			#region Static Fields
+			private static readonly CastMethod _castMethod;
+			#endregion
+
+			#region Constructors
+			static BoxedConverter()
+			{
+				MethodInfo method = FindCastOperator(typeof(T)) ?? FindCastOperator(typeof(F));
+				_castMethod = (method == null) ? null : (CastMethod)Delegate.CreateDelegate(typeof(CastMethod), method);
+			}
+			#endregion
+
+			#region Static Methods
+			private static MethodInfo FindCastOperator(Type type)
+			{
+				foreach (MethodInfo method in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
+				{
+					if (method.IsSpecialName && method.ReturnType == typeof(T) &&
+						(method.Name == "op_Implicit" || method.Name == "op_Explicit"))
+					{
+						ParameterInfo[] parameters = method.GetParameters();
+						if (parameters.Length == 1 && parameters[0].ParameterType == typeof(F))
+							return method;
+					}
+				}
+				return null;
+			}
+			#endregion
+
+			#region Instance Properties
+			public bool CanConvert
+			{
+				get
+				{
+					return (_castMethod != null);
+				}
+			}
+			#endregion
+
+			#region Instance Methods
+			public object Convert(object value)
+			{
+				if (CanConvert)
+					return _castMethod((F)value);
+
+				throw Error.CouldNotConvertType(typeof(T), "value");
+			}
+			#endregion
+		}
         #endregion
 
-        #region Static Methods
+        #region Base16 Conversion
         /// <summary>
         /// Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="String" /> 
         /// representation encoded with hex digits. 
@@ -196,31 +260,188 @@ namespace Radischevo.Wahha.Core
             }
             return bytes;
         }
-
-        /// <summary>
-        /// Copies all readable public property values from the 
-        /// source object to the dictionary.
-        /// </summary>
-        /// <param name="argument">An object to convert</param>
-        public static IDictionary<string, object> ToDictionary(object argument)
-        {
-            if (argument == null)
-                return null;
-
-            if (argument is IDictionary<string, object>)
-                return (IDictionary<string, object>)argument;
-
-            Func<object, IDictionary<string, object>> converter =
-                ObjectToHashConverter.GetConverter(argument.GetType());
-
-            if (converter == null)
-                throw Error.CouldNotCreateDynamicTypeConverter(argument.GetType());
-
-            return converter(argument);
-        }
 		#endregion
 
-		#region Generic Methods
+		#region Dictionary Conversion
+		/// <summary>
+		/// Copies all readable public property values from the 
+		/// source object to the dictionary.
+		/// </summary>
+		/// <param name="argument">An object to convert</param>
+		public static IDictionary<string, object> ToDictionary(object argument)
+		{
+			if (argument == null)
+				return null;
+
+			if (argument is IDictionary<string, object>)
+				return (IDictionary<string, object>)argument;
+
+			Func<object, IDictionary<string, object>> converter =
+				ObjectToHashConverter.GetConverter(argument.GetType());
+
+			if (converter == null)
+				throw Error.CouldNotCreateDynamicTypeConverter(argument.GetType());
+
+			return converter(argument);
+		}
+		#endregion
+
+		#region Helper Methods
+		private static bool IsExpectedException(Exception error)
+		{
+			return (
+					error is InvalidCastException ||
+					error is FormatException ||
+					error is ArgumentException ||
+					error is OverflowException
+				);
+		}
+
+		private static bool ValidateValue(object value, Type requiredType)
+		{
+			if (requiredType.IsInstanceOfType(value))
+				return true;
+
+			if (Object.ReferenceEquals(null, value))
+				return requiredType.IsNullable();
+
+			return requiredType.IsAssignableFrom(value.GetType());
+		}
+
+		private static IBoxedConverter CreateCastOperator(Type from, Type to)
+		{
+			Type converterType = typeof(BoxedConverter<,>).MakeGenericType(from, to);
+			return (IBoxedConverter)Activator.CreateInstance(converterType);
+		}
+		#endregion
+
+		#region Conversion Methods
+		private static object ConvertUndefinedValue(Type type)
+		{
+			if (type.IsNullable())
+				return null;
+
+			throw Error.TargetTypeIsNotNullable(type, "value");
+		}
+
+		private static object ConvertUndefinedValue(Type type, object defaultValue)
+		{
+			if (type.IsNullable())
+				return null;
+
+			return defaultValue;
+		}
+
+		private static object ConvertValue(Type type,
+			object value, IFormatProvider provider)
+		{
+			Type from = value.GetType();
+			Type to = type.MakeNonNullableType();
+
+			if (from == to || to.IsAssignableFrom(from))
+				return value;
+
+			IBoxedConverter cast = CreateCastOperator(from, to);
+			if (cast.CanConvert)
+				return cast.Convert(value);
+
+			if (to == typeof(bool))
+				return ConvertToBoolean(from, value, provider);
+
+			if (to.IsEnum)
+				return ConvertToEnum(from, to, value, provider);
+
+			if (to == typeof(Guid))
+				return ConvertToGuid(value);
+
+			if (to.GetInterface(typeof(IConvertible).Name) != null)
+				return ConvertByDefault(to, value, provider);
+
+			throw Error.CouldNotConvertType(to, "value");
+		}
+
+		private static object ConvertValue(Type type,
+			object value, object defaultValue, IFormatProvider provider)
+		{
+			try
+			{
+				return ConvertValue(type, value, provider);
+			}
+			catch (Exception error)
+			{
+				if (IsExpectedException(error))
+					return defaultValue;
+
+				throw;
+			}
+		}
+
+		private static bool ConvertToBoolean(Type from,
+			object value, IFormatProvider provider)
+		{
+			if (from == typeof(string))
+			{
+				switch (((string)value).ToUpperInvariant())
+				{
+					case "1":
+					case "TRUE":
+					case "ON":
+					case "YES":
+					case "Y":
+						return true;
+				}
+				return false;
+			}
+			if (from == typeof(char))
+			{
+				switch (Char.ToUpperInvariant((char)value))
+				{
+					case '1':
+					case 'Y':
+						return true;
+				}
+				return false;
+			}
+			return Convert.ToBoolean(value);
+		}
+
+		private static object ConvertToEnum(Type from, Type to,
+			object value, IFormatProvider provider)
+		{
+			if (from == typeof(string)) // special case string type
+				return Enum.Parse(to, (string)value, true);
+
+			Type valueType = Enum.GetUnderlyingType(to);
+			object enumValue = value;
+
+			if (!valueType.IsAssignableFrom(from))
+				enumValue = ConvertValue(valueType, value, provider);
+
+			return Enum.ToObject(to, enumValue);
+		}
+
+		private static Guid ConvertToGuid(object value)
+		{
+			byte[] byteValue = (value as byte[]);
+			string stringValue = (value as string);
+
+			if (stringValue != null)
+				return new Guid(stringValue);
+
+			else if (byteValue != null && byteValue.Length == 16)
+				return new Guid(byteValue);
+
+			throw Error.CouldNotConvertType(typeof(Guid), "value");
+		}
+
+		private static object ConvertByDefault(Type to,
+			object value, IFormatProvider provider)
+		{
+			return Convert.ChangeType(value, to, provider);
+		}
+		#endregion
+
+		#region Generic Change Type Methods
 		/// <summary>
         /// Converts the <paramref name="value"/> to the 
         /// <typeparamref name="T"/> type.
@@ -272,7 +493,7 @@ namespace Radischevo.Wahha.Core
         }
         #endregion
 
-		#region Non-generic Methods
+		#region Non-generic Change Type Methods
 		/// <summary>
 		/// Converts the <paramref name="value"/> to the 
 		/// specified <paramref name="type"/>.
@@ -295,52 +516,12 @@ namespace Radischevo.Wahha.Core
 		public static object ChangeType(Type type, object value, IFormatProvider provider)
 		{
 			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			Precondition.Require(provider, () => Error.ArgumentNull("provider"));
 
-			if (type.IsInstanceOfType(value))
-				return value;
+			if (Object.ReferenceEquals(value, null))
+				return ConvertUndefinedValue(type);
 
-			if (value == null && !type.IsNullable())
-				throw Error.TargetTypeIsNotNullable(type, "value");
-
-			Type underlyingType = type.MakeNonNullableType();
-			if (underlyingType.IsInstanceOfType(value))
-				return value;
-
-			if (underlyingType.IsEnum && value != null)
-			{
-				if (Enum.GetUnderlyingType(underlyingType)
-					.IsAssignableFrom(value.GetType()))
-					return Enum.ToObject(underlyingType, value);
-
-				if (value is string)
-					return Enum.Parse(underlyingType, (string)value, true);
-
-				throw Error.CouldNotConvertType(type, "value");
-			}
-
-			if (underlyingType == typeof(Guid))
-			{
-				object result;
-				byte[] gb = (value as byte[]);
-				string gs = (value as string);
-
-				if (gs != null)
-					result = new Guid(gs);
-				else if (gb != null && gb.Length == 16)
-					result = new Guid(gb);
-				else
-					throw Error.CouldNotConvertType(type, "value");
-
-				return result;
-			}
-
-			if (underlyingType.GetInterface(typeof(IConvertible).Name) != null)
-				return System.Convert.ChangeType(value, underlyingType, provider);
-
-			if (value != null && !type.IsAssignableFrom(value.GetType()))
-				throw Error.CouldNotConvertType(type, "value");
-
-			return value;
+			return ConvertValue(type, value, provider);
 		}
 
 		/// <summary>
@@ -368,96 +549,14 @@ namespace Radischevo.Wahha.Core
 			object defaultValue, IFormatProvider provider)
 		{
 			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			Precondition.Require(provider, () => Error.ArgumentNull("provider"));
+			Precondition.Require(ValidateValue(value, type),
+				() => Error.InvalidArgumentType(type, "value"));
 
-			if (type.IsInstanceOfType(value))
-				return value;
+			if (Object.ReferenceEquals(value, null))
+				return ConvertUndefinedValue(type);
 
-			if (value == null && !type.IsNullable())
-				return defaultValue;
-
-			Type underlyingType = type.MakeNonNullableType();
-
-			if (underlyingType.IsInstanceOfType(value))
-				return value;
-
-			if (underlyingType.IsEnum && value != null)
-			{
-				if (Enum.GetUnderlyingType(underlyingType)
-					.IsAssignableFrom(value.GetType()))
-					return Enum.ToObject(underlyingType, value);
-
-				if (value is string)
-				{
-					try
-					{
-						return Enum.Parse(underlyingType, (string)value, true);
-					}
-					catch (ArgumentException)
-					{
-						return defaultValue;
-					}
-				}
-				return defaultValue;
-			}
-
-			if (underlyingType == typeof(Guid))
-			{
-				object result;
-				byte[] gb = (value as byte[]);
-				string gs = (value as string);
-
-				if (gs != null)
-				{
-					try
-					{
-						result = new Guid(gs);
-					}
-					catch (FormatException)
-					{
-						return defaultValue;
-					}
-					catch (OverflowException)
-					{
-						return defaultValue;
-					}
-				}
-				else if (gb != null && gb.Length == 16)
-				{
-					try
-					{
-						result = new Guid(gb);
-					}
-					catch (ArgumentException)
-					{
-						return defaultValue;
-					}
-				}
-				else
-					return defaultValue;
-
-				return result;
-			}
-
-			if (underlyingType.GetInterface(typeof(IConvertible).Name) != null)
-			{
-				try
-				{
-					return System.Convert.ChangeType(value, underlyingType, provider);
-				}
-				catch (InvalidCastException)
-				{
-					return defaultValue;
-				}
-				catch (FormatException)
-				{
-					return defaultValue;
-				}
-			}
-			
-			if (value != null && !type.IsAssignableFrom(value.GetType()))
-				return defaultValue;
-
-			return value;
+			return ConvertValue(type, value, defaultValue, provider);
 		}
 		#endregion
 	}
