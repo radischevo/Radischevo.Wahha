@@ -18,9 +18,9 @@ namespace Radischevo.Wahha.Web.Routing.Providers
         {
         }
 
-        public IDictionary<string, RouteBase> GetRouteTable()
+        public RouteTableProviderResult GetRouteTable()
         {
-            return new Dictionary<string, RouteBase>(StringComparer.OrdinalIgnoreCase);
+			return new RouteTableProviderResult();
         }
         #endregion
     }

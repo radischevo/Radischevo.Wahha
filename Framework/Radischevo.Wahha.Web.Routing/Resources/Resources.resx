@@ -141,17 +141,20 @@
   <data name="Error_IncompatibleRouteTableProvider" xml:space="preserve">
     <value>The route table provider type '{0}' must implement the '{1}' interface.</value>
   </data>
+  <data name="Error_IncompleteEscapeSequenceInRoute" xml:space="preserve">
+    <value>There is incomplete escape sequence found in this path segment: '{0}'. Please check the route syntax.</value>
+  </data>
   <data name="Error_InvalidRouteHandlerType" xml:space="preserve">
     <value>The route handler type '{0}' must implement the '{1}' interface.</value>
   </data>
   <data name="Error_InvalidRouteParameterName" xml:space="preserve">
-    <value>The route parameter name '{0}' is invalid. Route parameter names must be non-empty and cannot contain these characters: '{{', '}}', '/', '?'</value>
+    <value>The route parameter name '{0}' is invalid. Route parameter names must be non-empty and cannot contain these characters: '{{', '}}', '[', ']', '/', '?'</value>
+  </data>
+  <data name="Error_InvalidRouteVariableName" xml:space="preserve">
+    <value>The route variable name '{0}' is invalid. Route variable names must be non-empty and cannot contain these characters: '{{', '}}', '[', ']', '/', '?'</value>
   </data>
   <data name="Error_MatchingRouteCouldNotBeLocated" xml:space="preserve">
     <value>A route that matches the requested values could not be located in the route table.</value>
-  </data>
-  <data name="Error_MismatchedRouteParameter" xml:space="preserve">
-    <value>There is an incomplete parameter in this path segment: '{0}'. Check that each '{{' character has a matching '}}' character.</value>
   </data>
   <data name="Error_NoHttpHandlerFound" xml:space="preserve">
     <value>The route handler '{0}' did not return an IHttpHandler from its GetHttpHandler() method.</value>
@@ -170,5 +173,11 @@
   </data>
   <data name="Error_RoutableControlRequiresRoutablePage" xml:space="preserve">
     <value>A RoutableUserControl can only be used inside pages that derive from RoutablePage.</value>
+  </data>
+  <data name="Error_UndefinedRouteVariable" xml:space="preserve">
+    <value>The route variable '{0}' must be defined before the route can be used.</value>
+  </data>
+  <data name="Error_UnexpectedSymbolInRoute" xml:space="preserve">
+    <value>An unexpected symbol '{0}' found in this path segment: '{1}'. Please check the route syntax.</value>
   </data>
 </root>

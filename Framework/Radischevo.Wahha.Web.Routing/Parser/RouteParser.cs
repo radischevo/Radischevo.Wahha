@@ -8,17 +8,38 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Web.Routing
 {
     internal static class RouteParser
-    {
-        #region Constants
-        public const char PathSeparator = '/';
-        public const char ParameterStart = '{';
-        public const char ParameterEnd = '}';
-        private const string DOUBLE_START = "{{";
-        private const string DOUBLE_END = "}}";
+	{
+		#region Nested Types
+		private enum State : int
+		{
+			Literal = 0,
+			PossibleEscapedVariable,
+			EscapedVariable,
+			Variable,
+			AfterVariable,
+			AfterEscapedVariable,
+			PossibleEscapedParameter,
+			EscapedParameter,
+			Parameter,
+			AfterParameter,
+			AfterEscapedParameter
+		}
+		#endregion
+
+		#region Constants
+		public const char PathSeparator = '/';
+		public const char ParameterStart = '{';
+		public const char ParameterEnd = '}';
+		public const char VariableStart = '[';
+		public const char VariableEnd = ']';
+		private const string ESCAPED_PARAMETER_START = "{{";
+		private const string ESCAPED_PARAMETER_END = "}}";
+		private const string ESCAPED_VARIABLE_START = "[[";
+		private const string ESCAPED_VARIABLE_END = "]]";
         #endregion
 
-        #region Static Methods
-        public static ParsedRoute Parse(string url)
+		#region Static Methods
+		public static ParsedRoute Parse(string url)
         {
             if (url == null)
                 url = String.Empty;
@@ -33,40 +54,21 @@ namespace Radischevo.Wahha.Web.Routing
             return new ParsedRoute(SplitSegments(segments), isRelative, isAppRelative);
         }
 
+		internal static bool IsSeparator(string str)
+		{
+			return String.Equals(str, Char.ToString(PathSeparator), StringComparison.Ordinal);
+		}
+
         private static string GetLiteral(string literal)
         {
-            string str = literal.Replace(DOUBLE_START, "").Replace(DOUBLE_END, "");
-            if (!str.Contains(ParameterStart) && !str.Contains(ParameterEnd))
-                return literal.Replace(DOUBLE_START, ParameterStart.ToString())
-                    .Replace(DOUBLE_END, ParameterEnd.ToString());
-            
-            return null;
-        }
+			if (String.IsNullOrEmpty(literal))
+				return String.Empty;
 
-        private static int GetParameterStartIndex(string segment, int startIndex)
-        {
-            while (true)
-            {
-                startIndex = segment.IndexOf(ParameterStart, startIndex);
-                if (startIndex == -1)
-                    return -1;
-
-                if (segment.Length == startIndex + 1 || 
-                    (startIndex + 1 < segment.Length && segment[startIndex + 1] != ParameterStart))
-                    return startIndex;
-                
-                startIndex += 2;
-            }
-        }
-
-        private static int GetParameterEndIndex(string segment, int startIndex)
-        {
-            return segment.IndexOf(ParameterEnd, startIndex);
-        }
-
-        internal static bool IsSeparator(string str)
-        {
-            return String.Equals(str, Char.ToString(PathSeparator), StringComparison.Ordinal);
+			return literal
+				.Replace(ESCAPED_PARAMETER_START, ParameterStart.ToString())
+				.Replace(ESCAPED_PARAMETER_END, ParameterEnd.ToString())
+				.Replace(ESCAPED_VARIABLE_START, VariableStart.ToString())
+				.Replace(ESCAPED_VARIABLE_END, VariableEnd.ToString());
         }
 
         private static bool IsValidParameterName(string parameterName)
@@ -85,42 +87,133 @@ namespace Radischevo.Wahha.Web.Routing
 
         private static IEnumerable<PathSubsegment> ParseUrlSegment(string segment)
         {
-            int startIndex = 0;
-            string part = null;
-            List<PathSubsegment> list = new List<PathSubsegment>();
+			List<PathSubsegment> segments = new List<PathSubsegment>();
 
-            while (startIndex < segment.Length)
-            {
-                int parameterIndex = GetParameterStartIndex(segment, startIndex); // открывающая скобочка
-                if (parameterIndex == -1)
-                {
-                    part = GetLiteral(segment.Substring(startIndex));
-                    if (part == null)
-                        throw Error.MismatchedRouteParameter(segment);
-                    
-                    if (part.Length > 0)
-                        list.Add(new LiteralSubsegment(part));
-                    
-                    break;
-                }
+			State state = State.Literal;
+			int startIndex = 0;
+			string content = String.Empty;
 
-                int index = GetParameterEndIndex(segment, parameterIndex + 1); // ищем закрывающую скобочку
-                if (index == -1)
-                    throw Error.MismatchedRouteParameter(segment);
-                
-                part = GetLiteral(segment.Substring(startIndex, parameterIndex - startIndex)); // что было до параметра...
-                if (part == null)
-                    throw Error.MismatchedRouteParameter(segment);
+			for (int i = 0; i < segment.Length; ++i)
+			{
+				char c = segment[i];
+				switch (c)
+				{
+					case ParameterStart:
+						switch (state)
+						{
+							case State.Literal:
+							case State.AfterVariable:
+								state = State.PossibleEscapedParameter;
+								break;
+							case State.PossibleEscapedParameter:
+								state = State.EscapedParameter;
+								break;
+							case State.AfterParameter:
+								throw Error.ConsecutiveRouteParameters();
+							default:
+								throw Error.UnexpectedSymbolInRoute(ParameterStart, segment);
+						}
+						break;
+					case VariableStart:
+						switch (state)
+						{
+							case State.Literal:
+							case State.AfterParameter:
+							case State.AfterVariable:
+								state = State.PossibleEscapedVariable;
+								break;
+							case State.PossibleEscapedVariable:
+								state = State.EscapedVariable;
+								break;
+							default:
+								throw Error.UnexpectedSymbolInRoute(VariableStart, segment);
+						}
+						break;
+					case ParameterEnd:
+						switch (state)
+						{
+							case State.Parameter:
+								content = segment.Substring(startIndex, i - startIndex);
+								segments.Add(new ParameterSubsegment(content));
+								startIndex = i + 1;
+								state = State.AfterParameter;
+								break;
+							case State.EscapedParameter:
+								state = State.AfterEscapedParameter;
+								break;
+							case State.AfterEscapedParameter:
+								state = State.Literal;
+								break;
+							default:
+								throw Error.UnexpectedSymbolInRoute(ParameterEnd, segment);
+						}
+						break;
+					case VariableEnd:
+						switch (state)
+						{
+							case State.Variable:
+								content = segment.Substring(startIndex, i - startIndex);
+								if (!IsValidParameterName(content))
+									throw Error.InvalidRouteVariableName(content);
 
-                if (part.Length > 0)
-                    list.Add(new LiteralSubsegment(part));
-                
-                string parameterName = segment.Substring(parameterIndex + 1, index - parameterIndex - 1); // остальное - имя параметра
-                list.Add(new ParameterSubsegment(parameterName));
+								segments.Add(new VariableSubsegment(content));
+								startIndex = i + 1;
+								state = State.AfterVariable;
+								break;
+							case State.EscapedVariable:
+								state = State.AfterEscapedVariable;
+								break;
+							case State.AfterEscapedVariable:
+								state = State.Literal;
+								break;
+							default:
+								throw Error.UnexpectedSymbolInRoute(VariableEnd, segment);
+						}
+						break;
+					default:
+						switch (state)
+						{
+							case State.PossibleEscapedParameter:
+								content = GetLiteral(segment.Substring(startIndex, i - startIndex - 1));
+								if (content.Length > 0)
+									segments.Add(new LiteralSubsegment(content));
+								
+								startIndex = i;
+								state = State.Parameter;
+								break;
+							case State.PossibleEscapedVariable:
+								content = GetLiteral(segment.Substring(startIndex, i - startIndex - 1));
+								if (content.Length > 0)
+									segments.Add(new LiteralSubsegment(content));
 
-                startIndex = index + 1;
-            }
-            return list;
+								startIndex = i;
+								state = State.Variable;
+								break;
+							case State.AfterEscapedParameter:
+							case State.AfterEscapedVariable:
+								throw Error.IncompleteEscapeSequenceInRoute(segment);
+							case State.AfterVariable:
+							case State.AfterParameter:
+								state = State.Literal;
+								break;
+						}
+						break;
+				}
+			}
+			switch (state)
+			{
+				case State.Literal:
+				case State.AfterVariable:
+				case State.AfterParameter:
+					content = GetLiteral(segment.Substring(startIndex));
+					if (content.Length > 0)
+						segments.Add(new LiteralSubsegment(content));
+					
+					break;
+				default:
+					throw Error.IncompleteEscapeSequenceInRoute(segment);
+			}
+			return LiteralComposer.Compose(segments);
         }
 
         private static IList<PathSegment> SplitSegments(IEnumerable<string> parts)
@@ -208,26 +301,19 @@ namespace Radischevo.Wahha.Web.Routing
             HashSet<string> usedParameterNames)
         {
             bool hasCatchAll = false;
-            Type segmentType = null;
-
             foreach (PathSubsegment s in segments)
             {
-                if (segmentType != null && segmentType == s.GetType())
-                    throw Error.ConsecutiveRouteParameters();
-                
-                segmentType = s.GetType();
-
                 if (s is ParameterSubsegment)
                 {
                     ParameterSubsegment parameter = (ParameterSubsegment)s;
                     if (s != null)
                     {
                         string parameterName = parameter.ParameterName;
+						if (!IsValidParameterName(parameterName))
+							throw Error.InvalidRouteParameterName(parameterName);
+
                         if (parameter.IsCatchAll)
                             hasCatchAll = true;
-
-                        if (!IsValidParameterName(parameterName))
-                            throw Error.InvalidRouteParameterName(parameterName);
 
                         if (usedParameterNames.Contains(parameterName))
                             throw Error.DuplicateRouteParameterName(parameterName);

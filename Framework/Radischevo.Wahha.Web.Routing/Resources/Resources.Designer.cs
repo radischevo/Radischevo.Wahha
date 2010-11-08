@@ -133,6 +133,15 @@ namespace Radischevo.Wahha.Web.Routing.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is incomplete escape sequence found in this path segment: &apos;{0}&apos;. Please check the route syntax..
+        /// </summary>
+        internal static string Error_IncompleteEscapeSequenceInRoute {
+            get {
+                return ResourceManager.GetString("Error_IncompleteEscapeSequenceInRoute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The route handler type &apos;{0}&apos; must implement the &apos;{1}&apos; interface..
         /// </summary>
         internal static string Error_InvalidRouteHandlerType {
@@ -142,11 +151,20 @@ namespace Radischevo.Wahha.Web.Routing.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The route parameter name &apos;{0}&apos; is invalid. Route parameter names must be non-empty and cannot contain these characters: &apos;{{&apos;, &apos;}}&apos;, &apos;/&apos;, &apos;?&apos;.
+        ///   Looks up a localized string similar to The route parameter name &apos;{0}&apos; is invalid. Route parameter names must be non-empty and cannot contain these characters: &apos;{{&apos;, &apos;}}&apos;, &apos;[&apos;, &apos;]&apos;, &apos;/&apos;, &apos;?&apos;.
         /// </summary>
         internal static string Error_InvalidRouteParameterName {
             get {
                 return ResourceManager.GetString("Error_InvalidRouteParameterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The route variable name &apos;{0}&apos; is invalid. Route variable names must be non-empty and cannot contain these characters: &apos;{{&apos;, &apos;}}&apos;, &apos;[&apos;, &apos;]&apos;, &apos;/&apos;, &apos;?&apos;.
+        /// </summary>
+        internal static string Error_InvalidRouteVariableName {
+            get {
+                return ResourceManager.GetString("Error_InvalidRouteVariableName", resourceCulture);
             }
         }
         
@@ -156,15 +174,6 @@ namespace Radischevo.Wahha.Web.Routing.Resources {
         internal static string Error_MatchingRouteCouldNotBeLocated {
             get {
                 return ResourceManager.GetString("Error_MatchingRouteCouldNotBeLocated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There is an incomplete parameter in this path segment: &apos;{0}&apos;. Check that each &apos;{{&apos; character has a matching &apos;}}&apos; character..
-        /// </summary>
-        internal static string Error_MismatchedRouteParameter {
-            get {
-                return ResourceManager.GetString("Error_MismatchedRouteParameter", resourceCulture);
             }
         }
         
@@ -219,6 +228,24 @@ namespace Radischevo.Wahha.Web.Routing.Resources {
         internal static string Error_RoutableControlRequiresRoutablePage {
             get {
                 return ResourceManager.GetString("Error_RoutableControlRequiresRoutablePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The route variable &apos;{0}&apos; must be defined before the route can be used..
+        /// </summary>
+        internal static string Error_UndefinedRouteVariable {
+            get {
+                return ResourceManager.GetString("Error_UndefinedRouteVariable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unexpected symbol &apos;{0}&apos; found in this path segment: &apos;{1}&apos;. Please check the route syntax..
+        /// </summary>
+        internal static string Error_UnexpectedSymbolInRoute {
+            get {
+                return ResourceManager.GetString("Error_UnexpectedSymbolInRoute", resourceCulture);
             }
         }
     }

@@ -135,20 +135,6 @@ namespace Radischevo.Wahha.Core
             if (!SafeTryGetValue(key, out value))
                 return defaultValue;
 
-            if (typeof(TValue) == typeof(bool) && value is string)
-            {
-                switch (((string)value).Define().ToLowerInvariant())
-                {
-                    case "on":
-                    case "yes":
-                    case "true":
-                        value = true;
-                        break;
-                    default:
-                        value = false;
-                        break;
-                }
-            }
             return Converter.ChangeType<TValue>(value, defaultValue, provider);
         }
 

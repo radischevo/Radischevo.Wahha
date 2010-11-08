@@ -14,6 +14,7 @@ namespace Radischevo.Wahha.Web.Routing
         private bool _isRelative;
         private bool _isAppRelative;
         private List<PathSegment> _segments;
+		private int _variableFingerprint;
         #endregion
 
         #region Constructors
@@ -74,11 +75,11 @@ namespace Radischevo.Wahha.Web.Routing
                 {
                     foreach (PathSubsegment subsegment in content.Segments)
                     {
-                        if (subsegment is LiteralSubsegment)
-                            continue;
-
                         ParameterSubsegment arg = (subsegment as ParameterSubsegment);
-                        if (arg != null && !action(arg))
+						if (arg == null)
+							continue;
+
+                        if (!action(arg))
                             return false;
                     }
                 }
@@ -103,8 +104,28 @@ namespace Radischevo.Wahha.Web.Routing
         }
         #endregion
 
-        #region Instance Properties
-        public bool IsRelative
+		#region Variable Assignment and Services
+		private static int CombineHashCodes(int first, int second)
+		{
+			return (((first << 5) + first) ^ second);
+		}
+
+		private static int CalculateFingerprint(ValueDictionary values)
+		{
+			int hash = -1;
+			foreach (KeyValuePair<string, object> pair in values)
+			{
+				int keyCode = (pair.Key == null) ? -1 : pair.Key.GetHashCode();
+				int valueCode = (pair.Value == null) ? -1 : pair.Value.GetHashCode();
+
+				hash = CombineHashCodes(hash, CombineHashCodes(keyCode, valueCode));
+			}
+			return hash;
+		}
+		#endregion
+
+		#region Instance Properties
+		public bool IsRelative
         {
             get
             {
@@ -119,20 +140,43 @@ namespace Radischevo.Wahha.Web.Routing
                 return _isAppRelative;
             }
         }
+
+		public ICollection<PathSegment> Segments
+		{
+			get
+			{
+				return _segments;
+			}
+		}
         #endregion
 
         #region Instance Methods
-        public ValueDictionary Match(string virtualPath, ValueDictionary defaults)
+		private void AssignVariableValues(ValueDictionary variables)
+		{
+			// Check if the values were changed
+			int fingerprint = CalculateFingerprint(variables);
+			if (fingerprint == _variableFingerprint)
+				return;
+
+			RouteVariableAssigner.Assign(this, variables);
+			_variableFingerprint = fingerprint;
+		}
+
+        public ValueDictionary Match(string virtualPath, 
+			ValueDictionary variables, ValueDictionary defaults)
         {
             List<string> parts = new List<string>(RouteParser.SplitUrl(virtualPath));
-            if (defaults == null)
-                defaults = new ValueDictionary();
+            
+			defaults = defaults ?? new ValueDictionary();
+			variables = variables ?? new ValueDictionary();
             
             ValueDictionary values = new ValueDictionary();
 
             bool hasAdditionalParameters = false;
             bool isCatchAll = false;
-            
+
+			AssignVariableValues(variables);
+
             for (int i = 0; i < _segments.Count; i++)
             {
                 SeparatorSegment separator = (_segments[i] as SeparatorSegment);
@@ -207,8 +251,6 @@ namespace Radischevo.Wahha.Web.Routing
                     object value;
                     ParameterSubsegment ps = (segment.Segments.FirstOrDefault(
                         s => (s is ParameterSubsegment)) as ParameterSubsegment);
-                    // в оригинале была проверка на первое вхождение, что неправильно. 
-                    // нам нужно любое вхождение параметра.
                     
                     if (ps == null)
                         return false;
@@ -240,6 +282,7 @@ namespace Radischevo.Wahha.Web.Routing
                 if (literal != null)
                 {
                     lastLiteral = literal;
+
                     int literalIndex = pathSegment.LastIndexOf(literal.Literal, 
                         segmentLength - 1, StringComparison.OrdinalIgnoreCase);
 
@@ -296,20 +339,19 @@ namespace Radischevo.Wahha.Web.Routing
         }
 
         public BoundUrl Bind(ValueDictionary currentValues, 
-            ValueDictionary values, ValueDictionary defaults)
+            ValueDictionary values, ValueDictionary variables, 
+			ValueDictionary defaults)
         {
-            if (currentValues == null)
-                currentValues = new ValueDictionary();
-            
-            if (values == null)
-                values = new ValueDictionary();
-            
-            if (defaults == null)
-                defaults = new ValueDictionary();
-            
+            currentValues = currentValues ?? new ValueDictionary();
+            values = values ?? new ValueDictionary();
+			variables = variables ?? new ValueDictionary();
+			defaults = defaults ?? new ValueDictionary();
+
             ValueDictionary acceptedValues = new ValueDictionary();
             HashSet<string> unusedValues = new HashSet<string>(
                 values.Keys, StringComparer.OrdinalIgnoreCase);
+
+			AssignVariableValues(variables);
 
             ForEachParameter(_segments, segment => {
                 object value;
@@ -431,7 +473,7 @@ namespace Radischevo.Wahha.Web.Routing
                             flush = true;
                             segmentBuilder.Append(Uri.EscapeUriString(literal.Literal));
                         }
-                        
+
                         if(parameter != null)
                         {
                             object acceptedValue;

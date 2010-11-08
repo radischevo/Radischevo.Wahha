@@ -100,11 +100,13 @@ namespace Radischevo.Wahha.Web.Mvc
 
 			if (type == typeof(Boolean)) // с bool разговор особый
 			{
-				switch (stringValue.ToLower(currentCulture))
+				switch (stringValue.ToUpperInvariant())
 				{
-					case "on":
-					case "yes":
-					case "true":
+					case "1":
+					case "Y":
+					case "ON":
+					case "YES":
+					case "TRUE":
 						return true;
 					default:
 						return false;

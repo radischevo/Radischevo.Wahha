@@ -15,21 +15,25 @@
             URL routing
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Routing.RouteBase.GetRouteData(Radischevo.Wahha.Web.Abstractions.HttpContextBase)">
+        <member name="M:Radischevo.Wahha.Web.Routing.RouteBase.GetRouteData(Radischevo.Wahha.Web.Abstractions.HttpContextBase,Radischevo.Wahha.Core.ValueDictionary)">
             <summary>
             Gets the <see cref="T:Radischevo.Wahha.Web.Routing.RouteData"/> for 
-            the current <see cref="T:System.Web.HttpRequest"/>
+            the current <see cref="T:Radischevo.Wahha.Web.Abstractions.HttpContextBase"/>.
             </summary>
             <param name="context">The <see cref="T:Radischevo.Wahha.Web.Abstractions.HttpContextBase"/> 
-            containing the incoming request</param>
+            containing the incoming request.</param>
+            <param name="variables">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
+            containing the route variable values.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Routing.RouteBase.GetVirtualPath(Radischevo.Wahha.Web.Routing.RequestContext,Radischevo.Wahha.Core.ValueDictionary)">
+        <member name="M:Radischevo.Wahha.Web.Routing.RouteBase.GetVirtualPath(Radischevo.Wahha.Web.Routing.RequestContext,Radischevo.Wahha.Core.ValueDictionary,Radischevo.Wahha.Core.ValueDictionary)">
             <summary>
             Gets the <see cref="T:Radischevo.Wahha.Web.Routing.VirtualPathData"/> for 
-            the current instance
+            the current instance.
             </summary>
             <param name="value">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
-            containing the route parameter values</param>
+            containing the route parameter values.</param>
+            <param name="variables">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
+            containing the route variable values.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.Route.#ctor(System.String,Radischevo.Wahha.Web.Routing.IRouteHandler)">
             <summary>
@@ -76,21 +80,25 @@
             <param name="handler">The <see cref="T:Radischevo.Wahha.Web.Routing.IRouteHandler"/>, which is used 
             to handle a request</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Routing.Route.GetVirtualPath(Radischevo.Wahha.Web.Routing.RequestContext,Radischevo.Wahha.Core.ValueDictionary)">
+        <member name="M:Radischevo.Wahha.Web.Routing.Route.GetVirtualPath(Radischevo.Wahha.Web.Routing.RequestContext,Radischevo.Wahha.Core.ValueDictionary,Radischevo.Wahha.Core.ValueDictionary)">
             <summary>
             Gets the <see cref="T:Radischevo.Wahha.Web.Routing.VirtualPathData"/> for 
-            the current instance
+            the current instance.
             </summary>
-            <param name="value">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
-            containing the route parameter values</param>
+            <param name="values">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
+            containing the route parameter values.</param>
+            <param name="variables">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
+            containing the route variable values.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Routing.Route.GetRouteData(Radischevo.Wahha.Web.Abstractions.HttpContextBase)">
+        <member name="M:Radischevo.Wahha.Web.Routing.Route.GetRouteData(Radischevo.Wahha.Web.Abstractions.HttpContextBase,Radischevo.Wahha.Core.ValueDictionary)">
             <summary>
             Gets the <see cref="T:Radischevo.Wahha.Web.Routing.RouteData"/> for 
-            the current <see cref="T:System.Web.HttpRequest"/>
+            the current <see cref="T:Radischevo.Wahha.Web.Abstractions.HttpContextBase"/>.
             </summary>
             <param name="context">The <see cref="T:System.Web.HttpContext"/> 
-            containing the incoming request</param>
+            containing the incoming request.</param>
+            <param name="variables">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
+            containing the route variable values.</param>
         </member>
         <member name="P:Radischevo.Wahha.Web.Routing.Route.Url">
             <summary>
@@ -176,6 +184,11 @@
               Looks up a localized string similar to The route table provider type &apos;{0}&apos; must implement the &apos;{1}&apos; interface..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_IncompleteEscapeSequenceInRoute">
+            <summary>
+              Looks up a localized string similar to There is incomplete escape sequence found in this path segment: &apos;{0}&apos;. Please check the route syntax..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_InvalidRouteHandlerType">
             <summary>
               Looks up a localized string similar to The route handler type &apos;{0}&apos; must implement the &apos;{1}&apos; interface..
@@ -183,17 +196,17 @@
         </member>
         <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_InvalidRouteParameterName">
             <summary>
-              Looks up a localized string similar to The route parameter name &apos;{0}&apos; is invalid. Route parameter names must be non-empty and cannot contain these characters: &apos;{{&apos;, &apos;}}&apos;, &apos;/&apos;, &apos;?&apos;.
+              Looks up a localized string similar to The route parameter name &apos;{0}&apos; is invalid. Route parameter names must be non-empty and cannot contain these characters: &apos;{{&apos;, &apos;}}&apos;, &apos;[&apos;, &apos;]&apos;, &apos;/&apos;, &apos;?&apos;.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_InvalidRouteVariableName">
+            <summary>
+              Looks up a localized string similar to The route variable name &apos;{0}&apos; is invalid. Route variable names must be non-empty and cannot contain these characters: &apos;{{&apos;, &apos;}}&apos;, &apos;[&apos;, &apos;]&apos;, &apos;/&apos;, &apos;?&apos;.
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_MatchingRouteCouldNotBeLocated">
             <summary>
               Looks up a localized string similar to A route that matches the requested values could not be located in the route table..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_MismatchedRouteParameter">
-            <summary>
-              Looks up a localized string similar to There is an incomplete parameter in this path segment: &apos;{0}&apos;. Check that each &apos;{{&apos; character has a matching &apos;}}&apos; character..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_NoHttpHandlerFound">
@@ -224,6 +237,16 @@
         <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_RoutableControlRequiresRoutablePage">
             <summary>
               Looks up a localized string similar to A RoutableUserControl can only be used inside pages that derive from RoutablePage..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_UndefinedRouteVariable">
+            <summary>
+              Looks up a localized string similar to The route variable &apos;{0}&apos; must be defined before the route can be used..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.Resources.Resources.Error_UnexpectedSymbolInRoute">
+            <summary>
+              Looks up a localized string similar to An unexpected symbol &apos;{0}&apos; found in this path segment: &apos;{1}&apos;. Please check the route syntax..
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Routing.Configurations.RouteTableProviderConfigurationElement">
@@ -473,6 +496,12 @@
             </summary>
             <param name="key">The key to find</param>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.RouteCollection.Variables">
+            <summary>
+            Gets the collection of global variables 
+            used by routing subsystem.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Web.Routing.RouteTable">
             <summary>
             Provides the URL routing table
@@ -493,12 +522,19 @@
         <member name="T:Radischevo.Wahha.Web.Routing.IRouteTableProvider">
             <summary>
             Provides a contract for the 
-            route table persistence provider
+            route table persistence provider.
             </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Routing.IRouteTableProvider.Init(Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Initializes the current instance of the <see cref="T:IRouteTableProvider"/>.
+            </summary>
+            <param name="settings">The <see cref="T:IValueSet"/> containing 
+            provider settings.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.IRouteTableProvider.GetRouteTable">
             <summary>
-            Gets the currently configured route table
+            Gets the currently configured route table.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Routing.VirtualPathData">
@@ -515,6 +551,12 @@
             <param name="route">An URL route</param>
             <param name="virtualPath">A virtual path string, 
             related to the supplied route</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Routing.VirtualPathData.ToString">
+            <summary>
+            Returns the string representation of 
+            the current <see cref="T:Radischevo.Wahha.Web.Routing.VirtualPathData"/>.
+            </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Routing.VirtualPathData.Route">
             <summary>

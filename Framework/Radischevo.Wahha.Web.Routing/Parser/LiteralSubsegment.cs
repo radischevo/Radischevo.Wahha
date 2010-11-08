@@ -3,7 +3,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Routing
 {
-    internal sealed class LiteralSubsegment : PathSubsegment
+    internal class LiteralSubsegment : PathSubsegment
     {
         #region Instance Fields
         private string _literal;
@@ -18,7 +18,7 @@ namespace Radischevo.Wahha.Web.Routing
         #endregion
 
         #region Instance Properties
-        public string Literal
+        public virtual string Literal
         {
             get
             {
@@ -27,8 +27,8 @@ namespace Radischevo.Wahha.Web.Routing
         }
         #endregion
 
-        #region Instance Methods
-        public override string ToString()
+		#region Instance Methods
+		public override string ToString()
         {
             return _literal;
         }

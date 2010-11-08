@@ -85,7 +85,11 @@
     <Compile Include="Interfaces\IRouteHandler.cs" />
     <Compile Include="Interfaces\IRouteTableProvider.cs" />
     <Compile Include="Parser\BoundUrl.cs" />
+    <Compile Include="Parser\CompositeSubsegment.cs" />
     <Compile Include="Parser\ContentSegment.cs" />
+    <Compile Include="Parser\LiteralComposer.cs" />
+    <Compile Include="Parser\RouteVariableAssigner.cs" />
+    <Compile Include="Parser\VariableSubsegment.cs" />
     <Compile Include="Parser\LiteralSubsegment.cs" />
     <Compile Include="Parser\ParameterSubsegment.cs" />
     <Compile Include="Parser\ParsedRoute.cs" />
@@ -95,7 +99,9 @@
     <Compile Include="Parser\SeparatorSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\DefaultRouteTableProvider.cs" />
+    <Compile Include="Providers\IndexedRouteCollection.cs" />
     <Compile Include="Providers\RouteDescriptor.cs" />
+    <Compile Include="Providers\RouteTableProviderResult.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

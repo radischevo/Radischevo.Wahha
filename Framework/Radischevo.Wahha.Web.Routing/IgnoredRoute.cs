@@ -14,8 +14,8 @@ namespace Radischevo.Wahha.Web.Routing
 		#endregion
 
 		#region Instance Methods
-		public override VirtualPathData GetVirtualPath(
-			RequestContext context, ValueDictionary values)
+		public override VirtualPathData GetVirtualPath(RequestContext context, 
+			ValueDictionary values, ValueDictionary variables)
 		{
 			return null;
 		}

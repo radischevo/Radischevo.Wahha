@@ -550,8 +550,8 @@ namespace Radischevo.Wahha.Core
 		{
 			Precondition.Require(type, () => Error.ArgumentNull("type"));
 			Precondition.Require(provider, () => Error.ArgumentNull("provider"));
-			Precondition.Require(ValidateValue(value, type),
-				() => Error.InvalidArgumentType(type, "value"));
+			Precondition.Require(ValidateValue(defaultValue, type),
+				() => Error.InvalidArgumentType(type, "defaultValue"));
 
 			if (Object.ReferenceEquals(value, null))
 				return ConvertUndefinedValue(type);

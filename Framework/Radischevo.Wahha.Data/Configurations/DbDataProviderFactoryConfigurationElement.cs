@@ -33,7 +33,7 @@ namespace Radischevo.Wahha.Data.Configurations
             }
         }
 
-        public DbDataProviderConfigurationElement this[string name]
+        public new DbDataProviderConfigurationElement this[string name]
         {
             get
             {

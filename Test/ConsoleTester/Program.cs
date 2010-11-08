@@ -15,6 +15,8 @@ using Radischevo.Wahha.Web.Routing;
 using Radischevo.Wahha.Web.Mvc;
 using System.Globalization;
 using Radischevo.Wahha.Web;
+using Radischevo.Wahha.Web.Abstractions;
+using System.Web;
 
 namespace ConsoleTester
 {
@@ -25,10 +27,38 @@ namespace ConsoleTester
 		static void Main(string[] args)
 		{
 			Program p = new Program();
-			//p.MultipleThreadTest();
-			p.SingleThreadTest();
-			
+			p.MultipleThreadTest();
+			//p.SingleThreadTest();
+			//p.RouteTest();
+
 			Console.ReadKey();
+		}
+
+		public void RouteTest()
+		{
+			RequestContext context = new RequestContext(
+				new HttpContextWrapper(new HttpContext(
+					new HttpRequest("default.aspx", "http://sergey.starcafe.com/blog/797.html", null),
+					new HttpResponse(Console.Out))), new RouteData()
+				);
+
+			RouteTable.Routes.Add("blog-item", new Route("{user}.[host].{tld}/blog/{id}.html", new MvcRouteHandler()));
+			RouteTable.Routes.Variables.Add("host", "inthecity");
+
+			var data = RouteTable.Routes.GetVirtualPath(context, "blog-item", new ValueDictionary(new {
+				user = "sergey", id = 15, tld = "ru"
+			}));
+
+			Console.WriteLine(data.VirtualPath);
+
+			RouteTable.Routes.Variables["host"] = "men.inthecity";
+
+			data = RouteTable.Routes.GetVirtualPath(context, "blog-item", new ValueDictionary(new {
+				user = "max", id = 797, tld = "ru"
+			}));
+
+			Console.WriteLine(data.VirtualPath);
+			// http://ksu.mysite.ru/blog/14898.html
 		}
 
 		public void SingleThreadTest()

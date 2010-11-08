@@ -23,6 +23,15 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
             }
         }
 
+		[ConfigurationProperty("variables")]
+		public NameValueConfigurationCollection Variables
+		{
+			get
+			{
+				return (NameValueConfigurationCollection)base["variables"];
+			}
+		}
+
         [ConfigurationProperty("routes", IsRequired = false)]
         public RouteConfigurationElementCollection Routes
         {

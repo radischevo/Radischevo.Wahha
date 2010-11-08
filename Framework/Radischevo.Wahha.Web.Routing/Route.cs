@@ -176,7 +176,8 @@ namespace Radischevo.Wahha.Web.Routing
         #endregion
 
         #region Instance Methods
-        private bool MatchConstraints(HttpContextBase context, ValueDictionary values, RouteDirection direction)
+        private bool MatchConstraints(HttpContextBase context, 
+			ValueDictionary values, RouteDirection direction)
         {
             foreach (IRouteConstraint constraint in Constraints)
             {
@@ -187,27 +188,28 @@ namespace Radischevo.Wahha.Web.Routing
         }
 
         protected virtual bool MatchConstraint(HttpContextBase context, 
-            IRouteConstraint constraint, ValueDictionary values, RouteDirection direction)
+            IRouteConstraint constraint, ValueDictionary values, 
+			RouteDirection direction)
         {
             return constraint.Match(context, this, values, direction);
         }
 
         /// <summary>
         /// Gets the <see cref="VirtualPathData"/> for 
-        /// the current instance
+        /// the current instance.
         /// </summary>
-        /// <param name="value">The <see cref="ValueDictionary"/> 
-        /// containing the route parameter values</param>
-        public override VirtualPathData GetVirtualPath(RequestContext context, ValueDictionary values)
+        /// <param name="values">The <see cref="ValueDictionary"/> 
+        /// containing the route parameter values.</param>
+		/// <param name="variables">The <see cref="ValueDictionary"/> 
+		/// containing the route variable values.</param>
+        public override VirtualPathData GetVirtualPath(RequestContext context,
+			ValueDictionary values, ValueDictionary variables)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
             HttpContextBase httpContext = context.Context;
             HttpRequestBase request = httpContext.Request;
 
-            if (values == null)
-                values = new ValueDictionary();
-
-            BoundUrl url = _parsedRoute.Bind(context.RouteData.Values, values, Defaults);
+            BoundUrl url = _parsedRoute.Bind(context.RouteData.Values, values, variables, Defaults);
             if (url == null)
                 return null;
             
@@ -237,11 +239,14 @@ namespace Radischevo.Wahha.Web.Routing
 
         /// <summary>
         /// Gets the <see cref="RouteData"/> for 
-        /// the current <see cref="HttpRequest"/>
+        /// the current <see cref="HttpContextBase"/>.
         /// </summary>
         /// <param name="context">The <see cref="HttpContext"/> 
-        /// containing the incoming request</param>
-        public override RouteData GetRouteData(HttpContextBase context)
+        /// containing the incoming request.</param>
+		/// <param name="variables">The <see cref="ValueDictionary"/> 
+		/// containing the route variable values.</param>
+        public override RouteData GetRouteData(HttpContextBase context, 
+			ValueDictionary variables)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
 
@@ -254,7 +259,7 @@ namespace Radischevo.Wahha.Web.Routing
             string path = (_parsedRoute.IsRelative) ? virtualPath :
                 String.Concat(context.Request.Url.Authority, virtualPath);
 
-            ValueDictionary values = _parsedRoute.Match(path, Defaults);
+            ValueDictionary values = _parsedRoute.Match(path, variables, Defaults);
             
             if (values == null)
                 return null;

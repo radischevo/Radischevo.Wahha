@@ -15,7 +15,6 @@ namespace Radischevo.Wahha.Web.Mvc
 
         #region Instance Fields
         private IBuildManager _buildManager;
-        private ControllerBuilder _builder;
         private ControllerTypeCache _instanceTypeCache;
 		private IControllerActivator _activator;
         #endregion

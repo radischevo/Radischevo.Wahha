@@ -76,21 +76,6 @@ namespace Radischevo.Wahha.Web
                     return defaultValue;
 
                 object value = _selector(_collection, key);
-
-				if (typeof(TValue) == typeof(bool) && value is string)
-				{
-					switch (((string)value).Define().ToLowerInvariant())
-					{
-						case "on":
-						case "yes":
-						case "true":
-							value = true;
-							break;
-						default:
-							value = false;
-							break;
-					}
-				}
                 return Converter.ChangeType<TValue>(value, defaultValue);
             }
 
@@ -106,25 +91,8 @@ namespace Radischevo.Wahha.Web
 					StringSplitOptions.RemoveEmptyEntries);
 
 				foreach (string sv in values)
-				{
-					object value = sv;
-					if (typeof(TValue) == typeof(bool))
-					{
-						switch (sv.ToLower())
-						{
-							case "on":
-							case "yes":
-							case "true":
-								value = true;
-								break;
-							case "off":
-							default:
-								value = false;
-								break;
-						}
-					}
-					list.Add(Converter.ChangeType<TValue>(value, default(TValue)));
-				}
+					list.Add(Converter.ChangeType<TValue>(sv, default(TValue)));
+				
 				return list;
 			}
 

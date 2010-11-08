@@ -9,7 +9,6 @@ namespace Radischevo.Wahha.Web.Mvc
         private object _container;
         private PropertyDescriptor _descriptor;
         private object _value;
-        private ModelMetadata _metadata;
         #endregion
 
         #region Constructors

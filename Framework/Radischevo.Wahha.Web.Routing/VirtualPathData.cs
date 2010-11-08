@@ -73,5 +73,16 @@ namespace Radischevo.Wahha.Web.Routing
             }
         }
         #endregion
-    }
+
+		#region Instance Methods
+		/// <summary>
+		/// Returns the string representation of 
+		/// the current <see cref="T:Radischevo.Wahha.Web.Routing.VirtualPathData"/>.
+		/// </summary>
+		public override string ToString()
+		{
+			return VirtualPath;
+		}
+		#endregion
+	}
 }

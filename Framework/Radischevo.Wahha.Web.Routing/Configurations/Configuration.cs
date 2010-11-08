@@ -19,12 +19,14 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
         #region Instance Fields
         private IRouteTableProvider _provider;
         private List<RouteConfigurationElement> _routes;
+		private NameValueConfigurationCollection _variables;
         #endregion
 
         #region Constructors
         private Configuration()
         {
             _routes = new List<RouteConfigurationElement>();
+			_variables = new NameValueConfigurationCollection();
 
             SettingsSection section =
                     ConfigurationManager.GetSection("radischevo.wahha/web/routing")
@@ -33,6 +35,7 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
             if (section != null)
             {
                 InitRouteTableProvider(section.Provider);
+				InitVariables(section.Variables);
                 LoadRouteTable(section.Routes);
             }
         }
@@ -76,6 +79,14 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
             }
         }
 
+		public NameValueConfigurationCollection Variables
+		{
+			get
+			{
+				return _variables;
+			}
+		}
+
         public ICollection<RouteConfigurationElement> Routes
         {
             get
@@ -104,6 +115,15 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
 
             _provider.Init(settings);
         }
+
+		private void InitVariables(NameValueConfigurationCollection collection)
+		{
+			if (collection == null)
+				return;
+
+			foreach (NameValueConfigurationElement element in collection)
+				_variables.Add(element);
+		}
 
         private void LoadRouteTable(RouteConfigurationElementCollection routes)
         {

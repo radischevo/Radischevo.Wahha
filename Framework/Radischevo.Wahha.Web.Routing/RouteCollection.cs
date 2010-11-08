@@ -16,6 +16,7 @@ namespace Radischevo.Wahha.Web.Routing
     public class RouteCollection
     {
         #region Instance Fields
+		private ValueDictionary _variables;
         private Dictionary<string, RouteBase> _indexedRoutes;
         private List<RouteBase> _nonIndexedRoutes;
         private ReaderWriterLock _lock;
@@ -28,6 +29,7 @@ namespace Radischevo.Wahha.Web.Routing
         /// </summary>
         public RouteCollection()
         {
+			_variables = new ValueDictionary();
             _indexedRoutes = new Dictionary<string, RouteBase>();
             _nonIndexedRoutes = new List<RouteBase>();
             _lock = new ReaderWriterLock();
@@ -53,6 +55,18 @@ namespace Radischevo.Wahha.Web.Routing
                 return rb;
             }
         }
+
+		/// <summary>
+		/// Gets the collection of global variables 
+		/// used by routing subsystem.
+		/// </summary>
+		public ValueDictionary Variables
+		{
+			get
+			{
+				return _variables;
+			}
+		}
         #endregion
 
         #region Instance Methods
@@ -102,7 +116,6 @@ namespace Radischevo.Wahha.Web.Routing
                 foreach (KeyValuePair<string, RouteBase> kvp in values)
                 {
                     _nonIndexedRoutes.Add(kvp.Value);
-
                     if (!String.IsNullOrEmpty(kvp.Key))
                         _indexedRoutes[kvp.Key] = kvp.Value;
                 }
@@ -217,7 +230,7 @@ namespace Radischevo.Wahha.Web.Routing
 
                 foreach (RouteBase r in _nonIndexedRoutes)
                 {
-                    RouteData data = r.GetRouteData(context);
+                    RouteData data = r.GetRouteData(context, Variables);
                     if (data != null)
                         return data;
                 }
@@ -249,7 +262,7 @@ namespace Radischevo.Wahha.Web.Routing
 
                 foreach (RouteBase route in _nonIndexedRoutes)
                 {
-                    VirtualPathData vp = route.GetVirtualPath(context, values);
+                    VirtualPathData vp = route.GetVirtualPath(context, values, Variables);
                     if (vp != null)
                         return vp;
                 }
@@ -294,7 +307,7 @@ namespace Radischevo.Wahha.Web.Routing
 
             if (hasRoute)
             {
-                VirtualPathData vp = route.GetVirtualPath(context, values);
+                VirtualPathData vp = route.GetVirtualPath(context, values, Variables);
                 if (vp != null)
                     return vp;
             }

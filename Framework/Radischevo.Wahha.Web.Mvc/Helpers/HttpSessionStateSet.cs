@@ -63,21 +63,6 @@ namespace Radischevo.Wahha.Web.Mvc
                 return defaultValue;
 
 			object value = _session[key];
-
-			if (typeof(TValue) == typeof(bool) && value is string)
-			{
-				switch (((string)value).Define().ToLowerInvariant())
-				{
-					case "on":
-					case "yes":
-					case "true":
-						value = true;
-						break;
-					default:
-						value = false;
-						break;
-				}
-			}
             return Converter.ChangeType<TValue>(value, defaultValue, provider);
         }
 

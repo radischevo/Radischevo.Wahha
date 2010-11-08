@@ -74,16 +74,20 @@ namespace Radischevo.Wahha.Web.Routing.Providers
 		/// <summary>
         /// Gets the currently configured route table.
         /// </summary>
-        public IDictionary<string, RouteBase> GetRouteTable()
+        public RouteTableProviderResult GetRouteTable()
         {
-            Dictionary<string, RouteBase> routes =
-                new Dictionary<string, RouteBase>();
+			RouteTableProviderResult result =
+				new RouteTableProviderResult();
 
             foreach (RouteConfigurationElement element in
                 Configurations.Configuration.Instance.Routes)
-                routes.Add(element.Name, ProcessRoute(element));
-            
-            return routes;
+                result.Routes.Add(element.Name, ProcessRoute(element));
+
+			foreach (NameValueConfigurationElement variable in
+				Configurations.Configuration.Instance.Variables)
+				result.Variables.Add(variable.Name, variable.Value);
+
+            return result;
         }
 
 		private RouteBase CreateRoute(RouteDescriptor descriptor,

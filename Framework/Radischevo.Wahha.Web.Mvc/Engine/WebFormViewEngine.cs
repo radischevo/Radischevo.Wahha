@@ -6,10 +6,6 @@ namespace Radischevo.Wahha.Web.Mvc
 {
     public class WebFormViewEngine : BuildManagerViewEngine
 	{
-		#region Instance Fields
-		private IBuildManager _buildManager;
-		#endregion
-
 		#region Constructors
 		public WebFormViewEngine() 
             : base("~/{0}.aspx", "~/{0}.ascx", 
@@ -18,23 +14,6 @@ namespace Radischevo.Wahha.Web.Mvc
                  "~/Views/Shared/{0}.aspx", "~/Views/Shared/{0}.ascx")
         {   }
         #endregion
-
-		#region Instance Properties
-		public IBuildManager BuildManager
-		{
-			get
-			{
-				if (_buildManager == null)
-					_buildManager = new BuildManagerWrapper();
-				
-				return _buildManager;
-			}
-			set
-			{
-				_buildManager = value;
-			}
-		}
-		#endregion
 
 		#region Instance Methods
 		protected override bool IsValidCompiledType(ControllerContext context, string virtualPath, Type type)

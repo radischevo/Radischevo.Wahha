@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Web;
+
+using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Routing
@@ -147,7 +149,11 @@ namespace Radischevo.Wahha.Web.Routing
 
         protected virtual void EnsureRouteTableLoaded()
         {
-            RouteTable.Routes.AddRange(RouteTable.Provider.GetRouteTable());
+			IRouteTableProvider provider = RouteTable.Provider;
+			RouteTableProviderResult result = provider.GetRouteTable();
+
+			RouteTable.Routes.Variables.Merge((IValueSet)result.Variables);
+			RouteTable.Routes.AddRange(result.Routes);
         }
 
         protected virtual void Dispose()

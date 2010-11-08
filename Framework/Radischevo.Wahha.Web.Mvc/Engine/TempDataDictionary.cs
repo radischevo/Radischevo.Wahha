@@ -147,20 +147,6 @@ namespace Radischevo.Wahha.Web.Mvc
 		private static TValue ConvertValue<TValue>(object value, TValue defaultValue, 
 			IFormatProvider provider)
 		{
-			if (typeof(TValue) == typeof(bool) && value is string)
-			{
-				switch (((string)value).Define().ToLowerInvariant())
-				{
-					case "on":
-					case "yes":
-					case "true":
-						value = true;
-						break;
-					default:
-						value = false;
-						break;
-				}
-			}
 			return Converter.ChangeType<TValue>(value, defaultValue, provider);
 		}
 		#endregion
