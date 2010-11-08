@@ -106,8 +106,8 @@ namespace Radischevo.Wahha.Data
             }
             set
             {
-                Precondition.Require(_timeout > 0,
-					() => Error.ParameterMustBeGreaterThan("value", 0, value));
+                Precondition.Require(_timeout >= 0,
+					() => Error.ParameterMustBeGreaterThanOrEqual("value", 0, value));
 
                 _timeout = value;
             }
