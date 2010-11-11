@@ -17,6 +17,7 @@ using System.Globalization;
 using Radischevo.Wahha.Web;
 using Radischevo.Wahha.Web.Abstractions;
 using System.Web;
+using Radischevo.Wahha.Data.Caching;
 
 namespace ConsoleTester
 {

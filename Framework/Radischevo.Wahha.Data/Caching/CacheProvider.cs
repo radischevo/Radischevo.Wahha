@@ -95,7 +95,6 @@ namespace Radischevo.Wahha.Data.Caching
         /// Gets the typed value from the web application cache.
         /// </summary>
         /// <typeparam name="T">The type of the object to return.</typeparam>
-        /// <param name="cache"></param>
         /// <param name="key">The key the object is stored with.</param>
         public T Get<T>(string key)
         {

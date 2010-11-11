@@ -188,6 +188,7 @@
     <Compile Include="Helpers\HttpSessionStateSet.cs" />
     <Compile Include="Metadata\FieldOrderAttribute.cs" />
     <Compile Include="Models\ModelBinderProvider.cs" />
+    <Compile Include="Models\ModelMapperBase`1.cs" />
     <Compile Include="Models\SimpleTypeModelBinder.cs" />
     <Compile Include="Models\SimpleTypeModelBinderProvider.cs" />
     <Compile Include="Models\TypeMatchModelBinderProvider.cs" />
