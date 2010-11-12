@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Inheritance.cs" />
     <Compile Include="UnityDbDataProviderFactory.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemMaterializer.cs" />

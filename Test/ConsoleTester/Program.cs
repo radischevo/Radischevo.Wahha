@@ -18,6 +18,7 @@ using Radischevo.Wahha.Web;
 using Radischevo.Wahha.Web.Abstractions;
 using System.Web;
 using Radischevo.Wahha.Data.Caching;
+using System.Reflection;
 
 namespace ConsoleTester
 {
@@ -31,31 +32,55 @@ namespace ConsoleTester
 			//p.MultipleThreadTest();
 			//p.SingleThreadTest();
 			//p.RouteTest();
+			p.InheritanceTest();
 
 			Console.ReadKey();
+		}
+
+		public void InheritanceTest()
+		{
+			IEnumerable<Type> controllerTypes = GetDerivedTypes(typeof(IController));
+			foreach (Type type in controllerTypes)
+				Console.WriteLine(type.FullName);
+		}
+
+		private IEnumerable<Type> GetDerivedTypes(Type type)
+		{
+			foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+			{
+				foreach (Type candidate in assembly.GetExportedTypes())
+				{
+					if (type.IsInterface && type.IsAssignableFrom(candidate) && 
+						IsValidType(candidate))
+						yield return candidate;
+
+					if (candidate.IsSubclassOf(type) && IsValidType(candidate))
+						yield return candidate;
+				}
+			}
+		}
+
+		private bool IsValidType(Type type)
+		{
+			return !(type.IsAbstract ||
+				type.IsInterface || 
+				type.IsNested ||
+				type.IsGenericTypeDefinition);
 		}
 
 		public void RouteTest()
 		{
 			RequestContext context = new RequestContext(
 				new HttpContextWrapper(new HttpContext(
-					new HttpRequest("default.aspx", "http://sergey.starcafe.com/blog/797.html", null),
+					new HttpRequest("default.aspx", "http://sergey.starcafe.ru/blog/797.html", null),
 					new HttpResponse(Console.Out))), new RouteData()
 				);
 
-			RouteTable.Routes.Add("blog-item", new Route("{user}.[host].{tld}/blog/{id}.html", new MvcRouteHandler()));
-			RouteTable.Routes.Variables.Add("host", "inthecity");
+			RouteTable.Routes.Add("blog-list", new Route("{user}.[host]/blog/{id}.html", new MvcRouteHandler()));
+			RouteTable.Routes.Variables.Add("host", "starcafe.ru");
 
-			var data = RouteTable.Routes.GetVirtualPath(context, "blog-item", new ValueDictionary(new {
-				user = "sergey", id = 15, tld = "ru"
-			}));
-
-			Console.WriteLine(data.VirtualPath);
-
-			RouteTable.Routes.Variables["host"] = "men.inthecity";
-
-			data = RouteTable.Routes.GetVirtualPath(context, "blog-item", new ValueDictionary(new {
-				user = "max", id = 797, tld = "ru"
+			var data = RouteTable.Routes.GetVirtualPath(context, "blog-list", new ValueDictionary(new {
+				user = "sergey", id = 127
 			}));
 
 			Console.WriteLine(data.VirtualPath);

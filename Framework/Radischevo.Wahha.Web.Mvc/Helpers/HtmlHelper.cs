@@ -289,7 +289,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
 		/// <param name="viewName">The name of the view to render.</param>
 		public void Include(string viewName)
 		{
-			Include(viewName, null, _context.ViewData);
+			Include(viewName, null, new ViewDataDictionary(_context.ViewData));
 		}
 
 		/// <summary>
@@ -299,7 +299,7 @@ namespace Radischevo.Wahha.Web.Mvc.UI
 		/// <param name="model">The model object supplied to the view.</param>
 		public void Include(string viewName, object model)
 		{
-			Include(viewName, model, _context.ViewData);
+			Include(viewName, model, new ViewDataDictionary(_context.ViewData));
 		}
 
 		/// <summary>
