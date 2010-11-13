@@ -11,9 +11,9 @@ namespace Radischevo.Wahha.Core
     /// Converts a base data type to another base data type.
     /// </summary>
     public static class Converter
-    {
-        #region Nested Types
-        private static class ObjectToHashConverter
+	{
+		#region Nested Types
+		private static class ObjectToHashConverter
         {
             #region Static Fields
             private static readonly Dictionary<Type,
@@ -389,8 +389,15 @@ namespace Radischevo.Wahha.Core
 					case "YES":
 					case "Y":
 						return true;
+					case "":
+					case "0":
+					case "FALSE":
+					case "OFF":
+					case "NO":
+					case "N":
+						return false;
 				}
-				return false;
+				throw Error.CouldNotConvertType(typeof(bool), "value");
 			}
 			if (from == typeof(char))
 			{
@@ -399,8 +406,11 @@ namespace Radischevo.Wahha.Core
 					case '1':
 					case 'Y':
 						return true;
+					case '0':
+					case 'N':
+						return false;
 				}
-				return false;
+				throw Error.CouldNotConvertType(typeof(bool), "value");
 			}
 			return Convert.ToBoolean(value);
 		}
