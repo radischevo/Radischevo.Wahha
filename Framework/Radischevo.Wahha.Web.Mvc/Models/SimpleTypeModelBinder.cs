@@ -64,10 +64,11 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Instance Methods
 		private object ExtractValue(BindingContext context)
 		{
-			object value = null;
-			context.TryGetValue(out value);
+			ValueProviderResult value = null;
+			if (context.TryGetValue(out value))
+				return value.Value;
 
-			return value;
+			return null;
 		}
 
 		protected override object ExecuteBind(BindingContext context)

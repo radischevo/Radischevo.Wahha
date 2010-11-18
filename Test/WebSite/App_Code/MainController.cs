@@ -424,7 +424,6 @@ public class MainController : Controller
 
 	public class TestClass
 	{
-		[SkipBinding]
 		public HttpPostedFileBase File
 		{
 			get;
@@ -440,7 +439,7 @@ public class MainController : Controller
 
     [AcceptHttpVerbs(HttpMethod.Post)]
     public ActionResult TestArrayAndCollection(int[] indices, IEnumerable<string> names, 
-        Dictionary<int, Tuple<bool, string>> dict, TestClass model, FormCollection form)
+        Dictionary<int, Pair<bool, string>> dict, TestClass model, FormCollection form)
     {
         int errors = Errors.Count;
 
@@ -464,7 +463,7 @@ public class MainController : Controller
 
     [HttpCompression]
     [AcceptHttpVerbs(HttpMethod.Get)]
-    [ApplyCulture("lc", Source = ParameterSource.QueryString | ParameterSource.Header)]
+    [ApplyCulture("lc", Source = "QueryString,Header")]
     public ActionResult Section([Bind(Source = ParameterSource.Url)]string section, 
         [Bind(Default = SectionType.Simple)]SectionType type)
     {        
@@ -586,4 +585,18 @@ public class Section
     {
         _name = name;
     }
+}
+
+public class Pair<T1, T2>
+{
+	public T1 Item1
+	{
+		get;
+		set;
+	}
+	public T2 Item2
+	{
+		get;
+		set;
+	}
 }

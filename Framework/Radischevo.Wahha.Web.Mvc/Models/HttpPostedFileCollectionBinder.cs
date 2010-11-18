@@ -18,40 +18,16 @@ namespace Radischevo.Wahha.Web.Mvc
         {   }
         #endregion
 
-        #region Static Methods
-        private static List<HttpPostedFileBase> GetPostedFiles(HttpFileCollectionBase files, string key)
-        {
-            List<HttpPostedFileBase> list = files.AllKeys
-                .Select((thisKey, index) => (String.Equals(thisKey, key, StringComparison.OrdinalIgnoreCase)) ? index : -1)
-                .Where(index => index > -1).Select(index => files[index]).ToList();
-
-            if (files.Count == 0)
-            {
-                for (int i = 0; ; ++i)
-                {
-                    HttpPostedFileBase file = files[String.Format(
-                        CultureInfo.InvariantCulture, "{0}-{1}", key, i)];
-
-                    if (file == null)
-                        break;
-                    
-                    list.Add(file);
-                }
-            }
-
-            return list.Where(f => f != null && f.ContentLength > 0 && 
-                !String.IsNullOrEmpty(f.FileName)).ToList();
-        }
-        #endregion
-
-        #region Instance Methods
-        public object Bind(BindingContext context)
+		#region Instance Methods
+		public object Bind(BindingContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-            List<HttpPostedFileBase> files = GetPostedFiles(context.Context.Request.Files, context.ModelName);
-            
-            if (files.Count < 1)
-                return null;
+            ValueProviderResult result = context.ValueProvider.GetValue(context.ModelName);
+			if (result == null)
+				return null;
+
+			List<HttpPostedFileBase> files = result
+				.GetValue<IEnumerable<HttpPostedFileBase>>().ToList();
 
             Type type = context.ModelType;
             if (type == typeof(IEnumerable<HttpPostedFileBase>) || type == typeof(HttpPostedFileBase[]))

@@ -88,7 +88,8 @@ namespace Radischevo.Wahha.Web.Mvc
 			Type elementType = typeof(T);
 
 			SortedDictionary<int, T> convertedValues = new SortedDictionary<int, T>();
-			object value = context.Data.GetValue<string>(context.ModelName);
+			ValueProviderResult result = context.GetValue();
+			object value = (result == null) ? null : result.GetValue<string>();
 
 			if (value != null && IsSimpleType)
 			{
@@ -103,7 +104,8 @@ namespace Radischevo.Wahha.Web.Mvc
 					bindingData.Add(elementKey, split[i]);
 
 					BindingContext inner = new BindingContext(context, elementType,
-						elementKey, context.Source, bindingData, null, context.Errors);
+						elementKey, new DictionaryValueProvider(bindingData), 
+						null, context.Errors);
 
 					value = ElementBinder.Bind(inner);
 					convertedValues[i] = ValidateElement(context, elementKey, value);
@@ -111,9 +113,9 @@ namespace Radischevo.Wahha.Web.Mvc
 			}
 			else
 			{
-				foreach (KeyValuePair<string, object> kvp in context.Data)
+				foreach (string kvp in context.ValueProvider.Keys)
 				{
-					int? index = GetItemIndex(kvp.Key, context.ModelName);
+					int? index = GetItemIndex(kvp, context.ModelName);
 					if (!index.HasValue)
 						continue;
 
@@ -122,7 +124,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
 					string elementKey = CreateSubMemberName(context.ModelName, index.ToString());
 					BindingContext inner = new BindingContext(context, elementType,
-						elementKey, context.Source, context.Data, null, context.Errors);
+						elementKey, context.ValueProvider, null, context.Errors);
 
 					value = ElementBinder.Bind(inner);
 					convertedValues[index.Value] = ValidateElement(context, elementKey, value);

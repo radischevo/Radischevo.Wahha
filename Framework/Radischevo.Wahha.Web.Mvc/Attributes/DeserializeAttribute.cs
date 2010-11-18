@@ -23,10 +23,11 @@ namespace Radischevo.Wahha.Web.Mvc
 			#region Instance Methods
 			protected override object ExecuteBind(BindingContext context)
 			{
-				object value;
-				context.TryGetValue(out value);
+				ValueProviderResult value;
+				if (!context.TryGetValue(out value))
+					return null;
 
-				string stringValue = (value as string);
+				string stringValue = value.GetValue<string>();
 				if (String.IsNullOrEmpty(stringValue))
 					return null;
 

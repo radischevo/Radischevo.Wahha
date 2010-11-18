@@ -39,11 +39,11 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         /// model binding.
         /// </summary>
         [ConfigurationProperty("models", IsRequired = false)]
-        public ModelConfigurationElementCollection Models
+        public ModelConfigurationElement Models
         {
             get
             {
-                return (ModelConfigurationElementCollection)base["models"];
+                return (ModelConfigurationElement)base["models"];
             }
         }
     }

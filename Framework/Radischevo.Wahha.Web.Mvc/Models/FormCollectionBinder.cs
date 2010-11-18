@@ -14,15 +14,33 @@ namespace Radischevo.Wahha.Web.Mvc
         {   }
         #endregion
 
-        #region Instance Methods
-        public object Bind(BindingContext context)
+		#region Static Methods
+		private static IValueSet BindDataSource(IValueProvider provider)
+		{
+			ValueDictionary values = new ValueDictionary();
+			foreach (string key in provider.Keys)
+			{
+				ValueProviderResult result = provider.GetValue(key);
+				if (result == null)
+					continue;
+
+				values.Add(key, result.Value);
+			}
+			return values;
+		}
+		#endregion
+
+		#region Instance Methods
+		public object Bind(BindingContext context)
         {
             // Заполняем FormCollection теми данными, 
             // что были использованы как источник в 
             // атрибуте BindAttribute.
 
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-            return new FormCollection(context.Data);
+			IValueSet source = BindDataSource(context.ValueProvider);
+
+			return new FormCollection(source);
         }
         #endregion
     }

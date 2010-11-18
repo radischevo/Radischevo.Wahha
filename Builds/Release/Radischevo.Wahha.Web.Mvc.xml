@@ -655,8 +655,8 @@
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Source">
             <summary>
-            Gets or sets a bitmask comprised of one or more 
-            <see cref="T:Radischevo.Wahha.Web.Mvc.ParameterSource"/> flags 
+            Gets or sets comma delimited list of one or more
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ParameterSource"/> values 
             specifying locations where the parameter value is searched.
             </summary>
         </member>

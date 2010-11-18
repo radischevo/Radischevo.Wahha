@@ -1,4 +1,5 @@
 ﻿using System;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -18,15 +19,17 @@ namespace Radischevo.Wahha.Web.Mvc
             #region Instance Methods
             public object Bind(BindingContext context)
             {
+				IValueProvider provider = new DictionaryValueProvider(context.Parameters);
+
 				// Rewrite the provided context to ensure all the parameters 
 				// provided by user is set correctly.
 				BindingContext inner = new BindingContext(context, 
-					context.ModelType, context.ModelName, ParameterSource.Custom, 
-					null, null, context.Errors);
+					context.ModelType, context.ModelName, provider, 
+					null, context.Errors);
 
-				object value;
+				ValueProviderResult value;
 				if (inner.TryGetValue(out value))
-					return value;
+					return value.Value;
 
 				return null;
             }

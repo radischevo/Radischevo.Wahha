@@ -52,9 +52,6 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Static Methods
 		private static bool HasBindingData(BindingContext context)
 		{
-			if(String.IsNullOrEmpty(context.ModelName))
-				return (context.Data.Count > 0);
-
 			return context.Contains(context.ModelName);
 		}
 
@@ -95,9 +92,9 @@ namespace Radischevo.Wahha.Web.Mvc
 		
 		private object BindObject(BindingContext context)
 		{
-			object value;
+			ValueProviderResult value;
 			if (context.TryGetValue(out value))
-				return value;
+				return value.Value;
 
 			return null;
 		}

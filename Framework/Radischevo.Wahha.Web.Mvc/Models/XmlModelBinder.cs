@@ -13,12 +13,12 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         protected override object ExecuteBind(BindingContext context)
         {
-            object value;
+            ValueProviderResult value;
             if (!context.TryGetValue(out value))
                 return null;
 
             using (TextReader reader = new StringReader(
-                Convert.ToString(value, CultureInfo.InvariantCulture)))
+                Convert.ToString(value.Value, CultureInfo.InvariantCulture)))
             {
                 XmlSerializer serializer = new XmlSerializer(context.ModelType);
                 return context.Model = serializer.Deserialize(reader);

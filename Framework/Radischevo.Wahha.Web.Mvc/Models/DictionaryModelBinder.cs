@@ -92,18 +92,18 @@ namespace Radischevo.Wahha.Web.Mvc
 				throw Error.UnsupportedDictionaryType(context.ModelType);
 
 			Dictionary<TKey, TValue> convertedValues = new Dictionary<TKey, TValue>();
-
-			foreach (KeyValuePair<string, object> kvp in context.Data)
+			foreach (string kvp in context.ValueProvider.Keys)
 			{
-				string formKey = GetItemKey(kvp.Key, context.ModelName);
+				string formKey = GetItemKey(kvp, context.ModelName);
 				if (String.IsNullOrEmpty(formKey))
 					continue;
 
 				string keyField = CreateSubMemberName(context.ModelName, "key");
+				IValueProvider keyProvider = new DictionaryValueProvider(
+					CreateKeyBindingData(keyField, formKey));
 
 				BindingContext keyContext = new BindingContext(context, keyType,
-					keyField, ParameterSource.Form, CreateKeyBindingData(keyField, formKey),
-					null, context.Errors);
+					keyField, keyProvider, null, context.Errors);
 
 				object boundKey = KeyBinder.Bind(keyContext);
 				if (boundKey == null)
@@ -115,7 +115,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
 				string formValue = CreateSubMemberName(context.ModelName, formKey);
 				BindingContext valueContext = new BindingContext(context, valueType,
-					formValue, context.Source, context.Data, null, context.Errors);
+					formValue, context.ValueProvider, null, context.Errors);
 
 				TValue value = ValidateValue(context, formValue, ValueBinder.Bind(valueContext));
 				convertedValues.Add(key, value);

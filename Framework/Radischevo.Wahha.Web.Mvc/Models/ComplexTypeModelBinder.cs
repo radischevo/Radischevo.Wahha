@@ -84,7 +84,7 @@ namespace Radischevo.Wahha.Web.Mvc
 				bind.IsUpdateAllowed(propertyName) && context.AllowMemberUpdate(propertyName)) : context.AllowMemberUpdate;
 
 			BindingContext inner = new BindingContext(context, context.ModelType,
-				context.ModelName, context.Source, context.Data, propertyFilter,
+				context.ModelName, context.ValueProvider, propertyFilter,
 				context.Errors) {
 					Model = result
 				};
@@ -126,7 +126,7 @@ namespace Radischevo.Wahha.Web.Mvc
 				ModelValidator propertyValidator = context.Validator.GetPropertyValidator(property.Name);
 
 				BindingContext inner = new BindingContext(context, property.PropertyType,
-					propertyKey, context.Source, context.Data, null, context.Errors) {
+					propertyKey, context.ValueProvider, null, context.Errors) {
 						Model = property.GetValue(context.Model),
 						Metadata = propertyMetadata, Validator = propertyValidator
 					};

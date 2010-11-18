@@ -580,21 +580,21 @@ namespace Radischevo.Wahha.Web.Mvc
 
         #region Update Model with Binder Methods
         protected TModel BindModel<TModel, TBinder>(TModel model)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, String.Empty,
                 new string[0], new string[0], (IDictionary<string, object>)null);
         }
 
         protected TModel BindModel<TModel, TBinder>(TModel model, string[] include)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, String.Empty, include,
                 new string[0], (IDictionary<string, object>)null);
         }
 
         protected TModel BindModel<TModel, TBinder>(TModel model, IValueSet values)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, String.Empty,
                 new string[0], new string[0], values);
@@ -602,14 +602,14 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected TModel BindModel<TModel, TBinder>(TModel model,
             IDictionary<string, object> values)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, String.Empty,
                 new string[0], new string[0], values);
         }
 
         protected TModel BindModel<TModel, TBinder>(TModel model, string name)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, name,
                 new string[0], new string[0], (IDictionary<string, object>)null);
@@ -617,7 +617,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected TModel BindModel<TModel, TBinder>(TModel model, string name,
             IValueSet values)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, name,
                 new string[0], new string[0], values);
@@ -625,7 +625,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected TModel BindModel<TModel, TBinder>(TModel model, string name,
             IDictionary<string, object> values)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, name, 
                 new string[0], new string[0], values);
@@ -633,7 +633,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected TModel BindModel<TModel, TBinder>(TModel model, 
             string name, string[] include)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, name,
                 include, new string[0], (IDictionary<string, object>)null);
@@ -641,21 +641,21 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected TModel BindModel<TModel, TBinder>(TModel model, string name,
             string[] include, IValueSet values)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, name, include, new string[0], values);
         }
 
         protected TModel BindModel<TModel, TBinder>(TModel model, string name,
             string[] include, IDictionary<string, object> values)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, name, include, new string[0], values);
         }
 
         protected TModel BindModel<TModel, TBinder>(TModel model, string name,
             string[] include, string[] exclude)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             return BindModel<TModel, TBinder>(model, name, 
                 include, exclude, (IDictionary<string, object>)null);
@@ -663,7 +663,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected TModel BindModel<TModel, TBinder>(TModel model, string name,
             string[] include, string[] exclude, IValueSet values)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
             IDictionary<string, object> data = (values == null) ? 
                 null : new ValueDictionary().Merge(values);
@@ -673,14 +673,16 @@ namespace Radischevo.Wahha.Web.Mvc
         protected TModel BindModel<TModel, TBinder>(TModel model, string name,
             string[] include, string[] exclude, 
             IDictionary<string, object> values)
-            where TBinder : IModelBinder, new()
+            where TBinder : IModelBinder
         {
-            IModelBinder binder = Activator.CreateInstance<TBinder>();
+			IModelBinder binder = ServiceLocator.Instance.GetService<TBinder>();
             ValueDictionary data = (values == null) ? null : new ValueDictionary(values);
 
+			IValueProvider provider = Configuration.Instance.Models
+				.ValueProviders.GetProvider(Context, ParameterSource.Default);
+
             BindingContext bc = new BindingContext(Context, typeof(TModel),
-                name, ParameterSource.Default, data, 
-                s => BindAttribute.IsUpdateAllowed(s, include, exclude),
+                name, provider, s => BindAttribute.IsUpdateAllowed(s, include, exclude),
                 Errors);
 
             bc.Model = model;
@@ -774,9 +776,11 @@ namespace Radischevo.Wahha.Web.Mvc
             IModelBinder binder = Configuration.Instance
                 .Models.Binders.GetBinder(typeof(TModel));
 
+			IValueProvider provider = Configuration.Instance.Models
+				.ValueProviders.GetProvider(Context, ParameterSource.Default);
+
             BindingContext bc = new BindingContext(Context, typeof(TModel),
-                name, ParameterSource.Default, data, 
-                s => BindAttribute.IsUpdateAllowed(s, include, exclude), 
+                name, provider, s => BindAttribute.IsUpdateAllowed(s, include, exclude), 
                 Errors);
             
             bc.Model = model;

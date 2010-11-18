@@ -63,8 +63,8 @@
             <%= value %>, 
         <% } %>
         <b>Словарь: </b>
-        <% foreach (KeyValuePair<int, Tuple<bool, string>> value in 
-               ViewData.GetValue<Dictionary<int, Tuple<bool, string>>>("Dictionary")) { %>
+        <% foreach (KeyValuePair<int, Pair<bool, string>> value in 
+               ViewData.GetValue<Dictionary<int, Pair<bool, string>>>("Dictionary")) { %>
             <%= value.Key %> = <%= value.Value.Item1 %>, <%= value.Value.Item2 %>; 
         <% } %>
     </div>

@@ -67,15 +67,15 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Instance Methods
 		protected override object ExecuteBind(BindingContext context)
         {
-            object value;
+            ValueProviderResult value;
 			if (!context.TryGetValue(out value))
 				return null;
 
-			ValueDictionary data = CreateBindingData(Convert.ToString(value, 
-				CultureInfo.InvariantCulture)) ?? new ValueDictionary();
+			ValueDictionary data = CreateBindingData(value.GetValue<string>()) ?? new ValueDictionary();
+			IValueProvider provider = new DictionaryValueProvider(data);
 
 			BindingContext inner = new BindingContext(context, context.ModelType,
-				String.Empty, context.Source, data, context.AllowMemberUpdate, context.Errors);
+				String.Empty, provider, context.AllowMemberUpdate, context.Errors);
 
 			return base.ExecuteBind(inner);
         }

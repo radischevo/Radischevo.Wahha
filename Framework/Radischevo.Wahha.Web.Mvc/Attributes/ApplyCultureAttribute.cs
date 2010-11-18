@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -14,7 +15,7 @@ namespace Radischevo.Wahha.Web.Mvc
     {
         #region Instance Fields
         private string _parameterName;
-        private ParameterSource _source;
+        private string _source;
         #endregion
 
         #region Constructors
@@ -43,7 +44,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public ParameterSource Source
+        public string Source
         {
             get
             {
@@ -56,39 +57,17 @@ namespace Radischevo.Wahha.Web.Mvc
         }
         #endregion
 
-        #region Static Methods
-        private string GetCultureCode(ActionContext context)
-        {
-            HttpParameters parameters = context.HttpContext.Request.Parameters;
-
-            if ((_source & ParameterSource.Url) == ParameterSource.Url &&
-                context.Context.RouteData.Values.ContainsKey(_parameterName))
-                return context.Context.RouteData.Values.GetValue<string>(_parameterName);
-
-            if ((_source & ParameterSource.Form) == ParameterSource.Form &&
-                parameters.Form.Keys.Any(k => k.Equals(_parameterName, StringComparison.OrdinalIgnoreCase)))
-                return parameters.Form.GetValue<string>(_parameterName);
-
-            if ((_source & ParameterSource.QueryString) == ParameterSource.QueryString &&
-                parameters.QueryString.Keys.Any(k => k.Equals(_parameterName, StringComparison.OrdinalIgnoreCase)))
-                return parameters.QueryString.GetValue<string>(_parameterName);
-
-            if ((_source & ParameterSource.Session) == ParameterSource.Session &&
-				context.HttpContext.Session != null && context.HttpContext.Session[_parameterName] != null)
-				return context.HttpContext.Session[_parameterName].ToString();
-
-            if ((_source & ParameterSource.Cookie) == ParameterSource.Cookie &&
-                parameters.Cookies.Keys.Any(k => k.Equals(_parameterName, StringComparison.OrdinalIgnoreCase)))
-                return parameters.Cookies.GetValue<string>(_parameterName);
-
-            if ((_source & ParameterSource.Header) == ParameterSource.Header)
-				return context.HttpContext.Request.UserLanguages.FirstOrDefault() ?? String.Empty;
-            
-            return String.Empty;
-        }
-        #endregion
-
         #region Instance Methods
+		private string GetCultureCode(ActionContext context)
+		{
+			IValueProvider provider = Configuration.Instance.Models
+				.ValueProviders.GetProvider(context.Context, 
+				ParameterSource.FromString(Source));
+
+			ValueProviderResult result = provider.GetValue(_parameterName);
+			return (result == null) ? null : result.GetValue<string>();
+		}
+
         public override void OnExecuting(ActionExecutionContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));

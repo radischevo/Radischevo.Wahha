@@ -15,7 +15,7 @@ namespace Radischevo.Wahha.Web.Mvc
     {
         #region Instance Fields
         private string _name;
-        private ParameterSource _source;
+        private string _source;
         private string[] _blackList;
         private string[] _whiteList;
         private object _default;
@@ -31,7 +31,6 @@ namespace Radischevo.Wahha.Web.Mvc
             _name = name;
             _blackList = new string[0];
             _whiteList = new string[0];
-            _source = ParameterSource.Default;
         }
         #endregion
 
@@ -106,20 +105,20 @@ namespace Radischevo.Wahha.Web.Mvc
         }
 
         /// <summary>
-        /// Gets or sets a bitmask comprised of one or more 
-        /// <see cref="Radischevo.Wahha.Web.Mvc.ParameterSource"/> flags 
+        /// Gets or sets comma delimited list of one or more
+        /// <see cref="Radischevo.Wahha.Web.Mvc.ParameterSource"/> values 
         /// specifying locations where the parameter value is searched.
         /// </summary>
-        public ParameterSource Source
+        public string Source
         {
             get
             {
                 return _source;
             }
-            set
-            {
-                _source = value;
-            }
+			set
+			{
+				_source = value;
+			}
         }
         #endregion
 

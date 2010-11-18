@@ -8,9 +8,13 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Web.Mvc
 {
     public class ReflectedParameterBinding : ParameterBinding
-    {
-        #region Instance Fields
-        private ParameterInfo _parameter;
+	{
+		#region Static Fields
+		private static readonly char[] _separator = new char[] { ',' };
+		#endregion
+
+		#region Instance Fields
+		private ParameterInfo _parameter;
         private string[] _include;
         private string[] _exclude;
         private Predicate<string> _memberFilter;
@@ -112,11 +116,11 @@ namespace Radischevo.Wahha.Web.Mvc
 
                 _name = attribute.Name ?? _parameter.Name;
                 _include = (String.IsNullOrEmpty(include)) ? new string[0] : 
-                    include.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    include.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
                 _exclude = (String.IsNullOrEmpty(exclude)) ? new string[0] :
-                    exclude.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    exclude.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
 
-                _source = attribute.Source;
+				_source = ParameterSource.FromString(attribute.Source);
                 _defaultValue = attribute.Default;
                 _memberFilter = s => BindAttribute.IsUpdateAllowed(s, _include, _exclude);
             }

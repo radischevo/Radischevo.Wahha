@@ -13,6 +13,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
     {
         #region Instance Fields
         private ModelBinderCollection _binders;
+		private ValueProviderFactoryCollection _valueProviders;
 		private ModelMetadataProvider _metadataProvider;
 		private ModelValidatorProvider _validatorProvider;
         #endregion
@@ -21,9 +22,11 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         internal ModelConfigurationSettings()
         {
             _binders = new ModelBinderCollection();
-            
+			_valueProviders = new ValueProviderFactoryCollection();
+
 			InitDefaultBinders();
 			InitDefaultBinderProviders();
+			InitDefaultValueProviders();
         }
         #endregion
 
@@ -35,6 +38,14 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
                 return _binders;
             }
         }
+
+		public ValueProviderFactoryCollection ValueProviders
+		{
+			get
+			{
+				return _valueProviders;
+			}
+		}
 
 		public ModelMetadataProvider MetadataProvider
 		{
@@ -76,6 +87,15 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 
 			return (IModelBinder)ServiceLocator.Instance.GetService(type);
         }
+
+		private static IValueProviderFactory CreateValueProviderFactory(Type type)
+		{
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			if (!typeof(IValueProviderFactory).IsAssignableFrom(type))
+				throw Error.IncompatibleModelBinderType(type); // TODO: Кинуть нормальный еррор
+
+			return (IValueProviderFactory)ServiceLocator.Instance.GetService(type);
+		}
 
         private static ModelMetadataProvider CreateMetadataProvider(Type type)
         {
@@ -134,13 +154,57 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 			});
 		}
 
-        internal void Init(ModelConfigurationElementCollection element)
+		private void InitDefaultValueProviders()
+		{
+			_valueProviders.Insert(ParameterSource.Parameters, 1, new ParameterValueProviderFactory());
+			_valueProviders.Insert(ParameterSource.Url, 2, new RouteDataValueProviderFactory());
+			_valueProviders.Insert(ParameterSource.Form, 3, new FormValueProviderFactory());
+			_valueProviders.Insert(ParameterSource.File, 4, new HttpFileCollectionValueProviderFactory());
+			_valueProviders.Insert(ParameterSource.QueryString, 5, new QueryStringValueProviderFactory());
+			_valueProviders.Insert(ParameterSource.Token, 6, new RouteTokenValueProviderFactory());
+			_valueProviders.Insert(ParameterSource.Session, 7, new SessionStateValueProviderFactory());
+			_valueProviders.Insert(ParameterSource.Cookie, 8, new CookieValueProviderFactory());
+			_valueProviders.Insert(ParameterSource.Header, 9, new HeaderValueProviderFactory());
+			_valueProviders.Insert(ParameterSource.InputStream, 10, new InputStreamValueProviderFactory());
+		}
+
+		private void InitBinders(ModelBinderConfigurationElementCollection element)
+		{
+			if (element == null)
+				return;
+
+			if (!String.IsNullOrEmpty(element.DefaultType))
+				_binders.DefaultBinder = CreateModelBinder(
+					Type.GetType(element.DefaultType, true, true));
+
+			foreach (ModelBinderConfigurationElement elem in element)
+			{
+				Type modelType = Type.GetType(elem.ModelType, true, true);
+
+				if (!String.IsNullOrEmpty(elem.BinderType))
+					_binders.Add(modelType,
+						CreateModelBinder(Type.GetType(elem.BinderType, true, true)));
+			}
+		}
+
+		private void InitValueProviders(ValueProviderConfigurationElementCollection element)
+		{
+			if (element == null)
+				return;
+
+			foreach (ValueProviderConfigurationElement elem in element)
+			{
+				_valueProviders.Insert(elem.Name, elem.Order,
+					CreateValueProviderFactory(Type.GetType(elem.FactoryType, true, true)));
+			}
+		}
+
+        internal void Init(ModelConfigurationElement element)
         {
             Precondition.Require(element, () => Error.ArgumentNull("element"));
 
-            if (!String.IsNullOrEmpty(element.BinderType))
-                _binders.DefaultBinder = CreateModelBinder(
-                    Type.GetType(element.BinderType, true, true));
+			InitBinders(element.Binders);
+			InitValueProviders(element.ValueProviders);
 
             if (!String.IsNullOrEmpty(element.MetadataProviderType))
                 _metadataProvider = CreateMetadataProvider(
@@ -149,15 +213,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             if (!String.IsNullOrEmpty(element.ValidatorProviderType))
                 _validatorProvider = CreateValidatorProvider(
                     Type.GetType(element.ValidatorProviderType, true, true));
-
-            foreach (ModelConfigurationElement elem in element)
-            {
-                Type modelType = Type.GetType(elem.ModelType, true, true);
-
-                if(!String.IsNullOrEmpty(elem.BinderType))
-                    _binders.Add(modelType,
-                        CreateModelBinder(Type.GetType(elem.BinderType, true, true)));
-            }
         }
         #endregion
     }

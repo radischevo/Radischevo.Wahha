@@ -30,10 +30,11 @@ namespace Radischevo.Wahha.Web.Mvc
 
 		protected virtual object ExtractValue(BindingContext context)
 		{
-			object value;
-			context.TryGetValue(out value);
+			ValueProviderResult value;
+			if (context.TryGetValue(out value))
+				return value.Value;
 
-			return value;
+			return null;
 		}
 		#endregion
 	}

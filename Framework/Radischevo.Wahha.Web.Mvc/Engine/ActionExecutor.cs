@@ -162,6 +162,11 @@ namespace Radischevo.Wahha.Web.Mvc
             return parameter.Binding.Binder ?? Binders.GetBinder(parameter.Type);
         }
 
+		protected virtual IValueProvider GetValueProvider(ControllerContext context, ParameterSource source)
+		{
+			return Configuration.Instance.Models.ValueProviders.GetProvider(context, source);
+		}
+
         protected virtual ControllerDescriptor GetControllerDescriptor(ControllerContext context)
         {
             Type type = GetController().GetType();
@@ -221,7 +226,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
             IModelBinder binder = GetBinder(parameter);
             BindingContext bc = new BindingContext(context, parameter.Type, 
-                parameter.Binding.Name, parameter.Binding.Source, null, 
+                parameter.Binding.Name, GetValueProvider(context, parameter.Binding.Source), 
                 parameter.Binding.GetMemberFilter(), GetController().Errors);
             bc.FallbackToEmptyPrefix = (String.Equals(parameter.Binding.Name, parameter.Name));
 
