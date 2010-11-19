@@ -160,6 +160,7 @@
     <Compile Include="Helpers\ModelStateSerializer.cs" />
     <Compile Include="Helpers\SerializationExtensions.cs" />
     <Compile Include="Helpers\SerializationMode.cs" />
+    <Compile Include="Helpers\ValueProviderExtensions.cs" />
     <Compile Include="Interfaces\IControllerActivator.cs" />
     <Compile Include="Interfaces\IValueProvider.cs" />
     <Compile Include="Interfaces\IViewActivator.cs" />
