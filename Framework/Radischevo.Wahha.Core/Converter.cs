@@ -360,22 +360,6 @@ namespace Radischevo.Wahha.Core
 			throw Error.CouldNotConvertType(to, "value");
 		}
 
-		private static object ConvertValue(Type type,
-			object value, object defaultValue, IFormatProvider provider)
-		{
-			try
-			{
-				return ConvertValue(type, value, provider);
-			}
-			catch (Exception error)
-			{
-				if (IsExpectedException(error))
-					return defaultValue;
-
-				throw;
-			}
-		}
-
 		private static bool ConvertToBoolean(Type from,
 			object value, IFormatProvider provider)
 		{
@@ -563,10 +547,20 @@ namespace Radischevo.Wahha.Core
 			Precondition.Require(ValidateValue(defaultValue, type),
 				() => Error.InvalidArgumentType(type, "defaultValue"));
 
-			if (Object.ReferenceEquals(value, null))
-				return ConvertUndefinedValue(type);
+			try
+			{
+				if (Object.ReferenceEquals(value, null))
+					return ConvertUndefinedValue(type);
 
-			return ConvertValue(type, value, defaultValue, provider);
+				return ConvertValue(type, value, provider);
+			}
+			catch (Exception error)
+			{
+				if (IsExpectedException(error))
+					return defaultValue;
+
+				throw;
+			}
 		}
 		#endregion
 	}
