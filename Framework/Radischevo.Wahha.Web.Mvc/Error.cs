@@ -145,18 +145,6 @@ namespace Radischevo.Wahha.Web.Mvc
             return new InvalidOperationException(Res.Error_ViewLocationFormatsAreEmpty);
         }
 
-        internal static Exception UnableToInstantiateUserControl(string virtualPath)
-        {
-            return new InvalidOperationException(String.Format(
-                Res.Error_UnableToInstantiateUserControl, virtualPath));
-        }
-
-        internal static Exception CouldNotSetControlProperties(object instance, Exception inner)
-        {
-            return new InvalidOperationException(String.Format(
-                Res.Error_CouldNotSetControlProperties, instance.GetType().Name), inner);
-        }
-
         internal static Exception InvalidViewDataType(Type viewDataType, Type type)
         {
             return new InvalidOperationException(String.Format(
@@ -428,6 +416,12 @@ namespace Radischevo.Wahha.Web.Mvc
 		internal static Exception MustOverrideGetBinderToUseEmptyType()
 		{
 			return new InvalidOperationException(Res.Error_MustOverrideGetBinderToUseEmptyType);
+		}
+
+		internal static Exception IncompatibleValueProviderFactoryType(Type type)
+		{
+			return new ArgumentException(String.Format(
+				Res.Error_IncompatibleValueProviderFactoryType, type.Name));
 		}
 	}
 }

@@ -54,7 +54,7 @@ public class SmsRepository : DbRepository<MessageInfo>
         : base("sms")
     {
         DataProvider = DbDataProvider.Create<SqlDbDataProvider>(
-            @"Data Source=euro\sqlexpress;Initial Catalog=outlook;User ID=sa;Password=Trfnthbyf_Lelpbycrfz");
+            @"Data Source=euro\sqlexpress;Initial Catalog=outlook;User ID=asp;Password=asp");
         Cache = new AspNetCacheProvider();
         ExpirationTimeout = TimeSpan.FromMinutes(30);
         Materializer = new SmsMaterializer();

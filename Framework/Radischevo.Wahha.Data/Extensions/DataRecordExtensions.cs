@@ -15,15 +15,6 @@ namespace Radischevo.Wahha.Data
     public static class DataRecordExtensions
     {
         #region Extended Conversion
-        private static DbFieldLookup CreateFieldLookup(IDataRecord record)
-        {
-            DbFieldLookup lookup = new DbFieldLookup();
-            for (int i = 0; i < record.FieldCount; ++i)
-                lookup.Add(i, record.GetName(i));
-
-            return lookup;
-        }
-
         /// <summary>
         /// Converts the <see cref="System.Data.IDataRecord"/> to a case-sensitive dictionary.
         /// </summary>
@@ -65,7 +56,7 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public static IDbDataRecord ToDataRecord(this IDataRecord record)
         {
-            return new DbDataRecord(record, CreateFieldLookup(record));
+            return new DbDataRecord(record);
         }
         #endregion
 

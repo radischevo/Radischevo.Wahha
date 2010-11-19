@@ -30,9 +30,9 @@ namespace ConsoleTester
 		{
 			Program p = new Program();
 			//p.MultipleThreadTest();
-			//p.SingleThreadTest();
+			p.SingleThreadTest();
 			//p.RouteTest();
-			p.InheritanceTest();
+			//p.InheritanceTest();
 
 			Console.ReadKey();
 		}

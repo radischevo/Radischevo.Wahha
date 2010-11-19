@@ -92,7 +92,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 		{
 			Precondition.Require(type, () => Error.ArgumentNull("type"));
 			if (!typeof(IValueProviderFactory).IsAssignableFrom(type))
-				throw Error.IncompatibleModelBinderType(type); // TODO: Кинуть нормальный еррор
+				throw Error.IncompatibleValueProviderFactoryType(type);
 
 			return (IValueProviderFactory)ServiceLocator.Instance.GetService(type);
 		}
@@ -156,16 +156,16 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 
 		private void InitDefaultValueProviders()
 		{
-			_valueProviders.Insert(ParameterSource.Parameters, 1, new ParameterValueProviderFactory());
-			_valueProviders.Insert(ParameterSource.Url, 2, new RouteDataValueProviderFactory());
-			_valueProviders.Insert(ParameterSource.Form, 3, new FormValueProviderFactory());
-			_valueProviders.Insert(ParameterSource.File, 4, new HttpFileCollectionValueProviderFactory());
-			_valueProviders.Insert(ParameterSource.QueryString, 5, new QueryStringValueProviderFactory());
-			_valueProviders.Insert(ParameterSource.Token, 6, new RouteTokenValueProviderFactory());
-			_valueProviders.Insert(ParameterSource.Session, 7, new SessionStateValueProviderFactory());
-			_valueProviders.Insert(ParameterSource.Cookie, 8, new CookieValueProviderFactory());
-			_valueProviders.Insert(ParameterSource.Header, 9, new HeaderValueProviderFactory());
-			_valueProviders.Insert(ParameterSource.InputStream, 10, new InputStreamValueProviderFactory());
+			_valueProviders.Add("InputStream", new InputStreamValueProviderFactory());
+			_valueProviders.Add("Header", new HeaderValueProviderFactory());
+			_valueProviders.Add("Cookie", new CookieValueProviderFactory());
+			_valueProviders.Add("Session", new SessionStateValueProviderFactory());
+			_valueProviders.Add("Token", new RouteTokenValueProviderFactory());
+			_valueProviders.Add("QueryString", new QueryStringValueProviderFactory());
+			_valueProviders.Add("File", new HttpFileCollectionValueProviderFactory());
+			_valueProviders.Add("Form", new FormValueProviderFactory());
+			_valueProviders.Add("Url", new RouteDataValueProviderFactory());
+			_valueProviders.Add("Parameters", new ParameterValueProviderFactory());
 		}
 
 		private void InitBinders(ModelBinderConfigurationElementCollection element)
@@ -194,8 +194,8 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 
 			foreach (ValueProviderConfigurationElement elem in element)
 			{
-				_valueProviders.Insert(elem.Name, elem.Order,
-					CreateValueProviderFactory(Type.GetType(elem.FactoryType, true, true)));
+				_valueProviders.Add(elem.Name, CreateValueProviderFactory(
+					Type.GetType(elem.FactoryType, true, true)));
 			}
 		}
 

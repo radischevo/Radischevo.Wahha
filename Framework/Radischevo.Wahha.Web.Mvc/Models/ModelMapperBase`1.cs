@@ -21,18 +21,18 @@ namespace Radischevo.Wahha.Web.Mvc
 			return null;
 		}
 
-		protected abstract TModel Bind(object value);
+		protected abstract TModel Bind(ValueProviderResult value);
 
 		protected virtual bool Validate(BindingContext context, TModel model)
 		{
 			return true;
 		}
 
-		protected virtual object ExtractValue(BindingContext context)
+		protected virtual ValueProviderResult ExtractValue(BindingContext context)
 		{
 			ValueProviderResult value;
 			if (context.TryGetValue(out value))
-				return value.Value;
+				return value;
 
 			return null;
 		}

@@ -25,7 +25,7 @@ namespace Radischevo.Wahha.Web.Mvc
 				() => Error.ArgumentNull("parameterName"));
 
             _parameterName = parameterName;
-            _source = ParameterSource.Header;
+            _source = "Header";
         }
         #endregion
 

@@ -44,7 +44,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			for (int i = 0; i < key.Length; ++i)
 			{
 				if (key[i] == '-')
-					yield return key.Substring(0, i); // TODO: Тут нельзя делать break, нужно прочесть их все!
+					yield return key.Substring(0, i);
 			}
 		}
 		#endregion

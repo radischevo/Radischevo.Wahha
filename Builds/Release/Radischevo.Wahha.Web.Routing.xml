@@ -594,6 +594,11 @@
             Gets the currently configured route table.
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.Configurations.RouteConfigurationElementCollection.DefaultHandlerType">
+            <summary>
+            Gets the type name for the default route handler.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Web.Routing.UrlRoutingModule">
             <summary>
             Implements an <see cref="T:System.Web.IHttpModule"/> 

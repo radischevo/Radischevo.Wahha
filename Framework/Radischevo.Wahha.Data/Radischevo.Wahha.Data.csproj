@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbDataRecord.cs" />
     <Compile Include="Extensions\AssociatorExtensions.cs" />
     <Compile Include="Caching\CacheProviderExtensions.cs" />
     <Compile Include="Interfaces\IValueSetTransformer.cs" />
@@ -141,7 +142,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="DbDataRecord.cs" />
     <Compile Include="DbDataProvider.cs" />
     <Compile Include="Provider\OleDbDataProvider.cs" />
     <Compile Include="Provider\SqlDbDataProvider.cs" />

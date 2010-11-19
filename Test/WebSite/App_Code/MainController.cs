@@ -162,7 +162,7 @@ public class MainController : Controller
 
     public ActionResult SampleComponent(Section section)
     {
-        return Content(section.Name);
+        return Content("<h1>" + section.Name + "</h1>");
     }
 
     public MainController()
@@ -437,7 +437,7 @@ public class MainController : Controller
 		}
 	}
 
-    [AcceptHttpVerbs(HttpMethod.Post)]
+    [HttpPost]
     public ActionResult TestArrayAndCollection(int[] indices, IEnumerable<string> names, 
         Dictionary<int, Pair<bool, string>> dict, TestClass model, FormCollection form)
     {
@@ -464,7 +464,7 @@ public class MainController : Controller
     [HttpCompression]
     [AcceptHttpVerbs(HttpMethod.Get)]
     [ApplyCulture("lc", Source = "QueryString,Header")]
-    public ActionResult Section([Bind(Source = ParameterSource.Url)]string section, 
+    public ActionResult Section([Bind(Source = "Url")]string section, 
         [Bind(Default = SectionType.Simple)]SectionType type)
     {        
         ViewData["Items"] = new object[] { 

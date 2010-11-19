@@ -36,7 +36,7 @@ namespace Radischevo.Wahha.Web.Routing.Providers
 
 			_defaultFactory = descriptor => {
 				Precondition.Require(descriptor.HandlerType, () => Error.ArgumentNull("handlerType"));
-				IRouteHandler handler = (IRouteHandler)Activator.CreateInstance(descriptor.HandlerType);
+				IRouteHandler handler = (IRouteHandler)ServiceLocator.Instance.GetService(descriptor.HandlerType);
 
 				return new Route(descriptor.Url, handler);
 			};	
@@ -121,9 +121,17 @@ namespace Radischevo.Wahha.Web.Routing.Providers
 			}
 		}
 
+		protected virtual Type DetermineHandlerType(RouteConfigurationElement element)
+		{
+			Type defaultType = Configurations.Configuration.Instance.DefaultHandlerType;
+			Type type = Type.GetType(element.HandlerType, false, true);
+
+			return type ?? defaultType;
+		}
+
         protected virtual RouteBase ProcessRoute(RouteConfigurationElement element)
         {
-            Type handlerType = Type.GetType(element.HandlerType, false, true);
+			Type handlerType = DetermineHandlerType(element);
             ValueDictionary defaults = ProcessDefaults(element.Defaults);
             ValueDictionary tokens = ProcessTokens(element.Tokens);
             IEnumerable<IRouteConstraint> constraints = ProcessConstraints(element.Constraints);

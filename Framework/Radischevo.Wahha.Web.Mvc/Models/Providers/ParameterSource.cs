@@ -4,28 +4,22 @@ using System.Collections.Generic;
 namespace Radischevo.Wahha.Web.Mvc
 {
     public struct ParameterSource
-	{
-		#region Constants
-		public const string QueryString = "QueryString";
-		public const string Form = "Form";
-		public const string File = "File";
-		public const string Url = "Url";
-		public const string Token = "Token";
-		public const string Cookie = "Cookie";
-		public const string Header = "Header";
-		public const string Session = "Session";
-		public const string Parameters = "Parameters";
-		public const string InputStream = "InputStream";
-		#endregion
-		
+	{	
 		#region Instance Fields
 		private HashSet<string> _sources;
+		private bool _allowAll;
 		#endregion
 
 		#region Constructors
-		public ParameterSource(params string[] sources)
+		private ParameterSource(bool allowAll)
 		{
+			_allowAll = allowAll;
 			_sources = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+		}
+
+		public ParameterSource(params string[] sources)
+			: this(false)
+		{
 			_sources.UnionWith(sources);
 		}
 		#endregion
@@ -35,18 +29,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		{
 			get
 			{
-				return new ParameterSource(
-					ParameterSource.Parameters, 
-					ParameterSource.Url,
-					ParameterSource.Form,
-					ParameterSource.File,
-					ParameterSource.QueryString,
-					ParameterSource.Token,
-					ParameterSource.Session,
-					ParameterSource.Cookie,
-					ParameterSource.Header,
-					ParameterSource.InputStream
-				);
+				return new ParameterSource(true);
 			}
 		}
 
@@ -55,11 +38,8 @@ namespace Radischevo.Wahha.Web.Mvc
 			get
 			{
 				return new ParameterSource(
-					ParameterSource.Parameters,
-					ParameterSource.Url,
-					ParameterSource.Form,
-					ParameterSource.File,
-					ParameterSource.QueryString
+					"Parameters", "Url", "Form", 
+					"File", "QueryString"
 				);
 			}
 		}
@@ -71,6 +51,14 @@ namespace Radischevo.Wahha.Web.Mvc
 			get
 			{
 				return _sources;
+			}
+		}
+
+		public bool AllowAll
+		{
+			get
+			{
+				return _allowAll;
 			}
 		}
 		#endregion

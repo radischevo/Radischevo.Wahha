@@ -106,7 +106,7 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Child actions are not allowed to perform redirect actions..
+        ///   Looks up a localized string similar to Child actions are not allowed to perform redirects..
         /// </summary>
         internal static string Error_CannotRedirectFromChildAction {
             get {
@@ -196,15 +196,6 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The user control of type &apos;{0}&apos; was not successfully initialized..
-        /// </summary>
-        internal static string Error_CouldNotSetControlProperties {
-            get {
-                return ResourceManager.GetString("Error_CouldNotSetControlProperties", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The controller name &apos;{0}&apos; is ambiguous between several types..
         /// </summary>
         internal static string Error_DuplicateControllerName {
@@ -273,6 +264,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         internal static string Error_IncompatibleModelValidatorProviderType {
             get {
                 return ResourceManager.GetString("Error_IncompatibleModelValidatorProviderType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value provider factory type &apos;{0}&apos; must implement the IValueProviderFactory interface..
+        /// </summary>
+        internal static string Error_IncompatibleValueProviderFactoryType {
+            get {
+                return ResourceManager.GetString("Error_IncompatibleValueProviderFactoryType", resourceCulture);
             }
         }
         
@@ -552,15 +552,6 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         internal static string Error_TypeMustImplementIEnumerable {
             get {
                 return ResourceManager.GetString("Error_TypeMustImplementIEnumerable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The user control found at &apos;{0}&apos; could not be created..
-        /// </summary>
-        internal static string Error_UnableToInstantiateUserControl {
-            get {
-                return ResourceManager.GetString("Error_UnableToInstantiateUserControl", resourceCulture);
             }
         }
         

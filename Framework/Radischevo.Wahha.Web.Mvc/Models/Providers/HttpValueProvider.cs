@@ -22,9 +22,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
 			_prefixes = new HashSet<string>(
 				StringComparer.OrdinalIgnoreCase);
-			_values = GetDataSource(context);
+			_values = EnsureValues(GetDataSource(context));
 
-			EnsureValues();
 			Initialize();
 		}
 		#endregion
@@ -39,12 +38,15 @@ namespace Radischevo.Wahha.Web.Mvc
 		}
 		#endregion
 
-		#region Instance Methods
-		private void EnsureValues()
+		#region Static Methods
+		private static IValueSet EnsureValues(IValueSet values)
 		{
-			Precondition.Require(_values, () => Error.ArgumentNull("values"));
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
+			return values;
 		}
+		#endregion
 
+		#region Instance Methods
 		protected abstract IValueSet GetDataSource(ControllerContext context);
 
 		protected virtual void Initialize()
@@ -66,7 +68,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
 		public override ValueProviderResult GetValue(string key)
 		{
-			if (_values.ContainsAny(key))
+			if(_values.ContainsAny(key))
 				return new ValueProviderResult(_values[key], Culture);
 
 			return null;

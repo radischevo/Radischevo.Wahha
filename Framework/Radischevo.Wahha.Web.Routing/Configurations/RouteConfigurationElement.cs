@@ -108,6 +108,19 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
     [ConfigurationCollection(typeof(RouteConfigurationElement), AddItemName="route")]
     internal sealed class RouteConfigurationElementCollection : ConfigurationElementCollection
     {
+		/// <summary>
+		/// Gets the type name for the default route handler.
+		/// </summary>
+		[ConfigurationProperty("defaultHandler", IsRequired = false,
+			DefaultValue = "")]
+		public string DefaultHandlerType
+		{
+			get
+			{
+				return base["defaultHandler"].ToString();
+			}
+		}
+
         protected override ConfigurationElement CreateNewElement()
         {
             return new RouteConfigurationElement();

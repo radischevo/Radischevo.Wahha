@@ -656,8 +656,8 @@
         <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Source">
             <summary>
             Gets or sets comma delimited list of one or more
-            <see cref="T:Radischevo.Wahha.Web.Mvc.ParameterSource"/> values 
-            specifying locations where the parameter value is searched.
+            parameter source names specifying locations 
+            where the parameter value is searched.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Mvc.IActionExecutor">
@@ -709,6 +709,17 @@
             <summary>
             Initializes a new instance of the 
             <see cref="T:Radischevo.Wahha.Web.Mvc.Configurations.Configuration"/> class
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.AcceptHttpVerbsAttribute">
+            <summary>
+            When applied to an action method, specifies which HTTP verbs the method will respond to.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.AcceptHttpVerbsAttribute.Verbs">
+            <summary>
+            Gets the combination of HTTP verbs 
+            the action method will respond to.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.UI.ViewPage.InitHelpers(Radischevo.Wahha.Web.Mvc.ViewContext)">
@@ -800,7 +811,7 @@
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CannotRedirectFromChildAction">
             <summary>
-              Looks up a localized string similar to Child actions are not allowed to perform redirect actions..
+              Looks up a localized string similar to Child actions are not allowed to perform redirects..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_ChildRequestExecutionError">
@@ -848,11 +859,6 @@
               Looks up a localized string similar to Could not locate the completion action method named &apos;{0}&apos; on controller type {1}..
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CouldNotSetControlProperties">
-            <summary>
-              Looks up a localized string similar to The user control of type &apos;{0}&apos; was not successfully initialized..
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_DuplicateControllerName">
             <summary>
               Looks up a localized string similar to The controller name &apos;{0}&apos; is ambiguous between several types..
@@ -891,6 +897,11 @@
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleModelValidatorProviderType">
             <summary>
               Looks up a localized string similar to The model validator provider type &apos;{0}&apos; must inherit from the ModelValidatorProvider class..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleValueProviderFactoryType">
+            <summary>
+              Looks up a localized string similar to The value provider factory type &apos;{0}&apos; must implement the IValueProviderFactory interface..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_IncompatibleViewEngineType">
@@ -1046,11 +1057,6 @@
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_TypeMustImplementIEnumerable">
             <summary>
               Looks up a localized string similar to The Collection template was used with an object of type &apos;{0}&apos;, which does not implement System.IEnumerable..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_UnableToInstantiateUserControl">
-            <summary>
-              Looks up a localized string similar to The user control found at &apos;{0}&apos; could not be created..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_UnableToLoadConfiguration">
@@ -1605,17 +1611,6 @@
             </summary>
             <param name="writer">A <see cref="T:System.IO.TextWriter"/> 
             to render the script block to.</param>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Mvc.AcceptHttpVerbsAttribute">
-            <summary>
-            When applied to an action method, specifies which HTTP verbs the method will respond to.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.AcceptHttpVerbsAttribute.Verbs">
-            <summary>
-            Gets the combination of HTTP verbs 
-            the action method will respond to.
-            </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Mvc.HttpCompressionAttribute">
             <summary>

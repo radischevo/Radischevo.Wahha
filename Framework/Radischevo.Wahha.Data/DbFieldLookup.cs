@@ -12,7 +12,7 @@ namespace Radischevo.Wahha.Data
     /// <see cref="Radischevo.Wahha.Data.DbDataReader"/> 
     /// class.
     /// </summary>
-    internal class DbFieldLookup
+    public sealed class DbFieldLookup
     {
         #region Instance Fields
         private IDictionary<string, int> _ordinalLookup;

@@ -135,9 +135,6 @@
   <data name="Error_CouldNotCreateView" xml:space="preserve">
     <value>The view found at '{0}' could not be created.</value>
   </data>
-  <data name="Error_CouldNotSetControlProperties" xml:space="preserve">
-    <value>The user control of type '{0}' was not successfully initialized.</value>
-  </data>
   <data name="Error_DuplicateControllerName" xml:space="preserve">
     <value>The controller name '{0}' is ambiguous between several types.</value>
   </data>
@@ -197,9 +194,6 @@
   </data>
   <data name="Error_TargetMustSubclassController" xml:space="preserve">
     <value>The controller type '{0}' must inherit from the '{1}' type.</value>
-  </data>
-  <data name="Error_UnableToInstantiateUserControl" xml:space="preserve">
-    <value>The user control found at '{0}' could not be created.</value>
   </data>
   <data name="Error_UnableToLoadConfiguration" xml:space="preserve">
     <value>Could not parse the configuration. Refer to the inner exception for details.</value>
@@ -280,7 +274,7 @@
     <value>The provided IAsyncResult has already been consumed.</value>
   </data>
   <data name="Error_CannotRedirectFromChildAction" xml:space="preserve">
-    <value>Child actions are not allowed to perform redirect actions.</value>
+    <value>Child actions are not allowed to perform redirects.</value>
   </data>
   <data name="Error_ControllerMustImplementAsyncManagerContainer" xml:space="preserve">
     <value>The controller of type '{0}' must subclass AsyncController or implement the IAsyncManagerContainer interface.</value>
@@ -329,5 +323,8 @@
   </data>
   <data name="Error_IncompatibleControllerActivatorType" xml:space="preserve">
     <value>The controller activator type '{0}' must implement the IControllerActivator interface.</value>
+  </data>
+  <data name="Error_IncompatibleValueProviderFactoryType" xml:space="preserve">
+    <value>The value provider factory type '{0}' must implement the IValueProviderFactory interface.</value>
   </data>
 </root>

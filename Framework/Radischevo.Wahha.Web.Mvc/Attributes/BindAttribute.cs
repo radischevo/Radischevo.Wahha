@@ -106,8 +106,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         /// <summary>
         /// Gets or sets comma delimited list of one or more
-        /// <see cref="Radischevo.Wahha.Web.Mvc.ParameterSource"/> values 
-        /// specifying locations where the parameter value is searched.
+        /// parameter source names specifying locations 
+		/// where the parameter value is searched.
         /// </summary>
         public string Source
         {

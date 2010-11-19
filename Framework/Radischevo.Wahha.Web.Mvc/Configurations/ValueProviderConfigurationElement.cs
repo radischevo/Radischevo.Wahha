@@ -14,15 +14,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 			}
 		}
 
-		[ConfigurationProperty("order", IsRequired = false)]
-		public int Order
-		{
-			get
-			{
-				return (int)base["order"];
-			}
-		}
-
 		[ConfigurationProperty("factory", IsRequired = true)]
 		public string FactoryType
 		{

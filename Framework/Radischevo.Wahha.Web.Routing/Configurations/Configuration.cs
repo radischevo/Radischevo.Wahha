@@ -19,6 +19,7 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
         #region Instance Fields
         private IRouteTableProvider _provider;
         private List<RouteConfigurationElement> _routes;
+		private Type _defaultHandlerType;
 		private NameValueConfigurationCollection _variables;
         #endregion
 
@@ -87,6 +88,14 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
 			}
 		}
 
+		public Type DefaultHandlerType
+		{
+			get
+			{
+				return _defaultHandlerType;
+			}
+		}
+
         public ICollection<RouteConfigurationElement> Routes
         {
             get
@@ -129,6 +138,8 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
         {
             if (routes == null)
                 return;
+
+			_defaultHandlerType = Type.GetType(routes.DefaultHandlerType, false, true);
 
             foreach (RouteConfigurationElement element in routes)
                 _routes.Add(element);
