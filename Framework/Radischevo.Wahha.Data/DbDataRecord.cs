@@ -25,27 +25,29 @@ namespace Radischevo.Wahha.Data
 		/// Initializes a new instance 
 		/// of the <see cref="DbDataRecord"/> class.
 		/// </summary>
-		/// <param name="reader">An <see cref="IDataRecord"/> 
+		/// <param name="record">An <see cref="IDataRecord"/> 
 		/// instance, which will be used to fill the value set.</param>
 		internal DbDataRecord(IDataRecord record)
-			: this(record, null)
+			: this(record, new DbFieldLookup())
 		{
+			UpdateLookupTable();
 		}
 
 		/// <summary>
 		/// Initializes a new instance 
 		/// of the <see cref="DbDataRecord"/> class.
 		/// </summary>
-		/// <param name="reader">An <see cref="IDataRecord"/> 
+		/// <param name="record">An <see cref="IDataRecord"/> 
 		/// instance, which will be used to fill the value set.</param>
-        protected internal DbDataRecord(IDataRecord record, DbFieldLookup lookup)
+        internal DbDataRecord(IDataRecord record, DbFieldLookup lookup)
         {
-            Precondition.Require(record, () => Error.ArgumentNull("record"));
-            
-            _dataRecord = record;
-			_lookup = lookup ?? CreateLookupTable(record);
-            _accessedFields = new HashSet<string>(
-                StringComparer.InvariantCultureIgnoreCase);
+			Precondition.Require(record, () => Error.ArgumentNull("record"));
+			Precondition.Require(lookup, () => Error.ArgumentNull("lookup"));
+			
+			_dataRecord = record;
+			_lookup = lookup;
+			_accessedFields = new HashSet<string>(
+				StringComparer.InvariantCultureIgnoreCase);
         }
         #endregion
 
@@ -117,15 +119,6 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Static Methods
-		private static DbFieldLookup CreateLookupTable(IDataRecord dataRecord)
-		{
-			DbFieldLookup lookup = new DbFieldLookup();
-			for (int i = 0; i < dataRecord.FieldCount; ++i)
-				lookup.Add(i, dataRecord.GetName(i));
-
-			return lookup;
-		}
-
 		private static object ConvertDbNull(object value)
 		{
 			return (value == DBNull.Value) ? null : value;
@@ -137,7 +130,7 @@ namespace Radischevo.Wahha.Data
 		/// Marks the column with the 
 		/// specified <paramref name="ordinal"/> as accessed.
 		/// </summary>
-		/// <param name="name">The name of the column.</param>
+		/// <param name="ordinal">The zero-based column ordinal.</param>
 		protected void MarkAccessedField(int ordinal)
 		{
 			MarkAccessedField(GetName(ordinal));
@@ -152,7 +145,7 @@ namespace Radischevo.Wahha.Data
 		{
 			if (!_accessedFields.Contains(name))
 				_accessedFields.Add(name);
-		}
+		}	
 
 		/// <summary>
 		/// Clears the column lookup table.

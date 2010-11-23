@@ -26,7 +26,7 @@ namespace Radischevo.Wahha.Data
         /// <param name="reader">The <see cref="System.Data.IDataReader"/> 
         /// to decorate.</param>
         internal DbDataReader(IDataReader reader)
-			: base(reader, null)
+			: base(reader)
         {
             _reader = reader;
         }

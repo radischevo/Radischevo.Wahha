@@ -1510,7 +1510,7 @@
             Initializes a new instance 
             of the <see cref="T:Radischevo.Wahha.Data.DbDataRecord"/> class.
             </summary>
-            <param name="reader">An <see cref="T:System.Data.IDataRecord"/> 
+            <param name="record">An <see cref="T:System.Data.IDataRecord"/> 
             instance, which will be used to fill the value set.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbDataRecord.#ctor(System.Data.IDataRecord,Radischevo.Wahha.Data.DbFieldLookup)">
@@ -1518,7 +1518,7 @@
             Initializes a new instance 
             of the <see cref="T:Radischevo.Wahha.Data.DbDataRecord"/> class.
             </summary>
-            <param name="reader">An <see cref="T:System.Data.IDataRecord"/> 
+            <param name="record">An <see cref="T:System.Data.IDataRecord"/> 
             instance, which will be used to fill the value set.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbDataRecord.MarkAccessedField(System.Int32)">
@@ -1526,7 +1526,7 @@
             Marks the column with the 
             specified <paramref name="ordinal"/> as accessed.
             </summary>
-            <param name="name">The name of the column.</param>
+            <param name="ordinal">The zero-based column ordinal.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbDataRecord.MarkAccessedField(System.String)">
             <summary>
