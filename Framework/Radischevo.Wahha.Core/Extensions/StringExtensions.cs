@@ -14,7 +14,7 @@ namespace Radischevo.Wahha.Core
 
 		public static string Define(this string str, string defaultValue)
 		{
-			return (String.IsNullOrEmpty(str)) ? defaultValue : str;
+			return (str == null) ? defaultValue : str;
 		}
 
 		public static string Define(this string str, 

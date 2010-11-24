@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 
+using Radischevo.Wahha.Core;
+
 namespace Radischevo.Wahha.Web.Mvc
 {
 	public abstract class ValueProviderBase : IValueProvider
@@ -39,6 +41,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Static Methods
 		public static IEnumerable<string> GetPrefixes(string key)
 		{
+			key = key.Define();
 			yield return key;
 
 			for (int i = 0; i < key.Length; ++i)
