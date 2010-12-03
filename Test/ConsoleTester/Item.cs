@@ -75,10 +75,14 @@ namespace ConsoleTester
 		}
 	}
 
-	public struct Money
+	public class Money
 	{
 		private decimal _value;
 		private string _currency;
+
+		public Money()
+		{
+		}
 
 		public Money(decimal value, 
 			string currency)
@@ -114,6 +118,11 @@ namespace ConsoleTester
 
 	public class ItemData
 	{
+		public ItemData()
+		{
+			Amount = new Money();
+		}
+
 		public long Item
 		{
 			get;

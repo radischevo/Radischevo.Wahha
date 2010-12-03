@@ -133,6 +133,15 @@ namespace Radischevo.Wahha.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Format expression&apos; {0}&apos; is not valid..
+        /// </summary>
+        internal static string Error_InvalidFormatExpression {
+            get {
+                return ResourceManager.GetString("Error_InvalidFormatExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specified indexer expression is invalid..
         /// </summary>
         internal static string Error_InvalidIndexerExpressionFormat {

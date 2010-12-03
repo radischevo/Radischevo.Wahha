@@ -575,6 +575,11 @@
               Looks up a localized string similar to Specified binding expression is invalid..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_InvalidFormatExpression">
+            <summary>
+              Looks up a localized string similar to Format expression&apos; {0}&apos; is not valid..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_InvalidIndexerExpressionFormat">
             <summary>
               Looks up a localized string similar to Specified indexer expression is invalid..
@@ -1023,6 +1028,240 @@
             <summary>
             Provides a trigger for the <see cref="T:Radischevo.Wahha.Core.Async.TriggerListener"/> class.
             </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Boolean)">
+            <summary>
+            Appends the string representation of a specified 
+            Boolean value to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The Boolean value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Byte)">
+            <summary>
+            Appends the string representation of a specified 
+            8-bit unsigned integer to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Char)">
+            <summary>
+            Appends the string representation of a specified Unicode 
+            character to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The Unicode character to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Char[])">
+            <summary>
+            Appends the string representation of the Unicode characters 
+            in a specified array to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The array of characters to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Decimal)">
+            <summary>
+            Appends the string representation of a specified 
+            decimal number to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Double)">
+            <summary>
+            Appends the string representation of a specified double-precision 
+            floating-point number to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Single)">
+            <summary>
+            Appends the string representation of a specified single-precision 
+            floating-point number to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Int32)">
+            <summary>
+            Appends the string representation of a specified 32-bit 
+            signed integer to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Int64)">
+            <summary>
+            Appends the string representation of a specified 64-bit 
+            signed integer to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Object)">
+            <summary>
+            Appends the string representation of a specified object 
+            to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The object to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.SByte)">
+            <summary>
+            Appends the string representation of a specified 8-bit 
+            signed integer to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Int16)">
+            <summary>
+            Appends the string representation of a specified 16-bit signed 
+            integer to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.String)">
+            <summary>
+            Appends a copy of the specified string to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The <see cref="T:System.String"/> to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.UInt32)">
+            <summary>
+            Appends the string representation of a specified 32-bit 
+            unsigned integer to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.UInt64)">
+            <summary>
+            Appends the string representation of a specified 64-bit 
+            unsigned integer to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.UInt16)">
+            <summary>
+            Appends the string representation of a specified 16-bit 
+            unsigned integer to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Char,System.Int32)">
+            <summary>
+            Appends a specified number of copies of the string representation 
+            of a Unicode character to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The character to append.</param>
+            <param name="repeatCount">The number of times to append value.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Appends the string representation of a specified subarray of 
+            Unicode characters to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">A character array.</param>
+            <param name="startIndex">The starting position in value.</param>
+            <param name="charCount">The number of characters to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.Append(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Appends a copy of a specified substring to the end of this instance.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="value">The System.String that contains the substring to append.</param>
+            <param name="startIndex">The starting position of the substring within value.</param>
+            <param name="count">The number of characters in value to append.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.AppendFormat(System.String,System.String,System.Object)">
+            <summary>
+            Appends a formatted string, which contains zero or more format specifications, 
+            to this instance. Each format specification is replaced by the string representation 
+            of a corresponding object argument.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="format">A composite format string.</param>
+            <param name="arg0">An object to format.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.AppendFormat(System.String,System.String,System.Object[])">
+            <summary>
+            Appends a formatted string, which contains zero or more format specifications, 
+            to this instance. Each format specification is replaced by the string representation 
+            of a corresponding object argument.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">An array of objects to format.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.AppendFormat(System.String,System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Appends a formatted string, which contains zero or more format specifications, 
+            to this instance. Each format specification is replaced by the string representation 
+            of a corresponding object argument.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> that supplies 
+            culture-specific formatting information.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">An array of objects to format.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.AppendFormat(System.String,System.String,System.Object,System.Object)">
+            <summary>
+            Appends a formatted string, which contains zero or more format specifications, 
+            to this instance. Each format specification is replaced by the string representation 
+            of a corresponding object argument.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="format">A composite format string.</param>
+            <param name="arg0">The first object to format.</param>
+            <param name="arg1">The second object to format.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringBuilderExtensions.AppendFormat(System.String,System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            Appends a formatted string, which contains zero or more format specifications, 
+            to this instance. Each format specification is replaced by the string representation 
+            of a corresponding object argument.
+            </summary>
+            <param name="argument">The string argument to create 
+            <see cref="T:System.Text.StringBuilder"/> from.</param>
+            <param name="format">A composite format string.</param>
+            <param name="arg0">The first object to format.</param>
+            <param name="arg1">The second object to format.</param>
+            <param name="arg2">The third object to format.</param>
         </member>
     </members>
 </doc>

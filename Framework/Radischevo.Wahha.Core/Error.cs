@@ -13,6 +13,11 @@ namespace Radischevo.Wahha.Core
             return new ArgumentNullException(name);
         }
 
+		internal static Exception ArgumentOutOfRange(string name, object actualValue)
+		{
+			return new ArgumentOutOfRangeException(name); // TODO: написать нормальное сообщение
+		}
+
         internal static Exception ParameterMustBeGreaterThan(string parameterName, object lowerBound, object actualValue)
         {
             return new ArgumentOutOfRangeException(parameterName, actualValue,
@@ -159,6 +164,12 @@ namespace Radischevo.Wahha.Core
 		{
 			return new ArgumentException(String.Format(Res.Error_TypeIsNotTuple, 
 				argument.GetType().Name), "other");
+		}
+
+		internal static Exception InvalidFormatExpression(string expression)
+		{
+			return new ArgumentException(String.Format(Res.Error_InvalidFormatExpression,
+				expression));
 		}
 	}
 }

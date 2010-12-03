@@ -7,8 +7,18 @@ using System.Globalization;
 namespace Radischevo.Wahha.Core
 {
     public static class EnumerableExtensions
-    {
-        public static IEnumerable<T> Convert<T>(this IEnumerable collection)
+	{
+		#region Nested Types
+		private class EmptyReadOnlyCollection<T>
+		{
+			#region Static Fields
+			public static readonly ReadOnlyCollection<T> Empty = new List<T>().AsReadOnly();
+			#endregion
+		}
+		#endregion
+
+		#region Extension Methods
+		public static IEnumerable<T> Convert<T>(this IEnumerable collection)
         {
 			return Convert<T>(collection, CultureInfo.CurrentCulture);
         }
@@ -53,20 +63,16 @@ namespace Radischevo.Wahha.Core
 
         public static ReadOnlyCollection<T> AsReadOnly<T>(this IEnumerable<T> collection)
         {
-            ReadOnlyCollection<T> roc = (collection as ReadOnlyCollection<T>);
-            if (roc == null)
+			ReadOnlyCollection<T> list = (collection as ReadOnlyCollection<T>);
+            if (list == null)
             {
                 if (collection == null)
-                    roc = EmptyReadOnlyCollection<T>.Empty;
-                else
-                    roc = new List<T>(collection).AsReadOnly();
-            }
-            return roc;
-        }
+                    return EmptyReadOnlyCollection<T>.Empty;
 
-        internal class EmptyReadOnlyCollection<T>
-        {
-            internal static readonly ReadOnlyCollection<T> Empty = new List<T>().AsReadOnly();
-        }
-    }
+                return new List<T>(collection).AsReadOnly();
+            }
+            return list;
+		}
+		#endregion
+	}
 }

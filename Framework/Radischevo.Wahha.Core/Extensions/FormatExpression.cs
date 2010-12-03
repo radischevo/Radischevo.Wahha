@@ -56,8 +56,8 @@ namespace Radischevo.Wahha.Core
         #region Instance Methods
         public string Eval(object container)
         {
-            if (_isInvalid)
-                throw new FormatException("Expression is not valid");
+			if (_isInvalid)
+				throw Error.InvalidFormatExpression(_expression);
 
             try
             {

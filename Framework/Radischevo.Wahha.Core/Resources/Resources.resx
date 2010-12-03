@@ -141,6 +141,9 @@
   <data name="Error_InvalidBindingExpressionFormat" xml:space="preserve">
     <value>Specified binding expression is invalid.</value>
   </data>
+  <data name="Error_InvalidFormatExpression" xml:space="preserve">
+    <value>Format expression' {0}' is not valid.</value>
+  </data>
   <data name="Error_InvalidIndexerExpressionFormat" xml:space="preserve">
     <value>Specified indexer expression is invalid.</value>
   </data>

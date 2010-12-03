@@ -114,8 +114,8 @@ namespace Radischevo.Wahha.Core
         }
         #endregion
 
-        #region Helper Methods
-        private static IEnumerable<ITextExpression> SplitFormat(string format)
+		#region Helper Methods
+		private static IEnumerable<ITextExpression> SplitFormat(string format)
         {
             int exprEndIndex = -1;
             int expStartIndex;

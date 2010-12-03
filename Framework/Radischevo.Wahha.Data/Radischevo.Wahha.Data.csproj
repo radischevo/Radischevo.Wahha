@@ -64,7 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbDataRecord.cs" />
+    <Compile Include="Engine\DbDataRecord.cs" />
     <Compile Include="Extensions\AssociatorExtensions.cs" />
     <Compile Include="Caching\CacheProviderExtensions.cs" />
     <Compile Include="Interfaces\IValueSetTransformer.cs" />
@@ -97,13 +97,13 @@
     <Compile Include="Configurations\SettingsSection.cs" />
     <Compile Include="Configurations\Configuration.cs" />
     <Compile Include="Caching\TaggedCacheWrapper.cs" />
-    <Compile Include="DbCommandDescriptor.cs" />
-    <Compile Include="DbCommandResult.cs" />
-    <Compile Include="DbDataReader.cs" />
-    <Compile Include="DbDataRecordEnumerator.cs" />
-    <Compile Include="DbFieldLookup.cs" />
-    <Compile Include="DbParameterCollection.cs" />
-    <Compile Include="DbParameterDescriptor.cs" />
+    <Compile Include="Engine\DbCommandDescriptor.cs" />
+    <Compile Include="Engine\DbCommandResult.cs" />
+    <Compile Include="Engine\DbDataReader.cs" />
+    <Compile Include="Engine\DbDataRecordEnumerator.cs" />
+    <Compile Include="Engine\DbFieldLookup.cs" />
+    <Compile Include="Engine\DbParameterCollection.cs" />
+    <Compile Include="Engine\DbParameterDescriptor.cs" />
     <Compile Include="DbQueryType.cs" />
     <Compile Include="Extensions\SubsetExtensions.cs" />
     <Compile Include="Interfaces\IDbColumnMapper.cs" />
@@ -115,7 +115,7 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISubset.cs" />
     <Compile Include="KeyedDbRepository.cs" />
-    <Compile Include="DbDataProviderExtensions.cs" />
+    <Compile Include="Engine\DbDataProviderExtensions.cs" />
     <Compile Include="Materialization\LinkAssociatorAction`1.cs" />
     <Compile Include="Materialization\LinkMaterializerAction.cs" />
     <Compile Include="Materialization\LinkValueInitializer`1.cs" />
@@ -133,8 +133,8 @@
     <Compile Include="Extensions\DataRecordExtensions.cs" />
     <Compile Include="Extensions\DbCommandExtensions.cs" />
     <Compile Include="Extensions\DbConnectionExtensions.cs" />
-    <Compile Include="ObjectEnumerator.cs" />
-    <Compile Include="ObjectReader.cs" />
+    <Compile Include="Engine\ObjectEnumerator.cs" />
+    <Compile Include="Engine\ObjectReader.cs" />
     <Compile Include="Interfaces\IDbDataProviderFactory.cs" />
     <Compile Include="DbRepository.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
@@ -142,7 +142,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="DbDataProvider.cs" />
+    <Compile Include="Engine\DbDataProvider.cs" />
     <Compile Include="Provider\OleDbDataProvider.cs" />
     <Compile Include="Provider\SqlDbDataProvider.cs" />
     <Compile Include="Error.cs" />
@@ -182,6 +182,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
