@@ -55,16 +55,6 @@ namespace Radischevo.Wahha.Data
 		}
 		#endregion
 
-		#region Static Methods
-		private static Link<TAssociation> ConvertLink(ILink<TAssociation> link)
-		{
-			Link<TAssociation> result = (link as Link<TAssociation>);
-			Precondition.Require(result, () => Error.CouldNotMaterializeCollectionLink("link"));
-
-			return result;
-		}
-		#endregion
-
 		#region Instance Methods
 		protected virtual LinkValueInitializer<TAssociation> CreateInitializer()
 		{
@@ -83,7 +73,6 @@ namespace Radischevo.Wahha.Data
 
 		public override ILink<TAssociation> Execute(ILink<TAssociation> link)
 		{
-			Link<TAssociation> association = ConvertLink(link);
 			LinkValueInitializer<TAssociation> initializer = CreateInitializer();
 			IValueSet subset = Source;
 
@@ -91,9 +80,9 @@ namespace Radischevo.Wahha.Data
 				subset = transformer.Transform(subset);
 
 			if (Validate(subset) && initializer != null)
-				initializer.Initialize(association, subset);
+				initializer.Initialize(link, subset);
 
-			return association;
+			return link;
 		}
 		#endregion
 	}

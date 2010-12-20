@@ -96,6 +96,7 @@
     <Compile Include="Attributes\DeserializeAttribute.cs" />
     <Compile Include="Attributes\HttpGetAttribute.cs" />
     <Compile Include="Attributes\HttpPostAttribute.cs" />
+    <Compile Include="Attributes\PropertyBindingOrderAttribute.cs" />
     <Compile Include="Attributes\RequireHttpsAttribute.cs" />
     <Compile Include="Attributes\ResultCacheAttribute.cs" />
     <Compile Include="Configurations\ModelConfigurationElement.cs" />

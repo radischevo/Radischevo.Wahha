@@ -19,9 +19,22 @@ using Radischevo.Wahha.Web.Abstractions;
 using System.Web;
 using Radischevo.Wahha.Data.Caching;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Linq.Expressions;
 
 namespace ConsoleTester
 {
+	public class Maza
+	{
+		public int Value
+		{
+			get
+			{
+				return 10;
+			}
+		}
+	}
+
 	class Program
 	{
 		static Random _random = new Random();
@@ -30,12 +43,33 @@ namespace ConsoleTester
 		{
 			Program p = new Program();
 			//p.MultipleThreadTest();
-			//p.SingleThreadTest();
+			p.SingleThreadTest();
 			//p.RouteTest();
 			//p.InheritanceTest();
-			//p.SerializationTest();
 
 			Console.ReadKey();
+		}
+
+		private void SerializeLink(Item item)
+		{
+			using (FileStream fs = new FileStream(Path.Combine(
+				Environment.CurrentDirectory, "data-{0}.txt".Format(item.Id)), 
+				FileMode.OpenOrCreate, FileAccess.Write))
+			{
+				BinaryFormatter bf = new BinaryFormatter();
+				bf.Serialize(fs, item);
+			}
+		}
+
+		private Item DeserializeLink(long id)
+		{
+			using (FileStream fs = new FileStream(Path.Combine(
+				Environment.CurrentDirectory, "data-{0}.txt".Format(id)),
+				FileMode.Open, FileAccess.Read))
+			{
+				BinaryFormatter bf = new BinaryFormatter();
+				return (Item)bf.Deserialize(fs);
+			}
 		}
 
 		public void InheritanceTest()
@@ -139,8 +173,10 @@ namespace ConsoleTester
 						item.DateLastModified.ToString("dd.MM.yyyy"), 
 						item.Data.Value.Comments);
 
-					//foreach (ItemData data in item.Values)
-					//	Console.WriteLine("data => {0}", data.Comments);
+					SerializeLink(item);
+
+					Item otherItem = DeserializeLink(item.Id);
+					Console.WriteLine("Deserialized => {0}", otherItem.Id);
 				}
 			}
 			catch

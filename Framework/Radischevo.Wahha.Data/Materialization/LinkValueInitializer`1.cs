@@ -14,7 +14,7 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public void Initialize(Link<TEntity> link, IValueSet source)
+		public void Initialize(ILink<TEntity> link, IValueSet source)
 		{
 			Precondition.Require(link, () => Error.ArgumentNull("link"));
 			Precondition.Require(source, () => Error.ArgumentNull("source"));
@@ -25,13 +25,13 @@ namespace Radischevo.Wahha.Data
 				CreateLinkValue(link, source);
 		}
 
-		private void CreateLinkValue(Link<TEntity> link, IValueSet source)
+		private void CreateLinkValue(ILink<TEntity> link, IValueSet source)
 		{
 			Func<IValueSet, TEntity> action = Creator.Build(MaterializerType);
 			link.Value = action(source);
 		}
 
-		private void LoadLinkValue(Link<TEntity> link, IValueSet source)
+		private void LoadLinkValue(ILink<TEntity> link, IValueSet source)
 		{
 			Func<TEntity, IValueSet, TEntity> action = Loader.Build(MaterializerType);
 			action(link.Value, source);

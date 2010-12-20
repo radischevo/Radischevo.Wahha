@@ -14,6 +14,8 @@ namespace ConsoleTester
 	public interface IItemDataRepository : IRepository<ItemData, long>
 	{
 		IEnumerable<ItemData> Select(Item item);
+
+		ItemData Single(Item item);
 	}
 
 	public class ItemRepository : KeyedDbRepository<Item, long>, IItemRepository
@@ -71,6 +73,11 @@ namespace ConsoleTester
 			return Select(new DbCommandDescriptor(SqlQueries.CollectionDataQuery, new {
 				id = item.Id
 			}));
+		}
+
+		public ItemData Single(Item item)
+		{
+			return Single(item.Id);
 		}
 
 		protected override long ExtractKey(ItemData entity)

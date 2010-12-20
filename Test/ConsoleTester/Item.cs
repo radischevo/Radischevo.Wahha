@@ -1,14 +1,15 @@
 ﻿using System;
 using Radischevo.Wahha.Core;
+using System.Reflection;
 
 namespace ConsoleTester
 {
+	[Serializable]
 	public class Item
 	{
 		public Item()
 		{
 			_data = new Link<ItemData>();
-			_values = new EnumerableLink<ItemData>();
 			RawData = new ItemData();
 		}
 
@@ -54,16 +55,6 @@ namespace ConsoleTester
 			set;
 		}
 
-		private EnumerableLink<ItemData> _values;
-
-		public EnumerableLink<ItemData> Values
-		{
-			get
-			{
-				return _values;
-			}
-		}
-
 		private Link<ItemData> _data;
 
 		public Link<ItemData> Data
@@ -75,6 +66,7 @@ namespace ConsoleTester
 		}
 	}
 
+	[Serializable]
 	public class Money
 	{
 		private decimal _value;
@@ -116,6 +108,7 @@ namespace ConsoleTester
 		}
 	}
 
+	[Serializable]
 	public class ItemData
 	{
 		public ItemData()

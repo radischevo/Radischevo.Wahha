@@ -109,6 +109,7 @@
     <Compile Include="Interfaces\IStructuralComparable.cs" />
     <Compile Include="Interfaces\IStructuralEquatable.cs" />
     <Compile Include="Interfaces\ITuple.cs" />
+    <Compile Include="LinkBase`1.cs" />
     <Compile Include="Link`1.cs" />
     <Compile Include="Extensions\DelegateExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />

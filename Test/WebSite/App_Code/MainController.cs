@@ -409,7 +409,7 @@ public class MainController : Controller
 
     [AcceptHttpVerbs(HttpMethod.Get)]
 	[Maza]
-    public ActionResult TestArrayAndCollection(string maza)
+    public ActionResult TestArrayAndCollection([Bind(Source = "*")]string maza)
     {
 		string ss = @"{ Name: ""Wahha"", Index: 0 }";
 		JavaScriptSerializer s = new JavaScriptSerializer();

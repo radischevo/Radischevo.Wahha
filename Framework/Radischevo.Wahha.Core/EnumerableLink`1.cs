@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Radischevo.Wahha.Core
 {
@@ -11,103 +12,70 @@ namespace Radischevo.Wahha.Core
     /// </summary>
     /// <typeparam name="T">The element type 
     /// of the linked collection.</typeparam>
-    public class EnumerableLink<T> : IEnumerableLink<T>
-    {
-        #region Instance Fields
-		private readonly object _lock = new object();
-        private bool _hasLoadedValue;
-        private bool _hasAssignedValue;
-        private int _count;
-		private object _tag;
-        private Func<IEnumerable<T>> _source;
-        private IEnumerable<T> _collection;
+	[Serializable]
+    public class EnumerableLink<T> : LinkBase<IEnumerable<T>>, IEnumerableLink<T>
+	{
+		#region Static Fields
+		private static Func<IEnumerable<T>> _defaultSource;
+		#endregion
+
+		#region Instance Fields
+		private int _count;
         #endregion
 
         #region Constructors
+		static EnumerableLink()
+		{
+			_defaultSource = () => Enumerable.Empty<T>();
+		}
+
         /// <summary>
         /// Initializes a new instance 
-        /// of the <see cref="Radischevo.Wahha.Core.EnumerableLink"/> class.
+		/// of the <see cref="Radischevo.Wahha.Core.EnumerableLink{T}"/> class.
         /// </summary>
-        public EnumerableLink()
+        public EnumerableLink() 
+			: this(_defaultSource)
         {
-            _count = -1;
-			_source = () => Enumerable.Empty<T>();
         }
 
         /// <summary>
         /// Initializes a new instance 
-        /// of the <see cref="Radischevo.Wahha.Core.EnumerableLink"/> class 
+		/// of the <see cref="Radischevo.Wahha.Core.EnumerableLink{T}"/> class 
         /// using the specified delegate, which is used to load the 
         /// linked collection into a link.
         /// </summary>
         public EnumerableLink(Func<IEnumerable<T>> source)
-            : this()
+            : base(source)
         {
-            _source = source;
+			_count = -1;
         }
 
         /// <summary>
         /// Initializes a new instance 
-        /// of the <see cref="Radischevo.Wahha.Core.EnumerableLink"/> class 
+		/// of the <see cref="Radischevo.Wahha.Core.EnumerableLink{T}"/> class 
         /// using the specified collection.
         /// </summary>
         public EnumerableLink(IEnumerable<T> collection)
-            : this()
+            : base(collection)
         {
-            _hasAssignedValue = true;
-            _collection = collection;
-        }
-        #endregion
-
-        #region Instance Properties
-        /// <summary>
-        /// Gets a value, indicating 
-        /// whether a linked collection 
-        /// is loaded into the link.
-        /// </summary>
-        public virtual bool HasValue
-        {
-            get
-            {
-                return (_hasLoadedValue || _hasAssignedValue);
-            }
         }
 
 		/// <summary>
-		/// Gets or sets the specific 
-		/// tag that can help to determine the 
-		/// linked object without loading.
+		/// Initializes a new instance 
+		/// of the <see cref="Radischevo.Wahha.Core.EnumerableLink{T}"/> class 
+		/// with serialized data.
 		/// </summary>
-		public object Tag
+		/// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> 
+		/// that holds the serialized object data.</param>
+		/// <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> 
+		/// that contains contextual information about the source or destination.</param>
+		protected EnumerableLink(SerializationInfo info, StreamingContext context)
+			: base(info, context)
 		{
-			get
-			{
-				return _tag;
-			}
-			set
-			{
-				_tag = value;
-			}
 		}
+        #endregion
 
-        /// <summary>
-        /// Gets or sets a delegate function, 
-        /// which will be used to load the 
-        /// linked object.
-        /// </summary>
-        public Func<IEnumerable<T>> Source
-        {
-            get
-            {
-                return _source;
-            }
-            set
-            {
-				_hasLoadedValue = false;
-                _source = value;
-            }
-        }
-
+        #region Instance Properties
         /// <summary>
         /// Gets or sets a number of elements in a sequence 
         /// or a maximum number of elements, that can be 
@@ -133,38 +101,12 @@ namespace Radischevo.Wahha.Core
 
         #region Instance Methods
         /// <summary>
-        /// Explicitly loads the linked collection 
-        /// into the link.
-        /// </summary>
-        public virtual void Load()
-        {
-            if (!_hasLoadedValue)
-            {
-				lock (_lock)
-				{
-					if (!_hasLoadedValue)
-					{
-						Precondition.Require((_hasAssignedValue || _source != null),
-							() => Error.LinkSourceIsNotInitialized());
-
-						_collection = _source();
-						_hasLoadedValue = true;
-						_source = null;
-					}
-				}
-            }
-        }
-
-        /// <summary>
         /// Returns an enumerator that iterates 
         /// through the collection.
         /// </summary>
         public IEnumerator<T> GetEnumerator()
         {
-            if (!HasValue)
-                Load();
-
-            return _collection.GetEnumerator();
+			return Value.GetEnumerator();
         }
         #endregion
 

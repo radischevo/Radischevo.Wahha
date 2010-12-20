@@ -44,15 +44,11 @@ namespace ConsoleTester
 			entity.DateCreated = source.GetValue<DateTime>("dateCreated");
 			entity.DateLastModified = source.GetValue<DateTime>("dateLastModified");
 
-			long id = source.GetValue<long>("id");
 			Associate(entity.Data)
 				.With<IItemDataRepository>(r => r.Single(source.GetValue<long>("id")))
 				.Subset("data.").Scheme("field_1_value").Apply(source);
 
-			Associate(entity.Values)
-				.With<IItemDataRepository>(r => r.Select(entity)).Apply();
-
-			//Associate(entity.RawData).Subset("data.").Scheme("field_1_value").Apply(source);
+			Associate(entity.RawData).Subset("data.").Scheme("field_1_value").Apply(source);
 
 			return entity;
 		}

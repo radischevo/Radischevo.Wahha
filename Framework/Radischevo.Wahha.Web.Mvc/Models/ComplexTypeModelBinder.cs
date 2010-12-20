@@ -66,10 +66,17 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual IEnumerable<PropertyDescriptor> GetModelProperties(BindingContext context)
         {
-            PropertyDescriptorCollection properties = GetTypeDescriptor(context).GetProperties();
-            Predicate<string> propertyFilter = context.AllowMemberUpdate;
+			Predicate<string> propertyFilter = context.AllowMemberUpdate;
+			return GetTypeDescriptor(context)
+				.GetProperties().Cast<PropertyDescriptor>()
+				.Where(p => AllowPropertyUpdate(p, propertyFilter))
+				.OrderBy(p => {
+					PropertyBindingOrderAttribute attribute = p.Attributes
+						.OfType<PropertyBindingOrderAttribute>()
+						.FirstOrDefault();
 
-            return properties.Cast<PropertyDescriptor>().Where(p => AllowPropertyUpdate(p, propertyFilter));
+					return (attribute == null) ? int.MaxValue : attribute.Order;
+				});
         }
 
         protected virtual ModelMetadata GetModelMetadata(BindingContext context)
@@ -80,8 +87,8 @@ namespace Radischevo.Wahha.Web.Mvc
 		private BindingContext CreateComplexModelBindingContext(BindingContext context, object result)
 		{
 			BindAttribute bind = (BindAttribute)TypeDescriptor.GetAttributes(context.ModelType)[typeof(BindAttribute)];
-			Predicate<string> propertyFilter = (bind != null) ? (Predicate<string>)(propertyName =>
-				bind.IsUpdateAllowed(propertyName) && context.AllowMemberUpdate(propertyName)) : context.AllowMemberUpdate;
+			Predicate<string> propertyFilter = (bind == null) ? context.AllowMemberUpdate : 
+				(Predicate<string>)(propertyName => bind.IsUpdateAllowed(propertyName) && context.AllowMemberUpdate(propertyName));
 
 			BindingContext inner = new BindingContext(context, context.ModelType,
 				context.ModelName, context.ValueProvider, propertyFilter,

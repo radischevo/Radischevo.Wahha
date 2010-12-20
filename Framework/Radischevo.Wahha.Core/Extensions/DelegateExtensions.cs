@@ -70,8 +70,22 @@ namespace Radischevo.Wahha.Core
         /// <param name="args">The argument list of a method.</param>
         public static void InvokeAndForget(this Delegate d, params object[] args)
         {
+			Precondition.Require(d, () => Error.ArgumentNull("d"));
             ThreadPool.QueueUserWorkItem(_invokeShim, new TargetInfo(d, args));
         }
+
+		/// <summary>
+		/// Gets a value indicating whether the specified delegate 
+		/// can be serialized using default .NET Framework formatters.
+		/// </summary>
+		/// <param name="d">The delegate containing the method to invoke.</param>
+		public static bool IsSerializable(this Delegate d)
+		{
+			Precondition.Require(d, () => Error.ArgumentNull("d"));
+
+			return (d.Target == null || d.Target.GetType().GetCustomAttributes(
+				typeof(SerializableAttribute), false).Length > 0);
+		}
         #endregion
     }
 }

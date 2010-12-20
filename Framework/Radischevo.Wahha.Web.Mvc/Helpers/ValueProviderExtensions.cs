@@ -24,9 +24,12 @@ namespace Radischevo.Wahha.Web.Mvc
 		{
 			Precondition.Require(provider, () => Error.ArgumentNull("provider"));
 			ValueProviderResult result = provider.GetValue(name);
-			result.Culture = culture;
 
-			return (result == null) ? defaultValue : result.GetValue<TValue>(defaultValue);
+			if (result == null)
+				return defaultValue;
+
+			result.Culture = culture;
+			return result.GetValue<TValue>(defaultValue);
 		}
 		#endregion
 	}

@@ -4,7 +4,11 @@ using System.Collections.Generic;
 namespace Radischevo.Wahha.Web.Mvc
 {
     public struct ParameterSource
-	{	
+	{
+		#region Constants
+		private const string ALLOW_ALL_TOKEN = "*";
+		#endregion
+
 		#region Instance Fields
 		private HashSet<string> _sources;
 		private bool _allowAll;
@@ -68,6 +72,10 @@ namespace Radischevo.Wahha.Web.Mvc
 		{
 			if (String.IsNullOrEmpty(value))
 				return ParameterSource.Default;
+
+			if (String.Equals(value, ALLOW_ALL_TOKEN,
+				StringComparison.OrdinalIgnoreCase))
+				return ParameterSource.Any;
 
 			return new ParameterSource(value.Split(new char[] { ',' }, 
 				StringSplitOptions.RemoveEmptyEntries));

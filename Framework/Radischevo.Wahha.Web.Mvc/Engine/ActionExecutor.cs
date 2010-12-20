@@ -73,7 +73,9 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             filter.OnExecuting(context);
             if (context.Cancel)
-                return new ActionExecutedContext(context, null) { Result = context.Result };
+                return new ActionExecutedContext(context, null) { 
+					Result = context.Result 
+				};
 
             bool wasError = false;
             ActionExecutedContext postContext = null;
@@ -320,12 +322,11 @@ namespace Radischevo.Wahha.Web.Mvc
 
             ActionFilterInfo filters = GetFilters(context, currentAction);
 
-			context.Parameters.Merge(values); 
-			// we should make sure that all the values were bound using the model binders
-            context.Parameters.Merge(GetParameterValues(context, currentAction));
-
             try
             {
+				context.Parameters.Merge(values);
+				context.Parameters.Merge(GetParameterValues(context, currentAction));
+
                 AuthorizationContext authContext = InvokeAuthorizationFilters(
                     context, currentAction, filters.AuthorizationFilters);
 

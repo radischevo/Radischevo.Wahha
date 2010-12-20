@@ -77,7 +77,15 @@ namespace Radischevo.Wahha.Web.Mvc
 		{
 			get
 			{
-				return (RouteData.Tokens[ParentContextKey] as ControllerContext);
+				RouteData routeData = RouteData;
+				if (routeData == null)
+					return null;
+
+				object value;
+				if (routeData.Tokens.TryGetValue(ParentContextKey, out value))
+					return (value as ControllerContext);
+
+				return null;
 			}
 		}
 

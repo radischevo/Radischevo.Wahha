@@ -21,6 +21,12 @@ namespace Radischevo.Wahha.Core
 			get;
 			set;
 		}
+
+		T Value
+		{
+			get;
+			set;
+		}
 		#endregion
 
 		#region Instance Methods

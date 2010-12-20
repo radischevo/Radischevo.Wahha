@@ -79,7 +79,7 @@ namespace Radischevo.Wahha.Core
             if (!objectType.IsGenericType)
             {
                 DynamicMethod dynamicMethod = new DynamicMethod("xget_" + field.Name,
-                    field.FieldType, new Type[] { objectType }, true);
+                    field.FieldType, new Type[] { objectType }, objectType, true);
 
                 ILGenerator iLGenerator = dynamicMethod.GetILGenerator();
                 iLGenerator.Emit(OpCodes.Ldarg_0);
@@ -90,7 +90,7 @@ namespace Radischevo.Wahha.Core
                     typeof(DGet<,>).MakeGenericType(objectType, field.FieldType));
 
                 dynamicMethod = new DynamicMethod(("xset_" + field.Name),
-                    typeof(void), new Type[] { objectType, field.FieldType }, true);
+                    typeof(void), new Type[] { objectType, field.FieldType }, objectType, true);
 
                 iLGenerator = dynamicMethod.GetILGenerator();
                 iLGenerator.Emit(OpCodes.Ldarg_0);
