@@ -7,27 +7,6 @@ namespace Radischevo.Wahha.Core
 	[Serializable]
     public class Interval<T>
     {
-        #region Nested Types
-        private class DefaultComparer : IComparer<T>
-        {
-            #region Instance Methods
-            public int Compare(T x, T y)
-            {
-                IComparable left = (x as IComparable);
-                IComparable right = (y as IComparable);
-
-                if (Object.ReferenceEquals(left, right))
-                    return 0;
-
-                if (Object.ReferenceEquals(null, left))
-                    return -1;
-
-                return left.CompareTo(right);
-            }
-            #endregion
-        }
-        #endregion
-
         #region Instance Fields
         private T _from;
         private T _to;
@@ -104,33 +83,94 @@ namespace Radischevo.Wahha.Core
         #region Instance Methods
         public void Normalize()
         {
-            Normalize(new DefaultComparer());
+            Normalize(Comparer<T>.Default);
         }
 
-        public void Normalize(IComparer<T> comparer)
-        {
-            T left = _from;
-            T right = _to;
+		public bool IsEmpty()
+		{
+			return IsEmpty(Comparer<T>.Default);
+		}
 
-            bool isRightOrder = (comparer.Compare(left, right) <= 0);
+		public bool Contains(T value)
+		{
+			return Contains(value, Comparer<T>.Default);
+		}
 
-            _from = (isRightOrder) ? left : right;
-            _to = (isRightOrder) ? right : left;
-        }
+		public bool Contains(Interval<T> interval)
+		{
+			return Contains(interval, Comparer<T>.Default);
+		}
 
-		protected virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+		public bool IntersectWith(Interval<T> other)
+		{
+			return IntersectWith(other, Comparer<T>.Default);
+		}
+
+		public bool Equals(Interval<T> other)
+		{
+			return Equals(other, EqualityComparer<T>.Default);
+		}
+
+		public bool IsEmpty(IComparer<T> comparer)
+		{
+			Precondition.Require(comparer, () => Error.ArgumentNull("comparer"));
+			return (comparer.Compare(_from, _to) == 0);
+		}
+
+		public virtual void Normalize(IComparer<T> comparer)
+		{
+			Precondition.Require(comparer, () => Error.ArgumentNull("comparer"));
+
+			T left = _from;
+			T right = _to;
+
+			bool isRightOrder = (comparer.Compare(left, right) <= 0);
+
+			_from = (isRightOrder) ? left : right;
+			_to = (isRightOrder) ? right : left;
+		}
+
+		public virtual bool Contains(T value, IComparer<T> comparer)
+		{
+			Precondition.Require(comparer, () => Error.ArgumentNull("comparer"));
+
+			return ((comparer.Compare(value, _from) >= 0) 
+				 && (comparer.Compare(value, _to) <= 0));
+		}
+
+		public virtual bool Contains(Interval<T> interval, IComparer<T> comparer)
+		{
+			Precondition.Require(comparer, () => Error.ArgumentNull("comparer"));
+			if (Object.ReferenceEquals(interval, null))
+				return false;
+
+			return (Contains(interval._from) && Contains(interval._to));
+		}
+
+		public virtual bool IntersectWith(Interval<T> other, IComparer<T> comparer)
+		{
+			Precondition.Require(comparer, () => Error.ArgumentNull("comparer"));
+			if (Object.ReferenceEquals(other, null))
+				return false;
+
+			return (Contains(other._from) || Contains(other._to));
+		}
+
+		public virtual bool Equals(Interval<T> other, IEqualityComparer<T> comparer)
+		{
+			Precondition.Require(comparer, () => Error.ArgumentNull("comparer"));
+			if (Object.ReferenceEquals(other, null))
+				return false;
+
+			return comparer.Equals(_from, other._from)
+				&& comparer.Equals(_to, other._to);
+		}
+
+		protected virtual void GetObjectData(SerializationInfo info, 
+			StreamingContext context)
         {
             info.AddValue("from", _from, typeof(T));
 			info.AddValue("to", _to, typeof(T));
-        }
-
-        protected virtual bool Equals(Interval<T> other)
-        {
-            if (Object.ReferenceEquals(other, null))
-                return false;
-
-            return (Object.Equals(_from, other._from) 
-                && Object.Equals(_to, other._to));
         }
 
         public override bool Equals(object obj)
@@ -151,7 +191,7 @@ namespace Radischevo.Wahha.Core
 
         public override string ToString()
         {
-            return String.Format("{0} - {1}", _from, _to);
+            return String.Format("[{0} - {1}]", _from, _to);
         }
         #endregion
     }
