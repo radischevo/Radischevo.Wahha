@@ -1,76 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
+using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public sealed class ActionFilterInfo
-    {
-        #region Instance Fields
-        private IList<IActionFilter> _actionFilters;
-        private IList<IResultFilter> _resultFilters;
-        private IList<IAuthorizationFilter> _authorizationFilters;
-        private IList<IExceptionFilter> _exceptionFilters;
-        #endregion
+	public class ActionFilterInfo
+	{
+		#region Instance Fields
+		private List<IActionFilter> _actionFilters;
+		private List<IAuthorizationFilter> _authorizationFilters;
+		private List<IExceptionFilter> _exceptionFilters;
+		private List<IResultFilter> _resultFilters;
+		#endregion
 
-        #region Constructors
-        internal ActionFilterInfo()
-        {
-        }
+		#region Constructors
+		public ActionFilterInfo()
+		{
+			_actionFilters = new List<IActionFilter>();
+			_authorizationFilters = new List<IAuthorizationFilter>();
+			_exceptionFilters = new List<IExceptionFilter>();
+			_resultFilters = new List<IResultFilter>();
+		}
 
-        internal ActionFilterInfo(IList<IActionFilter> actionFilters, 
-            IList<IResultFilter> resultFilters, 
-            IList<IAuthorizationFilter> authorizationFilters, 
-            IList<IExceptionFilter> exceptionFilters)
-        {
-            _actionFilters = actionFilters;
-            _resultFilters = resultFilters;
-            _authorizationFilters = authorizationFilters;
-            _exceptionFilters = exceptionFilters;
-        }
-        #endregion
+		public ActionFilterInfo(IEnumerable<Filter> filters)
+			: this()
+		{
+			Precondition.Require(filters, () => Error.ArgumentNull("filters"));
+			List<object> instances = filters.Select(f => f.Instance).ToList();
 
-        #region Instance Properties
-        public IList<IActionFilter> ActionFilters
-        {
-            get
-            {
-                return GetListOrEmpty<IActionFilter>(ref _actionFilters);
-            }
-        }
+			_actionFilters.AddRange(instances.OfType<IActionFilter>());
+			_authorizationFilters.AddRange(instances.OfType<IAuthorizationFilter>());
+			_exceptionFilters.AddRange(instances.OfType<IExceptionFilter>());
+			_resultFilters.AddRange(instances.OfType<IResultFilter>());
+		}
+		#endregion
 
-        public IList<IResultFilter> ResultFilters
-        {
-            get
-            {
-                return GetListOrEmpty<IResultFilter>(ref _resultFilters);
-            }
-        }
+		#region Instance Properties
+		public ICollection<IActionFilter> ActionFilters
+		{
+			get
+			{
+				return _actionFilters;
+			}
+		}
 
-        public IList<IAuthorizationFilter> AuthorizationFilters
-        {
-            get
-            {
-                return GetListOrEmpty<IAuthorizationFilter>(ref _authorizationFilters);
-            }
-        }
+		public ICollection<IAuthorizationFilter> AuthorizationFilters
+		{
+			get
+			{
+				return _authorizationFilters;
+			}
+		}
 
-        public IList<IExceptionFilter> ExceptionFilters
-        {
-            get
-            {
-                return GetListOrEmpty<IExceptionFilter>(ref _exceptionFilters);
-            }
-        }
-        #endregion
+		public ICollection<IExceptionFilter> ExceptionFilters
+		{
+			get
+			{
+				return _exceptionFilters;
+			}
+		}
 
-        #region Static Methods
-        private static IList<T> GetListOrEmpty<T>(ref IList<T> list)
-        {
-            if (list == null)
-                return new List<T>();
-
-            return list;
-        }
-        #endregion
-    }
+		public ICollection<IResultFilter> ResultFilters
+		{
+			get
+			{
+				return _resultFilters;
+			}
+		}
+		#endregion
+	}
 }

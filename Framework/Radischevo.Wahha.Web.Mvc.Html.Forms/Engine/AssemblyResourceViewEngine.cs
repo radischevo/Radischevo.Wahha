@@ -7,7 +7,7 @@ using System.Web.Hosting;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Hosting;
 
-namespace Radischevo.Wahha.Web.Mvc
+namespace Radischevo.Wahha.Web.Mvc.Html.Forms
 {
     /// <summary>
     /// Provides a view engine for serving pages or user controls 

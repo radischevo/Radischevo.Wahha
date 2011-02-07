@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 using Radischevo.Wahha.Core;
@@ -43,6 +44,11 @@ namespace Radischevo.Wahha.Web.Mvc
             Precondition.Require(type, () => Error.ArgumentNull("type"));
             return (object[])Array.CreateInstance(type, 0);
         }
+
+		public virtual IEnumerable<FilterAttribute> GetFilters(bool useCache)
+		{
+			return GetCustomAttributes(typeof(FilterAttribute), true).Cast<FilterAttribute>();
+		}
 
         public virtual bool IsDefined(Type type, bool inherit)
         {

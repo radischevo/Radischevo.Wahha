@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Error_AmbiguousActionName" xml:space="preserve">
     <value>Duplicate action name '{0}' found at controller '{1}'.</value>
@@ -125,9 +125,6 @@
   </data>
   <data name="Error_ControllerMustHaveDefaultConstructor" xml:space="preserve">
     <value>The controller type '{0}' must have a parameterless public constructor.</value>
-  </data>
-  <data name="Error_ControlRequiresViewDataProvider" xml:space="preserve">
-    <value>The ViewUserControl cannot find an IViewDataContainer. The ViewUserControl must be inside a ViewPage, ViewMasterPage, or another ViewUserControl.</value>
   </data>
   <data name="Error_CouldNotCreateController" xml:space="preserve">
     <value>The controller '{0}' could not be found.</value>
@@ -201,20 +198,11 @@
   <data name="Error_UnsupportedDictionaryType" xml:space="preserve">
     <value>The dictionary of type '{0}' cannot be used as an action parameter.</value>
   </data>
-  <data name="Error_ViewControlRequiresViewPage" xml:space="preserve">
-    <value>A ViewUserControl can only be used inside pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;.</value>
-  </data>
   <data name="Error_ViewLocationFormatsAreEmpty" xml:space="preserve">
     <value>View location format collection cannot be empty.</value>
   </data>
-  <data name="Error_ViewMasterPageRequiresViewPage" xml:space="preserve">
-    <value>A ViewMasterPage can only be used with content pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;.</value>
-  </data>
   <data name="Error_ViewNotFound" xml:space="preserve">
     <value>The view '{0}' could not be found.</value>
-  </data>
-  <data name="Error_WrongViewBase" xml:space="preserve">
-    <value>The view type '{0}' must derive from ViewPage, ViewPage&lt;TViewData&gt;, ViewUserControl, or ViewUserControl&lt;TViewData&gt;.</value>
   </data>
   <data name="Error_UnsupportedModelType" xml:space="preserve">
     <value>This model binder does not support the model type '{0}'.</value>
@@ -326,5 +314,8 @@
   </data>
   <data name="Error_IncompatibleValueProviderFactoryType" xml:space="preserve">
     <value>The value provider factory type '{0}' must implement the IValueProviderFactory interface.</value>
+  </data>
+  <data name="Error_IncompatibleFilterProviderType" xml:space="preserve">
+    <value>The filter provider type '{0}' must implement the IFilterProvider interface.</value>
   </data>
 </root>

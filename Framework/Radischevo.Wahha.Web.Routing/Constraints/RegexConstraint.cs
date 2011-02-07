@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using System.Web;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
@@ -27,7 +26,7 @@ namespace Radischevo.Wahha.Web.Routing
 
         public RegexConstraint(string parameterName, string pattern, RegexOptions options)
         {
-            Precondition.Defined(parameterName, () =>Error.ArgumentNull("parameterName"));
+            Precondition.Defined(parameterName, () => Error.ArgumentNull("parameterName"));
 
             _parameterName = parameterName;
             _pattern = new Regex(NormalizePattern(pattern), options);

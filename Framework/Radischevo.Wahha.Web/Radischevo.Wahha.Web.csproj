@@ -33,6 +33,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -90,13 +91,17 @@
     <Compile Include="Abstractions\Implementation\HttpSessionStateWrapper.cs" />
     <Compile Include="Abstractions\Implementation\HttpStaticObjectsCollectionWrapper.cs" />
     <Compile Include="Caching\AspNetCacheProvider.cs" />
-    <Compile Include="Caching\CacheExtensions.cs" />
     <Compile Include="Caching\CacheLockDictionary.cs" />
     <Compile Include="Compilation\BuildManagerWrapper.cs" />
     <Compile Include="Compilation\IBuildManager.cs" />
     <Compile Include="Error.cs" />
+    <Compile Include="Extensions\HttpCollectionWrapper`1.cs" />
+    <Compile Include="Extensions\HttpSessionStateExtensions.cs" />
+    <Compile Include="Extensions\HttpSessionStateSet.cs" />
+    <Compile Include="Extensions\HttpValueCollectionConverter.cs" />
+    <Compile Include="Extensions\HttpValueCollectionExtensions.cs" />
     <Compile Include="Hosting\AssemblyResourcePathProvider.cs" />
-    <Compile Include="IHttpValueSet.cs" />
+    <Compile Include="Interfaces\IHttpValueSet.cs" />
     <Compile Include="Modules\HttpCompressionModule.cs" />
     <Compile Include="Hosting\AssemblyResourceVirtualFile.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
@@ -131,6 +136,7 @@
     <Compile Include="Scripting\Templates\TemplateParameter.cs" />
     <Compile Include="Scripting\Templates\TemplateParser.cs" />
     <Compile Include="Scripting\Templates\ParsedAttributeCollection.cs" />
+    <Compile Include="Text\HtmlElementContext.cs" />
     <Compile Include="Text\HtmlAttributeDictionary.cs" />
     <Compile Include="Text\HtmlAttributeFlags.cs" />
     <Compile Include="Text\HtmlAttributeRule.cs" />
@@ -216,6 +222,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

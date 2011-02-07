@@ -832,138 +832,6 @@
             to a single-use consumable resource.
             </summary>
         </member>
-        <member name="T:Radischevo.Wahha.Core.Converter">
-            <summary>
-            Converts a base data type to another base data type.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[])">
-            <summary>
-            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
-            representation encoded with hex digits. 
-            </summary>
-            <param name="array">An array of 8-bit unsigned integers</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[],System.Boolean)">
-            <summary>
-            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
-            representation encoded with hex digits. 
-            </summary>
-            <param name="array">An array of 8-bit unsigned integers</param>
-            <param name="lowerCase">If set to true, produces a lowercase string.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
-            representation encoded with hex digits. Parameters specify the subset as an offset in the input array and  
-            the number of elements in the array to convert.
-            </summary>
-            <param name="array">An array of 8-bit unsigned integers</param>
-            <param name="startIndex">An offset in the <paramref name="array"/></param>
-            <param name="length">The number of elements of <paramref name="array"/> to convert.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[],System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
-            representation encoded with hex digits. Parameters specify the subset as an offset in the input array and  
-            the number of elements in the array to convert.
-            </summary>
-            <param name="array">An array of 8-bit unsigned integers</param>
-            <param name="startIndex">An offset in the <paramref name="array"/></param>
-            <param name="length">The number of elements of <paramref name="array"/> to convert.</param>
-            <param name="lowerCase">If set to true, produces a lowercase string.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.FromBase16String(System.String)">
-            <summary>
-            Converts the specified <see cref="T:System.String"/>, which encodes 
-            binary data as hex digits, to an equivalent 8-bit 
-            unsigned integer array.
-            </summary>
-            <param name="str">A <see cref="T:System.String"/></param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ToDictionary(System.Object)">
-            <summary>
-            Copies all readable public property values from the 
-            source object to the dictionary.
-            </summary>
-            <param name="argument">An object to convert</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object)">
-            <summary>
-            Converts the <paramref name="value"/> to the 
-            <typeparamref name="T"/> type.
-            </summary>
-            <typeparam name="T">A type to convert to.</typeparam>
-            <param name="value">A value to convert.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,System.IFormatProvider)">
-            <summary>
-            Converts the <paramref name="value"/> to the 
-            <typeparamref name="T"/> type.
-            </summary>
-            <typeparam name="T">A type to convert to.</typeparam>
-            <param name="value">A value to convert.</param>
-            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
-            supplies culture-specific formatting information.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,``0)">
-            <summary>
-            Converts the <paramref name="value"/> to the 
-            <typeparamref name="T"/> type.
-            </summary>
-            <typeparam name="T">A type to convert to.</typeparam>
-            <param name="value">A value to convert.</param>
-            <param name="defaultValue">The default value of the parameter.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,``0,System.IFormatProvider)">
-            <summary>
-            Converts the <paramref name="value"/> to the 
-            <typeparamref name="T"/> type.
-            </summary>
-            <typeparam name="T">A type to convert to.</typeparam>
-            <param name="value">A value to convert.</param>
-            <param name="defaultValue">The default value of the parameter</param>
-            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
-            supplies culture-specific formatting information.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object)">
-            <summary>
-            Converts the <paramref name="value"/> to the 
-            specified <paramref name="type"/>.
-            </summary>
-            <param name="type">A type to convert to.</param>
-            <param name="value">A value to convert.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object,System.IFormatProvider)">
-            <summary>
-            Converts the <paramref name="value"/> to the 
-            specified <paramref name="type"/>.
-            </summary>
-            <param name="type">A type to convert to.</param>
-            <param name="value">A value to convert.</param>
-            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
-            supplies culture-specific formatting information.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object,System.Object)">
-            <summary>
-            Converts the <paramref name="value"/> to the specified 
-            <paramref name="type"/>.
-            </summary>
-            <param name="type">A type to convert to.</param>
-            <param name="value">A value to convert.</param>
-            <param name="defaultValue">The default value of the parameter.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object,System.Object,System.IFormatProvider)">
-            <summary>
-            Converts the <paramref name="value"/> to the specified 
-            <paramref name="type"/>.
-            </summary>
-            <param name="type">A type to convert to.</param>
-            <param name="value">A value to convert.</param>
-            <param name="defaultValue">The default value of the parameter.</param>
-            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
-            supplies culture-specific formatting information.</param>
-        </member>
         <member name="M:Radischevo.Wahha.Core.ParameterInfoExtensions.GetCustomAttributes``1(System.Reflection.ParameterInfo)">
             <summary>
             Helper method used to find attributes of type <typeparamref name="TAttribute"/>, 
@@ -1310,6 +1178,138 @@
             <summary>
             Provides a trigger for the <see cref="T:Radischevo.Wahha.Core.Async.TriggerListener"/> class.
             </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Converter">
+            <summary>
+            Converts a base data type to another base data type.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[])">
+            <summary>
+            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
+            representation encoded with hex digits. 
+            </summary>
+            <param name="array">An array of 8-bit unsigned integers</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[],System.Boolean)">
+            <summary>
+            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
+            representation encoded with hex digits. 
+            </summary>
+            <param name="array">An array of 8-bit unsigned integers</param>
+            <param name="lowerCase">If set to true, produces a lowercase string.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
+            representation encoded with hex digits. Parameters specify the subset as an offset in the input array and  
+            the number of elements in the array to convert.
+            </summary>
+            <param name="array">An array of 8-bit unsigned integers</param>
+            <param name="startIndex">An offset in the <paramref name="array"/></param>
+            <param name="length">The number of elements of <paramref name="array"/> to convert.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToBase16String(System.Byte[],System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Converts a subset of an array of 8-bit unsigned integers to its equivalent <see cref="T:System.String"/> 
+            representation encoded with hex digits. Parameters specify the subset as an offset in the input array and  
+            the number of elements in the array to convert.
+            </summary>
+            <param name="array">An array of 8-bit unsigned integers</param>
+            <param name="startIndex">An offset in the <paramref name="array"/></param>
+            <param name="length">The number of elements of <paramref name="array"/> to convert.</param>
+            <param name="lowerCase">If set to true, produces a lowercase string.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.FromBase16String(System.String)">
+            <summary>
+            Converts the specified <see cref="T:System.String"/>, which encodes 
+            binary data as hex digits, to an equivalent 8-bit 
+            unsigned integer array.
+            </summary>
+            <param name="str">A <see cref="T:System.String"/></param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ToDictionary(System.Object)">
+            <summary>
+            Copies all readable public property values from the 
+            source object to the dictionary.
+            </summary>
+            <param name="argument">An object to convert</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            <typeparamref name="T"/> type.
+            </summary>
+            <typeparam name="T">A type to convert to.</typeparam>
+            <param name="value">A value to convert.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,System.IFormatProvider)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            <typeparamref name="T"/> type.
+            </summary>
+            <typeparam name="T">A type to convert to.</typeparam>
+            <param name="value">A value to convert.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,``0)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            <typeparamref name="T"/> type.
+            </summary>
+            <typeparam name="T">A type to convert to.</typeparam>
+            <param name="value">A value to convert.</param>
+            <param name="defaultValue">The default value of the parameter.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType``1(System.Object,``0,System.IFormatProvider)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            <typeparamref name="T"/> type.
+            </summary>
+            <typeparam name="T">A type to convert to.</typeparam>
+            <param name="value">A value to convert.</param>
+            <param name="defaultValue">The default value of the parameter</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            specified <paramref name="type"/>.
+            </summary>
+            <param name="type">A type to convert to.</param>
+            <param name="value">A value to convert.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object,System.IFormatProvider)">
+            <summary>
+            Converts the <paramref name="value"/> to the 
+            specified <paramref name="type"/>.
+            </summary>
+            <param name="type">A type to convert to.</param>
+            <param name="value">A value to convert.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object,System.Object)">
+            <summary>
+            Converts the <paramref name="value"/> to the specified 
+            <paramref name="type"/>.
+            </summary>
+            <param name="type">A type to convert to.</param>
+            <param name="value">A value to convert.</param>
+            <param name="defaultValue">The default value of the parameter.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.Converter.ChangeType(System.Type,System.Object,System.Object,System.IFormatProvider)">
+            <summary>
+            Converts the <paramref name="value"/> to the specified 
+            <paramref name="type"/>.
+            </summary>
+            <param name="type">A type to convert to.</param>
+            <param name="value">A value to convert.</param>
+            <param name="defaultValue">The default value of the parameter.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
+            supplies culture-specific formatting information.</param>
         </member>
     </members>
 </doc>

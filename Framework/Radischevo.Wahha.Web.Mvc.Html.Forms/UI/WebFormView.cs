@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
 
-using Radischevo.Wahha.Web.Mvc.UI;
-
-namespace Radischevo.Wahha.Web.Mvc
+namespace Radischevo.Wahha.Web.Mvc.Html.Forms
 {
     public class WebFormView : BuildManagerCompiledView
     {

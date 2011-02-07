@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
@@ -15,6 +14,7 @@ namespace Radischevo.Wahha.Web.Routing
         #region Instance Fields
         private HttpContextBase _context;
         private RouteData _routeData;
+		private HttpParameters _httpParameters;
         #endregion
 
         #region Constructors

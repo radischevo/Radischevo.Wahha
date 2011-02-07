@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
-using System.Web;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
-using Radischevo.Wahha.Web.Routing;
 using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
@@ -23,6 +20,7 @@ namespace Radischevo.Wahha.Web.Mvc
         private ControllerDescriptorCache _instanceCache;
         private ControllerContext _context;
         private ModelBinderCollection _binders;
+		private FilterProviderCollection _filterProviders;
         #endregion
 
         #region Constructors
@@ -65,6 +63,17 @@ namespace Radischevo.Wahha.Web.Mvc
                 return _binders;
             }
         }
+
+		protected FilterProviderCollection FilterProviders
+		{
+			get
+			{
+				if (_filterProviders == null)
+					_filterProviders = Configuration.Instance.Controllers.FilterProviders;
+
+				return _filterProviders;
+			}
+		}
         #endregion
 
         #region Static Methods
@@ -140,14 +149,6 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             request.ValidateInput();
         }
-
-        private static void ControllerAsFilter<TFilter>(ControllerBase controller, IList<TFilter> filters) 
-            where TFilter : class
-        {
-            TFilter item = controller as TFilter;
-            if (item != null)
-                filters.Insert(0, item);
-        }
         #endregion
 
         #region Instance Methods
@@ -181,18 +182,9 @@ namespace Radischevo.Wahha.Web.Mvc
             return descriptor.FindAction(context, actionName);
         }
 
-        protected virtual ActionFilterInfo GetFilters(ControllerContext context, 
-            ActionDescriptor descriptor)
+        protected virtual ActionFilterInfo GetFilters(ControllerContext context, ActionDescriptor descriptor)
         {
-            ActionFilterInfo filters = descriptor.GetFilters();
-            ControllerBase controller = GetController();
-
-            ControllerAsFilter<IActionFilter>(controller, filters.ActionFilters);
-            ControllerAsFilter<IResultFilter>(controller, filters.ResultFilters);
-            ControllerAsFilter<IAuthorizationFilter>(controller, filters.AuthorizationFilters);
-            ControllerAsFilter<IExceptionFilter>(controller, filters.ExceptionFilters);
-
-            return filters;
+			return new ActionFilterInfo(FilterProviders.GetFilters(context, descriptor));
         }
 
         protected virtual ActionResult CreateActionResult(ControllerContext context,
@@ -237,7 +229,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual ActionExecutedContext InvokeActionFilters(
             ControllerContext context, ActionDescriptor action, 
-            IList<IActionFilter> filters)
+            ICollection<IActionFilter> filters)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
             Precondition.Require(action, () => Error.ArgumentNull("action"));
@@ -255,7 +247,7 @@ namespace Radischevo.Wahha.Web.Mvc
         }
 
         protected virtual ResultExecutedContext InvokeActionResultFilters(
-            ControllerContext context, IList<IResultFilter> filters, ActionResult result)
+            ControllerContext context, ICollection<IResultFilter> filters, ActionResult result)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
             Precondition.Require(result, () => Error.ArgumentNull("result"));
@@ -274,7 +266,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual AuthorizationContext InvokeAuthorizationFilters(
             ControllerContext context, ActionDescriptor descriptor,
-            IEnumerable<IAuthorizationFilter> filters)
+            ICollection<IAuthorizationFilter> filters)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
             Precondition.Require(descriptor, () => Error.ArgumentNull("descriptor"));
@@ -291,7 +283,8 @@ namespace Radischevo.Wahha.Web.Mvc
         }
 
         protected virtual ExceptionContext InvokeExceptionFilters(
-            ControllerContext context, Exception exception, IList<IExceptionFilter> filters)
+            ControllerContext context, Exception exception, 
+			ICollection<IExceptionFilter> filters)
         {
             Precondition.Require(exception, () => Error.ArgumentNull("exception"));
             Precondition.Require(filters, () => Error.ArgumentNull("filters"));

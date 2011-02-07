@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Security.Principal;
 using System.Web;
-using System.Web.Caching;
-using System.Web.SessionState;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Core.Async;
 using Radischevo.Wahha.Data.Caching;
-using Radischevo.Wahha.Web;
 using Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Web.Routing;
 
@@ -178,9 +175,9 @@ namespace Radischevo.Wahha.Web.Mvc
 
         /// <summary>
         /// Gets the combined HTTP value collection 
-        /// for the current <see cref="System.Web.HttpRequest"/>.
+        /// for the current <see cref="Radischevo.Wahha.Web.Routing.RequestContext"/>.
         /// </summary>
-        public HttpParameters Parameters
+        public HttpParameters HttpParameters
         {
             get
             {

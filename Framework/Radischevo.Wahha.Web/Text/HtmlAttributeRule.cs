@@ -189,15 +189,23 @@ namespace Radischevo.Wahha.Web.Text
         #endregion
 
         #region Instance Methods
-        internal HtmlAttributeRule CreateCopy(HtmlElementRule parent)
+        public HtmlAttributeRule Clone()
         {
-            HtmlAttributeRule current = new HtmlAttributeRule(parent, _name, _flags);
+            HtmlAttributeRule current = new HtmlAttributeRule(_element, _name, _flags);
             current._converter = _converter;
             current._defaultValue = _defaultValue;
             current._pattern = _pattern;
 
             return current;
         }
+
+		internal HtmlAttributeRule Clone(HtmlElementRule parent)
+		{
+			HtmlAttributeRule current = Clone();
+			current._element = parent;
+
+			return current;
+		}
 
         public virtual bool ValidateValue(string value)
         {

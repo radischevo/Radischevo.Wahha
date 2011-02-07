@@ -4,6 +4,7 @@ using System.Web;
 using Radischevo.Wahha.Web.Mvc;
 using Radischevo.Wahha.Web.Routing;
 
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
 public class OutputMessageAttribute : FilterAttribute, IActionFilter
 {
     private string _message;

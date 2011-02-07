@@ -28,7 +28,6 @@ using Radischevo.Wahha.Core.Expressions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Radischevo.Wahha.Web.Mvc.Validation;
-using Radischevo.Wahha.Web.Abstractions;
 using System.Text;
 using Radischevo.Wahha.Web.Scripting.Serialization;
 
@@ -128,7 +127,6 @@ public class TemplatedItem : IDataErrorInfo
 /// <summary>
 /// Summary description for MainController
 /// </summary>
-//[OutputMessage(Message = "<h3>Превед, я MainController</h3>")]
 [HttpCompression]
 public class MainController : Controller
 {
@@ -311,93 +309,6 @@ public class MainController : Controller
     [AcceptHttpVerbs(HttpMethod.Post)]
     public ActionResult TestSgml([Bind(Name = "text")]string str)
     {
-		HtmlProcessor text = new HtmlProcessor();
-		
-        HtmlElementFlags allowFlags = HtmlElementFlags.Allowed | HtmlElementFlags.Recursive;
-        text.Parser.ProcessingMode = HtmlProcessingMode.DenyByDefault;
-        text.Parser.DefaultElementFlags = HtmlElementFlags.AllowContent | HtmlElementFlags.UseTypography;
-        
-        text.Parser.Add(a => a.Attributes("xmlns", "ns").As(HtmlAttributeFlags.Denied));
-        text.Parser.Add(e => e.Elements("i", "b", "u", "em", "strong", "pre", "acronym", "h1", "h2", "h3", "h4", "h5", "h6")
-                .As(allowFlags | HtmlElementFlags.Text | HtmlElementFlags.UseTypography))
-			.With(e => e.Element("noindex").As(allowFlags | HtmlElementFlags.Container))
-            .With(e => e.Element("script").As(HtmlElementFlags.Denied | HtmlElementFlags.Recursive))
-            .With(e => e.Element("a")
-                .As(allowFlags | HtmlElementFlags.Text)
-                .Convert(elem => {
-					if (elem.ParentNode.LocalName.Equals("noindex"))
-						return elem;
-
-					XmlElement noindex = elem.OwnerDocument.CreateElement("noindex");
-
-                    if(elem.InnerText.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && 
-                        elem.InnerText.Length > 30) { 
-                        XmlAttribute title = elem.GetAttributeNode("title") ?? 
-                            elem.Attributes.Append(elem.OwnerDocument.CreateAttribute("title"));
-                        title.Value = elem.InnerText;
-                        elem.InnerXml = elem.InnerText.Substring(0, 30) + "...";
-                    }
-					noindex.AppendChild(elem);
-                    return noindex; 
-                })
-                .With(a => a.Attribute("href").Validate("#url")
-                    .Convert(attr => {
-                        Uri uri = new Uri(attr.Value, UriKind.RelativeOrAbsolute);
-                        if (uri.IsAbsoluteUri && uri.Host != "localhost")
-                            attr.Value = String.Format("http://localhost/redirect?url={0}", Uri.EscapeDataString(attr.Value));
-
-                        return attr;
-                    }))
-                .With(a => a.Attribute("title"))
-                .With(a => a.Attribute("rel").As(HtmlAttributeFlags.Denied | HtmlAttributeFlags.Required).Default("nofollow"))
-                .With(a => a.Attribute("target").As(HtmlAttributeFlags.Denied | HtmlAttributeFlags.Required).Default("_blank"))
-                )
-            .With(e => e.Element("img")
-                .As(allowFlags | HtmlElementFlags.SelfClosing)
-                .Convert(elem => {
-                    if (elem.HasAttribute("alt")) {
-                        XmlAttribute title = elem.GetAttributeNode("title") ?? elem.Attributes.Append(elem.OwnerDocument.CreateAttribute("title"));
-                        title.Value = elem.GetAttribute("alt");
-                    }
-                    return elem;
-                })
-                .With(a => a.Attribute("src").Validate("#url"))
-                .With(a => a.Attribute("width").As(HtmlAttributeFlags.Required).Validate("#int").Default(100))
-                .With(a => a.Attribute("height").Validate("#int"))
-                .With(a => a.Attribute("title")))
-            .With(e => e.Element("p").As(allowFlags | HtmlElementFlags.AllowContent | HtmlElementFlags.UseTypography))
-            .With(e => e.Element("nobr").As(allowFlags | HtmlElementFlags.Text | HtmlElementFlags.UseTypography))
-            .With(e => e.Element("ul").As(allowFlags | HtmlElementFlags.Container)
-                .With(l => l.Element("li").As(HtmlElementFlags.Allowed | HtmlElementFlags.Text | HtmlElementFlags.UseTypography)))
-            .With(e => e.Element("code").As(allowFlags | HtmlElementFlags.Preformatted))
-            .With(e => e.Element("br").As(allowFlags | HtmlElementFlags.SelfClosing))
-            .With(e => e.Element("habracut").As(allowFlags | HtmlElementFlags.SelfClosing)
-                .Convert(elem => {
-                    XmlElement link = elem.OwnerDocument.CreateElement("a");
-                    link.Attributes.Append(elem.OwnerDocument.CreateAttribute("href"))
-                        .Value = "http://localhost/blog/news/21.html";
-                    string title = (elem.HasAttribute("title")) ? String.Format("{0} →",
-                        elem.Attributes["title"].Value) : "читать далее →";
-                    link.AppendChild(elem.OwnerDocument.CreateTextNode(title));
-
-                    return link;
-                }));
-
-        text.Typographer.EncodeSpecialSymbols = true;
-        //text.Typographer.ExtractLinks = false;
-        text.Typographer.Replace("(c)", "&copy;")
-            .Replace("(r)", "&reg;")
-            .Replace("(tm)", "&trade;")
-            .Replace("+/-", "&plusmn;")
-            .Replace("+-", "&plusmn;")
-            .Replace(@"(?'number'\d+)\s*\^\s*(?'power'\-?\d+((\.|\,)\d+)?)", 
-                "${number}<sup>${power}</sup>", StringReplacementMode.Regex)
-            .Replace(@"(?'before'\d+)\s*x\s*(?'after'\-?\d+)", 
-                "${before}&times;${after}", StringReplacementMode.Regex)
-            .Replace(@"(?'before'\d+)\s*\*\s*(?'after'\-?\d+)",
-                "${before}&times;${after}", StringReplacementMode.Regex);
-
-        ViewData["Output"] = text.Parse(str);
         
         return View("Test");
     }
@@ -486,7 +397,7 @@ public class MainController : Controller
 
     [ActionName("Section")]
     [AcceptHttpVerbs(HttpMethod.Post)]
-    [ValidateRequestToken(Timeout = 2)]
+    [ValidateRequestToken("token", Timeout = 2)]
     public ActionResult Login()
     {
         UserCredentials creds = new UserCredentials() { Login = "sergey", Password = "***", Other = "SomeString" };

@@ -1,7 +1,6 @@
-﻿<%@ Page Language="C#" ValidateRequest="false" Inherits="Radischevo.Wahha.Web.Mvc.UI.ViewPage" %>
-<%@ Import Namespace="Radischevo.Wahha.Web.Mvc.Html" %>
+﻿<%@ Page Language="C#" ValidateRequest="false" %>
 <%@ Import Namespace="System.Collections.Generic" %>
-<% Html.Controls.DataSource = Parameters.Form; %>
+<% Html.Controls.DataSource = HttpParameters.Form; %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">

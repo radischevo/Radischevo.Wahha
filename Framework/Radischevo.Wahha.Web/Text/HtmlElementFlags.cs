@@ -6,13 +6,14 @@ namespace Radischevo.Wahha.Web.Text
     public enum HtmlElementFlags : byte
     {
         Denied = 0,
-        Allowed = 1,          // 0000001
-        Recursive = 0x02,     // 0000010
-        SelfClosing = 0x05,   // 0000101
-        Container = 0x08,     // 0001000
-        Text = 0x10,          // 0010000
-        UseTypography = 0x30, // 0110000
-        Preformatted = 0x50,  // 1010000
-        AllowContent = 0x18   // 0011000
+        Allowed = 1,
+        Recursive = 2,
+        SelfClosing = 5,
+        Container = 8,
+        Text = 16,
+		AllowContent = 24,
+        UseTypography = 48,
+        Preformatted = 80,
+		Internal = 128
     }
 }

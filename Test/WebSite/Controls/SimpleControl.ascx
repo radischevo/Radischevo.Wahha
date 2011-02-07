@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="Radischevo.Wahha.Web.Mvc.UI.ViewUserControl" %>
+﻿<%@ Control Language="C#" %>
 
 <script runat="server">
 

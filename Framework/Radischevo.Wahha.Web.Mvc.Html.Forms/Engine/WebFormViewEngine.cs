@@ -1,17 +1,15 @@
 ﻿using System;
 
-using Radischevo.Wahha.Web.Mvc.UI;
-
-namespace Radischevo.Wahha.Web.Mvc
+namespace Radischevo.Wahha.Web.Mvc.Html.Forms
 {
     public class WebFormViewEngine : BuildManagerViewEngine
 	{
 		#region Constructors
 		public WebFormViewEngine() 
             : base("~/{0}.aspx", "~/{0}.ascx", 
-                 "~/Views/{0}.aspx", "~/Views/{0}.ascx", 
-                 "~/Views/{1}/{0}.aspx", "~/Views/{1}/{0}.ascx", 
-                 "~/Views/Shared/{0}.aspx", "~/Views/Shared/{0}.ascx")
+                 "~/views/{0}.aspx", "~/views/{0}.ascx", 
+                 "~/views/{1}/{0}.aspx", "~/views/{1}/{0}.ascx", 
+                 "~/views/shared/{0}.aspx", "~/views/shared/{0}.ascx")
         {   }
         #endregion
 

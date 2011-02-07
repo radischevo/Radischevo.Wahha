@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="Radischevo.Wahha.Web.Mvc.UI.ViewPage" %>
+﻿<%@ Page Language="C#" %>
 <% Ajax.Scripts.Block("onload").Append(() => { %>document.title = "Аллес андер май контрол!";<% }); %>
 <h2 style="color:#ff6600"><%= ViewData.Model %></h2>
 <%= Html.Controls.Tag("a", new { HRef = "http://sergey.ro", Class = "active-link" }, "Иди туда не знаю куда") %><%= Html.Controls.Tag("br") %>

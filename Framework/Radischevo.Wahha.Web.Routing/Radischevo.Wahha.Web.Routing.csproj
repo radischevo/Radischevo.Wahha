@@ -33,6 +33,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -111,7 +112,7 @@
     <Compile Include="Route.cs" />
     <Compile Include="RouteBase.cs" />
     <Compile Include="RouteCollection.cs" />
-    <Compile Include="RouteCollectionExtensions.cs" />
+    <Compile Include="Extensions\RouteCollectionExtensions.cs" />
     <Compile Include="RouteData.cs" />
     <Compile Include="RouteDirection.cs" />
     <Compile Include="RouteTable.cs" />

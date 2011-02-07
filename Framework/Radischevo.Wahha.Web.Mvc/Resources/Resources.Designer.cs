@@ -151,15 +151,6 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The ViewUserControl cannot find an IViewDataContainer. The ViewUserControl must be inside a ViewPage, ViewMasterPage, or another ViewUserControl..
-        /// </summary>
-        internal static string Error_ControlRequiresViewDataProvider {
-            get {
-                return ResourceManager.GetString("Error_ControlRequiresViewDataProvider", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The controller &apos;{0}&apos; could not be found..
         /// </summary>
         internal static string Error_CouldNotCreateController {
@@ -237,6 +228,15 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         internal static string Error_IncompatibleControllerFactoryType {
             get {
                 return ResourceManager.GetString("Error_IncompatibleControllerFactoryType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The filter provider type &apos;{0}&apos; must implement the IFilterProvider interface..
+        /// </summary>
+        internal static string Error_IncompatibleFilterProviderType {
+            get {
+                return ResourceManager.GetString("Error_IncompatibleFilterProviderType", resourceCulture);
             }
         }
         
@@ -601,15 +601,6 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A ViewUserControl can only be used inside pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;..
-        /// </summary>
-        internal static string Error_ViewControlRequiresViewPage {
-            get {
-                return ResourceManager.GetString("Error_ViewControlRequiresViewPage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to View location format collection cannot be empty..
         /// </summary>
         internal static string Error_ViewLocationFormatsAreEmpty {
@@ -619,29 +610,11 @@ namespace Radischevo.Wahha.Web.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A ViewMasterPage can only be used with content pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;..
-        /// </summary>
-        internal static string Error_ViewMasterPageRequiresViewPage {
-            get {
-                return ResourceManager.GetString("Error_ViewMasterPageRequiresViewPage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The view &apos;{0}&apos; could not be found..
         /// </summary>
         internal static string Error_ViewNotFound {
             get {
                 return ResourceManager.GetString("Error_ViewNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The view type &apos;{0}&apos; must derive from ViewPage, ViewPage&lt;TViewData&gt;, ViewUserControl, or ViewUserControl&lt;TViewData&gt;..
-        /// </summary>
-        internal static string Error_WrongViewBase {
-            get {
-                return ResourceManager.GetString("Error_WrongViewBase", resourceCulture);
             }
         }
         

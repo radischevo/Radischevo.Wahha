@@ -7,20 +7,16 @@ using Microsoft.Practices.Unity;
 using System.Threading;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Data;
 using System.Diagnostics;
 using System.IO;
-using Radischevo.Wahha.Web.Scripting.Templates;
 using Radischevo.Wahha.Web.Routing;
 using Radischevo.Wahha.Web.Mvc;
-using System.Globalization;
-using Radischevo.Wahha.Web;
-using Radischevo.Wahha.Web.Abstractions;
 using System.Web;
-using Radischevo.Wahha.Data.Caching;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Linq.Expressions;
+using Radischevo.Wahha.Web.Text;
+
+using A = Radischevo.Wahha.Web.Abstractions;
 
 namespace ConsoleTester
 {
@@ -43,8 +39,9 @@ namespace ConsoleTester
 		{
 			Program p = new Program();
 			//p.MultipleThreadTest();
-			p.SingleThreadTest();
+			//p.SingleThreadTest();
 			//p.RouteTest();
+			p.SgmlTest();
 			//p.InheritanceTest();
 
 			Console.ReadKey();
@@ -105,11 +102,10 @@ namespace ConsoleTester
 
 		public void RouteTest()
 		{
-			RequestContext context = new RequestContext(
-				new HttpContextWrapper(new HttpContext(
-					new HttpRequest("default.aspx", "http://sergey.starcafe.ru/blog/797.html", null),
-					new HttpResponse(Console.Out))), new RouteData()
-				);
+			A.HttpContextBase httpContext = new A.HttpContextWrapper(new HttpContext(
+				new HttpRequest("default.aspx", "http://sergey.starcafe.ru/blog/797.html", null),
+				new HttpResponse(Console.Out)));
+			RequestContext context = new RequestContext(httpContext, new RouteData());
 
 			RouteTable.Routes.Add("blog-list", new Route("{user}.[host]/blog/{id}.html", new MvcRouteHandler()));
 			RouteTable.Routes.Variables.Add("host", "starcafe.ru");
@@ -117,6 +113,8 @@ namespace ConsoleTester
 			var data = RouteTable.Routes.GetVirtualPath(context, "blog-list", new ValueDictionary(new {
 				user = "sergey", id = 127
 			}));
+
+			var route = RouteTable.Routes.GetRouteData(httpContext);
 
 			Console.WriteLine(data.VirtualPath);
 			// http://ksu.mysite.ru/blog/14898.html
@@ -188,6 +186,34 @@ namespace ConsoleTester
 		public void MultipleThreadTestCallback()
 		{
 			Console.WriteLine("Execution of thread {0} complete.", Thread.CurrentThread.Name);
+		}
+
+		public void SgmlTest()
+		{
+			HtmlProcessor text = new HtmlProcessor();
+
+			text.Parser.ProcessingMode = HtmlProcessingMode.DenyByDefault;
+			text.Parser.DefaultElementFlags = HtmlElementFlags.AllowContent | HtmlElementFlags.UseTypography;
+
+			text.Parser.Add(a => a.Attributes("xmlns", "ns").As(HtmlAttributeFlags.Denied))
+				.RegularContent()
+				.Links("starcafe.ru", "http://starcafe.ru/redirect")
+				.Images()
+				.Abstract("http://starcafe.ru/blog/jessica-alba/1672.html")
+				.Youtube();
+
+			text.Typographer.EncodeSpecialSymbols = true;
+			text.Typographer.Replaces();
+
+			using (StreamReader sr = new StreamReader(Path.Combine(Environment.CurrentDirectory, "sgml-test.htm"), Encoding.UTF8))
+			{
+				string html = sr.ReadToEnd();
+				using (StreamWriter sw = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "html-test.htm"), false, Encoding.UTF8))
+				{
+					sw.Write(text.Parse(html));
+				}
+			}
+			Console.WriteLine("Complete");
 		}
 	}
 }

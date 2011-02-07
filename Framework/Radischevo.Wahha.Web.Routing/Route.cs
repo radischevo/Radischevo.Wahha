@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Web;
-using System.Text;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
@@ -171,8 +169,18 @@ namespace Radischevo.Wahha.Web.Routing
             if (context == null)
                 return String.Empty;
 
-            return context.Request.ApplicationPath.TrimEnd('/');
+            return context.Request.ApplicationPath.Define().TrimEnd('/');
         }
+
+		private static string GetExecutionPath(HttpContextBase context)
+		{
+			if (context == null)
+				return String.Empty;
+
+			return (String.IsNullOrEmpty(context.Request.ApplicationPath)) ? 
+				context.Request.CurrentExecutionFilePath : 
+				context.Request.AppRelativeCurrentExecutionFilePath.Substring(1);
+		}
         #endregion
 
         #region Instance Methods
@@ -251,8 +259,7 @@ namespace Radischevo.Wahha.Web.Routing
             Precondition.Require(context, () => Error.ArgumentNull("context"));
 
             string applicationPath = GetApplicationPath(context);
-            string appRelativePath = String.Concat(context.Request
-                .AppRelativeCurrentExecutionFilePath.Substring(1), context.Request.PathInfo);
+            string appRelativePath = String.Concat(GetExecutionPath(context), context.Request.PathInfo);
 
             string virtualPath = (_parsedRoute.IsAppRelative) ? appRelativePath :
                 String.Concat(applicationPath, appRelativePath);

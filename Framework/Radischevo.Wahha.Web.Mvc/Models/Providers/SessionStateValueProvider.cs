@@ -23,7 +23,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			if (sessionState == null)
 				return new ValueDictionary();
 
-			return new HttpSessionStateSet(sessionState);
+			return sessionState.AsValueSet();
 		}
 		#endregion
 	}

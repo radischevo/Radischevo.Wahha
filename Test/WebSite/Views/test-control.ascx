@@ -1,2 +1,2 @@
-﻿<%@ Control Language="C#" Inherits="Radischevo.Wahha.Web.Mvc.UI.ViewUserControl<string>" %>
-<%= this.Model %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<string>" %>
+<%= Model %>

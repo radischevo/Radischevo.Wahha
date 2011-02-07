@@ -128,12 +128,6 @@ namespace Radischevo.Wahha.Web.Mvc
                 Res.Error_CouldNotCreateView, location));
         }
 
-        internal static Exception WrongViewBase(Type type)
-        {
-            return new InvalidOperationException(String.Format(
-                Res.Error_WrongViewBase, type.Name));
-        }
-
         internal static Exception CouldNotCreateController(string controllerName)
         {
             return new InvalidOperationException(String.Format(
@@ -150,18 +144,6 @@ namespace Radischevo.Wahha.Web.Mvc
             return new InvalidOperationException(String.Format(
                 Res.Error_InvalidViewDataType,
                 type.Name, viewDataType.Name));
-        }
-
-        internal static Exception ViewControlRequiresViewPage()
-        {
-            return new InvalidOperationException(
-                Res.Error_ViewControlRequiresViewPage);
-        }
-
-        internal static Exception ControlRequiresViewDataProvider()
-        {
-            return new InvalidOperationException(
-                Res.Error_ControlRequiresViewDataProvider);
         }
 
         internal static Exception SessionStateDisabled()
@@ -198,12 +180,6 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             return new InvalidOperationException(
                 Res.Error_UnableToLoadConfiguration, inner);
-        }
-
-        internal static Exception ViewMasterPageRequiresViewPage()
-        {
-            return new InvalidOperationException(
-                Res.Error_ViewMasterPageRequiresViewPage);
         }
 
         internal static Exception IncompatibleViewEngineType(Type type)
@@ -422,6 +398,12 @@ namespace Radischevo.Wahha.Web.Mvc
 		{
 			return new ArgumentException(String.Format(
 				Res.Error_IncompatibleValueProviderFactoryType, type.Name));
+		}
+
+		internal static Exception IncompatibleFilterProviderType(Type type)
+		{
+			return new ArgumentException(String.Format(
+				Res.Error_IncompatibleFilterProviderType, type.Name));
 		}
 	}
 }

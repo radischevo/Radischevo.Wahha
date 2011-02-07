@@ -223,7 +223,7 @@ namespace Radischevo.Wahha.Web.Mvc.Async
 		}
 
 		protected virtual IAsyncResult BeginInvokeActionFilters(ControllerContext context,
-			ActionDescriptor action, IList<IActionFilter> filters, IDictionary<string, object> parameters,
+			ActionDescriptor action, ICollection<IActionFilter> filters, IDictionary<string, object> parameters,
 			AsyncCallback callback, object state)
 		{
 			Func<ActionExecutedContext> endContinuation = null;

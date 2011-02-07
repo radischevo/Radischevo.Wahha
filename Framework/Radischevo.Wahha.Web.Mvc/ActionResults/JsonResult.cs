@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Web;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Web.Scripting.Serialization;
+using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -97,8 +96,7 @@ namespace Radischevo.Wahha.Web.Mvc
             Precondition.Require(context, () => Error.ArgumentNull("context"));
             HttpResponseBase response = context.Context.Response;
 
-            string callbackFunction = context.Context.Request
-                .Parameters.GetValue<string>("callback");
+            string callbackFunction = context.Context.Request.Parameters.GetValue<string>("callback");
             string data = String.Empty;
 
             if (!String.IsNullOrEmpty(_contentType))

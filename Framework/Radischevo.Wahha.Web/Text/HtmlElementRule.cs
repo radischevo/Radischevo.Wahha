@@ -166,7 +166,7 @@ namespace Radischevo.Wahha.Web.Text
         public virtual HtmlElementRule AddElementRule(HtmlElementRule rule)
         {
             Precondition.Require(rule, () => Error.ArgumentNull("rule"));
-            HtmlElementRule current = (rule.Parent == this) ? rule : rule.CreateCopy(this);
+            HtmlElementRule current = (rule.Parent == this) ? rule : rule.Clone(this);
             _children[current.Name] = current;
 
             return current;
@@ -175,7 +175,7 @@ namespace Radischevo.Wahha.Web.Text
         public virtual HtmlAttributeRule AddAttributeRule(HtmlAttributeRule rule)
         {
             Precondition.Require(rule, () => Error.ArgumentNull("rule"));
-            HtmlAttributeRule current = (rule.Element == this) ? rule : rule.CreateCopy(this);
+            HtmlAttributeRule current = (rule.Element == this) ? rule : rule.Clone(this);
             _attributes[current.Name] = current;
 
             return current;
@@ -193,15 +193,24 @@ namespace Radischevo.Wahha.Web.Text
                 AddAttributeRule(rule);
         }
 
-        internal HtmlElementRule CreateCopy(HtmlElementRule parent)
-        {
-            HtmlElementRule current = new HtmlElementRule(parent, _name, _flags);
-            _children.CopyTo(current._children);
-            _attributes.CopyTo(current._attributes);
-            current._converter = _converter;
+		public HtmlElementRule Clone()
+		{
+			HtmlElementRule current = new HtmlElementRule(_parent, _name, _flags);
 
-            return current;
-        }
+			current._converter = _converter;
+			_children.CopyTo(current._children);
+			_attributes.CopyTo(current._attributes);
+
+			return current;
+		}
+
+		internal HtmlElementRule Clone(HtmlElementRule parent)
+		{
+			HtmlElementRule current = Clone();
+			current._parent = parent;
+
+			return current;
+		}
 
         public override int GetHashCode()
         {
@@ -228,5 +237,5 @@ namespace Radischevo.Wahha.Web.Text
             return String.Format(@"{0}, ""{1}""", GetType().Name, _name);
         }
         #endregion
-    }
+	}
 }

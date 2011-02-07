@@ -8,6 +8,7 @@ namespace Radischevo.Wahha.Web.Text
         Denied = 0,
         Allowed = 1,
         Default = 0x02,
-        Required = 0x06
+        Required = 0x06,
+		Internal = 0x08
     }
 }

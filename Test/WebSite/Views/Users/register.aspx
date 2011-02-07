@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="Radischevo.Wahha.Web.Mvc.UI.ViewPage<TemplatedItem>" MasterPageFile="~/Views/default.master" %>
+﻿<%@ Page Language="C#" Inherits="ViewPage<TemplatedItem>" MasterPageFile="~/Views/default.master" %>
 <%@ import namespace="Radischevo.Wahha.Web.Mvc.Validation" %>
 <%@ Import Namespace="Radischevo.Wahha.Web.Scripting.Templates" %>
 <asp:Content ContentPlaceHolderID="title" runat="server">Нереальный сайт MVC</asp:Content>
@@ -6,7 +6,7 @@
 <% Ajax.Scripts.Include("http://ajax.microsoft.com/ajax/jquery/jquery-1.3.2.min.js")
 		.Include("http://ajax.microsoft.com/ajax/jquery.validate/1.5.5/jquery.validate.min.js")
 		.Include("~/resources/jquery.mvc.validation.js");
-   Html.Controls.DataSource = Parameters.Form; %>
+   Html.Controls.DataSource = HttpParameters.Form; %>
 </asp:Content>
 <asp:Content ContentPlaceHolderID="main" runat="server">
 <script type="text/javascript" src="<%= JavaScriptTemplateHandler.GenerateUrl(Url.Resource("~/scriptTemplate.axd"), "~/views/global.js.html") %>">

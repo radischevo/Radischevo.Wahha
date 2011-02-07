@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Radischevo.Wahha.Web.Mvc.Html.Forms</name>
+    </assembly>
+    <members>
+        <member name="T:Radischevo.Wahha.Web.Mvc.Html.Forms.AssemblyResourceViewEngine">
+            <summary>
+            Provides a view engine for serving pages or user controls 
+            from embedded resources, using the 
+            <see cref="T:Radischevo.Wahha.Web.Hosting.AssemblyResourcePathProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Html.Forms.AssemblyResourceViewEngine.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="!:Radischevo.Wahha.Web.Mvc.AssemblyResourceViewEngine"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Html.Forms.AssemblyResourceViewEngine.Init(Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Initializes the current 
+            <see cref="!:Radischevo.Wahha.Web.Mvc.AssemblyResourceViewEngine"/> instance 
+            using the specified <paramref name="settings"/>.
+            </summary>
+            <param name="settings">A settings list for the current instance.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.Html.Forms.Resources.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.Resources.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.Resources.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.Resources.Resources.Error_ChildRequestExecutionError">
+            <summary>
+              Looks up a localized string similar to Execution of the child request failed. Please examine the InnerException for more information..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.Resources.Resources.Error_ControlRequiresViewDataProvider">
+            <summary>
+              Looks up a localized string similar to The ViewUserControl cannot find an IViewDataContainer. The ViewUserControl must be inside a ViewPage, ViewMasterPage, or another ViewUserControl..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.Resources.Resources.Error_ViewControlRequiresViewPage">
+            <summary>
+              Looks up a localized string similar to A ViewUserControl can only be used inside pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.Resources.Resources.Error_ViewMasterPageRequiresViewPage">
+            <summary>
+              Looks up a localized string similar to A ViewMasterPage can only be used with content pages that derive from ViewPage or ViewPage&lt;TViewItem&gt;..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.Resources.Resources.Error_WrongViewBase">
+            <summary>
+              Looks up a localized string similar to The view type &apos;{0}&apos; must derive from ViewPage, ViewPage&lt;TViewData&gt;, ViewUserControl, or ViewUserControl&lt;TViewData&gt;..
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Html.Forms.ViewPage.InitHelpers(Radischevo.Wahha.Web.Mvc.ViewContext)">
+            <summary>
+            Instantiates and initializes the Ajax, Html, and Url properties.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.Html.Forms.ViewPage.RenderView(Radischevo.Wahha.Web.Mvc.ViewContext)">
+            <summary>
+            Renders the view page to the response.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.ViewPage.Html">
+            <summary>
+            Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper"/> containing 
+            methods useful for rendering HTML elements.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.ViewPage.Output">
+            <summary>
+            Gets or sets the <see cref="T:System.IO.TextWriter"/>, 
+            where the page will be rendered into.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.ViewPage.Url">
+            <summary>
+            Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UrlHelper"/> containing 
+            methods useful for resolving URLs and routes.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.ViewPage.Ajax">
+            <summary>
+            Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper"/> 
+            containing methods useful for AJAX scenarios.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.ViewPage.Model">
+            <summary>
+            Convenience property used to access the Model 
+            property of the <see cref="T:Radischevo.Wahha.Web.Mvc.ViewDataDictionary"/>
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.Forms.ViewPage`1.Html">
+            <summary>
+            Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper"/> containing 
+            methods useful for rendering HTML elements.
+            </summary>
+        </member>
+    </members>
+</doc>

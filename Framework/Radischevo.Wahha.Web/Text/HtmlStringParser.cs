@@ -129,9 +129,19 @@ namespace Radischevo.Wahha.Web.Text
         #endregion
 
         #region Helper Methods
+		protected bool MatchName(XmlElement element, HtmlElementRule rule)
+		{
+			return String.Equals(element.LocalName, rule.Name, StringComparison.OrdinalIgnoreCase);
+		}
+
+		protected bool MatchName(XmlAttribute attribute, HtmlAttributeRule rule)
+		{
+			return String.Equals(attribute.LocalName, rule.Name, StringComparison.OrdinalIgnoreCase);
+		}
+
         protected HtmlElementRule GetElementRule(HtmlElementRule parent, string tag)
         {
-            HtmlElementFlags defaultFlags = DefaultElementFlags | ((_processingMode == HtmlProcessingMode.AllowByDefault) ?
+			HtmlElementFlags defaultFlags = DefaultElementFlags | ((_processingMode == HtmlProcessingMode.AllowByDefault) ?
                 HtmlElementFlags.SelfClosing | HtmlElementFlags.Allowed | HtmlElementFlags.AllowContent :
                 HtmlElementFlags.Denied);
 
@@ -140,7 +150,9 @@ namespace Radischevo.Wahha.Web.Text
 
         protected HtmlAttributeRule GetAttributeRule(HtmlElementRule parent, string attribute)
         {
-            HtmlAttributeFlags flags = (_processingMode == HtmlProcessingMode.AllowByDefault) ?
+			bool isInternal = ((parent.Flags & HtmlElementFlags.Internal) == HtmlElementFlags.Internal);
+
+			HtmlAttributeFlags flags = (_processingMode == HtmlProcessingMode.AllowByDefault || isInternal) ?
                 HtmlAttributeFlags.Allowed : HtmlAttributeFlags.Denied;
 
             return parent.Attributes[attribute] ?? _document.Attributes[attribute] ?? 
@@ -243,10 +255,18 @@ namespace Radischevo.Wahha.Web.Text
             if (rule.Converter != null)
             {
                 element = rule.Converter(element);
-                if (!String.Equals(element.LocalName, rule.Name, StringComparison.OrdinalIgnoreCase))
-                    rule = GetElementRule(parent, element.LocalName);
-            }
+				if (element == null)
+					return null;
 
+                if (!MatchName(element, rule))
+                    rule = GetElementRule(parent, element.LocalName);
+
+				if ((rule.Flags & HtmlElementFlags.Internal) == HtmlElementFlags.Internal)
+				{
+					rule = rule.Clone();
+					rule.Flags |= HtmlElementFlags.Allowed;
+				}
+            }
             return element;
         }
 
@@ -256,9 +276,12 @@ namespace Radischevo.Wahha.Web.Text
             HtmlElementRule rule;
             element = ConvertElement(parent, element, out rule);
 
-            WriteStartElement(rule, element, writer);
-            WriteElementContents(rule, element, writer);
-            WriteEndElement(rule, element, writer);
+			if (element == null)
+				return;
+			
+			WriteStartElement(rule, element, writer);
+			WriteElementContents(rule, element, writer);
+			WriteEndElement(rule, element, writer);
         }
 
         protected void WriteStartElement(HtmlElementRule rule, XmlElement element, XmlWriter writer)
@@ -322,10 +345,18 @@ namespace Radischevo.Wahha.Web.Text
             if (attrRule.Converter != null)
             {
                 attribute = attrRule.Converter(attribute);
-                if(!String.Equals(attribute.LocalName, attrRule.Name))
+				if (attribute == null)
+					return null;
+
+                if(!MatchName(attribute, attrRule))
                     attrRule = GetAttributeRule(rule, attribute.LocalName);
+
+				if ((attrRule.Flags & HtmlAttributeFlags.Internal) == HtmlAttributeFlags.Internal)
+				{
+					attrRule = attrRule.Clone();
+					attrRule.Flags |= HtmlAttributeFlags.Allowed;
+				}
             }
-            
             string value = attribute.Value;
 
             if ((attrRule.Flags & HtmlAttributeFlags.Allowed) == HtmlAttributeFlags.Allowed)
@@ -376,7 +407,10 @@ namespace Radischevo.Wahha.Web.Text
             HtmlElementBuilder element, HtmlElementRenderMode renderMode)
         {
             XmlDocument dummy = new XmlDocument();
+			XmlElement container = dummy.CreateElement(parent.Name);
+
             XmlElement xe = dummy.CreateElement(element.Name);
+			container.AppendChild(xe);
             
             foreach(KeyValuePair<string, object> attr in element.Attributes)
                 xe.Attributes.Append(dummy.CreateAttribute(attr.Key.ToLowerInvariant())).Value = 

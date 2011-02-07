@@ -7,15 +7,15 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 #if DEBUG
-[assembly: AssemblyTitle("Wahha Framework Data Provider -- DEBUG BUILD")]
+[assembly: AssemblyTitle("Wahha Framework Data Access Library -- DEBUG BUILD")]
 #else
-[assembly: AssemblyTitle("Wahha Framework Data Provider")]
+[assembly: AssemblyTitle("Wahha Framework Data Access Library")]
 #endif
-[assembly: AssemblyDescription("Lite Version")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jeltofiol Internet Design")]
+[assembly: AssemblyCompany("Radischevo Solutions")]
 [assembly: AssemblyProduct("Wahha Framework")]
-[assembly: AssemblyCopyright("Copyright ©Jeltofiol 2008")]
+[assembly: AssemblyCopyright("Copyright ©Sergey Rodyushkin 2008–2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -37,6 +37,6 @@ using System.Resources;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.0.*")]
-[assembly: AssemblyFileVersion("3.0")]
+[assembly: AssemblyVersion("3.1.*")]
+[assembly: AssemblyFileVersion("3.1")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]

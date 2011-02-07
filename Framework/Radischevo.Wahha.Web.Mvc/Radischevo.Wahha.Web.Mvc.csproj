@@ -33,6 +33,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,6 +100,9 @@
     <Compile Include="Attributes\PropertyBindingOrderAttribute.cs" />
     <Compile Include="Attributes\RequireHttpsAttribute.cs" />
     <Compile Include="Attributes\ResultCacheAttribute.cs" />
+    <Compile Include="Configurations\ControllerFactoryConfigurationElement.cs" />
+    <Compile Include="Configurations\FilterProviderConfigurationElement.cs" />
+    <Compile Include="Configurations\FilterProviderConfigurationElementCollection.cs" />
     <Compile Include="Configurations\ModelConfigurationElement.cs" />
     <Compile Include="Configurations\ValueProviderConfigurationElement.cs" />
     <Compile Include="Configurations\ValueProviderConfigurationElementCollection.cs" />
@@ -112,6 +116,8 @@
     <Compile Include="Async\AsyncTask.cs" />
     <Compile Include="Async\AsyncVoid.cs" />
     <Compile Include="Async\MvcAsyncResult.cs" />
+    <Compile Include="Engine\ActionFilterCache.cs" />
+    <Compile Include="Engine\AttributedFilterProvider.cs" />
     <Compile Include="Engine\ActionMethodCacheEntry.cs" />
     <Compile Include="Async\Interfaces\IAsyncActionExecutor.cs" />
     <Compile Include="Async\Interfaces\IAsyncController.cs" />
@@ -150,26 +156,31 @@
     <Compile Include="Configurations\ViewConfigurationElement.cs" />
     <Compile Include="Configurations\ViewConfigurationElementCollection.cs" />
     <Compile Include="Engine\ActionDescriptor.cs" />
-    <Compile Include="Engine\ActionFilterInfo.cs" />
     <Compile Include="Engine\ActionSelector.cs" />
-    <Compile Include="Engine\AssemblyResourceViewEngine.cs" />
     <Compile Include="Engine\BuildManagerCompiledView.cs" />
     <Compile Include="Engine\BuildManagerViewEngine.cs" />
     <Compile Include="Engine\ChildContextOperator.cs" />
+    <Compile Include="Engine\ControllerFilterProvider.cs" />
     <Compile Include="Engine\DefaultControllerActivator.cs" />
     <Compile Include="Engine\DefaultViewActivator.cs" />
-    <Compile Include="Helpers\ModelStateSerializer.cs" />
-    <Compile Include="Helpers\SerializationExtensions.cs" />
-    <Compile Include="Helpers\SerializationMode.cs" />
-    <Compile Include="Helpers\ValueProviderExtensions.cs" />
+    <Compile Include="Data\ModelStateSerializer.cs" />
+    <Compile Include="Engine\Filter.cs" />
+    <Compile Include="Engine\ActionFilterInfo.cs" />
+    <Compile Include="Engine\FilterProviderCollection.cs" />
+    <Compile Include="Engine\FilterScope.cs" />
+    <Compile Include="Html\Extensions\SerializationExtensions.cs" />
+    <Compile Include="Data\SerializationMode.cs" />
+    <Compile Include="Extensions\ValueProviderExtensions.cs" />
     <Compile Include="Interfaces\IControllerActivator.cs" />
+    <Compile Include="Interfaces\IFilterProvider.cs" />
+    <Compile Include="Interfaces\IMvcFilter.cs" />
     <Compile Include="Interfaces\IValueProvider.cs" />
     <Compile Include="Interfaces\IViewActivator.cs" />
     <Compile Include="Models\ArrayModelBinder.cs" />
     <Compile Include="Models\ArrayModelBinderProvider.cs" />
     <Compile Include="Models\EnumerableModelBinderProvider.cs" />
     <Compile Include="Models\BindingContext.cs" />
-    <Compile Include="Engine\CollectionHelpers.cs" />
+    <Compile Include="Extensions\CollectionHelpers.cs" />
     <Compile Include="Engine\FormCollection.cs" />
     <Compile Include="Models\CollectionModelBinder.cs" />
     <Compile Include="Models\CollectionModelBinderProvider.cs" />
@@ -191,8 +202,6 @@
     <Compile Include="Engine\MethodDispatcherCache.cs" />
     <Compile Include="Models\ModelBinderBase.cs" />
     <Compile Include="Models\ModelBinderCollection.cs" />
-    <Compile Include="Helpers\HttpHandlerWrapper.cs" />
-    <Compile Include="Helpers\HttpSessionStateSet.cs" />
     <Compile Include="Metadata\FieldOrderAttribute.cs" />
     <Compile Include="Models\ModelBinderProvider.cs" />
     <Compile Include="Models\ModelMapperBase`1.cs" />
@@ -260,26 +269,24 @@
     <Compile Include="Engine\SessionStateTempDataProvider.cs" />
     <Compile Include="Engine\ViewDataEvaluator.cs" />
     <Compile Include="ActionResults\ViewResultBase.cs" />
-    <Compile Include="Engine\WebFormView.cs" />
-    <Compile Include="Engine\WebFormViewEngine.cs" />
     <Compile Include="Models\XmlModelBinder.cs" />
-    <Compile Include="Helpers\AjaxHelper.cs" />
-    <Compile Include="Helpers\BlockRenderer.cs" />
-    <Compile Include="Helpers\HtmlControlHelper.cs" />
-    <Compile Include="Helpers\HtmlHelper.cs" />
-    <Compile Include="Helpers\LinqHelper.cs" />
-    <Compile Include="Helpers\RequestValidationException.cs" />
-    <Compile Include="Helpers\RequestValidationToken.cs" />
-    <Compile Include="Helpers\ResourceHelper.cs" />
-    <Compile Include="Helpers\MvcRouteCollectionExtensions.cs" />
-    <Compile Include="Helpers\ScriptManager.cs" />
-    <Compile Include="Helpers\TemplateHelper.cs" />
-    <Compile Include="Helpers\UrlHelper.cs" />
-    <Compile Include="Helpers\ValidationHelper.cs" />
-    <Compile Include="Html\BinaryHtmlExtensions.cs" />
-    <Compile Include="Html\FormExtensions.cs" />
-    <Compile Include="Html\LabelExtensions.cs" />
-    <Compile Include="Html\LinkExtensions.cs" />
+    <Compile Include="Html\Helpers\AjaxHelper.cs" />
+    <Compile Include="Html\BlockRenderer.cs" />
+    <Compile Include="Html\Helpers\HtmlControlHelper.cs" />
+    <Compile Include="Html\Helpers\HtmlHelper.cs" />
+    <Compile Include="Extensions\LinqHelper.cs" />
+    <Compile Include="Extensions\RequestValidationException.cs" />
+    <Compile Include="Extensions\RequestValidationToken.cs" />
+    <Compile Include="Extensions\ResourceHelper.cs" />
+    <Compile Include="Extensions\MvcRouteCollectionExtensions.cs" />
+    <Compile Include="Html\ScriptManager.cs" />
+    <Compile Include="Html\Helpers\TemplateHelper.cs" />
+    <Compile Include="Html\Helpers\UrlHelper.cs" />
+    <Compile Include="Html\Helpers\ValidationHelper.cs" />
+    <Compile Include="Html\Extensions\BinaryHtmlExtensions.cs" />
+    <Compile Include="Html\Extensions\FormExtensions.cs" />
+    <Compile Include="Html\Extensions\LabelExtensions.cs" />
+    <Compile Include="Html\Extensions\LinkExtensions.cs" />
     <Compile Include="Html\ListItem.cs" />
     <Compile Include="Html\MultiSelectList.cs" />
     <Compile Include="Html\MvcForm.cs" />
@@ -319,31 +326,14 @@
     </Compile>
     <Compile Include="RedirectData.cs" />
     <Compile Include="Engine\TempDataDictionary.cs" />
-    <Compile Include="UI\DefaultDisplayTemplates.cs" />
-    <Compile Include="UI\DefaultEditorTemplates.cs" />
-    <Compile Include="UI\TemplateDescriptor.cs" />
-    <Compile Include="UI\ViewContext.cs" />
-    <Compile Include="UI\ViewDataDictionary.cs" />
-    <Compile Include="UI\ViewDataDictionary`1.cs" />
-    <Compile Include="UI\ViewDataInfo.cs" />
-    <Compile Include="UI\ViewMasterPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UI\ViewPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UI\ViewPageBuilder.cs" />
-    <Compile Include="UI\ViewTemplateUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UI\ViewType.cs" />
-    <Compile Include="UI\ViewTypeControlBuilder.cs" />
-    <Compile Include="UI\ViewTypeParserFilter.cs" />
-    <Compile Include="UI\ViewUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Html\DefaultDisplayTemplates.cs" />
+    <Compile Include="Html\DefaultEditorTemplates.cs" />
+    <Compile Include="Data\TemplateDescriptor.cs" />
+    <Compile Include="Engine\ViewContext.cs" />
+    <Compile Include="Data\ViewDataDictionary.cs" />
+    <Compile Include="Data\ViewDataDictionary`1.cs" />
+    <Compile Include="Data\ViewDataInfo.cs" />
     <Compile Include="Engine\ValidationErrorCollection.cs" />
-    <Compile Include="UI\ViewUserControlBuilder.cs" />
     <Compile Include="Validation\ModelValidatorProvider.cs" />
     <Compile Include="Validation\RemoteValidationAttribute.cs" />
     <Compile Include="Validation\Rules\DataAnnotationsValidationRule.cs" />
@@ -399,6 +389,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

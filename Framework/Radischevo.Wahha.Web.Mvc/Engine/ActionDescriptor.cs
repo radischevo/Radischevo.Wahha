@@ -10,40 +10,9 @@ namespace Radischevo.Wahha.Web.Mvc
 {
     public abstract class ActionDescriptor : ICustomAttributeProvider
 	{
-		#region Nested Types
-		private sealed class AllowMultipleCache : ReaderWriterCache<Type, bool>
-		{
-			#region Constructors
-			public AllowMultipleCache()
-				: base()
-			{
-			}
-			#endregion
-
-			#region Static Fields
-			private static bool AllowsMultiple(Type type)
-			{
-				AttributeUsageAttribute attr = type
-					.GetCustomAttributes<AttributeUsageAttribute>(true)
-					.FirstOrDefault();
-
-				return (attr == null) ? false : attr.AllowMultiple;
-			}
-			#endregion
-
-			#region Instance Methods
-			public bool AllowMultiple(Type type)
-			{
-				return GetOrCreate(type, () => AllowsMultiple(type));
-			}
-			#endregion
-		}
-		#endregion
-
 		#region Static Fields
 		private static readonly ActionSelector[] _emptySelectors = new ActionSelector[0];
 		private static readonly MethodDispatcherCache _staticDispatcherCache = new MethodDispatcherCache();
-		private static readonly AllowMultipleCache _allowMultipleCache = new AllowMultipleCache();
         #endregion
 
 		#region Instance Fields
@@ -100,13 +69,7 @@ namespace Radischevo.Wahha.Web.Mvc
 				if (info.IsOut || info.ParameterType.IsByRef)
 					throw Error.ReferenceActionParametersNotSupported(method, info.Name);
 		}
-
-		protected static IList<TFilter> FiltersToTypedList<TFilter>(IList<FilterAttribute> filters)
-			where TFilter : class
-		{
-			return filters.OfType<TFilter>().ToList();
-		}
-
+		
 		protected static object ExtractParameter(ParameterInfo parameter,
 			IDictionary<string, object> parameters, MethodInfo action)
 		{
@@ -135,34 +98,6 @@ namespace Radischevo.Wahha.Web.Mvc
 
 			return (Interlocked.CompareExchange<TDescriptor[]>(ref cache, local, null) ?? local);
 		}
-
-		protected static IEnumerable<FilterAttribute> RemoveOverriddenFilters(IEnumerable<FilterAttribute> filters)
-		{
-			Dictionary<Type, int> attrIndices = new Dictionary<Type, int>();
-
-			FilterAttribute[] filtersList = filters.ToArray();
-			for (int i = 0; i < filtersList.Length; i++)
-			{
-				FilterAttribute filter = filtersList[i];
-				Type filterType = filter.GetType();
-
-				int lastIndex;
-				if (attrIndices.TryGetValue(filterType, out lastIndex))
-				{
-					if (lastIndex >= 0)
-					{
-						filtersList[lastIndex] = null;
-						attrIndices[filterType] = i;
-					}
-				}
-				else
-				{
-					bool allowMultiple = _allowMultipleCache.AllowMultiple(filterType);
-					attrIndices[filterType] = (allowMultiple) ? -1 : i;
-				}
-			}
-			return filtersList.Where(attr => attr != null);
-		}
 		#endregion
 
 		#region Instance Methods
@@ -175,9 +110,9 @@ namespace Radischevo.Wahha.Web.Mvc
             return _emptySelectors;
         }
 
-        public virtual ActionFilterInfo GetFilters()
+        public virtual IEnumerable<FilterAttribute> GetFilters(bool useCache)
         {
-            return new ActionFilterInfo();
+			return GetCustomAttributes(typeof(FilterAttribute), true).Cast<FilterAttribute>();
         }
 
         public virtual object[] GetCustomAttributes(bool inherit)

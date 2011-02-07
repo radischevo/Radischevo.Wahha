@@ -10,12 +10,16 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         #region Instance Fields
         private IControllerFactory _factory;
         private Dictionary<string, Type> _mappings;
+		private FilterProviderCollection _filterProviders;
         #endregion
 
         #region Constructors
         internal ControllerConfigurationSettings()
         {
             _mappings = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+			_filterProviders = new FilterProviderCollection();
+
+			InitDefaultFilterProviders();
         }
         #endregion
 
@@ -42,31 +46,85 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
                 return _mappings;
             }
         }
+
+		public FilterProviderCollection FilterProviders
+		{
+			get
+			{
+				return _filterProviders;
+			}
+		}
         #endregion
 
-        #region Instance Methods
-        internal void Init(ControllerConfigurationElement element)
+		#region Static Methods
+		private static IFilterProvider CreateFilterProvider(Type type)
+		{
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			if (!typeof(IFilterProvider).IsAssignableFrom(type))
+				throw Error.IncompatibleFilterProviderType(type);
+
+			return (IFilterProvider)ServiceLocator.Instance.GetService(type);
+		}
+
+		private static IControllerFactory CreateControllerFactory(Type type)
+		{
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			if (!typeof(IControllerFactory).IsAssignableFrom(type))
+				throw Error.IncompatibleControllerFactoryType(type);
+
+			IControllerFactory factory = (IControllerFactory)ServiceLocator.Instance.GetService(type);
+			return factory;
+		}
+		#endregion
+
+		#region Instance Methods
+		internal void Init(ControllerConfigurationElement element)
         {
             Precondition.Require(element, () => Error.ArgumentNull("element"));
-			CreateFactory(element);
 
-            foreach (ControllerMappingConfigurationElement nm in element.Mappings)
-                _mappings.Add(nm.Name, Type.GetType(nm.ControllerType, true, true));
+			InitFactory(element.Factory);
+			InitFilterProviders(element.FilterProviders);
+			InitStaticMappings(element.Mappings);
         }
 
-		private void CreateFactory(ControllerConfigurationElement element)
+		private void InitDefaultFilterProviders()
 		{
-			Type type = Type.GetType(element.FactoryType, false, true);
-			if (type != null)
-			{
-				if (!typeof(IControllerFactory).IsAssignableFrom(type))
-					throw Error.IncompatibleControllerFactoryType(type);
+			_filterProviders.Add(new AttributedFilterProvider(true));
+			_filterProviders.Add(new ControllerFilterProvider());
+		}
 
-				_factory = (IControllerFactory)ServiceLocator.Instance.GetService(type);
-				_factory.Init(element.Parameters);
+		private void InitFilterProviders(FilterProviderConfigurationElementCollection element)
+		{
+			if (element == null)
+				return;
+
+			foreach (FilterProviderConfigurationElement elem in element)
+			{
+				IFilterProvider provider = CreateFilterProvider(
+					Type.GetType(elem.ProviderType, true, true));
+
+				provider.Init(elem.Parameters);
+				_filterProviders.Add(provider);
 			}
-			else
-				_factory = new DefaultControllerFactory();
+		}
+
+		private void InitStaticMappings(ControllerMappingConfigurationElementCollection element)
+		{
+			if (element == null)
+				return;
+
+			foreach (ControllerMappingConfigurationElement map in element)
+				_mappings.Add(map.Name, Type.GetType(map.ControllerType, true, true));
+		}
+
+		private void InitFactory(ControllerFactoryConfigurationElement element)
+		{
+			Type type = String.IsNullOrEmpty(element.FactoryType) ? 
+				typeof(DefaultControllerFactory) : 
+				Type.GetType(element.FactoryType, true, true);
+
+			_factory = CreateControllerFactory(type);
+			_factory.Init(element.Parameters);
 		}
         #endregion
     }

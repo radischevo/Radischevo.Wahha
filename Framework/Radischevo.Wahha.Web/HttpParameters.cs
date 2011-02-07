@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
@@ -7,161 +6,38 @@ using System.Linq;
 using System.Web;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web
 {
     /// <summary>
     /// Incapsulates the collection 
-    /// of HTTP request variables
+    /// of HTTP request variables.
     /// </summary>
-    public class HttpParameters : IValueSet
+    public class HttpParameters : IHttpValueSet
     {
-        #region Nested Types
-        private sealed class CollectionWrapper<TCollection> : IHttpValueSet
-            where TCollection : NameObjectCollectionBase
-        {
-            #region Instance Fields
-            private TCollection _collection;
-            private HashSet<string> _keys;
-            private Func<TCollection, string, object> _selector;
-            #endregion
-
-            #region Constructors
-            public CollectionWrapper(TCollection collection, 
-                Func<TCollection, string, object> selector)
-            {
-                Precondition.Require(collection, () => Error.ArgumentNull("collection"));
-                Precondition.Require(selector, () => Error.ArgumentNull("selector"));
-
-                _collection = collection;
-                _selector = selector;
-            }
-            #endregion
-
-            #region Instance Properties
-            private HashSet<string> Keys
-            {
-                get
-                {
-                    if (_keys == null)
-                        _keys = new HashSet<string>(_collection.Keys.Cast<string>(), 
-                            StringComparer.InvariantCultureIgnoreCase);
-                    
-                    return _keys;
-                }
-            }
-
-            public object this[string key]
-            {
-                get
-                {
-                    return GetValue<object>(key, null, CultureInfo.CurrentCulture);
-                }
-            }
-
-            public int Count
-            {
-                get
-                {
-                    return _collection.Count;
-                }
-            }
-            #endregion
-
-			#region Instance Methods
-			public TValue GetValue<TValue>(string key, TValue defaultValue, 
-				IFormatProvider provider)
-            {
-                if (!ContainsKey(key))
-                    return defaultValue;
-
-                object value = _selector(_collection, key);
-                return Converter.ChangeType<TValue>(value, defaultValue);
-            }
-
-			public IEnumerable<TValue> GetValues<TValue>(string key)
-			{
-				List<TValue> list = new List<TValue>();
-				string keyValue = GetValue<string>(key, null, CultureInfo.CurrentCulture);
-
-				if (keyValue == null)
-					return list;
-
-				string[] values = keyValue.Split(new char[] { ',' },
-					StringSplitOptions.RemoveEmptyEntries);
-
-				foreach (string sv in values)
-					list.Add(Converter.ChangeType<TValue>(sv, default(TValue)));
-				
-				return list;
-			}
-
-            public bool ContainsKey(string key)
-            {
-                return Keys.Contains(key);
-            }
-
-            public bool ContainsAll(params string[] keys)
-            {
-                foreach (string key in keys)
-                {
-                    if (!ContainsKey(key))
-                        return false;
-                }
-                return true;
-            }
-
-            public bool ContainsAny(params string[] keys)
-            {
-                foreach (string key in keys)
-                {
-                    if (ContainsKey(key))
-                        return true;
-                }
-                return false;
-            }
-            #endregion
-
-            #region IValueSet Members
-            IEnumerable<string> IValueSet.Keys
-            {
-                get
-                {
-                    return Keys;
-                }
-            }
-            #endregion
-        }
-        #endregion
-
         #region Instance Fields
-        private CollectionWrapper<NameValueCollection> _form;
-        private CollectionWrapper<NameValueCollection> _queryString;
-        private CollectionWrapper<NameValueCollection> _headers;
-        private CollectionWrapper<HttpCookieCollection> _cookies;
+        private IHttpValueSet _form;
+		private IHttpValueSet _queryString;
+		private IHttpValueSet _headers;
+		private IHttpValueSet _cookies;
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Initializes a new instance of the 
-        /// <see cref="RequestParameters"/> class
-        /// </summary>
-        /// <param name="request">The current HTTP request</param>
-        public HttpParameters(HttpRequest request)
-        {
-            Precondition.Require(request, () => Error.ArgumentNull("request"));
+		/// <summary>
+		/// Initializes a new instance of the 
+		/// <see cref="HttpParameters"/> class
+		/// </summary>
+		/// <param name="request">The current HTTP request</param>
+		public HttpParameters(HttpRequest request)
+		{
+			Precondition.Require(request, () => Error.ArgumentNull("request"));
 
-            _queryString = new CollectionWrapper<NameValueCollection>(
-                request.QueryString, (col, key) => col[key]);
-            _headers = new CollectionWrapper<NameValueCollection>(
-                request.Headers, (col, key) => col[key]);
-            _form = new CollectionWrapper<NameValueCollection>(
-                request.Form, (col, key) => col[key]);
-            _cookies = new CollectionWrapper<HttpCookieCollection>(
-                request.Cookies, (col, key) => { 
-                    HttpCookie c = col[key]; return (c == null) ? null : c.Value; 
-                });
-        }
+			_queryString = request.QueryString.AsValueSet();
+			_headers = request.Headers.AsValueSet();
+			_form = request.Form.AsValueSet();
+			_cookies = request.Cookies.AsValueSet();
+		}
         #endregion
 
         #region Instance Properties
@@ -207,6 +83,18 @@ namespace Radischevo.Wahha.Web
         #endregion
 
         #region Instance Methods
+		/// <summary>
+		/// Determines whether the collection contains the specified key.
+		/// </summary>
+		/// <param name="key">The key to find.</param>
+		public bool ContainsKey(string key)
+		{
+			return (_form.ContainsKey(key) ||
+				_queryString.ContainsKey(key) ||
+				_cookies.ContainsKey(key) ||
+				_headers.ContainsKey(key));				
+		}
+
         /// <summary>
         /// Gets the typed list of 
         /// values from the specified 
@@ -272,21 +160,4 @@ namespace Radischevo.Wahha.Web
 		}
 		#endregion
 	}
-
-    /// <summary>
-    /// Provides extension methods for the 
-    /// <see cref="System.Web.HttpRequest"/> class.
-    /// </summary>
-    public static class HttpRequestExtensions
-    {
-        /// <summary>
-        /// Gets the combined HTTP value collection 
-        /// for the current <see cref="System.Web.HttpRequest"/>.
-        /// </summary>
-        /// <param name="request">The request instance to extend.</param>
-        public static HttpParameters Parameters(this HttpRequest request)
-        {
-            return new HttpParameters(request);
-        }
-    }
 }

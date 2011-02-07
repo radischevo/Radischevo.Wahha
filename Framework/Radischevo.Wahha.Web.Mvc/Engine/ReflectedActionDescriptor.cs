@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -9,9 +10,13 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Web.Mvc
 {
     public class ReflectedActionDescriptor : ActionDescriptor
-    {
-        #region Instance Fields
-        private string _name;
+	{
+		#region Static Fields
+		private static readonly ActionFilterCache _filterCache = new ActionFilterCache();
+		#endregion
+
+		#region Instance Fields
+		private string _name;
         private MethodInfo _method;        
         private ControllerDescriptor _controller;
         private ParameterDescriptor[] _parameterCache;
@@ -95,25 +100,18 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public override IEnumerable<ActionSelector> GetSelectors()
         {
-            ActionSelectorAttribute[] attributes = (ActionSelectorAttribute[])_method.GetCustomAttributes(typeof(ActionSelectorAttribute), true);
+            ActionSelectorAttribute[] attributes = _method.GetCustomAttributes<ActionSelectorAttribute>(true).ToArray();
             return Array.ConvertAll<ActionSelectorAttribute, ActionSelector>(attributes, attr => {
                 return context => attr.IsValid(context, _method);
             });
         }
 
-        public override ActionFilterInfo GetFilters()
+        public override IEnumerable<FilterAttribute> GetFilters(bool useCache)
         {
-            FilterAttribute[] typeFilters = (FilterAttribute[])_method.ReflectedType.GetCustomAttributes(typeof(FilterAttribute), true);
-            FilterAttribute[] methodFilters = (FilterAttribute[])_method.GetCustomAttributes(typeof(FilterAttribute), true);
-
-            List<FilterAttribute> filters = RemoveOverriddenFilters(typeFilters.Concat(methodFilters))
-				.OrderBy(attr => attr.Order).ToList();
-
-            return new ActionFilterInfo(
-                FiltersToTypedList<IActionFilter>(filters),
-                FiltersToTypedList<IResultFilter>(filters),
-                FiltersToTypedList<IAuthorizationFilter>(filters),
-                FiltersToTypedList<IExceptionFilter>(filters));
+			if (useCache)
+				return _filterCache.GetFilters(_method);
+			
+			return base.GetFilters(useCache);
         }
 
         public override IEnumerable<ParameterDescriptor> GetParameters()

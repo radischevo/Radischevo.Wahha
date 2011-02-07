@@ -16,7 +16,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         internal ViewConfigurationSettings()
         {
             _viewEngines = new ViewEngineCollection();
-            _viewEngines.Add(new WebFormViewEngine());
         }
         #endregion
 
@@ -33,8 +32,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         #region Static Methods
         private static IViewEngine CreateViewEngine(Type type, IValueSet settings)
         {
-            if (type == null)
-                return new WebFormViewEngine();
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
 
             if (!typeof(IViewEngine).IsAssignableFrom(type))
                 throw Error.IncompatibleViewEngineType(type);

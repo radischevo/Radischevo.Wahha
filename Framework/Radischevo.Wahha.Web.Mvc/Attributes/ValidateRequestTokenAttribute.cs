@@ -9,29 +9,41 @@ namespace Radischevo.Wahha.Web.Mvc
         Inherited = true, AllowMultiple = false)]
     public sealed class ValidateRequestTokenAttribute : FilterAttribute, IAuthorizationFilter
     {
-        #region Constants
-        internal const string ValidationFieldName = "__digest";
-        #endregion
-
         #region Instance Fields
+		private string _fieldName;
         private string _value;
         private int _timeout;
         #endregion
 
         #region Constructors
-        public ValidateRequestTokenAttribute()
-            : this(null)
+        public ValidateRequestTokenAttribute(string fieldName)
+            : this(fieldName, null)
         {   }
 
-        public ValidateRequestTokenAttribute(string value)
+        public ValidateRequestTokenAttribute(string fieldName, string value)
             : base()
         {
+			Precondition.Defined(fieldName, () => Error.ArgumentNull("fieldName"));
+
+			_fieldName = fieldName;
             _value = value;
         }
         #endregion
 
         #region Instance Properties
-        public string Value
+		public string FieldName
+		{
+			get
+			{
+				return _fieldName;
+			}
+			set
+			{
+				_fieldName = value;
+			}
+		}
+		
+		public string Value
         {
             get
             {
@@ -56,11 +68,11 @@ namespace Radischevo.Wahha.Web.Mvc
         }
         #endregion
 
-        #region IAuthorizationFilter Members
+        #region Instance Methods
         public void OnAuthorization(AuthorizationContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-			string value = context.HttpContext.Request.Form.GetValue<string>(ValidationFieldName);
+			string value = context.HttpContext.Request.Parameters.Form.GetValue<string>(FieldName);
 
             if (String.IsNullOrEmpty(value))
                 throw Error.RequestValidationError();

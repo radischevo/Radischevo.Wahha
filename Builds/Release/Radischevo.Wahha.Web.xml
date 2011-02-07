@@ -4,69 +4,6 @@
         <name>Radischevo.Wahha.Web</name>
     </assembly>
     <members>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpResponseWrapper">
-            <summary>
-            Encapsulates the HTTP intrinsic object that provides 
-            HTTP-response information from an ASP.NET operation.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpResponseBase">
-            <summary>
-            Serves as the base class for classes that provides 
-            HTTP-response information from an ASP.NET operation.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpResponseBase.#ctor">
-            <summary>
-            Initializes the class for use by an inherited class 
-            instance. This constructor can only be called by an inherited class.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpFileCollectionWrapper">
-            <summary>
-            Encapsulates the HTTP intrinsic object that provides access 
-            to files that were uploaded by a client.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpFileCollectionBase">
-            <summary>
-            Serves as the base class for classes that provide 
-            access to files that were uploaded by a client.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpFileCollectionBase.#ctor">
-            <summary>
-            Initializes the class for use by an inherited 
-            class instance. This constructor can only be 
-            called by an inherited class. 
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpContextWrapper">
-            <summary>
-            Encapsulates the HTTP intrinsic object that contains 
-            HTTP-specific information about an individual HTTP request.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpCachePolicyWrapper">
-            <summary>
-            Encapsulates the HTTP intrinsic object that contains methods 
-            for setting cache-specific HTTP headers and for controlling the 
-            ASP.NET page output cache.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpCachePolicyBase">
-            <summary>
-            Serves as the base class for classes that contain methods for 
-            setting cache-specific HTTP headers and for controlling the 
-            ASP.NET page output cache. 
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpCachePolicyBase.#ctor">
-            <summary>
-            Initializes the class for use by an inherited class instance. 
-            This constructor can only be called by an inherited class.
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Web.Abstractions.HttpStaticObjectsCollectionBase">
             <summary>
             Serves as the base class for classes that provide a collection of application-scoped objects for the 
@@ -304,15 +241,21 @@
         <member name="T:Radischevo.Wahha.Web.HttpParameters">
             <summary>
             Incapsulates the collection 
-            of HTTP request variables
+            of HTTP request variables.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Web.HttpParameters.#ctor(System.Web.HttpRequest)">
             <summary>
             Initializes a new instance of the 
-            <see cref="!:RequestParameters"/> class
+            <see cref="T:Radischevo.Wahha.Web.HttpParameters"/> class
             </summary>
             <param name="request">The current HTTP request</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.HttpParameters.ContainsKey(System.String)">
+            <summary>
+            Determines whether the collection contains the specified key.
+            </summary>
+            <param name="key">The key to find.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.HttpParameters.GetValues``1(System.String)">
             <summary>
@@ -334,37 +277,6 @@
             <param name="defaultValue">The default value of the variable</param>
             <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
             supplies culture-specific formatting information.</param>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.HttpRequestExtensions">
-            <summary>
-            Provides extension methods for the 
-            <see cref="T:System.Web.HttpRequest"/> class.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.HttpRequestExtensions.Parameters(System.Web.HttpRequest)">
-            <summary>
-            Gets the combined HTTP value collection 
-            for the current <see cref="T:System.Web.HttpRequest"/>.
-            </summary>
-            <param name="request">The request instance to extend.</param>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpServerUtilityWrapper">
-            <summary>
-            Encapsulates the HTTP intrinsic object that provides 
-            helper methods for processing Web requests.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpServerUtilityBase">
-            <summary>
-            Serves as the base class for classes that provide 
-            helper methods for processing Web requests.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpServerUtilityBase.#ctor">
-            <summary>
-            Initializes the class for use by an inherited class instance. 
-            This constructor can only be called by an inherited class.
-            </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Text.Sgml.SgmlNode">
             <summary>
@@ -685,6 +597,18 @@
             <value>The XmlNameTable enabling you to get the atomized 
             version of a string within the node.</value>
         </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpServerUtilityBase">
+            <summary>
+            Serves as the base class for classes that provide 
+            helper methods for processing Web requests.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpServerUtilityBase.#ctor">
+            <summary>
+            Initializes the class for use by an inherited class instance. 
+            This constructor can only be called by an inherited class.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Web.Text.Sgml.AttributeDefinition">
             <summary>
             An attribute definition in a DTD.
@@ -748,6 +672,14 @@
             attribute declaration.
             </summary>
         </member>
+        <member name="M:Radischevo.Wahha.Web.HttpSessionStateExtensions.AsValueSet(Radischevo.Wahha.Web.Abstractions.HttpSessionStateBase)">
+            <summary>
+            Creates a wrapper over the specified 
+            <see cref="!:System.Web.HttpSessionStateBase"/>
+            making it act as <see cref="T:Radischevo.Wahha.Web.IHttpValueSet"/>.
+            </summary>
+            <param name="session">The session state to wrap over.</param>
+        </member>
         <member name="T:Radischevo.Wahha.Web.Abstractions.HttpSessionStateBase">
             <summary>
             Serves as the base class for classes that provides access to 
@@ -792,6 +724,31 @@
             <typeparam name="TValue">The type of value.</typeparam>
             <param name="key">The index of the element to find.</param>
             <param name="defaultValue">The default value of the variable.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpResponseBase">
+            <summary>
+            Serves as the base class for classes that provides 
+            HTTP-response information from an ASP.NET operation.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpResponseBase.#ctor">
+            <summary>
+            Initializes the class for use by an inherited class 
+            instance. This constructor can only be called by an inherited class.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpFileCollectionBase">
+            <summary>
+            Serves as the base class for classes that provide 
+            access to files that were uploaded by a client.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpFileCollectionBase.#ctor">
+            <summary>
+            Initializes the class for use by an inherited 
+            class instance. This constructor can only be 
+            called by an inherited class. 
+            </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Hosting.AssemblyResourcePathProvider">
             <summary>
@@ -1134,6 +1091,22 @@
             Adds the specified encoding to the response headers.
             </summary>
             <param name="encoding"></param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.HttpValueCollectionExtensions.AsValueSet(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Creates a wrapper over the specified 
+            <see cref="T:System.Collections.Specialized.NameValueCollection"/>
+            making it act as <see cref="T:Radischevo.Wahha.Web.IHttpValueSet"/>.
+            </summary>
+            <param name="collection">The collection to wrap over.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.HttpValueCollectionExtensions.AsValueSet(System.Web.HttpCookieCollection)">
+            <summary>
+            Creates a wrapper over the specified 
+            <see cref="T:System.Web.HttpCookieCollection"/>
+            making it act as <see cref="T:Radischevo.Wahha.Web.IHttpValueSet"/>.
+            </summary>
+            <param name="collection">The collection to wrap over.</param>
         </member>
         <member name="T:Radischevo.Wahha.Web.Text.Sgml.Attribute">
             <summary>
@@ -1709,33 +1682,6 @@
             Convert tags to lower case.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Caching.CacheExtensions.Get``1(System.Web.Caching.Cache,System.String)">
-            <summary>
-            Gets the typed value from the web application cache.
-            </summary>
-            <typeparam name="T">The type of the object to return.</typeparam>
-            <param name="cache"></param>
-            <param name="key">The key the object is stored with.</param>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpPostedFileWrapper">
-            <summary>
-            Encapsulates the HTTP intrinsic object that provides access to 
-            individual files that have been uploaded by a client.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpApplicationStateWrapper">
-            <summary>
-            Encapsulates the HTTP intrinsic object that enables information to be 
-            shared across multiple requests and sessions within an ASP.NET application.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpApplicationStateWrapper.#ctor(System.Web.HttpApplicationState)">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Web.Abstractions.HttpApplicationStateWrapper" /> class. 
-            </summary>
-            <param name="application">The object that this wrapper class provides access to.</param>
-        </member>
         <member name="T:Radischevo.Wahha.Web.Text.Sgml.SgmlReader">
             <summary>
             SgmlReader is an XmlReader API over any 
@@ -2214,16 +2160,17 @@
             Contextual information detailing the entity on which the error occurred.
             </summary>
         </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpStaticObjectsCollectionWrapper">
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpCachePolicyBase">
             <summary>
-            Encapsulates the HTTP intrinsic object that provides a collection 
-            of application-scoped objects for the <see cref="T:System.Web.HttpApplicationState.StaticObjects" /> property.
+            Serves as the base class for classes that contain methods for 
+            setting cache-specific HTTP headers and for controlling the 
+            ASP.NET page output cache. 
             </summary>
         </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpRequestWrapper">
+        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpCachePolicyBase.#ctor">
             <summary>
-            Encapsulates the HTTP intrinsic object that enables ASP.NET to read 
-            the HTTP values that are sent by a client during a Web request.
+            Initializes the class for use by an inherited class instance. 
+            This constructor can only be called by an inherited class.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Text.Sgml.ElementDeclaration">
@@ -2264,6 +2211,68 @@
         <member name="P:Radischevo.Wahha.Web.Text.Sgml.ElementDeclaration.ContentModel">
             <summary>
             The <see cref="P:Radischevo.Wahha.Web.Text.Sgml.ElementDeclaration.ContentModel"/> of the element declaration.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpResponseWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that provides 
+            HTTP-response information from an ASP.NET operation.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpFileCollectionWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that provides access 
+            to files that were uploaded by a client.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpContextWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that contains 
+            HTTP-specific information about an individual HTTP request.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpCachePolicyWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that contains methods 
+            for setting cache-specific HTTP headers and for controlling the 
+            ASP.NET page output cache.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpServerUtilityWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that provides 
+            helper methods for processing Web requests.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpPostedFileWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that provides access to 
+            individual files that have been uploaded by a client.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpApplicationStateWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that enables information to be 
+            shared across multiple requests and sessions within an ASP.NET application.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Abstractions.HttpApplicationStateWrapper.#ctor(System.Web.HttpApplicationState)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Abstractions.HttpApplicationStateWrapper" /> class. 
+            </summary>
+            <param name="application">The object that this wrapper class provides access to.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpStaticObjectsCollectionWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that provides a collection 
+            of application-scoped objects for the <see cref="T:System.Web.HttpApplicationState.StaticObjects" /> property.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpRequestWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that enables ASP.NET to read 
+            the HTTP values that are sent by a client during a Web request.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Abstractions.HttpSessionStateWrapper">
