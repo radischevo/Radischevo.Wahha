@@ -398,8 +398,11 @@ public class MainController : Controller
     [ActionName("Section")]
     [AcceptHttpVerbs(HttpMethod.Post)]
     [ValidateRequestToken("token", Timeout = 2)]
+	[ErrorHandler]
     public ActionResult Login()
     {
+		throw new RequestValidationException();
+
         UserCredentials creds = new UserCredentials() { Login = "sergey", Password = "***", Other = "SomeString" };
         BindModel<UserCredentials>(creds, new string[] { "login" });
 

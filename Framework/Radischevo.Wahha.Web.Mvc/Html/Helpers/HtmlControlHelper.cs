@@ -104,9 +104,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         /// <param name="value">An extended value to store in the token.</param>
         public string Token(string value)
         {
-            RequestValidationToken token = RequestValidationToken.Create(Context.Context);
-			token.Value = value;
-
+            RequestValidationToken token = RequestValidationToken.Create(Context.Context, value);
 			return token.Serialize();
         }
         #endregion

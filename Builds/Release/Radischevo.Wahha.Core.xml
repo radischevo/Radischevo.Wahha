@@ -1156,29 +1156,6 @@
             Gets the size, in bits, of the computed hash code.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Core.StringExtensions.Left(System.String,System.Int32)">
-            <summary>
-            Returns the first few characters of the string with a length
-            specified by the given parameter. If the string's length is less than the 
-            given length the complete string is returned.
-            </summary>
-            <param name="str">The string to process</param>
-            <param name="count">A number of characters to return</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Core.StringExtensions.Right(System.String,System.Int32)">
-            <summary>
-            Returns the last few characters of the string with a length
-            specified by the given parameter. If the string's length is less than the 
-            given length the complete string is returned. 
-            </summary>
-            <param name="str">The string to process</param>
-            <param name="count">A number of characters to return</param>
-        </member>
-        <member name="T:Radischevo.Wahha.Core.Async.Trigger">
-            <summary>
-            Provides a trigger for the <see cref="T:Radischevo.Wahha.Core.Async.TriggerListener"/> class.
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Core.Converter">
             <summary>
             Converts a base data type to another base data type.
@@ -1310,6 +1287,29 @@
             <param name="defaultValue">The default value of the parameter.</param>
             <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation that 
             supplies culture-specific formatting information.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringExtensions.Left(System.String,System.Int32)">
+            <summary>
+            Returns the first few characters of the string with a length
+            specified by the given parameter. If the string's length is less than the 
+            given length the complete string is returned.
+            </summary>
+            <param name="str">The string to process</param>
+            <param name="count">A number of characters to return</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.StringExtensions.Right(System.String,System.Int32)">
+            <summary>
+            Returns the last few characters of the string with a length
+            specified by the given parameter. If the string's length is less than the 
+            given length the complete string is returned. 
+            </summary>
+            <param name="str">The string to process</param>
+            <param name="count">A number of characters to return</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Async.Trigger">
+            <summary>
+            Provides a trigger for the <see cref="T:Radischevo.Wahha.Core.Async.TriggerListener"/> class.
+            </summary>
         </member>
     </members>
 </doc>

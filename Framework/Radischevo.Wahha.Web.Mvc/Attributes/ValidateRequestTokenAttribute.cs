@@ -17,16 +17,10 @@ namespace Radischevo.Wahha.Web.Mvc
 
         #region Constructors
         public ValidateRequestTokenAttribute(string fieldName)
-            : this(fieldName, null)
-        {   }
-
-        public ValidateRequestTokenAttribute(string fieldName, string value)
             : base()
         {
 			Precondition.Defined(fieldName, () => Error.ArgumentNull("fieldName"));
-
 			_fieldName = fieldName;
-            _value = value;
         }
         #endregion
 
@@ -36,10 +30,6 @@ namespace Radischevo.Wahha.Web.Mvc
 			get
 			{
 				return _fieldName;
-			}
-			set
-			{
-				_fieldName = value;
 			}
 		}
 		
@@ -77,7 +67,7 @@ namespace Radischevo.Wahha.Web.Mvc
             if (String.IsNullOrEmpty(value))
                 throw Error.RequestValidationError();
 
-			RequestValidationToken current = RequestValidationToken.Create(context.HttpContext);
+			RequestValidationToken current = RequestValidationToken.Create(context.HttpContext, Value);
             RequestValidationToken token = RequestValidationToken.Create(value);
 
             if(!token.IsValid(current))

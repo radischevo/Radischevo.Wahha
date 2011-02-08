@@ -10,13 +10,13 @@ namespace Radischevo.Wahha.Web.Mvc
     public sealed class ErrorHandlerAttribute : FilterAttribute, IExceptionFilter
     {
         #region Instance Fields
-        private Type _type = typeof(Exception);
+        private Type _type;
         private string _view;
         #endregion
 
         #region Constructors
         public ErrorHandlerAttribute() 
-            : base()
+            : this(null, typeof(Exception))
         {
         }
 
@@ -76,9 +76,6 @@ namespace Radischevo.Wahha.Web.Mvc
             if (controller == null || context.Handled || !context.Context.IsCustomErrorEnabled)
                 return;
 
-			if (context.IsChild)
-				return;
-
             Exception exception = context.Exception;
             if (new HttpException(null, exception).GetHttpCode() != 500)
                 return;
@@ -92,7 +89,9 @@ namespace Radischevo.Wahha.Web.Mvc
             ErrorHandlerInfo model = new ErrorHandlerInfo(context.Exception);
             context.Handled = true;
             context.Context.Response.Clear();
-            context.Context.Response.StatusCode = 500;
+
+			if(!context.IsChild)
+				context.Context.Response.StatusCode = 500;
 
             if (String.IsNullOrEmpty(_view))
                 context.Result = EmptyResult.Instance;
@@ -100,7 +99,8 @@ namespace Radischevo.Wahha.Web.Mvc
                 context.Result = new ViewResult() {
                     TempData = controller.TempData,
                     ViewData = new ViewDataDictionary<ErrorHandlerInfo>(model), 
-                    ViewName = View };
+                    ViewName = View 
+				};
         }
         #endregion
     }
