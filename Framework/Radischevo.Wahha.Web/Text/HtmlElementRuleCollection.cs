@@ -123,7 +123,7 @@ namespace Radischevo.Wahha.Web.Text
         #endregion
 
         #region Fluent Interface Implementation
-        IFluentElementRule IFluentElementRule.As(HtmlElementFlags flags)
+        IFluentElementRule IFluentElementRule.As(HtmlElementOptions flags)
         {
             foreach (IFluentElementRule rule in this)
                 rule.As(flags);

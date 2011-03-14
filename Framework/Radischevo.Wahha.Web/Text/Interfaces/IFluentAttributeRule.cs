@@ -4,7 +4,7 @@ namespace Radischevo.Wahha.Web.Text
 {
     public interface IFluentAttributeRule : IRuleBuilder
     {
-        IFluentAttributeRule As(HtmlAttributeFlags flags);
+        IFluentAttributeRule As(HtmlAttributeOptions options);
 
         IFluentAttributeRule Convert(HtmlAttributeConverter converter);
 
@@ -13,5 +13,7 @@ namespace Radischevo.Wahha.Web.Text
         IFluentAttributeRule Default(object defaultValue);
 
         IFluentAttributeRule Validate(string pattern);
+
+		IFluentAttributeRule Validate(params string[] values);
     }
 }

@@ -3,7 +3,7 @@
 namespace Radischevo.Wahha.Web.Text
 {
     [Flags]
-    public enum HtmlAttributeFlags : byte
+    public enum HtmlAttributeOptions : byte
     {
         Denied = 0,
         Allowed = 1,

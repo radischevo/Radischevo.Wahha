@@ -10,7 +10,7 @@ namespace Radischevo.Wahha.Web.Text
     {
         #region Instance Fields
         private string _name;
-        private HtmlElementFlags _flags;
+        private HtmlElementOptions _flags;
         private HtmlElementRule _parent;
         private HtmlElementRuleCollection _children;
         private HtmlAttributeRuleCollection _attributes;
@@ -19,7 +19,7 @@ namespace Radischevo.Wahha.Web.Text
 
         #region Constructors
         public HtmlElementRule(HtmlElementRule parent,
-            string name, HtmlElementFlags flags)
+            string name, HtmlElementOptions flags)
         {
             Precondition.Defined(name,
 				() => Error.ArgumentNull("name"));
@@ -41,7 +41,7 @@ namespace Radischevo.Wahha.Web.Text
             }
         }
 
-        public HtmlElementFlags Flags
+        public HtmlElementOptions Flags
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Radischevo.Wahha.Web.Text
         #endregion
 
         #region Fluent Interface Implementation
-        IRuleAppender IRuleAppender.With(Func<IRuleSelector, IRuleBuilder> inner)
+        public IRuleAppender With(Func<IRuleSelector, IRuleBuilder> inner)
         {
             Precondition.Require(inner, () => Error.ArgumentNull("inner"));
             IRuleBuilder rule = inner(this);
@@ -115,7 +115,7 @@ namespace Radischevo.Wahha.Web.Text
             return this;
         }
 
-        IFluentElementRule IFluentElementRule.As(HtmlElementFlags flags)
+        IFluentElementRule IFluentElementRule.As(HtmlElementOptions flags)
         {
             _flags = flags;
             return this;
@@ -129,8 +129,8 @@ namespace Radischevo.Wahha.Web.Text
 
         IFluentElementRule IRuleSelector.Element(string name)
         {
-            return new HtmlElementRule(this, name, HtmlElementFlags.Allowed |
-                HtmlElementFlags.AllowContent | HtmlElementFlags.SelfClosing);
+            return new HtmlElementRule(this, name, HtmlElementOptions.Allowed |
+                HtmlElementOptions.AllowContent | HtmlElementOptions.SelfClosing);
         }
 
         IFluentElementRule IRuleSelector.Elements(params string[] names)
@@ -139,15 +139,15 @@ namespace Radischevo.Wahha.Web.Text
             HtmlElementRuleCollection collection = new HtmlElementRuleCollection();
 
             foreach (string name in names)
-                collection.Add(new HtmlElementRule(this, name, HtmlElementFlags.Allowed |
-                    HtmlElementFlags.AllowContent | HtmlElementFlags.SelfClosing));
+                collection.Add(new HtmlElementRule(this, name, HtmlElementOptions.Allowed |
+                    HtmlElementOptions.AllowContent | HtmlElementOptions.SelfClosing));
             
             return collection;
         }
 
         IFluentAttributeRule IRuleSelector.Attribute(string name)
         {
-            return new HtmlAttributeRule(this, name, HtmlAttributeFlags.Allowed);
+            return new HtmlAttributeRule(this, name, HtmlAttributeOptions.Allowed);
         }
 
         IFluentAttributeRule IRuleSelector.Attributes(params string[] names)
@@ -156,31 +156,13 @@ namespace Radischevo.Wahha.Web.Text
             HtmlAttributeRuleCollection collection = new HtmlAttributeRuleCollection();
 
             foreach (string name in names)
-                collection.Add(new HtmlAttributeRule(this, name, HtmlAttributeFlags.Allowed));
+                collection.Add(new HtmlAttributeRule(this, name, HtmlAttributeOptions.Allowed));
 
             return collection;
         }
         #endregion
 
         #region Instance Methods
-        public virtual HtmlElementRule AddElementRule(HtmlElementRule rule)
-        {
-            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
-            HtmlElementRule current = (rule.Parent == this) ? rule : rule.Clone(this);
-            _children[current.Name] = current;
-
-            return current;
-        }
-
-        public virtual HtmlAttributeRule AddAttributeRule(HtmlAttributeRule rule)
-        {
-            Precondition.Require(rule, () => Error.ArgumentNull("rule"));
-            HtmlAttributeRule current = (rule.Element == this) ? rule : rule.Clone(this);
-            _attributes[current.Name] = current;
-
-            return current;
-        }
-
         private void AddElementRules(IEnumerable<HtmlElementRule> collection)
         {
             foreach (HtmlElementRule rule in collection)
@@ -193,13 +175,20 @@ namespace Radischevo.Wahha.Web.Text
                 AddAttributeRule(rule);
         }
 
-		public HtmlElementRule Clone()
+		public virtual HtmlElementRule AddElementRule(HtmlElementRule rule)
 		{
-			HtmlElementRule current = new HtmlElementRule(_parent, _name, _flags);
+			Precondition.Require(rule, () => Error.ArgumentNull("rule"));
+			HtmlElementRule current = (rule.Parent == this) ? rule : rule.Clone(this);
+			_children[current.Name] = current;
 
-			current._converter = _converter;
-			_children.CopyTo(current._children);
-			_attributes.CopyTo(current._attributes);
+			return current;
+		}
+
+		public virtual HtmlAttributeRule AddAttributeRule(HtmlAttributeRule rule)
+		{
+			Precondition.Require(rule, () => Error.ArgumentNull("rule"));
+			HtmlAttributeRule current = (rule.Element == this) ? rule : rule.Clone(this);
+			_attributes[current.Name] = current;
 
 			return current;
 		}
@@ -208,6 +197,17 @@ namespace Radischevo.Wahha.Web.Text
 		{
 			HtmlElementRule current = Clone();
 			current._parent = parent;
+
+			return current;
+		}
+
+		public HtmlElementRule Clone()
+		{
+			HtmlElementRule current = new HtmlElementRule(_parent, _name, _flags);
+
+			current._converter = _converter;
+			_children.CopyTo(current._children);
+			_attributes.CopyTo(current._attributes);
 
 			return current;
 		}

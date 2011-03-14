@@ -16,23 +16,23 @@ namespace Radischevo.Wahha.Web.Text
     {
         #region Instance Fields
         private HtmlElementRule _document;
-        private HtmlElementFlags _defaultElementFlags;
-        private HtmlProcessingMode _processingMode;
+        private HtmlElementOptions _defaultElementFlags;
+        private HtmlFilteringMode _processingMode;
         private HtmlStringTypographer _typographer;
         private bool _preserveWhitespace;
         #endregion
 
         #region Constructors
         public HtmlStringParser()
-            : this(HtmlProcessingMode.DenyByDefault)
+            : this(HtmlFilteringMode.DenyByDefault)
         {
         }
 
-        public HtmlStringParser(HtmlProcessingMode processingMode)
+        public HtmlStringParser(HtmlFilteringMode processingMode)
         {
             _document = new HtmlElementRule(null, "html",
-                HtmlElementFlags.Allowed | HtmlElementFlags.AllowContent |
-                HtmlElementFlags.UseTypography);
+                HtmlElementOptions.Allowed | HtmlElementOptions.AllowContent |
+                HtmlElementOptions.UseTypography);
 
             _preserveWhitespace = true;
             _processingMode = processingMode;
@@ -41,11 +41,11 @@ namespace Radischevo.Wahha.Web.Text
 
         #region Instance Properties
         /// <summary>
-        /// Gets or sets the <see cref="Radischevo.Wahha.Web.Text.HtmlProcessingMode"/> 
+        /// Gets or sets the <see cref="Radischevo.Wahha.Web.Text.HtmlFilteringMode"/> 
         /// which will be used to determine whether the particular HTML node is allowed 
         /// within the document.
         /// </summary>
-        public HtmlProcessingMode ProcessingMode
+        public HtmlFilteringMode ProcessingMode
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Radischevo.Wahha.Web.Text
         /// Gets or sets the default rule set, which will be applied 
         /// to an element, if no specific rule is found.
         /// </summary>
-        public HtmlElementFlags DefaultElementFlags
+        public HtmlElementOptions DefaultElementFlags
         {
             get
             {
@@ -141,19 +141,19 @@ namespace Radischevo.Wahha.Web.Text
 
         protected HtmlElementRule GetElementRule(HtmlElementRule parent, string tag)
         {
-			HtmlElementFlags defaultFlags = DefaultElementFlags | ((_processingMode == HtmlProcessingMode.AllowByDefault) ?
-                HtmlElementFlags.SelfClosing | HtmlElementFlags.Allowed | HtmlElementFlags.AllowContent :
-                HtmlElementFlags.Denied);
+			HtmlElementOptions defaultFlags = DefaultElementFlags | ((_processingMode == HtmlFilteringMode.AllowByDefault) ?
+                HtmlElementOptions.SelfClosing | HtmlElementOptions.Allowed | HtmlElementOptions.AllowContent :
+                HtmlElementOptions.Denied);
 
             return GetRuleOrDefault(parent, tag, defaultFlags);
         }
 
         protected HtmlAttributeRule GetAttributeRule(HtmlElementRule parent, string attribute)
         {
-			bool isInternal = ((parent.Flags & HtmlElementFlags.Internal) == HtmlElementFlags.Internal);
+			bool isInternal = ((parent.Flags & HtmlElementOptions.Internal) == HtmlElementOptions.Internal);
 
-			HtmlAttributeFlags flags = (_processingMode == HtmlProcessingMode.AllowByDefault || isInternal) ?
-                HtmlAttributeFlags.Allowed : HtmlAttributeFlags.Denied;
+			HtmlAttributeOptions flags = (_processingMode == HtmlFilteringMode.AllowByDefault || isInternal) ?
+                HtmlAttributeOptions.Allowed : HtmlAttributeOptions.Denied;
 
             return parent.Attributes[attribute] ?? _document.Attributes[attribute] ?? 
                 new HtmlAttributeRule(_document, attribute, flags);
@@ -181,19 +181,19 @@ namespace Radischevo.Wahha.Web.Text
             }
             // если мы тут, нет ни родителя, ни потомка, зрим в корень...
             tagRule = GetRule(tag);
-            if (tagRule != null && (tagRule.Flags & HtmlElementFlags.Recursive)
-                == HtmlElementFlags.Recursive) // и ищем рекурсивные правила
+            if (tagRule != null && (tagRule.Flags & HtmlElementOptions.Recursive)
+                == HtmlElementOptions.Recursive) // и ищем рекурсивные правила
                 return tagRule;
 
             return null;
         }
 
-        protected HtmlElementRule GetRuleOrDefault(string tag, HtmlElementFlags flags)
+        protected HtmlElementRule GetRuleOrDefault(string tag, HtmlElementOptions flags)
         {
             return GetRule(tag) ?? new HtmlElementRule(Document, tag, flags);
         }
 
-        protected HtmlElementRule GetRuleOrDefault(HtmlElementRule parent, string tag, HtmlElementFlags flags)
+        protected HtmlElementRule GetRuleOrDefault(HtmlElementRule parent, string tag, HtmlElementOptions flags)
         {
             parent = parent ?? _document;
             return GetRule(parent, tag) ?? new HtmlElementRule(parent, tag, flags);
@@ -226,21 +226,21 @@ namespace Radischevo.Wahha.Web.Text
             switch (node.NodeType)
             {
                 case XmlNodeType.Element:
-                    if ((parent.Flags & HtmlElementFlags.Container) == HtmlElementFlags.Container)
+                    if ((parent.Flags & HtmlElementOptions.Container) == HtmlElementOptions.Container)
                         WriteElement(parent, (XmlElement)node, writer);
                     break;
                 case XmlNodeType.CDATA:
-                    if ((parent.Flags & HtmlElementFlags.Text) == HtmlElementFlags.Text)
+                    if ((parent.Flags & HtmlElementOptions.Text) == HtmlElementOptions.Text)
                         WriteCData(parent, node.Value, writer);
                     break;
                 case XmlNodeType.Comment:
-                    if ((parent.Flags & HtmlElementFlags.Text) == HtmlElementFlags.Text)
+                    if ((parent.Flags & HtmlElementOptions.Text) == HtmlElementOptions.Text)
                         WriteComment(parent, node.Value, writer);
                     break;
                 case XmlNodeType.Text:
                 case XmlNodeType.Whitespace:
                 case XmlNodeType.SignificantWhitespace:
-                    if ((parent.Flags & HtmlElementFlags.Text) == HtmlElementFlags.Text)
+                    if ((parent.Flags & HtmlElementOptions.Text) == HtmlElementOptions.Text)
                         WriteText(parent, node.Value, writer);
                     break;
             }
@@ -261,10 +261,10 @@ namespace Radischevo.Wahha.Web.Text
                 if (!MatchName(element, rule))
                     rule = GetElementRule(parent, element.LocalName);
 
-				if ((rule.Flags & HtmlElementFlags.Internal) == HtmlElementFlags.Internal)
+				if ((rule.Flags & HtmlElementOptions.Internal) == HtmlElementOptions.Internal)
 				{
 					rule = rule.Clone();
-					rule.Flags |= HtmlElementFlags.Allowed;
+					rule.Flags |= HtmlElementOptions.Allowed;
 				}
             }
             return element;
@@ -286,7 +286,7 @@ namespace Radischevo.Wahha.Web.Text
 
         protected void WriteStartElement(HtmlElementRule rule, XmlElement element, XmlWriter writer)
         {
-            if ((rule.Flags & HtmlElementFlags.Allowed) == HtmlElementFlags.Allowed)
+            if ((rule.Flags & HtmlElementOptions.Allowed) == HtmlElementOptions.Allowed)
             {
                 writer.WriteStartElement(element.LocalName);
                 WriteAttributes(rule, element.Attributes, writer);
@@ -295,9 +295,9 @@ namespace Radischevo.Wahha.Web.Text
 
         protected void WriteEndElement(HtmlElementRule rule, XmlElement element, XmlWriter writer)
         {
-            if ((rule.Flags & HtmlElementFlags.Allowed) == HtmlElementFlags.Allowed)
+            if ((rule.Flags & HtmlElementOptions.Allowed) == HtmlElementOptions.Allowed)
             {
-                if ((rule.Flags & HtmlElementFlags.SelfClosing) == HtmlElementFlags.SelfClosing)
+                if ((rule.Flags & HtmlElementOptions.SelfClosing) == HtmlElementOptions.SelfClosing)
                     writer.WriteEndElement();
                 else
                     writer.WriteFullEndElement();
@@ -307,7 +307,7 @@ namespace Radischevo.Wahha.Web.Text
         protected void WriteElementContents(HtmlElementRule rule,
             XmlElement element, XmlWriter writer)
         {
-            if ((rule.Flags & HtmlElementFlags.Preformatted) == HtmlElementFlags.Preformatted)
+            if ((rule.Flags & HtmlElementOptions.Preformatted) == HtmlElementOptions.Preformatted)
                 WriteText(rule, element.InnerXml, writer);
             else
                 foreach (XmlNode node in element)
@@ -332,7 +332,7 @@ namespace Radischevo.Wahha.Web.Text
         {
             foreach (HtmlAttributeRule attr in rule.Attributes)
             {
-                if ((attr.Flags & HtmlAttributeFlags.Required) == HtmlAttributeFlags.Required
+                if ((attr.Flags & HtmlAttributeOptions.Required) == HtmlAttributeOptions.Required
                     && !usedAttributes.Contains(attr.Name))
                     writer.WriteAttributeString(attr.Name, attr.DefaultValue);
             }
@@ -351,17 +351,17 @@ namespace Radischevo.Wahha.Web.Text
                 if(!MatchName(attribute, attrRule))
                     attrRule = GetAttributeRule(rule, attribute.LocalName);
 
-				if ((attrRule.Flags & HtmlAttributeFlags.Internal) == HtmlAttributeFlags.Internal)
+				if ((attrRule.Flags & HtmlAttributeOptions.Internal) == HtmlAttributeOptions.Internal)
 				{
 					attrRule = attrRule.Clone();
-					attrRule.Flags |= HtmlAttributeFlags.Allowed;
+					attrRule.Flags |= HtmlAttributeOptions.Allowed;
 				}
             }
             string value = attribute.Value;
 
-            if ((attrRule.Flags & HtmlAttributeFlags.Allowed) == HtmlAttributeFlags.Allowed)
+            if ((attrRule.Flags & HtmlAttributeOptions.Allowed) == HtmlAttributeOptions.Allowed)
             {
-                if ((attrRule.Flags & HtmlAttributeFlags.Default) == HtmlAttributeFlags.Default &&
+                if ((attrRule.Flags & HtmlAttributeOptions.Default) == HtmlAttributeOptions.Default &&
                     String.IsNullOrEmpty(value))
                     value = attrRule.DefaultValue;
 
@@ -386,7 +386,7 @@ namespace Radischevo.Wahha.Web.Text
 
         protected virtual void WriteText(HtmlElementRule rule, string text, XmlWriter writer)
         {
-            if ((rule.Flags & HtmlElementFlags.UseTypography) == HtmlElementFlags.UseTypography &&
+            if ((rule.Flags & HtmlElementOptions.UseTypography) == HtmlElementOptions.UseTypography &&
                 _typographer != null)
             {
                 _typographer.Formatter = (element, mode) => FormatElement(rule, element, mode);
@@ -436,10 +436,10 @@ namespace Radischevo.Wahha.Web.Text
                     {
                         sb.Length = 0;
 
-                        HtmlElementFlags flags = rule.Flags;
-                        if ((rule.Flags & HtmlElementFlags.SelfClosing) ==
-                            HtmlElementFlags.SelfClosing)
-                            rule.Flags = (HtmlElementFlags)((byte)rule.Flags - 0x04);
+                        HtmlElementOptions flags = rule.Flags;
+                        if ((rule.Flags & HtmlElementOptions.SelfClosing) ==
+                            HtmlElementOptions.SelfClosing)
+                            rule.Flags = (HtmlElementOptions)((byte)rule.Flags - 0x04);
 
                         WriteEndElement(rule, xe, writer);
                         rule.Flags = flags;
@@ -491,11 +491,11 @@ namespace Radischevo.Wahha.Web.Text
         /// <summary>
         /// Adds a top-level rule for the element.
         /// </summary>
-        /// <param name="inner">The selector function.</param>
-        public IRuleAppender Add(Func<IRuleSelector, IRuleBuilder> inner)
+        /// <param name="builder">The selector function.</param>
+        public IRuleAppender Treat(Func<IRuleSelector, IRuleBuilder> builder)
         {
-            Precondition.Require(inner, () => Error.ArgumentNull("inner"));
-            IRuleBuilder rule = inner(this);
+            Precondition.Require(builder, () => Error.ArgumentNull("inner"));
+            IRuleBuilder rule = builder(this);
 
             HtmlElementRule elem = (rule as HtmlElementRule);
             HtmlAttributeRule attr = (rule as HtmlAttributeRule);
@@ -511,27 +511,27 @@ namespace Radischevo.Wahha.Web.Text
             else if (ac != null)
                 AddAttributeRules(ac);
             else
-                throw Error.UnsupportedElementRule("inner");
+                throw Error.UnsupportedElementRule("builder");
 
             return this;
         }
         #endregion
 
         #region Fluent Interface Implementation
-        IRuleAppender IRuleAppender.With(Func<IRuleSelector, IRuleBuilder> inner)
-        {
-            return Add(inner);
-        }
+		IRuleAppender IRuleAppender.With(Func<IRuleSelector, IRuleBuilder> builder)
+		{
+			return Treat(builder);
+		}
 
         IFluentElementRule IRuleSelector.Element(string name)
         {
-            return new HtmlElementRule(Document, name, HtmlElementFlags.Allowed |
-                HtmlElementFlags.AllowContent | HtmlElementFlags.SelfClosing);
+            return new HtmlElementRule(Document, name, HtmlElementOptions.Allowed |
+                HtmlElementOptions.AllowContent | HtmlElementOptions.SelfClosing);
         }
 
         IFluentAttributeRule IRuleSelector.Attribute(string name)
         {
-            return new HtmlAttributeRule(Document, name, HtmlAttributeFlags.Allowed);
+            return new HtmlAttributeRule(Document, name, HtmlAttributeOptions.Allowed);
         }
 
         IFluentElementRule IRuleSelector.Elements(params string[] names)
@@ -540,8 +540,8 @@ namespace Radischevo.Wahha.Web.Text
             HtmlElementRuleCollection collection = new HtmlElementRuleCollection();
 
             foreach (string name in names)
-                collection.Add(new HtmlElementRule(Document, name, HtmlElementFlags.Allowed |
-                    HtmlElementFlags.AllowContent | HtmlElementFlags.SelfClosing));
+                collection.Add(new HtmlElementRule(Document, name, HtmlElementOptions.Allowed |
+                    HtmlElementOptions.AllowContent | HtmlElementOptions.SelfClosing));
 
             return collection;
         }
@@ -552,7 +552,7 @@ namespace Radischevo.Wahha.Web.Text
             HtmlAttributeRuleCollection collection = new HtmlAttributeRuleCollection();
 
             foreach (string name in names)
-                collection.Add(new HtmlAttributeRule(Document, name, HtmlAttributeFlags.Allowed));
+                collection.Add(new HtmlAttributeRule(Document, name, HtmlAttributeOptions.Allowed));
 
             return collection;
         }

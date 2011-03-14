@@ -132,7 +132,7 @@ namespace Radischevo.Wahha.Web.Text
             return this;
         }
 
-        IFluentAttributeRule IFluentAttributeRule.As(HtmlAttributeFlags flags)
+        IFluentAttributeRule IFluentAttributeRule.As(HtmlAttributeOptions flags)
         {
             foreach (IFluentAttributeRule rule in this)
                 rule.As(flags);
@@ -166,6 +166,14 @@ namespace Radischevo.Wahha.Web.Text
 
             return this;
         }
+
+		IFluentAttributeRule IFluentAttributeRule.Validate(params string[] values)
+		{
+			foreach (IFluentAttributeRule rule in this)
+				rule.Validate(values);
+			
+			return this;
+		}
         #endregion
     }
 }

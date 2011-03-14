@@ -14,7 +14,7 @@ namespace Radischevo.Wahha.Web.Text
     /// the specified parsing rules and 
     /// adds typographic beautification.
     /// </summary>
-    public class HtmlProcessor
+    public class HtmlFilter
     {
         #region Instance Fields
         private HtmlStringParser _parser;
@@ -24,12 +24,12 @@ namespace Radischevo.Wahha.Web.Text
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the 
-        /// <see cref="Radischevo.Wahha.Web.Text.HtmlProcessor"/> class.
+        /// <see cref="Radischevo.Wahha.Web.Text.HtmlFilter"/> class.
         /// </summary>
-        public HtmlProcessor()
+        public HtmlFilter()
         {
             _parser = new HtmlStringParser(
-                HtmlProcessingMode.AllowByDefault);
+                HtmlFilteringMode.AllowByDefault);
             _typographer = new HtmlStringTypographer();
             
             _parser.Typographer = _typographer;
@@ -91,7 +91,7 @@ namespace Radischevo.Wahha.Web.Text
         {
             Precondition.Require(htmlString, () => Error.ArgumentNull("htmlString"));
             using (StringReader reader = new StringReader(
-                String.Concat("<html>", htmlString, "</html>")))
+				"<html>".Append(htmlString).Append("</html>").ToString()))
             {
                 return Parse(reader);
             }

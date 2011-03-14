@@ -10,8 +10,8 @@ namespace ConsoleTester
 	public static class HtmlParserExtensions
 	{
 		#region Constants
-		private static HtmlElementFlags AllowFlags = HtmlElementFlags.Allowed | HtmlElementFlags.Recursive;
-		private static HtmlElementFlags InternalFlags = HtmlElementFlags.Internal | HtmlElementFlags.Recursive;
+		private static HtmlElementOptions AllowFlags = HtmlElementOptions.Allowed | HtmlElementOptions.Recursive;
+		private static HtmlElementOptions InternalFlags = HtmlElementOptions.Internal | HtmlElementOptions.Recursive;
 		#endregion
 
 		#region Extension Methods
@@ -100,14 +100,14 @@ namespace ConsoleTester
 
 		public static IRuleAppender Youtube(this IRuleAppender appender)
 		{
-			return appender.With(e => e.Elements("object").As(InternalFlags | HtmlElementFlags.Container)
-				.With(p => p.Element("param").As(HtmlElementFlags.Allowed | HtmlElementFlags.SelfClosing)
-					.With(a => a.Attributes("name", "value").As(HtmlAttributeFlags.Allowed | HtmlAttributeFlags.Required))
+			return appender.With(e => e.Elements("object").As(InternalFlags | HtmlElementOptions.Container)
+				.With(p => p.Element("param").As(HtmlElementOptions.Allowed | HtmlElementOptions.SelfClosing)
+					.With(a => a.Attributes("name", "value").As(HtmlAttributeOptions.Allowed | HtmlAttributeOptions.Required))
 					)
-				.With(i => i.Element("embed").As(HtmlElementFlags.Allowed | HtmlElementFlags.SelfClosing | HtmlElementFlags.Internal))
-				.With(a => a.Attributes("classid", "name").As(HtmlAttributeFlags.Allowed))
-				.With(a => a.Attributes("width", "height").As(HtmlAttributeFlags.Allowed).Validate("#int")))
-				.With(e => e.Element("youtube").As(AllowFlags | HtmlElementFlags.SelfClosing)
+				.With(i => i.Element("embed").As(HtmlElementOptions.Allowed | HtmlElementOptions.SelfClosing | HtmlElementOptions.Internal))
+				.With(a => a.Attributes("classid", "name").As(HtmlAttributeOptions.Allowed))
+				.With(a => a.Attributes("width", "height").As(HtmlAttributeOptions.Allowed).Validate("#int")))
+				.With(e => e.Element("youtube").As(AllowFlags | HtmlElementOptions.SelfClosing)
 				.Convert(elem => {
 					return elem.OwnerDocument.FlashPlayer(elem.GetAttribute("src"), 640, 360, "");
 				}));
@@ -115,7 +115,7 @@ namespace ConsoleTester
 
 		public static IRuleAppender Abstract(this IRuleAppender appender, string url)
 		{
-			return appender.With(e => e.Element("cut").As(AllowFlags | HtmlElementFlags.SelfClosing)
+			return appender.With(e => e.Element("cut").As(AllowFlags | HtmlElementOptions.SelfClosing)
 				.Convert(elem => {
 					XmlElement link = elem.OwnerDocument.CreateElement("a");
 					link.SetAttribute("href", url);
@@ -129,7 +129,7 @@ namespace ConsoleTester
 		public static IRuleAppender Images(this IRuleAppender appender)
 		{
 			return appender.With(e => e.Element("img")
-				.As(AllowFlags | HtmlElementFlags.SelfClosing)
+				.As(AllowFlags | HtmlElementOptions.SelfClosing)
 				.Convert(elem => {
 					if (elem.HasAttribute("alt"))
 						elem.SetAttribute("title", elem.GetAttribute("alt"));
@@ -145,7 +145,7 @@ namespace ConsoleTester
 		public static IRuleAppender Links(this IRuleAppender appender, string domain, string redirectUrl)
 		{
 			return appender.With(e => e.Element("a")
-				.As(AllowFlags | HtmlElementFlags.Text)
+				.As(AllowFlags | HtmlElementOptions.Text)
 				.Convert(elem => {
 					if (elem.InnerText.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
 						elem.InnerText.Length > 30)
@@ -163,14 +163,15 @@ namespace ConsoleTester
 		public static IRuleAppender RegularContent(this IRuleAppender appender)
 		{
 			return appender.With(e => e.Elements("i", "b", "u", "em", "strong", "acronym", "h1", "h2", "h3", "h4", "h5", "h6")
-				.As(AllowFlags | HtmlElementFlags.Text | HtmlElementFlags.UseTypography))
-				.With(e => e.Element("p").As(AllowFlags | HtmlElementFlags.AllowContent | HtmlElementFlags.UseTypography))
-				.With(e => e.Element("nobr").As(AllowFlags | HtmlElementFlags.Text | HtmlElementFlags.UseTypography))
-				.With(e => e.Element("ul").As(AllowFlags | HtmlElementFlags.Container)
-					.With(l => l.Element("li").As(HtmlElementFlags.Allowed | HtmlElementFlags.Text | HtmlElementFlags.UseTypography)))
-				.With(e => e.Elements("code", "pre").As(AllowFlags | HtmlElementFlags.Preformatted))
-				.With(e => e.Element("br").As(AllowFlags | HtmlElementFlags.SelfClosing))
-				.With(e => e.Elements("script", "iframe").As(HtmlElementFlags.Denied | HtmlElementFlags.Recursive));
+				.As(AllowFlags | HtmlElementOptions.Text | HtmlElementOptions.UseTypography))
+				.With(e => e.Element("p").As(AllowFlags | HtmlElementOptions.AllowContent | HtmlElementOptions.UseTypography)
+					.With(a => a.Attribute("align").Validate("left", "right", "center")))
+				.With(e => e.Element("nobr").As(AllowFlags | HtmlElementOptions.Text | HtmlElementOptions.UseTypography))
+				.With(e => e.Element("ul").As(AllowFlags | HtmlElementOptions.Container)
+					.With(l => l.Element("li").As(HtmlElementOptions.Allowed | HtmlElementOptions.Text | HtmlElementOptions.UseTypography)))
+				.With(e => e.Elements("code", "pre").As(AllowFlags | HtmlElementOptions.Preformatted))
+				.With(e => e.Element("br").As(AllowFlags | HtmlElementOptions.SelfClosing))
+				.With(e => e.Elements("script", "iframe").As(HtmlElementOptions.Denied | HtmlElementOptions.Recursive));
 		}
 
 		public static HtmlStringTypographer Replaces(this HtmlStringTypographer item)

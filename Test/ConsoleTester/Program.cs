@@ -190,12 +190,12 @@ namespace ConsoleTester
 
 		public void SgmlTest()
 		{
-			HtmlProcessor text = new HtmlProcessor();
+			HtmlFilter text = new HtmlFilter();
 
-			text.Parser.ProcessingMode = HtmlProcessingMode.DenyByDefault;
-			text.Parser.DefaultElementFlags = HtmlElementFlags.AllowContent | HtmlElementFlags.UseTypography;
+			text.Parser.ProcessingMode = HtmlFilteringMode.DenyByDefault;
+			text.Parser.DefaultElementFlags = HtmlElementOptions.AllowContent | HtmlElementOptions.UseTypography;
 
-			text.Parser.Add(a => a.Attributes("xmlns", "ns").As(HtmlAttributeFlags.Denied))
+			text.Parser.Treat(a => a.Attributes("xmlns", "ns").As(HtmlAttributeOptions.Denied))
 				.RegularContent()
 				.Links("starcafe.ru", "http://starcafe.ru/redirect")
 				.Images()

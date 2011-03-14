@@ -2,7 +2,7 @@
 
 namespace Radischevo.Wahha.Web.Text
 {
-    public enum HtmlProcessingMode : byte
+    public enum HtmlFilteringMode : byte
     {
         DenyByDefault = 0,
         AllowByDefault

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -12,7 +13,7 @@ namespace Radischevo.Wahha.Web.Text
         #region Instance Fields
         private string _name;
         private HtmlElementRule _element;
-        private HtmlAttributeFlags _flags;
+        private HtmlAttributeOptions _flags;
         private string _pattern;
         private string _defaultValue;
         private Regex _regexPatternCache;
@@ -21,19 +22,19 @@ namespace Radischevo.Wahha.Web.Text
 
         #region Constructors
         public HtmlAttributeRule(HtmlElementRule element,
-            string name, HtmlAttributeFlags flags)
+            string name, HtmlAttributeOptions flags)
             : this(element, name, flags, null)
         {
         }
 
         public HtmlAttributeRule(HtmlElementRule element,
-            string name, HtmlAttributeFlags flags, string pattern)
+            string name, HtmlAttributeOptions flags, string pattern)
             : this(element, name, flags, pattern, null)
         {
         }
 
         public HtmlAttributeRule(HtmlElementRule element,
-            string name, HtmlAttributeFlags flags, string pattern,
+            string name, HtmlAttributeOptions flags, string pattern,
             string defaultValue)
         {
             Precondition.Require(element, () => Error.ArgumentNull("element"));
@@ -65,7 +66,7 @@ namespace Radischevo.Wahha.Web.Text
             }
         }
 
-        public HtmlAttributeFlags Flags
+        public HtmlAttributeOptions Flags
         {
             get
             {
@@ -129,6 +130,21 @@ namespace Radischevo.Wahha.Web.Text
         #endregion
 
         #region Static Methods
+		private static string BuildPatternFromValues(string[] values)
+		{
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
+
+			StringBuilder builder = new StringBuilder();
+			if (values.Length > 0)
+			{
+				for (int i = 0; i < values.Length; ++i)
+					builder.Append('(').Append(Regex.Escape(values[i])).Append(")|");
+
+				builder.Length--;
+			}
+			return builder.ToString();
+		}
+
         private static bool ContainsOnlyDigits(string value)
         {
             if (String.IsNullOrEmpty(value))
@@ -189,6 +205,23 @@ namespace Radischevo.Wahha.Web.Text
         #endregion
 
         #region Instance Methods
+		private IFluentAttributeRule SetDefaultValue(string defaultValue)
+		{
+			_defaultValue = defaultValue;
+			if (!String.IsNullOrEmpty(defaultValue))
+				_flags |= HtmlAttributeOptions.Default;
+
+			return this;
+		}
+
+		internal HtmlAttributeRule Clone(HtmlElementRule parent)
+		{
+			HtmlAttributeRule current = Clone();
+			current._element = parent;
+
+			return current;
+		}
+
         public HtmlAttributeRule Clone()
         {
             HtmlAttributeRule current = new HtmlAttributeRule(_element, _name, _flags);
@@ -198,14 +231,6 @@ namespace Radischevo.Wahha.Web.Text
 
             return current;
         }
-
-		internal HtmlAttributeRule Clone(HtmlElementRule parent)
-		{
-			HtmlAttributeRule current = Clone();
-			current._element = parent;
-
-			return current;
-		}
 
         public virtual bool ValidateValue(string value)
         {
@@ -250,16 +275,7 @@ namespace Radischevo.Wahha.Web.Text
         #endregion
 
         #region Fluent Interface Implementation
-        private IFluentAttributeRule SetDefaultValue(string defaultValue)
-        {
-            _defaultValue = defaultValue;
-            if (!String.IsNullOrEmpty(defaultValue))
-                _flags |= HtmlAttributeFlags.Default;
-
-            return this;
-        }
-
-        IFluentAttributeRule IFluentAttributeRule.As(HtmlAttributeFlags flags)
+        IFluentAttributeRule IFluentAttributeRule.As(HtmlAttributeOptions flags)
         {
             _flags = flags;
             return this;
@@ -287,6 +303,12 @@ namespace Radischevo.Wahha.Web.Text
             _pattern = pattern;
             return this;
         }
+
+		IFluentAttributeRule IFluentAttributeRule.Validate(params string[] values)
+		{
+			_pattern = BuildPatternFromValues(values);
+			return this;
+		}
         #endregion
     }
 }
