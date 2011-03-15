@@ -183,8 +183,8 @@ public class MainController : Controller
         m.Section.Load(); 
         Section s = m.Section.Value;
 
-		HtmlFilter p = new HtmlFilter();
-		p.Parser.Add(f => f.Element("a").As(HtmlElementOptions.Allowed | HtmlElementOptions.AllowContent)
+		HtmlProcessor p = new HtmlProcessor();
+		p.Filter.Add(f => f.Element("a").As(HtmlElementOptions.Allowed | HtmlElementOptions.AllowContent)
 			.Treat(e => e.Attribute("href").As(HtmlAttributeOptions.Allowed).Validate("#url")));
 
 		string input = @"www.google.com <a href=""ed2k://sovserv.net/link/16aut2hyu7s621"">ed2k</a><a href=""ftp://user:pass@ftp.ya.ru:21/topics"">Topics</a>";

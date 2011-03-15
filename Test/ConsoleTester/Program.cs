@@ -190,30 +190,46 @@ namespace ConsoleTester
 
 		public void SgmlTest()
 		{
-			HtmlFilter text = new HtmlFilter();
+			HtmlProcessor filter = SgmlSetup();
+			SgmlTest1(filter, "jessica-alba", 182);
+			SgmlTest1(filter, "bruce-willis", 183);
+			
+			Console.WriteLine("Complete");
+		}
 
-			text.Parser.ProcessingMode = HtmlFilteringMode.DenyByDefault;
-			text.Parser.DefaultElementFlags = HtmlElementOptions.AllowContent | HtmlElementOptions.UseTypography;
+		public HtmlProcessor SgmlSetup()
+		{
+			HtmlProcessor html = new HtmlProcessor();
 
-			text.Parser.Treat(a => a.Attributes("xmlns", "ns").As(HtmlAttributeOptions.Denied))
-				.RegularContent()
-				.Links("starcafe.ru", "http://starcafe.ru/redirect")
-				.Images()
-				.Abstract("http://starcafe.ru/blog/jessica-alba/1672.html")
-				.Youtube();
+			html.Filter.Mode = HtmlFilteringMode.DenyByDefault;
+			html.Filter.DefaultOptions = HtmlElementOptions.AllowContent | HtmlElementOptions.UseTypography;
 
-			text.Typographer.EncodeSpecialSymbols = true;
-			text.Typographer.Replaces();
+			html.Filter.Treat(a => a.Attributes("xmlns", "ns").As(HtmlAttributeOptions.Denied))
+				.RegularContent().Links().Images().Abstract().Youtube();
 
-			using (StreamReader sr = new StreamReader(Path.Combine(Environment.CurrentDirectory, "sgml-test.htm"), Encoding.UTF8))
+			html.Typographer.EncodeSpecialSymbols = false;
+			html.Typographer.Replaces();
+
+			return html;
+		}
+
+		public void SgmlTest1(HtmlProcessor filter, string blog, int topic)
+		{
+			ValueDictionary parameters = new ValueDictionary();
+
+			parameters["link-domain"] = "starcafe.ru";
+			parameters["link-redirect"] = "http://starcafe.ru/redirect";
+			parameters["url"] = String.Format("http://starcafe.ru/blog/{0}/{1}.html", blog, topic);
+
+			using (StreamReader sr = new StreamReader(
+				Path.Combine(Environment.CurrentDirectory, "sgml-test.htm"), Encoding.UTF8))
 			{
-				string html = sr.ReadToEnd();
-				using (StreamWriter sw = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "html-test.htm"), false, Encoding.UTF8))
+				using (StreamWriter sw = new StreamWriter(Path.Combine(Environment.CurrentDirectory, 
+					String.Format("html-test-{0}-{1}.htm", blog, topic)), false, Encoding.UTF8))
 				{
-					sw.Write(text.Parse(html));
+					sw.Write(filter.Execute(sr, parameters));
 				}
 			}
-			Console.WriteLine("Complete");
 		}
 	}
 }

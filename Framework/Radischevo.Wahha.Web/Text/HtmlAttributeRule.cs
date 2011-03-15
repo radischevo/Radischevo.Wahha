@@ -13,7 +13,7 @@ namespace Radischevo.Wahha.Web.Text
         #region Instance Fields
         private string _name;
         private HtmlElementRule _element;
-        private HtmlAttributeOptions _flags;
+        private HtmlAttributeOptions _options;
         private string _pattern;
         private string _defaultValue;
         private Regex _regexPatternCache;
@@ -43,7 +43,7 @@ namespace Radischevo.Wahha.Web.Text
 
             _element = element;
             _name = name;
-            _flags = flags;
+            _options = flags;
             _pattern = pattern;
             _defaultValue = defaultValue;
         }
@@ -66,15 +66,15 @@ namespace Radischevo.Wahha.Web.Text
             }
         }
 
-        public HtmlAttributeOptions Flags
+        public HtmlAttributeOptions Options
         {
             get
             {
-                return _flags;
+                return _options;
             }
             set
             {
-                _flags = value;
+                _options = value;
             }
         }
 
@@ -114,6 +114,14 @@ namespace Radischevo.Wahha.Web.Text
                 _converter = value;
             }
         }
+
+		public bool HasConverter
+		{
+			get
+			{
+				return (_converter != null);
+			}
+		}
 
         protected Regex RegexPattern
         {
@@ -209,7 +217,7 @@ namespace Radischevo.Wahha.Web.Text
 		{
 			_defaultValue = defaultValue;
 			if (!String.IsNullOrEmpty(defaultValue))
-				_flags |= HtmlAttributeOptions.Default;
+				_options |= HtmlAttributeOptions.Default;
 
 			return this;
 		}
@@ -224,7 +232,7 @@ namespace Radischevo.Wahha.Web.Text
 
         public HtmlAttributeRule Clone()
         {
-            HtmlAttributeRule current = new HtmlAttributeRule(_element, _name, _flags);
+            HtmlAttributeRule current = new HtmlAttributeRule(_element, _name, _options);
             current._converter = _converter;
             current._defaultValue = _defaultValue;
             current._pattern = _pattern;
@@ -277,7 +285,7 @@ namespace Radischevo.Wahha.Web.Text
         #region Fluent Interface Implementation
         IFluentAttributeRule IFluentAttributeRule.As(HtmlAttributeOptions flags)
         {
-            _flags = flags;
+            _options = flags;
             return this;
         }
 

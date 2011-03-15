@@ -4,6 +4,7 @@ using System.Xml;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Text;
+using System.Text.RegularExpressions;
 
 namespace ConsoleTester
 {
@@ -15,17 +16,35 @@ namespace ConsoleTester
 		#endregion
 
 		#region Extension Methods
-		private static XmlElement AppendChild(this XmlElement element, string localName)
+		private static XmlElement CreateElement(this HtmlElementContext context, string name)
 		{
-			XmlElement child = element.OwnerDocument.CreateElement(localName);
+			XmlDocument document = context.Element.OwnerDocument;
+			return document.CreateElement(name);
+		}
+
+		private static XmlAttribute CreateAttribute(this HtmlElementContext context, string name)
+		{
+			XmlDocument document = context.Element.OwnerDocument;
+			return document.CreateAttribute(name);
+		}
+
+		private static XmlText CreateTextNode(this HtmlElementContext context, string text)
+		{
+			XmlDocument document = context.Element.OwnerDocument;
+			return document.CreateTextNode(text);
+		}
+
+		private static XmlElement AppendChild(this XmlElement element, string name)
+		{
+			XmlElement child = element.OwnerDocument.CreateElement(name);
 			element.AppendChild(child);
 
 			return child;
 		}
 
-		private static XmlElement AppendChild(this XmlElement element, string localName, object attributes)
+		private static XmlElement AppendChild(this XmlElement element, string name, object attributes)
 		{
-			XmlElement child = AppendChild(element, localName);
+			XmlElement child = AppendChild(element, name);
 			ValueDictionary values = new ValueDictionary(attributes);
 
 			foreach (KeyValuePair<string, object> pair in values)
@@ -35,9 +54,11 @@ namespace ConsoleTester
 			return child;
 		}
 
-		public static XmlElement FlashPlayer(this XmlDocument document, string movie, int width, int height, string variables)
+		public static HtmlConverterResult<XmlElement> FlashPlayer(
+			this HtmlElementContext context, string movie, 
+			int width, int height, string variables)
 		{
-			XmlElement video = document.CreateElement("object");
+			XmlElement video = context.CreateElement("object");
 
 			video.SetAttribute("classid", "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000");
 			video.SetAttribute("width", width.ToString());
@@ -73,120 +94,131 @@ namespace ConsoleTester
 				allowfullscreen = "true",
 				flashVars = variables
 			});
-			return video;
+			return context.Result(video);
 		}
 
-		public static XmlElement CrossDomainLink(this XmlElement element, string domain, string redirectUrl)
+		public static HtmlConverterResult<XmlElement> CrossDomainLink(this HtmlElementContext context)
 		{
-			string location = element.GetAttribute("href");
-			element.RemoveAttribute("target");
+			string domain = context.Parameters.GetValue<string>("link-domain", String.Empty);
+			string redirect = context.Parameters.GetValue<string>("link-redirect");
+
+			string location = context.Element.GetAttribute("href");
+			context.Element.RemoveAttribute("target");
 
 			Uri uri;
 			if (!Uri.TryCreate(location, UriKind.Absolute, out uri))
 				if (!Uri.TryCreate("http://" + location, UriKind.Absolute, out uri))
-					return null;
+					return context.Cancel();
 
 			if (!uri.Host.EndsWith(domain, StringComparison.OrdinalIgnoreCase))
 			{
-				if (!String.IsNullOrEmpty(redirectUrl))
-					element.SetAttribute("href", String.Format("{0}?url={1}", redirectUrl, 
+				if (!String.IsNullOrEmpty(redirect))
+					context.Element.SetAttribute("href", String.Format("{0}?url={1}", redirect, 
 						Uri.EscapeDataString(uri.AbsoluteUri)));
 
-				element.SetAttribute("target", "_blank");
-				element.SetAttribute("rel", "nofollow");
+				context.Element.SetAttribute("target", "_blank");
+				context.Element.SetAttribute("rel", "nofollow");
 			}
-			return element;
+			return context.Result();
 		}
 
 		public static IRuleAppender Youtube(this IRuleAppender appender)
 		{
-			return appender.With(e => e.Elements("object").As(InternalFlags | HtmlElementOptions.Container)
-				.With(p => p.Element("param").As(HtmlElementOptions.Allowed | HtmlElementOptions.SelfClosing)
-					.With(a => a.Attributes("name", "value").As(HtmlAttributeOptions.Allowed | HtmlAttributeOptions.Required))
+			return appender.Treat(e => e.Elements("object").As(InternalFlags | HtmlElementOptions.Container)
+				.Treat(p => p.Element("param").As(HtmlElementOptions.Allowed | HtmlElementOptions.SelfClosing)
+					.Treat(a => a.Attributes("name", "value").As(HtmlAttributeOptions.Allowed | HtmlAttributeOptions.Required))
 					)
-				.With(i => i.Element("embed").As(HtmlElementOptions.Allowed | HtmlElementOptions.SelfClosing | HtmlElementOptions.Internal))
-				.With(a => a.Attributes("classid", "name").As(HtmlAttributeOptions.Allowed))
-				.With(a => a.Attributes("width", "height").As(HtmlAttributeOptions.Allowed).Validate("#int")))
-				.With(e => e.Element("youtube").As(AllowFlags | HtmlElementOptions.SelfClosing)
-				.Convert(elem => {
-					return elem.OwnerDocument.FlashPlayer(elem.GetAttribute("src"), 640, 360, "");
+				.Treat(i => i.Element("embed").As(HtmlElementOptions.Allowed | HtmlElementOptions.SelfClosing | HtmlElementOptions.Internal))
+				.Treat(a => a.Attributes("classid", "name").As(HtmlAttributeOptions.Allowed))
+				.Treat(a => a.Attributes("width", "height").As(HtmlAttributeOptions.Allowed).Validate("#int")))
+				.Treat(e => e.Element("youtube").As(AllowFlags | HtmlElementOptions.SelfClosing)
+				.Convert(context => {
+					string location = context.Element.GetAttribute("src");
+					if (String.IsNullOrEmpty(location))
+						return context.Cancel();
+
+					return context.FlashPlayer(location, 640, 360, "");
 				}));
 		}
 
-		public static IRuleAppender Abstract(this IRuleAppender appender, string url)
+		public static IRuleAppender Abstract(this IRuleAppender appender)
 		{
-			return appender.With(e => e.Element("cut").As(AllowFlags | HtmlElementOptions.SelfClosing)
-				.Convert(elem => {
-					XmlElement link = elem.OwnerDocument.CreateElement("a");
+			return appender.Treat(e => e.Element("cut").As(AllowFlags | HtmlElementOptions.SelfClosing)
+				.Convert(context => {
+					XmlElement link = context.CreateElement("a");
+
+					string url = context.Parameters.GetValue<string>("url", String.Empty);
+
 					link.SetAttribute("href", url);
-					link.AppendChild(elem.OwnerDocument.CreateTextNode(
-						String.Format("{0} →", elem.GetAttribute("title").Define("читать далее"))
+					link.AppendChild(context.CreateTextNode(String.Format("{0} →", 
+						context.Element.GetAttribute("title").Define("читать далее"))
 					));
-					return link;
+					return context.Result(link);
 				}));
 		}
 
 		public static IRuleAppender Images(this IRuleAppender appender)
 		{
-			return appender.With(e => e.Element("img")
+			return appender.Treat(e => e.Element("img")
 				.As(AllowFlags | HtmlElementOptions.SelfClosing)
-				.Convert(elem => {
-					if (elem.HasAttribute("alt"))
-						elem.SetAttribute("title", elem.GetAttribute("alt"));
+				.Convert(context => {
+					if (context.Element.HasAttribute("alt"))
+						context.Element.SetAttribute("title", context.Element.GetAttribute("alt"));
 
-					return elem;
+					return context.Result();
 				})
-				.With(a => a.Attribute("src").Validate("#url"))
-				.With(a => a.Attribute("width").Validate("#int"))
-				.With(a => a.Attribute("height").Validate("#int"))
-				.With(a => a.Attribute("title")));
+				.Treat(a => a.Attribute("src").Validate("#url"))
+				.Treat(a => a.Attribute("width").Validate("#int"))
+				.Treat(a => a.Attribute("height").Validate("#int"))
+				.Treat(a => a.Attribute("title")));
 		}
 
-		public static IRuleAppender Links(this IRuleAppender appender, string domain, string redirectUrl)
+		public static IRuleAppender Links(this IRuleAppender appender)
 		{
-			return appender.With(e => e.Element("a")
+			return appender.Treat(e => e.Element("a")
 				.As(AllowFlags | HtmlElementOptions.Text)
-				.Convert(elem => {
-					if (elem.InnerText.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
-						elem.InnerText.Length > 30)
+				.Convert(context => {
+					XmlElement element = context.Element;
+					if (element.InnerText.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+						element.InnerText.Length > 30)
 					{
-						elem.SetAttribute("title", elem.InnerText);
-						elem.InnerXml = elem.InnerText.Substring(0, 30) + "…";
+						element.SetAttribute("title", element.InnerText);
+						element.InnerXml = element.InnerText.Substring(0, 30) + "…";
 					}
-					return elem.CrossDomainLink(domain, redirectUrl);
+					return context.CrossDomainLink();
 				})
-				.With(a => a.Attribute("href").Validate("#url"))
-				.With(a => a.Attributes("rel", "target"))
-				.With(a => a.Attribute("title")));
+				.Treat(a => a.Attribute("href").Validate("#url"))
+				.Treat(a => a.Attributes("rel", "target"))
+				.Treat(a => a.Attribute("title")));
 		}
 
 		public static IRuleAppender RegularContent(this IRuleAppender appender)
 		{
-			return appender.With(e => e.Elements("i", "b", "u", "em", "strong", "acronym", "h1", "h2", "h3", "h4", "h5", "h6")
+			return appender.Treat(e => e.Elements("i", "b", "u", "em", "strong", "acronym", "h1", "h2", "h3", "h4", "h5", "h6")
 				.As(AllowFlags | HtmlElementOptions.Text | HtmlElementOptions.UseTypography))
-				.With(e => e.Element("p").As(AllowFlags | HtmlElementOptions.AllowContent | HtmlElementOptions.UseTypography)
-					.With(a => a.Attribute("align").Validate("left", "right", "center")))
-				.With(e => e.Element("nobr").As(AllowFlags | HtmlElementOptions.Text | HtmlElementOptions.UseTypography))
-				.With(e => e.Element("ul").As(AllowFlags | HtmlElementOptions.Container)
-					.With(l => l.Element("li").As(HtmlElementOptions.Allowed | HtmlElementOptions.Text | HtmlElementOptions.UseTypography)))
-				.With(e => e.Elements("code", "pre").As(AllowFlags | HtmlElementOptions.Preformatted))
-				.With(e => e.Element("br").As(AllowFlags | HtmlElementOptions.SelfClosing))
-				.With(e => e.Elements("script", "iframe").As(HtmlElementOptions.Denied | HtmlElementOptions.Recursive));
+				.Treat(e => e.Element("p").As(AllowFlags | HtmlElementOptions.AllowContent | HtmlElementOptions.UseTypography)
+					.Treat(a => a.Attribute("align").Validate("left", "right", "center")))
+				.Treat(e => e.Element("nobr").As(AllowFlags | HtmlElementOptions.Text | HtmlElementOptions.UseTypography))
+				.Treat(e => e.Element("ul").As(AllowFlags | HtmlElementOptions.Container)
+					.Treat(l => l.Element("li").As(HtmlElementOptions.Allowed | HtmlElementOptions.Text | HtmlElementOptions.UseTypography)))
+				.Treat(e => e.Elements("code", "pre").As(AllowFlags | HtmlElementOptions.Preformatted))
+				.Treat(e => e.Element("br").As(AllowFlags | HtmlElementOptions.SelfClosing))
+				.Treat(e => e.Elements("script", "iframe").As(HtmlElementOptions.Denied | HtmlElementOptions.Recursive));
 		}
 
-		public static HtmlStringTypographer Replaces(this HtmlStringTypographer item)
+		public static HtmlTypographer Replaces(this HtmlTypographer item)
 		{
-			return item.Replace("(c)", "&copy;")
-				.Replace("(r)", "&reg;")
-				.Replace("(tm)", "&trade;")
+			return item.Replace(@"\(c\)", "&copy;", RegexOptions.IgnoreCase)
+				.Replace(@"\(r\)", "®", RegexOptions.IgnoreCase)
+				.Replace(@"\(tm\)", "™", RegexOptions.IgnoreCase)
 				.Replace("+/-", "&plusmn;")
 				.Replace("+-", "&plusmn;")
 				.Replace(@"(?'number'\d+)\s*\^\s*(?'power'\-?\d+((\.|\,)\d+)?)",
-					"${number}<sup>${power}</sup>", StringReplacementMode.Regex)
+					"${number}<sup>${power}</sup>", RegexOptions.IgnoreCase)
 				.Replace(@"(?'before'\d+)\s*x\s*(?'after'\-?\d+)",
-					"${before}&times;${after}", StringReplacementMode.Regex)
+					"${before}&times;${after}", RegexOptions.IgnoreCase)
 				.Replace(@"(?'before'\d+)\s*\*\s*(?'after'\-?\d+)",
-					"${before}&times;${after}", StringReplacementMode.Regex);
+					"${before}&times;${after}", RegexOptions.IgnoreCase);
 		}
 		#endregion
 	}

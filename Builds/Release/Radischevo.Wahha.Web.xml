@@ -1056,74 +1056,6 @@
             </summary>
             <exception cref="T:System.NotImplementedException" condition="Always." />
         </member>
-        <member name="T:Radischevo.Wahha.Web.Text.HtmlStringParser">
-            <summary>
-            Provides an XML document processing 
-            using the specified parsing rules.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlStringParser.ProcessDocument(System.Xml.XmlElement,System.Xml.XmlWriter)">
-            <summary>
-            Processes the provided XML document using the specified 
-            parsing rules and writes the resulting text into the provided 
-            <see cref="T:System.Xml.XmlWriter"/>.
-            </summary>
-            <param name="document">An <see cref="T:System.Xml.XmlDocument"/> to process.</param>
-            <param name="writer">An <see cref="T:System.Xml.XmlWriter"/> to write into.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlStringParser.AddElementRule(Radischevo.Wahha.Web.Text.HtmlElementRule)">
-            <summary>
-            Adds a top-level rule for the element.
-            </summary>
-            <param name="rule">A new sub-rule to add.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlStringParser.AddAttributeRule(Radischevo.Wahha.Web.Text.HtmlAttributeRule)">
-            <summary>
-            Adds a top-level rule for the attribute. In most cases, the rule is ignored.
-            </summary>
-            <param name="rule">A new sub-rule to add.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlStringParser.Treat(System.Func{Radischevo.Wahha.Web.Text.IRuleSelector,Radischevo.Wahha.Web.Text.IRuleBuilder})">
-            <summary>
-            Adds a top-level rule for the element.
-            </summary>
-            <param name="builder">The selector function.</param>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlStringParser.ProcessingMode">
-            <summary>
-            Gets or sets the <see cref="T:Radischevo.Wahha.Web.Text.HtmlFilteringMode"/> 
-            which will be used to determine whether the particular HTML node is allowed 
-            within the document.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlStringParser.DefaultElementFlags">
-            <summary>
-            Gets or sets the default rule set, which will be applied 
-            to an element, if no specific rule is found.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlStringParser.PreserveWhitespace">
-            <summary>
-            Specifies how whitespace is handled.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlStringParser.Document">
-            <summary>
-            Gets the root node of the element rule tree.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlStringParser.Typographer">
-            <summary>
-            Gets or sets the <see cref="T:Radischevo.Wahha.Web.Text.HtmlStringTypographer"/> 
-            which is used to process the contents of the text nodes.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlStringParser.Elements">
-            <summary>
-            Gets the top-level element rule collection 
-            used by this instance.
-            </summary>
-        </member>
         <member name="M:Radischevo.Wahha.Web.HttpCompressionModule.IsEncodingAccepted(System.Web.HttpContext,System.String)">
             <summary>
             Checks the request headers to see if the specified
@@ -2241,44 +2173,122 @@
             adds typographic beautification.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.#ctor">
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.#ctor(Radischevo.Wahha.Web.Text.HtmlFilterSettings,System.IO.TextReader,System.IO.TextWriter)">
             <summary>
             Initializes a new instance of the 
             <see cref="T:Radischevo.Wahha.Web.Text.HtmlFilter"/> class.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.CreateReader(System.IO.TextReader)">
-            <summary>
-            Creates an <see cref="T:System.Xml.XmlReader"/> for 
-            reading the input HTML text.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.Parse(System.String)">
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.Execute">
             <summary>
             Processes an input string using the specified 
             parsing and typographic rules.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.Parse(System.IO.TextReader)">
+        <member name="T:Radischevo.Wahha.Web.Text.HtmlProcessor">
+            <summary>
+            Transforms the provided HTML string using 
+            the specified parsing rules and 
+            adds typographic beautification.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Text.HtmlProcessor"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.String)">
             <summary>
             Processes an input string using the specified 
             parsing and typographic rules.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlFilter.Parser">
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.String,Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Processes an input string using the specified 
+            parsing and typographic rules.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.IO.TextReader)">
+            <summary>
+            Processes an input string using the specified 
+            parsing and typographic rules.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.IO.TextReader,Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Processes an input string using the specified 
+            parsing and typographic rules.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlProcessor.Filter">
             <summary>
             Gets an instance of the 
-            <see cref="T:Radischevo.Wahha.Web.Text.HtmlStringParser"/> class 
-            used by this instance. Use this property to set the parsing rules, 
+            <see cref="T:Radischevo.Wahha.Web.Text.HtmlFilterSettings"/> class 
+            used by this instance. Use this property to set the filtering rules, 
             which will be applied to the input text.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlFilter.Typographer">
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlProcessor.Typographer">
             <summary>
             Gets an instance of the 
-            <see cref="T:Radischevo.Wahha.Web.Text.HtmlStringTypographer"/> class 
+            <see cref="T:Radischevo.Wahha.Web.Text.HtmlTypographer"/> class 
             used by this instance. Use this property to set the typographic 
             and replacement rules, which will be applied to the input text.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Text.HtmlFilterSettings">
+            <summary>
+            Provides an XML document processing 
+            using the specified parsing rules.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilterSettings.Treat(System.Func{Radischevo.Wahha.Web.Text.IRuleSelector,Radischevo.Wahha.Web.Text.IRuleBuilder})">
+            <summary>
+            Adds a top-level rule for the element.
+            </summary>
+            <param name="builder">The selector function.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilterSettings.AddElementRule(Radischevo.Wahha.Web.Text.HtmlElementRule)">
+            <summary>
+            Adds a top-level rule for the element.
+            </summary>
+            <param name="rule">A new sub-rule to add.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilterSettings.AddAttributeRule(Radischevo.Wahha.Web.Text.HtmlAttributeRule)">
+            <summary>
+            Adds a top-level rule for the attribute. In most cases, the rule is ignored.
+            </summary>
+            <param name="rule">A new sub-rule to add.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlFilterSettings.Mode">
+            <summary>
+            Gets or sets the <see cref="T:Radischevo.Wahha.Web.Text.HtmlFilteringMode"/> 
+            which will be used to determine whether the particular HTML node is allowed 
+            within the document.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlFilterSettings.DefaultOptions">
+            <summary>
+            Gets or sets the default rule set, which will be applied 
+            to an element, if no specific rule is found.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlFilterSettings.PreserveWhitespace">
+            <summary>
+            Specifies how whitespace is handled.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlFilterSettings.Document">
+            <summary>
+            Gets the root node of the element rule tree.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlFilterSettings.Elements">
+            <summary>
+            Gets the top-level element rule collection 
+            used by this instance.
             </summary>
         </member>
     </members>

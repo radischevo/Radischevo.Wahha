@@ -10,7 +10,7 @@ namespace Radischevo.Wahha.Web.Text
     {
         #region Instance Fields
         private string _name;
-        private HtmlElementOptions _flags;
+        private HtmlElementOptions _options;
         private HtmlElementRule _parent;
         private HtmlElementRuleCollection _children;
         private HtmlAttributeRuleCollection _attributes;
@@ -25,7 +25,7 @@ namespace Radischevo.Wahha.Web.Text
 				() => Error.ArgumentNull("name"));
 
             _name = name;
-            _flags = flags;
+            _options = flags;
             _children = new HtmlElementRuleCollection();
             _attributes = new HtmlAttributeRuleCollection();
             _parent = parent;
@@ -41,15 +41,15 @@ namespace Radischevo.Wahha.Web.Text
             }
         }
 
-        public HtmlElementOptions Flags
+        public HtmlElementOptions Options
         {
             get
             {
-                return _flags;
+                return _options;
             }
             set
             {
-                _flags = value;
+                _options = value;
             }
         }
 
@@ -88,10 +88,18 @@ namespace Radischevo.Wahha.Web.Text
                 _converter = value;
             }
         }
+
+		public bool HasConverter
+		{
+			get
+			{
+				return (_converter != null);
+			}
+		}
         #endregion
 
         #region Fluent Interface Implementation
-        public IRuleAppender With(Func<IRuleSelector, IRuleBuilder> inner)
+        public IRuleAppender Treat(Func<IRuleSelector, IRuleBuilder> inner)
         {
             Precondition.Require(inner, () => Error.ArgumentNull("inner"));
             IRuleBuilder rule = inner(this);
@@ -117,7 +125,7 @@ namespace Radischevo.Wahha.Web.Text
 
         IFluentElementRule IFluentElementRule.As(HtmlElementOptions flags)
         {
-            _flags = flags;
+            _options = flags;
             return this;
         }
 
@@ -203,7 +211,7 @@ namespace Radischevo.Wahha.Web.Text
 
 		public HtmlElementRule Clone()
 		{
-			HtmlElementRule current = new HtmlElementRule(_parent, _name, _flags);
+			HtmlElementRule current = new HtmlElementRule(_parent, _name, _options);
 
 			current._converter = _converter;
 			_children.CopyTo(current._children);

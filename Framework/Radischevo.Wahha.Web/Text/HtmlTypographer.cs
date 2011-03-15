@@ -8,7 +8,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Text
 {
-    public class HtmlStringTypographer
+    public class HtmlTypographer
     {
         #region Instance Fields
         private StringBuffer _input;
@@ -26,7 +26,7 @@ namespace Radischevo.Wahha.Web.Text
         #endregion
 
         #region Constructors
-        public HtmlStringTypographer()
+        public HtmlTypographer()
         {
             _autoLineBreak = true;
             _extractLinks = true;
@@ -141,24 +141,24 @@ namespace Radischevo.Wahha.Web.Text
             return _output.ToString();
         }
 
-        public HtmlStringTypographer Replace(string pattern, string replacement)
+        public HtmlTypographer Replace(string pattern, string replacement)
         {
             return Replace(pattern, replacement, StringReplacementMode.Default);
         }
 
-        public HtmlStringTypographer Replace(string pattern, string replacement,
+        public HtmlTypographer Replace(string pattern, string replacement,
             RegexOptions options)
         {
             return Replace(pattern, replacement, StringReplacementMode.Regex, options);
         }
 
-        public HtmlStringTypographer Replace(string pattern, string replacement,
+        public HtmlTypographer Replace(string pattern, string replacement,
             StringReplacementMode mode)
         {
             return Replace(pattern, replacement, mode, RegexOptions.None);
         }
 
-        public HtmlStringTypographer Replace(string pattern, string replacement,
+        public HtmlTypographer Replace(string pattern, string replacement,
             StringReplacementMode mode, RegexOptions options)
         {
             StringReplacementRule rule = new StringReplacementRule(mode, pattern, replacement);
@@ -684,7 +684,8 @@ namespace Radischevo.Wahha.Web.Text
                 int index = _output.Length;
                 while (index > 0 && !Char.IsWhiteSpace(_output[--index])) ;
 
-                _output.Insert((index > 0) ? index + 1 : 0, FormatElement(new HtmlElementBuilder("nobr"), 
+                _output.Insert((index > 0) ? index + 1 : 0, 
+					FormatElement(new HtmlElementBuilder("nobr"), 
                     HtmlElementRenderMode.StartTag));
 
                 _withinNoBreak = true;

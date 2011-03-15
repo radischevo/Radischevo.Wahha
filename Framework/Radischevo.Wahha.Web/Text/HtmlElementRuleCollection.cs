@@ -139,10 +139,10 @@ namespace Radischevo.Wahha.Web.Text
             return this;
         }
 
-        IRuleAppender IRuleAppender.With(Func<IRuleSelector, IRuleBuilder> inner)
+        IRuleAppender IRuleAppender.Treat(Func<IRuleSelector, IRuleBuilder> inner)
         {
             foreach (IFluentElementRule rule in this)
-                rule.With(inner);
+                rule.Treat(inner);
 
             return this;
         }
