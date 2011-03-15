@@ -7,7 +7,6 @@ namespace Radischevo.Wahha.Web.Text
 	{
 		#region Instance Fields
 		private IValueSet _parameters;
-		private bool _cancelled;
 		#endregion
 
 		#region Constructors
@@ -31,18 +30,6 @@ namespace Radischevo.Wahha.Web.Text
 					_parameters = new ValueDictionary();
 
 				return _parameters;
-			}
-		}
-
-		public virtual bool Cancelled
-		{
-			get
-			{
-				return _cancelled;
-			}
-			set
-			{
-				_cancelled = value;
 			}
 		}
 		#endregion

@@ -2230,10 +2230,10 @@
             which will be applied to the input text.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlProcessor.Typographer">
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlProcessor.Typographics">
             <summary>
             Gets an instance of the 
-            <see cref="T:Radischevo.Wahha.Web.Text.HtmlTypographer"/> class 
+            <see cref="T:Radischevo.Wahha.Web.Text.HtmlTypographerSettings"/> class 
             used by this instance. Use this property to set the typographic 
             and replacement rules, which will be applied to the input text.
             </summary>

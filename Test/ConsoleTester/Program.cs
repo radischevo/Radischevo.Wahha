@@ -207,8 +207,8 @@ namespace ConsoleTester
 			html.Filter.Treat(a => a.Attributes("xmlns", "ns").As(HtmlAttributeOptions.Denied))
 				.RegularContent().Links().Images().Abstract().Youtube();
 
-			html.Typographer.EncodeSpecialSymbols = false;
-			html.Typographer.Replaces();
+			html.Typographics.EncodeSpecialSymbols = false;
+			html.Typographics.Replaces();
 
 			return html;
 		}

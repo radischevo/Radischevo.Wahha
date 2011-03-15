@@ -9,32 +9,37 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Web.Text
 {
     public class HtmlTypographer
-    {
-        #region Instance Fields
+	{
+		#region Instance Fields
+		private HtmlTypographerSettings _settings;
+		private HtmlElementFormatter _formatter;
+		private HtmlTypographerState _state;
         private StringBuffer _input;
         private StringBuilder _output;
-        private Stack<char> _quotes;
-        private bool _withinNoBreak;
-        private List<StringReplacementRule> _replacements;
-
-        private bool _autoLineBreak;
-        private bool _insertNoBreakTags;
-        private bool _extractLinks;
-        private bool _encodeSpecialSymbols;
-		private bool _applyPunctuationRules;
-        private HtmlElementFormatter _formatter;
         #endregion
 
         #region Constructors
-        public HtmlTypographer()
+		public HtmlTypographer(string input)
+			: this(input, null, null)
+		{
+		}
+
+		public HtmlTypographer(string input,
+			HtmlTypographerSettings settings)
+			: this(input, settings, null)
+		{
+		}
+
+        public HtmlTypographer(string input, 
+			HtmlTypographerSettings settings, 
+			HtmlTypographerState state)
         {
-            _autoLineBreak = true;
-            _extractLinks = true;
-            _insertNoBreakTags = true;
-            _encodeSpecialSymbols = true;
-			_applyPunctuationRules = true;
-            _replacements = new List<StringReplacementRule>();
-            _quotes = new Stack<char>();
+			Precondition.Require(input, () => Error.ArgumentNull("input"));
+			
+			_input = new StringBuffer(input);
+			_output = new StringBuilder();
+			_state = state ?? new HtmlTypographerState();
+			_settings = settings ?? new HtmlTypographerSettings();
         }
         #endregion
 
@@ -55,125 +60,45 @@ namespace Radischevo.Wahha.Web.Text
             }
         }
 
-        public bool AutoLineBreak
-        {
-            get
-            {
-                return _autoLineBreak;
-            }
-            set
-            {
-                _autoLineBreak = value;
-            }
-        }
-
-        public bool InsertNoBreakTags
-        {
-            get
-            {
-                return _insertNoBreakTags;
-            }
-            set
-            {
-                _insertNoBreakTags = value;
-            }
-        }
-
-        public bool ExtractLinks
-        {
-            get
-            {
-                return _extractLinks;
-            }
-            set
-            {
-                _extractLinks = value;
-            }
-        }
-
-		public bool ApplyPunctuationRules
+		public HtmlTypographerState State
 		{
 			get
 			{
-				return _applyPunctuationRules;
-			}
-			set
-			{
-				_applyPunctuationRules = value;
+				return _state;
 			}
 		}
 
-        public HtmlElementFormatter Formatter
-        {
-            get
-            {
-                return _formatter;
-            }
-            set
-            {
-                _formatter = value;
-            }
-        }
+		public HtmlTypographerSettings Settings
+		{
+			get
+			{
+				return _settings;
+			}
+		}
 
-        public bool EncodeSpecialSymbols
-        {
-            get
-            {
-                return _encodeSpecialSymbols;
-            }
-            set
-            {
-                _encodeSpecialSymbols = value;
-            }
-        }
+		public HtmlElementFormatter Formatter
+		{
+			get
+			{
+				return _formatter;
+			}
+			set
+			{
+				_formatter = value;
+			}
+		}
         #endregion
 
         #region Instance Methods
-        public string Parse(string text)
+        public string Execute()
         {
-            Init(text);
             PreProcess();
 
-            while (_input.Read())
-                WriteCharacter(_input.Current);
+            while (Input.Read())
+                WriteCharacter(Input.Current);
 
             PostProcess();
-            return _output.ToString();
-        }
-
-        public HtmlTypographer Replace(string pattern, string replacement)
-        {
-            return Replace(pattern, replacement, StringReplacementMode.Default);
-        }
-
-        public HtmlTypographer Replace(string pattern, string replacement,
-            RegexOptions options)
-        {
-            return Replace(pattern, replacement, StringReplacementMode.Regex, options);
-        }
-
-        public HtmlTypographer Replace(string pattern, string replacement,
-            StringReplacementMode mode)
-        {
-            return Replace(pattern, replacement, mode, RegexOptions.None);
-        }
-
-        public HtmlTypographer Replace(string pattern, string replacement,
-            StringReplacementMode mode, RegexOptions options)
-        {
-            StringReplacementRule rule = new StringReplacementRule(mode, pattern, replacement);
-            rule.Options = options;
-            _replacements.Add(rule);
-
-            return this;
-        }
-
-        protected virtual void Init(string text)
-        {
-            Precondition.Require(text, () => Error.ArgumentNull("text"));
-
-            _input = new StringBuffer(text);
-            _output = new StringBuilder();
+            return Output.ToString();
         }
 
         protected virtual void PreProcess()
@@ -195,10 +120,10 @@ namespace Radischevo.Wahha.Web.Text
         {
             Precondition.Require(element, () => Error.ArgumentNull("element"));
 
-            if (_formatter == null)
+            if (Formatter == null)
                 return element.ToString(mode);
-            else
-                return _formatter(element, mode);
+            
+			return Formatter(element, mode);
         }
 
         protected virtual void WriteCharacter(char ch)
@@ -290,7 +215,7 @@ namespace Radischevo.Wahha.Web.Text
 
         private void RewriteOutputAsUnicode()
         {
-            if (!_encodeSpecialSymbols)
+            if (!Settings.EncodeSpecialSymbols)
                 return;
 
             StringBuilder sb = new StringBuilder();
@@ -311,22 +236,20 @@ namespace Radischevo.Wahha.Web.Text
 
         private void ApplyNonRegexReplacements()
         {
-            foreach (StringReplacementRule rule in _replacements.Where(r =>
-                r.Mode == StringReplacementMode.Default))
+            foreach (StringReplacementRule rule in Settings.Replacements
+				.Where(r => r.Mode == StringReplacementMode.Default))
                 _output.Replace(rule.Pattern, rule.Replacement);
         }
 
         private void ApplyRegexReplacements()
         {
-            List<StringReplacementRule> replacements = _replacements
+            List<StringReplacementRule> replacements = Settings.Replacements
                 .Where(r => r.Mode == StringReplacementMode.Regex).ToList();
 
             if (replacements.Count < 1)
                 return;
 
-            // Это медленно, увы.
             string str = _output.ToString();
-
             foreach (StringReplacementRule rule in replacements)
                 str = Regex.Replace(str, rule.Pattern, rule.Replacement, rule.Options);
 
@@ -336,9 +259,9 @@ namespace Radischevo.Wahha.Web.Text
 
         private void CloseNoBreak()
         {
-            if (_withinNoBreak)
+            if (State.WithinNoBreak)
             {
-                _withinNoBreak = false;
+                State.WithinNoBreak = false;
                 Write(FormatElement(new HtmlElementBuilder("nobr"), 
                     HtmlElementRenderMode.EndTag));
             }
@@ -346,16 +269,16 @@ namespace Radischevo.Wahha.Web.Text
 
         private void CloseQuotes()
         {
-            if (_quotes.Count > 0)
+            if (State.Quotes.Count > 0)
             {
                 int index = _output.Length;
                 while (Char.IsWhiteSpace(_output[--index]) ||
                     ".,:!?".IndexOf(_output[index]) > -1) ;
 
                 index++;
-                while (_quotes.Count > 0)
+                while (State.Quotes.Count > 0)
                 {
-                    switch (_quotes.Pop())
+                    switch (State.Quotes.Pop())
                     {
                         case '\u00ab':
                             _output.Insert(index, '\u00bb');
@@ -376,7 +299,7 @@ namespace Radischevo.Wahha.Web.Text
 
         private void WriteCharacterWithCheck(char ch)
         {
-            if (_extractLinks && Char.IsLetter(ch) && (
+            if (Settings.ExtractLinks && Char.IsLetter(ch) && (
                 _input.Match("http://") || _input.Match("https://") ||
                 _input.Match("ftp://") || _input.Match("mailto://") ||
                 _input.Match("www.")))
@@ -433,7 +356,7 @@ namespace Radischevo.Wahha.Web.Text
 
 		private void ProcessPunctuation(char ch)
 		{
-			if (ApplyPunctuationRules)
+			if (Settings.ApplyPunctuationRules)
 				ProcessPunctuationWithRules(ch);
 			else
 				Write(ch);
@@ -476,7 +399,7 @@ namespace Radischevo.Wahha.Web.Text
             if (_output.Length > 0 && _output[_output.Length - 1] == '\r')
                 _output.Length--;
 
-            if (_output.Length > 0 && _autoLineBreak)
+            if (_output.Length > 0 && Settings.AutoLineBreak)
                 Write(FormatElement(new HtmlElementBuilder("br"), 
                     HtmlElementRenderMode.Normal));
 
@@ -581,7 +504,6 @@ namespace Radischevo.Wahha.Web.Text
                         break;
                 }
             }
-
             do
             {
                 if (symbolCount++ < maxSymbolCount)
@@ -598,53 +520,53 @@ namespace Radischevo.Wahha.Web.Text
 
         private void WriteDoubleQuote(char ch)
         {
-            if (_quotes.Count > 0 &&
+            if (State.Quotes.Count > 0 &&
                (Char.IsLetterOrDigit(_input.Offset(-1)) ||
                  (_input.Offset(1) == StringBuffer.EOF || 
                    Char.IsPunctuation(_input.Offset(1)) || 
                    Char.IsWhiteSpace(_input.Offset(1)))
                )) // надо закрываться
             {
-                if (_quotes.Peek() == '\u00ab')
+                if (State.Quotes.Peek() == '\u00ab')
                     Write('\u00bb');
-                else if (_quotes.Peek() == '\u201e')
+                else if (State.Quotes.Peek() == '\u201e')
                     Write('\u201c');
 
-                _quotes.Pop();
+                State.Quotes.Pop();
             }
             else if (Char.IsLetterOrDigit(_input.Offset(1))) // надо открываться
             {
-                if (_quotes.Count > 0) // уже что-то было
+                if (State.Quotes.Count > 0) // уже что-то было
                 {
                     Write('\u201e');
-                    _quotes.Push('\u201e');
+                    State.Quotes.Push('\u201e');
                 }
                 else // первая открывающая
                 {
 					Write('\u00ab');
-                    _quotes.Push('\u00ab');
+                    State.Quotes.Push('\u00ab');
                 }
             }
         }
 
         private void WriteSingleQuote(char ch)
         {
-            if (_quotes.Count > 0 &&
+            if (State.Quotes.Count > 0 &&
                (Char.IsLetterOrDigit(_input.Offset(-1)) ||
                  (_input.Offset(1) == StringBuffer.EOF || 
                   Char.IsPunctuation(_input.Offset(1)) || 
                   Char.IsWhiteSpace(_input.Offset(1)))
                )) // надо закрываться
             {
-                if (_quotes.Peek() == '\'')
+                if (State.Quotes.Peek() == '\'')
                     _output.Append('\u2019');
 
-                _quotes.Pop();
+                State.Quotes.Pop();
             }
             else if (Char.IsLetterOrDigit(_input.Offset(1))) // надо открываться
             {
                 _output.Append('\u2018');
-                _quotes.Push('\'');
+                State.Quotes.Push('\'');
             }
         }
 
@@ -679,7 +601,7 @@ namespace Radischevo.Wahha.Web.Text
             }
             else if (Char.IsLetter(_input.Offset(-1)) &&
                 Char.IsLetter(_input.Offset(1))
-                && _insertNoBreakTags && !_withinNoBreak) // дефис
+                && Settings.InsertNoBreakTags && !State.WithinNoBreak) // дефис
             {
                 int index = _output.Length;
                 while (index > 0 && !Char.IsWhiteSpace(_output[--index])) ;
@@ -688,7 +610,7 @@ namespace Radischevo.Wahha.Web.Text
 					FormatElement(new HtmlElementBuilder("nobr"), 
                     HtmlElementRenderMode.StartTag));
 
-                _withinNoBreak = true;
+                State.WithinNoBreak = true;
                 Write('\u2010');
             }
             else

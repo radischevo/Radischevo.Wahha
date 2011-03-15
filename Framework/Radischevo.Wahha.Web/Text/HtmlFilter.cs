@@ -17,7 +17,8 @@ namespace Radischevo.Wahha.Web.Text
 	{
 		#region Instance Fields
 		private HtmlFilterSettings _settings;
-		private HtmlTypographer _typographer;
+		private HtmlTypographerSettings _typographics;
+		private HtmlTypographerState _lastState;
 		private IValueSet _parameters;
 		private XmlReader _reader;
 		private XmlWriter _writer;
@@ -42,15 +43,18 @@ namespace Radischevo.Wahha.Web.Text
 		#endregion
 
 		#region Instance Properties
-		public HtmlTypographer Typographer
+		public HtmlTypographerSettings Typographics
 		{
 			get
 			{
-				return _typographer;
+				if (_typographics == null)
+					_typographics = new HtmlTypographerSettings();
+
+				return _typographics;
 			}
 			set
 			{
-				_typographer = value;
+				_typographics = value;
 			}
 		}
 
@@ -234,38 +238,37 @@ namespace Radischevo.Wahha.Web.Text
 
 		protected virtual void WriteElement(HtmlElementRule parent, XmlElement element)
 		{
-			HtmlElementContext context = ConvertElement(parent, element);
-			if (context == null || context.Cancelled)
+			HtmlElementResult result = ConvertElement(parent, element);
+			if (result == null)
 				return;
-			
-			WriteStartElement(context.Rule, context.Element);
-			WriteElementContents(context.Rule, context.Element);
-			WriteEndElement(context.Rule, context.Element);
+
+			WriteStartElement(result.Rule, result.Element);
+			WriteElementContents(result.Rule, result.Element);
+			WriteEndElement(result.Rule, result.Element);
 		}
 
-		protected HtmlElementContext ConvertElement(HtmlElementRule parent, XmlElement element)
+		protected HtmlElementResult ConvertElement(HtmlElementRule parent, XmlElement element)
 		{
 			Precondition.Require(element, () => Error.ArgumentNull("element"));
 			HtmlElementRule rule = GetElementRule(parent, element.LocalName);
-			HtmlElementContext context = new HtmlElementContext(rule, element, Parameters);
+			HtmlElementContext context = new HtmlElementContext(rule, Parameters);
 
 			if (rule.HasConverter)
 			{
-				HtmlConverterResult<XmlElement> result = rule.Converter(context);
-				if (result.IsEmpty)
+				element = rule.Converter(context, element);
+				if (element == null)
 					return null;
 
-				if (!MatchName(result.Element, context.Rule))
-					rule = GetElementRule(parent, result.Element.LocalName);
+				if (!MatchName(element, context.Rule))
+					rule = GetElementRule(parent, element.LocalName);
 
 				if ((rule.Options & HtmlElementOptions.Internal) == HtmlElementOptions.Internal)
 				{
 					rule = rule.Clone();
 					rule.Options |= HtmlElementOptions.Allowed;
 				}
-				return new HtmlElementContext(rule, result.Element);
 			}
-			return context;
+			return new HtmlElementResult(element, rule);
 		}
 
 		protected void WriteStartElement(HtmlElementRule rule, XmlElement element)
@@ -302,48 +305,47 @@ namespace Radischevo.Wahha.Web.Text
 
 		protected virtual XmlAttribute WriteAttribute(HtmlElementRule element, XmlAttribute attribute)
 		{
-			HtmlAttributeContext context = ConvertAttribute(element, attribute);
-			if (context == null || context.Cancelled)
+			HtmlAttributeResult result = ConvertAttribute(element, attribute);
+			if (result == null)
 				return null;
 
-			string value = context.Attribute.Value;
-			if ((context.Rule.Options & HtmlAttributeOptions.Allowed) == HtmlAttributeOptions.Allowed)
+			string value = result.Attribute.Value;
+			if ((result.Rule.Options & HtmlAttributeOptions.Allowed) == HtmlAttributeOptions.Allowed)
 			{
-				if ((context.Rule.Options & HtmlAttributeOptions.Default) == HtmlAttributeOptions.Default &&
+				if ((result.Rule.Options & HtmlAttributeOptions.Default) == HtmlAttributeOptions.Default &&
 					String.IsNullOrEmpty(value))
-					value = context.Rule.DefaultValue;
+					value = result.Rule.DefaultValue;
 
-				if (context.Rule.ValidateValue(value))
+				if (result.Rule.ValidateValue(value))
 				{
-					_writer.WriteAttributeString(context.Attribute.LocalName, value);
-					return context.Attribute;
+					_writer.WriteAttributeString(result.Attribute.LocalName, value);
+					return result.Attribute;
 				}
 			}
 			return null;
 		}
 
-		protected HtmlAttributeContext ConvertAttribute(HtmlElementRule element, XmlAttribute attribute)
+		protected HtmlAttributeResult ConvertAttribute(HtmlElementRule element, XmlAttribute attribute)
 		{
 			HtmlAttributeRule attrRule = GetAttributeRule(element, attribute.LocalName);
-			HtmlAttributeContext context = new HtmlAttributeContext(attrRule, attribute, Parameters);
+			HtmlAttributeContext context = new HtmlAttributeContext(attrRule, Parameters);
 
 			if (attrRule.HasConverter)
 			{
-				HtmlConverterResult<XmlAttribute> result = attrRule.Converter(context);
-				if (result.IsEmpty)
+				attribute = attrRule.Converter(context, attribute);
+				if (attribute == null)
 					return null;
 
-				if (!MatchName(result.Element, attrRule))
-					attrRule = GetAttributeRule(element, result.Element.LocalName);
+				if (!MatchName(attribute, attrRule))
+					attrRule = GetAttributeRule(element, attribute.LocalName);
 
 				if ((attrRule.Options & HtmlAttributeOptions.Internal) == HtmlAttributeOptions.Internal)
 				{
 					attrRule = attrRule.Clone();
 					attrRule.Options |= HtmlAttributeOptions.Allowed;
 				}
-				return new HtmlAttributeContext(attrRule, result.Element);
 			}
-			return context;
+			return new HtmlAttributeResult(attribute, attrRule);
 		}
 
 		protected void EnsureRequiredAttributes(HtmlElementRule rule, HashSet<string> usedAttributes)
@@ -369,16 +371,19 @@ namespace Radischevo.Wahha.Web.Text
 		protected virtual void WriteText(HtmlElementRule rule, string text)
 		{
 			if ((rule.Options & HtmlElementOptions.UseTypography) == 
-				HtmlElementOptions.UseTypography && _typographer != null)
+				HtmlElementOptions.UseTypography)
 			{
-				_typographer.Formatter = (element, mode) => FormatElement(rule, element, mode);
+				HtmlTypographer typographer = new HtmlTypographer(text, Typographics, _lastState);
+				typographer.Formatter = (element, mode) => FormatElement(rule, element, mode);
 
-				bool lastValue = _typographer.InsertNoBreakTags;
+				bool lastValue = typographer.Settings.InsertNoBreakTags;
 				if (String.Equals(rule.Name, "nobr", StringComparison.OrdinalIgnoreCase))
-					_typographer.InsertNoBreakTags = false;
+					typographer.Settings.InsertNoBreakTags = false;
 
-				_writer.WriteRaw(_typographer.Parse(text));
-				_typographer.InsertNoBreakTags = lastValue;
+				_writer.WriteRaw(typographer.Execute());
+
+				typographer.Settings.InsertNoBreakTags = lastValue;
+				_lastState = typographer.State;
 			}
 			else
 				_writer.WriteString(text);

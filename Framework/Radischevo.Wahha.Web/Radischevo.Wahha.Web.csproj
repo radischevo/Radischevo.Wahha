@@ -139,11 +139,12 @@
     <Compile Include="Text\HtmlAttributeContext.cs" />
     <Compile Include="Text\HtmlAttributeDictionary.cs" />
     <Compile Include="Text\HtmlAttributeOptions.cs" />
+    <Compile Include="Text\HtmlAttributeResult.cs" />
     <Compile Include="Text\HtmlAttributeRule.cs" />
     <Compile Include="Text\HtmlAttributeRuleCollection.cs" />
     <Compile Include="Text\Delegates.cs" />
     <Compile Include="Text\HtmlElementContext.cs" />
-    <Compile Include="Text\HtmlConverterResult`1.cs" />
+    <Compile Include="Text\HtmlElementResult.cs" />
     <Compile Include="Text\HtmlElementOptions.cs" />
     <Compile Include="Text\HtmlElementRule.cs" />
     <Compile Include="Text\HtmlElementRuleCollection.cs" />
@@ -155,6 +156,8 @@
     <Compile Include="Text\HtmlParsingContext.cs" />
     <Compile Include="Text\HtmlTypographer.cs" />
     <Compile Include="Text\HtmlElementBuilder.cs" />
+    <Compile Include="Text\HtmlTypographerSettings.cs" />
+    <Compile Include="Text\HtmlTypographerState.cs" />
     <Compile Include="Text\Interfaces\IFluentAttributeRule.cs" />
     <Compile Include="Text\Interfaces\IRuleAppender.cs" />
     <Compile Include="Text\Interfaces\IFluentElementRule.cs" />

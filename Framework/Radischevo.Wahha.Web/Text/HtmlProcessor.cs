@@ -14,7 +14,7 @@ namespace Radischevo.Wahha.Web.Text
     {
         #region Instance Fields
         private HtmlFilterSettings _filter;
-        private HtmlTypographer _typographer;
+        private HtmlTypographerSettings _typographics;
         #endregion
 
         #region Constructors
@@ -26,7 +26,7 @@ namespace Radischevo.Wahha.Web.Text
         {
             _filter = new HtmlFilterSettings(
                 HtmlFilteringMode.AllowByDefault);
-            _typographer = new HtmlTypographer();
+            _typographics = new HtmlTypographerSettings();
         }
         #endregion
 
@@ -47,15 +47,15 @@ namespace Radischevo.Wahha.Web.Text
 
         /// <summary>
         /// Gets an instance of the 
-        /// <see cref="Radischevo.Wahha.Web.Text.HtmlTypographer"/> class 
+        /// <see cref="Radischevo.Wahha.Web.Text.HtmlTypographerSettings"/> class 
         /// used by this instance. Use this property to set the typographic 
         /// and replacement rules, which will be applied to the input text.
         /// </summary>
-        public HtmlTypographer Typographer
+        public HtmlTypographerSettings Typographics
         {
             get
             {
-                return _typographer;
+                return _typographics;
             }
         }
         #endregion
@@ -104,7 +104,7 @@ namespace Radischevo.Wahha.Web.Text
 			{
 				using (HtmlFilter parser = new HtmlFilter(Filter, reader, writer))
 				{
-					parser.Typographer = _typographer;
+					parser.Typographics = _typographics;
 					parser.Parameters = parameters;
 					parser.Execute();
 

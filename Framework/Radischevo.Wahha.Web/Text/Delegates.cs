@@ -3,9 +3,9 @@ using System.Xml;
 
 namespace Radischevo.Wahha.Web.Text
 {
-    public delegate HtmlConverterResult<XmlElement> HtmlElementConverter(HtmlElementContext context);
+    public delegate XmlElement HtmlElementConverter(HtmlElementContext context, XmlElement element);
     
-    public delegate HtmlConverterResult<XmlAttribute> HtmlAttributeConverter(HtmlAttributeContext context);
+    public delegate XmlAttribute HtmlAttributeConverter(HtmlAttributeContext context, XmlAttribute attribute);
 
     public delegate string HtmlElementFormatter(HtmlElementBuilder element, HtmlElementRenderMode renderMode);
 }

@@ -61,12 +61,12 @@ namespace Radischevo.Wahha.Web.Text
 		public override void Execute()
 		{
 			XmlElement element = CreateContainer();
-			HtmlElementContext context = ConvertElement(_container, element);
-			if (context == null || context.Cancelled)
+			HtmlElementResult result = ConvertElement(_container, element);
+			if (result == null)
 				return;
 
-			HtmlElementRule rule = context.Rule;
-			WriteStartElement(rule, context.Element);
+			HtmlElementRule rule = result.Rule;
+			WriteStartElement(rule, result.Element);
 
 			if (_renderMode == HtmlElementRenderMode.StartTag)
 			{
@@ -74,7 +74,7 @@ namespace Radischevo.Wahha.Web.Text
 				return;
 			}
 
-			WriteElementContents(rule, context.Element);
+			WriteElementContents(rule, result.Element);
 
 			if (_renderMode == HtmlElementRenderMode.EndTag)
 			{
@@ -85,14 +85,14 @@ namespace Radischevo.Wahha.Web.Text
 					HtmlElementOptions.SelfClosing)
 					rule.Options = (HtmlElementOptions)((byte)rule.Options - 0x04);
 
-				WriteEndElement(rule, context.Element);
+				WriteEndElement(rule, result.Element);
 				rule.Options = options;
 
 				if (_contents.Length > 0 && _contents[0] == '>')
 					_contents.Remove(0, 1);
 			}
 			else
-				WriteEndElement(rule, context.Element);
+				WriteEndElement(rule, result.Element);
 		}
 		#endregion
 	}
