@@ -794,6 +794,31 @@
             <param name="key">The index of the element to find.</param>
             <param name="defaultValue">The default value of the variable.</param>
         </member>
+        <member name="T:Radischevo.Wahha.Web.Text.HtmlFilter">
+            <summary>
+            Transforms the provided HTML string using 
+            the specified parsing rules and 
+            adds typographic beautification.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.#ctor(System.IO.TextReader,System.IO.TextWriter)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Text.HtmlFilter"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.#ctor(System.IO.TextReader,System.IO.TextWriter,Radischevo.Wahha.Web.Text.HtmlFilterSettings)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Text.HtmlFilter"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.Execute">
+            <summary>
+            Processes an input string using the specified 
+            parsing and typographic rules.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Web.Hosting.AssemblyResourcePathProvider">
             <summary>
             A <see cref="T:System.Web.Hosting.VirtualPathProvider"/> that allows serving
@@ -1122,6 +1147,59 @@
             <summary>
             The quote character used 
             for the attribute value.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Text.HtmlProcessor">
+            <summary>
+            Transforms the provided HTML string using 
+            the specified parsing rules and 
+            adds typographic beautification.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Text.HtmlProcessor"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.String)">
+            <summary>
+            Processes an input string using the specified 
+            parsing and typographic rules.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.String,Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Processes an input string using the specified 
+            parsing and typographic rules.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.IO.TextReader)">
+            <summary>
+            Processes an input string using the specified 
+            parsing and typographic rules.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.IO.TextReader,Radischevo.Wahha.Core.IValueSet)">
+            <summary>
+            Processes an input string using the specified 
+            parsing and typographic rules.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlProcessor.Filter">
+            <summary>
+            Gets an instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Text.HtmlFilterSettings"/> class 
+            used by this instance. Use this property to set the filtering rules, 
+            which will be applied to the input text.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Text.HtmlProcessor.Typographics">
+            <summary>
+            Gets an instance of the 
+            <see cref="T:Radischevo.Wahha.Web.Text.HtmlTypographerSettings"/> class 
+            used by this instance. Use this property to set the typographic 
+            and replacement rules, which will be applied to the input text.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Resources.Resources">
@@ -2160,84 +2238,6 @@
             The <see cref="P:Radischevo.Wahha.Web.Text.Sgml.ElementDeclaration.ContentModel"/> of the element declaration.
             </summary>
         </member>
-        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpSessionStateWrapper">
-            <summary>
-            Encapsulates the HTTP intrinsic object that provides access to session-state 
-            values, and to session-level settings and lifetime-management methods. 
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Text.HtmlFilter">
-            <summary>
-            Transforms the provided HTML string using 
-            the specified parsing rules and 
-            adds typographic beautification.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.#ctor(Radischevo.Wahha.Web.Text.HtmlFilterSettings,System.IO.TextReader,System.IO.TextWriter)">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Web.Text.HtmlFilter"/> class.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlFilter.Execute">
-            <summary>
-            Processes an input string using the specified 
-            parsing and typographic rules.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Web.Text.HtmlProcessor">
-            <summary>
-            Transforms the provided HTML string using 
-            the specified parsing rules and 
-            adds typographic beautification.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Web.Text.HtmlProcessor"/> class.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.String)">
-            <summary>
-            Processes an input string using the specified 
-            parsing and typographic rules.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.String,Radischevo.Wahha.Core.IValueSet)">
-            <summary>
-            Processes an input string using the specified 
-            parsing and typographic rules.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.IO.TextReader)">
-            <summary>
-            Processes an input string using the specified 
-            parsing and typographic rules.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Text.HtmlProcessor.Execute(System.IO.TextReader,Radischevo.Wahha.Core.IValueSet)">
-            <summary>
-            Processes an input string using the specified 
-            parsing and typographic rules.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlProcessor.Filter">
-            <summary>
-            Gets an instance of the 
-            <see cref="T:Radischevo.Wahha.Web.Text.HtmlFilterSettings"/> class 
-            used by this instance. Use this property to set the filtering rules, 
-            which will be applied to the input text.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Text.HtmlProcessor.Typographics">
-            <summary>
-            Gets an instance of the 
-            <see cref="T:Radischevo.Wahha.Web.Text.HtmlTypographerSettings"/> class 
-            used by this instance. Use this property to set the typographic 
-            and replacement rules, which will be applied to the input text.
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Web.Text.HtmlFilterSettings">
             <summary>
             Provides an XML document processing 
@@ -2289,6 +2289,12 @@
             <summary>
             Gets the top-level element rule collection 
             used by this instance.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Abstractions.HttpSessionStateWrapper">
+            <summary>
+            Encapsulates the HTTP intrinsic object that provides access to session-state 
+            values, and to session-level settings and lifetime-management methods. 
             </summary>
         </member>
     </members>

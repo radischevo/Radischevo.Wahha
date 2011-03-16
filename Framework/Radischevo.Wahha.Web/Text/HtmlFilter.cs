@@ -29,14 +29,23 @@ namespace Radischevo.Wahha.Web.Text
 		/// Initializes a new instance of the 
 		/// <see cref="Radischevo.Wahha.Web.Text.HtmlFilter"/> class.
 		/// </summary>
-		public HtmlFilter(HtmlFilterSettings settings, 
-			TextReader reader, TextWriter writer)
+		public HtmlFilter(TextReader reader, TextWriter writer)
+			: this(reader, writer, null)
 		{
-			Precondition.Require(settings, () => Error.ArgumentNull("settings"));
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the 
+		/// <see cref="Radischevo.Wahha.Web.Text.HtmlFilter"/> class.
+		/// </summary>
+		public HtmlFilter(TextReader reader, TextWriter writer,
+			HtmlFilterSettings settings)
+		{
 			Precondition.Require(reader, () => Error.ArgumentNull("reader"));
 			Precondition.Require(writer, () => Error.ArgumentNull("writer"));
 
-			_settings = settings;
+			_settings = settings ?? new HtmlFilterSettings(
+				HtmlFilteringMode.AllowByDefault);
 			_reader = CreateHtmlReader(reader, settings);
 			_writer = new XmlTextWriter(writer);
 		}

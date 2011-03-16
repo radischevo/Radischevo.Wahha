@@ -19,7 +19,7 @@ namespace Radischevo.Wahha.Web.Text
 		public HtmlFormatterFilter(HtmlFilterSettings settings, 
 			HtmlElementRule container, HtmlElementBuilder element, 
 			StringWriter output)
-			: base(settings, TextReader.Null, output)
+			: base(TextReader.Null, output, settings)
 		{
 			_contents = output.GetStringBuilder();
 			_container = container;

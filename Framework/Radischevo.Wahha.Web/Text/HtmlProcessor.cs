@@ -102,9 +102,9 @@ namespace Radischevo.Wahha.Web.Text
             Precondition.Require(reader, () => Error.ArgumentNull("reader"));
 			using (StringWriter writer = new StringWriter())
 			{
-				using (HtmlFilter parser = new HtmlFilter(Filter, reader, writer))
+				using (HtmlFilter parser = new HtmlFilter(reader, writer, Filter))
 				{
-					parser.Typographics = _typographics;
+					parser.Typographics = Typographics;
 					parser.Parameters = parameters;
 					parser.Execute();
 
