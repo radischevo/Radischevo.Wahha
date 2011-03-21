@@ -11,8 +11,8 @@ namespace ConsoleTester
 	public static class HtmlParserExtensions
 	{
 		#region Constants
-		private static HtmlElementOptions AllowFlags = HtmlElementOptions.Allowed | HtmlElementOptions.Recursive;
-		private static HtmlElementOptions InternalFlags = HtmlElementOptions.Internal | HtmlElementOptions.Recursive;
+		private static HtmlElementOptions AllowFlags = HtmlElementOptions.Allowed | HtmlElementOptions.Global;
+		private static HtmlElementOptions InternalFlags = HtmlElementOptions.Generated | HtmlElementOptions.Global;
 		#endregion
 
 		#region Extension Methods
@@ -117,7 +117,7 @@ namespace ConsoleTester
 				.Treat(p => p.Element("param").As(HtmlElementOptions.Allowed | HtmlElementOptions.SelfClosing)
 					.Treat(a => a.Attributes("name", "value").As(HtmlAttributeOptions.Allowed | HtmlAttributeOptions.Required))
 					)
-				.Treat(i => i.Element("embed").As(HtmlElementOptions.Allowed | HtmlElementOptions.SelfClosing | HtmlElementOptions.Internal))
+				.Treat(i => i.Element("embed").As(HtmlElementOptions.Allowed | HtmlElementOptions.SelfClosing))
 				.Treat(a => a.Attributes("classid", "name").As(HtmlAttributeOptions.Allowed))
 				.Treat(a => a.Attributes("width", "height").As(HtmlAttributeOptions.Allowed).Validate("#int")))
 				.Treat(e => e.Element("youtube").As(AllowFlags | HtmlElementOptions.SelfClosing)
@@ -190,7 +190,7 @@ namespace ConsoleTester
 					.Treat(l => l.Element("li").As(HtmlElementOptions.Allowed | HtmlElementOptions.Text | HtmlElementOptions.UseTypography)))
 				.Treat(e => e.Elements("code", "pre").As(AllowFlags | HtmlElementOptions.Preformatted))
 				.Treat(e => e.Element("br").As(AllowFlags | HtmlElementOptions.SelfClosing))
-				.Treat(e => e.Elements("script", "iframe").As(HtmlElementOptions.Denied | HtmlElementOptions.Recursive));
+				.Treat(e => e.Elements("script", "iframe").As(HtmlElementOptions.Denied | HtmlElementOptions.Global));
 		}
 
 		public static HtmlTypographerSettings Replaces(this HtmlTypographerSettings settings)

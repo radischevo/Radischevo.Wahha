@@ -25,7 +25,9 @@ namespace Radischevo.Wahha.Web.Routing
             Precondition.Require(url, () => Error.ArgumentNull("url"));
 
             IgnoredRoute route = new IgnoredRoute(url);
-            route.Constraints.AddRange(constraints);
+
+			for (int i = 0; i < constraints.Length; ++i)
+				route.Constraints.Add(constraints[i]);
 
             routes.Add(route);
         }

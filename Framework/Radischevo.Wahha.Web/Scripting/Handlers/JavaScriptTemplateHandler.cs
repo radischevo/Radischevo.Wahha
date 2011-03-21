@@ -227,13 +227,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 			return true;
 		}
 
-		private void ProcessRequest(HttpContext context)
-		{
-			Precondition.Require(context, () => Error.ArgumentNull("context"));
-			ProcessRequestInternal(new HttpContextWrapper(context));
-		}
-
-		private void ProcessRequestInternal(HttpContextBase context)
+		private void ProcessRequest(HttpContextBase context)
 		{
 			string encodedInfo = context.Request.Parameters.GetValue<string>("v");
 			byte[] encodedBytes = Convert.FromBase64String(encodedInfo);
@@ -280,7 +274,8 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		#region IHttpHandler Members
 		void IHttpHandler.ProcessRequest(HttpContext context)
 		{
-			ProcessRequest(context);
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
+			ProcessRequest(new HttpContextWrapper(context));
 		}
 		#endregion
 	}

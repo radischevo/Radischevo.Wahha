@@ -99,7 +99,9 @@ namespace Radischevo.Wahha.Web.Routing.Providers
 
 			route.Defaults.Merge(defaults);
 			route.Tokens.Merge(tokens);
-			route.Constraints.AddRange(constraints);
+
+			foreach (IRouteConstraint constraint in constraints)
+				route.Constraints.Add(constraint);
 
 			return route;
 		}

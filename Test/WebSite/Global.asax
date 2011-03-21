@@ -10,12 +10,14 @@
     void Application_Start(object sender, EventArgs e) 
     {
 		RouteTable.Routes.MapRoute("news_item", "/[appname]/news/{section}/{item}.html",
-            new { Controller = "MainController", Action = "SectionItem" },
+            new { Controller = "MainController", Action = "SectionItem" }, 
+			new { ScriptName = "news-item" },
             new RegexConstraint("section", "[A-Za-z]+[A-Za-z0-9\\-_]*"),
             new RegexConstraint("item", "\\d+"));
 
         RouteTable.Routes.MapRoute("template_item", "~/template",
-            new { Controller = "MainController", Action = "TemplatedItemTest" });
+            new { Controller = "MainController", Action = "TemplatedItemTest" }, 
+			new { ScriptName = "template-item" });
 
         RouteTable.Routes.MapRoute("register", "~/register",
             new { Controller = "OtherController", Action = "Register" });
@@ -50,8 +52,9 @@
         RouteTable.Routes.MapRoute("array_test", "~/array",
             new { Controller = "MainController", Action = "TestArrayAndCollection" });
         
-        RouteTable.Routes.MapRoute("news_section", "/[appname]/news/{section}",
+        RouteTable.Routes.MapRoute("news_section", "localhost/[appname]/news/{section}",
             new { Controller = "MainController", Action = "Section", Page = 1 },
+			new { ScriptName = "news-section" },
             new HttpMethodConstraint(HttpMethod.Get | HttpMethod.Head),
             new RegexConstraint("section", "[A-Za-z]+[A-Za-z0-9\\-_]*"));
         

@@ -30,6 +30,7 @@ using System.ComponentModel.DataAnnotations;
 using Radischevo.Wahha.Web.Mvc.Validation;
 using System.Text;
 using Radischevo.Wahha.Web.Scripting.Serialization;
+using Radischevo.Wahha.Web.Routing.Scripting;
 
 public enum Status
 {
@@ -184,11 +185,11 @@ public class MainController : Controller
         Section s = m.Section.Value;
 
 		HtmlProcessor p = new HtmlProcessor();
-		p.Filter.Add(f => f.Element("a").As(HtmlElementOptions.Allowed | HtmlElementOptions.AllowContent)
+		p.Filter.Treat(f => f.Element("a").As(HtmlElementOptions.Allowed | HtmlElementOptions.AllowContent)
 			.Treat(e => e.Attribute("href").As(HtmlAttributeOptions.Allowed).Validate("#url")));
 
 		string input = @"www.google.com <a href=""ed2k://sovserv.net/link/16aut2hyu7s621"">ed2k</a><a href=""ftp://user:pass@ftp.ya.ru:21/topics"">Topics</a>";
-		string output = p.Parse(input);
+		string output = p.Execute(input);
 
 		Response.Write(output);
 

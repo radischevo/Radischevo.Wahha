@@ -144,7 +144,7 @@ namespace Radischevo.Wahha.Web.Text
 
 		protected HtmlAttributeRule GetAttributeRule(HtmlElementRule parent, string attribute)
 		{
-			bool isInternal = ((parent.Options & HtmlElementOptions.Internal) == HtmlElementOptions.Internal);
+			bool isInternal = ((parent.Options & HtmlElementOptions.Generated) == HtmlElementOptions.Generated);
 
 			HtmlAttributeOptions flags = (_settings.Mode == HtmlFilteringMode.AllowByDefault || isInternal) 
 				? HtmlAttributeOptions.Allowed : HtmlAttributeOptions.Denied;
@@ -172,8 +172,8 @@ namespace Radischevo.Wahha.Web.Text
 					return tagRule;
 			}
 			tagRule = GetRule(tag);
-			if (tagRule != null && (tagRule.Options & HtmlElementOptions.Recursive)
-				== HtmlElementOptions.Recursive)
+			if (tagRule != null && (tagRule.Options & HtmlElementOptions.Global)
+				== HtmlElementOptions.Global)
 				return tagRule;
 
 			return null;
@@ -260,7 +260,7 @@ namespace Radischevo.Wahha.Web.Text
 		{
 			Precondition.Require(element, () => Error.ArgumentNull("element"));
 			HtmlElementRule rule = GetElementRule(parent, element.LocalName);
-			HtmlElementContext context = new HtmlElementContext(rule, Parameters);
+			HtmlElementContext context = new HtmlElementContext(rule.Clone(), Parameters);
 
 			if (rule.HasConverter)
 			{
@@ -271,7 +271,7 @@ namespace Radischevo.Wahha.Web.Text
 				if (!MatchName(element, context.Rule))
 					rule = GetElementRule(parent, element.LocalName);
 
-				if ((rule.Options & HtmlElementOptions.Internal) == HtmlElementOptions.Internal)
+				if ((rule.Options & HtmlElementOptions.Generated) == HtmlElementOptions.Generated)
 				{
 					rule = rule.Clone();
 					rule.Options |= HtmlElementOptions.Allowed;
@@ -337,7 +337,7 @@ namespace Radischevo.Wahha.Web.Text
 		protected HtmlAttributeResult ConvertAttribute(HtmlElementRule element, XmlAttribute attribute)
 		{
 			HtmlAttributeRule attrRule = GetAttributeRule(element, attribute.LocalName);
-			HtmlAttributeContext context = new HtmlAttributeContext(attrRule, Parameters);
+			HtmlAttributeContext context = new HtmlAttributeContext(attrRule.Clone(), Parameters);
 
 			if (attrRule.HasConverter)
 			{
@@ -348,7 +348,7 @@ namespace Radischevo.Wahha.Web.Text
 				if (!MatchName(attribute, attrRule))
 					attrRule = GetAttributeRule(element, attribute.LocalName);
 
-				if ((attrRule.Options & HtmlAttributeOptions.Internal) == HtmlAttributeOptions.Internal)
+				if ((attrRule.Options & HtmlAttributeOptions.Generated) == HtmlAttributeOptions.Generated)
 				{
 					attrRule = attrRule.Clone();
 					attrRule.Options |= HtmlAttributeOptions.Allowed;

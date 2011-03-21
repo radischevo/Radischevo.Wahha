@@ -261,6 +261,27 @@
             of the type of route persistence provider.
             </summary>
         </member>
+        <member name="T:Radischevo.Wahha.Web.Routing.Scripting.RegexConstraintReader">
+            <summary>
+            Route interceptor that adds regex constraints 
+            to the definition if present.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Routing.Scripting.IRouteInterceptor.Intercept(Radischevo.Wahha.Web.Routing.Scripting.RouteDefinition)">
+            <summary>
+            Intercepts the route definition.
+            </summary>
+            <param name="definition">Route definition to manipulate.</param>
+            <returns>Value indicating whether to add the 
+            route after the interception.</returns>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Routing.Scripting.RegexConstraintReader.Intercept(Radischevo.Wahha.Web.Routing.Scripting.RouteDefinition)">
+            <summary>
+            Intercepts the route definition adding regex constraints 
+            to its parameter values.
+            </summary>
+            <param name="definition">Route definition to manipulate.</param>
+        </member>
         <member name="T:Radischevo.Wahha.Web.Routing.IRouteHandler">
             <summary>
             Defines the contract for 
@@ -313,6 +334,13 @@
             Gets the parameter 
             dictionary for the current route
             </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Routing.Scripting.RouteReader.Read(Radischevo.Wahha.Web.Routing.Route)">
+            <summary>
+            Gets the route definition from the provided route.
+            </summary>
+            <param name="name">The name of the route.</param>
+            <param name="route">The route instance to create definition for.</param>
         </member>
         <member name="T:Radischevo.Wahha.Web.Routing.RouteData">
             <summary>
@@ -396,8 +424,7 @@
         </member>
         <member name="T:Radischevo.Wahha.Web.Routing.RouteCollection">
             <summary>
-            Provides a collection of objects 
-            of the <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> class
+            Provides a collection of routes for ASP.NET routing.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.#ctor">
@@ -408,30 +435,30 @@
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.Add(Radischevo.Wahha.Web.Routing.RouteBase)">
             <summary>
-            Adds a new <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> to the collection
+            Adds a new <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> to the collection.
             </summary>
-            <param name="item">The value of the element to add</param>
+            <param name="item">The value of the element to add.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.Add(System.String,Radischevo.Wahha.Web.Routing.RouteBase)">
             <summary>
-            Adds a new <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> to the collection
+            Adds a new <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> to the collection.
             </summary>
-            <param name="key">The key of the element to add</param>
-            <param name="item">The value of the element to add</param>
+            <param name="key">The key of the element to add.</param>
+            <param name="item">The value of the element to add.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.AddRange(System.Collections.Generic.IDictionary{System.String,Radischevo.Wahha.Web.Routing.RouteBase})">
             <summary>
             Adds a range of <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> elements 
-            to the collection
+            to the collection.
             </summary>
-            <param name="values">The values to add</param>
+            <param name="values">The values to add.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.AddRange(System.Collections.Generic.IEnumerable{Radischevo.Wahha.Web.Routing.RouteBase})">
             <summary>
             Adds a range of <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> elements 
-            to the collection
+            to the collection.
             </summary>
-            <param name="values">The values to add</param>
+            <param name="values">The values to add.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.Clear">
             <summary>
@@ -441,23 +468,23 @@
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.Remove(Radischevo.Wahha.Web.Routing.RouteBase)">
             <summary>
-            Removes the specified <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> from the collection
+            Removes the specified <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> from the collection.
             </summary>
-            <param name="item">An element to remove</param>
+            <param name="item">An element to remove.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.Remove(System.Int32)">
             <summary>
             Removes the <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> with the specified index 
-            from the collection
+            from the collection.
             </summary>
-            <param name="item">An index of the element to remove</param>
+            <param name="index">An index of the element to remove.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.Remove(System.String)">
             <summary>
             Removes the <see cref="T:Radischevo.Wahha.Web.Routing.RouteBase"/> with 
-            the specified key from the collection
+            the specified key from the collection.
             </summary>
-            <param name="key">The key of the element to remove</param>
+            <param name="key">The key of the element to remove.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.GetRouteData(Radischevo.Wahha.Web.Abstractions.HttpContextBase)">
             <summary>
@@ -466,7 +493,7 @@
             the <see cref="T:Radischevo.Wahha.Web.Routing.RouteData"/> for the current request. 
             This method returns null, if no route matched the request.
             </summary>
-            <param name="context">The current <see cref="T:System.Web.HttpContext"/> object</param>
+            <param name="context">The current <see cref="T:Radischevo.Wahha.Web.Abstractions.HttpContextBase"/> object.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.GetVirtualPath(Radischevo.Wahha.Web.Routing.RequestContext,Radischevo.Wahha.Core.ValueDictionary)">
             <summary>
@@ -474,9 +501,9 @@
             the provided <paramref name="values"/>, 
             or <value>null</value>, if no matching route found.
             </summary>
-            <param name="context">The context of the current request</param>
-            <param name="value">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
-            containing the route parameter values</param>
+            <param name="context">The context of the current request.</param>
+            <param name="values">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
+            containing the route parameter values.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Routing.RouteCollection.GetVirtualPath(Radischevo.Wahha.Web.Routing.RequestContext,System.String,Radischevo.Wahha.Core.ValueDictionary)">
             <summary>
@@ -484,10 +511,10 @@
             the provided route <paramref name="key"/> and <paramref name="values"/>, 
             or <value>null</value>, if no matching route found.
             </summary>
-            <param name="context">The context of the current request</param>
-            <param name="key">The key of the route to use</param>
-            <param name="value">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
-            containing the route parameter values</param>
+            <param name="context">The context of the current request.</param>
+            <param name="key">The key of the route to use.</param>
+            <param name="values">The <see cref="T:Radischevo.Wahha.Core.ValueDictionary"/> 
+            containing the route parameter values.</param>
         </member>
         <member name="P:Radischevo.Wahha.Web.Routing.RouteCollection.Item(System.String)">
             <summary>
@@ -535,6 +562,12 @@
         <member name="M:Radischevo.Wahha.Web.Routing.IRouteTableProvider.GetRouteTable">
             <summary>
             Gets the currently configured route table.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Routing.Scripting.IScriptRouteTableProvider">
+            <summary>
+            Provides a contract for the 
+            script route table provider.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Routing.VirtualPathData">

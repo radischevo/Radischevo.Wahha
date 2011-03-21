@@ -11,9 +11,9 @@ namespace Radischevo.Wahha.Web.Routing
     /// Represents a single route
     /// </summary>
     public class Route : RouteBase
-    {
-        #region Instance Fields
-        private IRouteHandler _handler;
+	{
+		#region Instance Fields
+		private IRouteHandler _handler;
         private string _url;
         private ParsedRoute _parsedRoute;
         private ValueDictionary _defaults;
@@ -135,7 +135,7 @@ namespace Radischevo.Wahha.Web.Routing
         /// <summary>
         /// Gets the collection of route constraints
         /// </summary>
-        public List<IRouteConstraint> Constraints
+        public ICollection<IRouteConstraint> Constraints
         {
             get
             {

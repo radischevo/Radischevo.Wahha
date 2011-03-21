@@ -41,6 +41,14 @@ namespace Radischevo.Wahha.Web.Routing
                 return _parameterName;
             }
         }
+
+		public Regex Pattern
+		{
+			get
+			{
+				return _pattern;
+			}
+		}
         #endregion
 
         #region Static Methods
