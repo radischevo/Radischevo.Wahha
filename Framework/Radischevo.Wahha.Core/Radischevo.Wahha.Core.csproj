@@ -116,7 +116,7 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
-    <Compile Include="Extensions\ValueSetExtensions.cs" />
+    <Compile Include="Extensions\ValueSet.cs" />
     <Compile Include="Interfaces\IHideObjectMembers.cs" />
     <Compile Include="Indexable.cs" />
     <Compile Include="Interfaces\IDynamicAccessor.cs" />

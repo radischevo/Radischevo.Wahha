@@ -5,9 +5,64 @@ using System.Globalization;
 
 namespace Radischevo.Wahha.Core
 {
-    public static class ValueSetExtensions
-    {
-        #region Extension Methods
+    public static class ValueSet
+	{
+		#region Nested Types
+		private sealed class EmptyValueSet : IValueSet
+		{
+			#region Static Fields
+			private static readonly IEnumerable<string> _emptyKeys = new string[0];
+			#endregion
+
+			#region Constructors
+			public EmptyValueSet()
+			{
+			}
+			#endregion
+
+			#region Instance Properties
+			public object this[string key]
+			{
+				get
+				{
+					return null;
+				}
+			}
+
+			public IEnumerable<string> Keys
+			{
+				get
+				{
+					return _emptyKeys;
+				}
+			}
+			#endregion
+
+			#region Instance Methods
+			public TValue GetValue<TValue>(string key, 
+				TValue defaultValue, IFormatProvider provider)
+			{
+				return defaultValue;
+			}
+			#endregion
+		}
+		#endregion
+
+		#region Static Fields
+		private static readonly IValueSet _empty = new EmptyValueSet();
+		#endregion
+
+		#region Static Properties
+		public static IValueSet Empty
+		{
+			get
+			{
+				return _empty;
+			}
+		}
+		#endregion
+
+		#region Extension Methods
 		/// <summary>
 		/// Gets the typed value with the specified key.
 		/// </summary>

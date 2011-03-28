@@ -51,32 +51,6 @@ namespace Radischevo.Wahha.Core
             return String.Join("", parts);
         }
 
-        public static string Format(this string format, object arg)
-        {
-            return String.Format(format, arg);
-        }
-
-        public static string Format(this string format, object arg0, object arg1)
-        {
-            return String.Format(format, arg0, arg1);
-        }
-
-        public static string Format(this string format, object arg0, object arg1, object arg2)
-        {
-            return String.Format(format, arg0, arg1, arg2);
-        }
-
-        public static string Format(this string format, params object[] arguments)
-        {
-            return String.Format(format, arguments);
-        }
-
-        public static string Format(this string format, IFormatProvider provider, 
-            params object[] arguments)
-        {
-            return String.Format(provider, format, arguments);
-        }
-
         /// <summary>
         /// Returns the first few characters of the string with a length
         /// specified by the given parameter. If the string's length is less than the 
