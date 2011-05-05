@@ -115,6 +115,11 @@
               Looks up a localized string similar to Cannot access the &apos;{0}&apos;. The object is disposed..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_OperationCommandIsNotInitialized">
+            <summary>
+              Looks up a localized string similar to The &apos;Command&apos; property should be initialized with the Radischevo.Wahha.Data.DbCommandDescriptor instance before the operation can execute..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ParameterMustBeGreaterThan">
             <summary>
               Looks up a localized string similar to The value of the &apos;{0}&apos; parameter should be greater than {1}..
@@ -159,6 +164,95 @@
             <summary>
               Looks up a localized string similar to The database command type &apos;{0}&apos; is not supported by the provider..
             </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbNonQueryOperation">
+            <summary>
+            Represents the operation that executes an SQL statement 
+            against the data source and returns a number of rows affected.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbCommandOperation`1">
+            <summary>
+            Defines the base class for the database operation 
+            that executes the provided <see cref="T:Radischevo.Wahha.Data.DbCommandDescriptor">command</see> 
+            and returns the result.
+            </summary>
+            <typeparam name="TResult">The type of operation result.</typeparam>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbOperation`1">
+            <summary>
+            Defines a contract for the atomic interaction with the database source.
+            </summary>
+            <typeparam name="TResult">The CLR type of the result.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.Execute(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns the result.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.Validate">
+            <summary>
+            When overridden in a derived class, validates 
+            the command arguments and returns a boolean value 
+            indicating whether the command is valid for execution.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            When overridden in a derived class, executes the command 
+            against the provided data source.
+            </summary>
+            <param name="provider">The database communication provider 
+            to retrieve or store the data.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.Radischevo#Wahha#Core#IContextOperation{Radischevo#Wahha#Data#IDbDataProvider}#Execute(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to store the data.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbCommandOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbCommandOperation`1.Validate">
+            <summary>
+            When overridden in a derived class, validates 
+            the command arguments and returns a boolean value 
+            indicating whether the command is valid for execution.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbCommandOperation`1.Command">
+            <summary>
+            Gets or sets the <see cref="T:Radischevo.Wahha.Data.DbCommandDescriptor">command</see> 
+            which will be executed by this operation.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbNonQueryOperation.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbNonQueryOperation"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbNonQueryOperation.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns a number of rows affected.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbCommandResult">
             <summary>
@@ -375,6 +469,57 @@
         <member name="P:Radischevo.Wahha.Data.IDbDataProvider.State">
             <summary>
             Gets the current connection state
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.CachedDbCommandOperation`1">
+            <summary>
+            Defines the base class for the operation, that queries the database 
+            converts the result to the specified type and caches it in the cache storage.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.CachedDbCommandOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.CachedDbCommandOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.CachedDbCommandOperation`1.Execute(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns the result.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.CachedDbCommandOperation`1.CreateCacheKey(Radischevo.Wahha.Data.DbCommandDescriptor)">
+            <summary>
+            Creates the unique cache key based on the text representation 
+            of the provided command and its parameters values.
+            </summary>
+            <param name="command">The command to create fingerprint from.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.CachedDbCommandOperation`1.Cache">
+            <summary>
+            Gets or sets the caching provider used 
+            to store the query result.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.CachedDbCommandOperation`1.Tags">
+            <summary>
+            Gets the collection of tags which 
+            is used to mark cache storage entries.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.CachedDbCommandOperation`1.ExpirationTimeout">
+            <summary>
+            Gets or sets the amount of time after 
+            which the entry will be removed from cache.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.CachedDbCommandOperation`1.EnableCaching">
+            <summary>
+            Gets or sets the value indicating whether 
+            the caching of results is enabled.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.Provider.OdbcDataProvider">
@@ -1029,6 +1174,77 @@
             If the value in the column is <see cref="T:System.DBNull"/>, <c>null</c> is returned. Otherwise the value is 
             converted to a <see cref="T:System.Int64"/> if possible.
             </remarks>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbOperationScope">
+            <summary>
+            Represents the controlled scope which can 
+            be used to execute several database operations 
+            within a single transaction.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationScope.#ctor">
+            <summary>
+            Initializes a nes instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationScope.#ctor(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Initializes a nes instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
+            </summary>
+            <param name="dataProvider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            used to perform database queries.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationScope.Initialize">
+            <summary>
+            Perform initialization tasks before the first 
+            operation is executed, i.e. starts new transaction 
+            if necessary.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationScope.Dispose(System.Boolean)">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or
+            resetting unmanaged resources.
+            </summary>
+            <param name="disposing">A value indicating whether 
+            the disposal is called explicitly.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationScope.Execute(Radischevo.Wahha.Data.IDbOperation)">
+            <summary>
+            Executes the specified operation within the scope.
+            </summary>
+            <param name="operation">The operation to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationScope.Execute``1(Radischevo.Wahha.Data.IDbOperation{``0})">
+            <summary>
+            Executes the specified operation within the scope 
+            and return its result.
+            </summary>
+            <typeparam name="TResult">The type of the operation result.</typeparam>
+            <param name="operation">The operation to execute.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationScope.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or
+            resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbOperationScope.Provider">
+            <summary>
+            Gets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            used to perform database queries.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbOperationScope.UseTransaction">
+            <summary>
+            Gets or sets the value indicating whether 
+            the transaction will be used.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbOperationScope.IsolationLevel">
+            <summary>
+            Gets or sets the transaction isolation level.
+            </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbDataProvider">
             <summary>
@@ -1733,107 +1949,76 @@
             of the SQL statement.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
+        <member name="T:Radischevo.Wahha.Data.DbQueryOperation`2">
             <summary>
-            Creates a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.KeyedDbRepository`2"/> class.
+            Defines the base class for the operation, that queries the database using 
+            the specified command and converts the result to the specified entity type.
             </summary>
-            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
-            used to transform database query results into objects.</param>
+            <typeparam name="TEntity">The type of the entity for materialization.</typeparam>
+            <typeparam name="TResult">The type of the result.</typeparam>
         </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.#ctor(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.IDbMaterializer{`0})">
+        <member name="M:Radischevo.Wahha.Data.DbQueryOperation`2.#ctor">
             <summary>
-            Creates a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.KeyedDbRepository`2"/> class.
-            </summary>
-            <param name="dataProvider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
-            used to perform database queries.</param>
-            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
-            used to transform database query results into objects.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.CreateEntitySelector(`1)">
-            <summary>
-            When overridden in a derived class, creates a 
-            <see cref="T:Radischevo.Wahha.Data.DbCommandDescriptor"/> used to 
-            select a single entity by its unique key.
-            </summary>
-            <param name="key">The unique key of the entity.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExtractKey(`0)">
-            <summary>
-            When overridden in a derived class, gets the unique key 
-            value of the provided entity.
-            </summary>
-            <param name="entity">The entity to extract key from.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.Materialize(Radischevo.Wahha.Core.IValueSet)">
-            <summary>
-            Creates and materializes a new entity object using the 
-            provided <paramref name="values">data source</paramref>.
-            </summary>
-            <param name="values">An <see cref="T:Radischevo.Wahha.Core.IValueSet"/> 
-            containing the data for entity materialization.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.Load(`0)">
-            <summary>
-            Executes the select query and updates the 
-            data properties of the provided entity.
-            </summary>
-            <param name="entity">The entity to update.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExecuteSelect(Radischevo.Wahha.Data.DbCommandDescriptor)">
-            <summary>
-            Executes the select query described by the provided <paramref name="command"/> 
-            and transforms the query result into the collection of entities.
-            </summary>
-            <param name="command">The unique key of the entity.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExecuteSingle(`1)">
-            <summary>
-            Selects a single entity using the provided unique key.
-            </summary>
-            <param name="key">An object describing the command to execute.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExecuteLoad(`0,Radischevo.Wahha.Data.DbCommandDescriptor)">
-            <summary>
-            Executes the select query and updates the data properties of the provided 
-            entity using the first element of the result set.
-            </summary>
-            <param name="entity">The entity to update.</param>
-            <param name="command">An object describing the command to execute.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.ExecuteSingle(Radischevo.Wahha.Data.DbCommandDescriptor)">
-            <summary>
-            Executes the select query described by the provided <paramref name="command"/> 
-            and transforms the first element of the resultset into entity.
-            </summary>
-            <param name="command">An object describing the command to execute.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.KeyedDbRepository`2.Dispose(System.Boolean)">
-            <summary>
-            Performs application-defined tasks associated with freeing, releasing, or
-            resetting unmanaged resources.
-            </summary>
-            <param name="disposing">A value indicating whether 
-            the disposal is called explicitly.</param>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.KeyedDbRepository`2.SelectBufferSize">
-            <summary>
-            Gets the initial size of the entity collections.
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbQueryOperation`2"/> class.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Data.KeyedDbRepository`2.Materializer">
+        <member name="P:Radischevo.Wahha.Data.DbQueryOperation`2.Materializer">
             <summary>
             Gets or sets the <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
             used to transform database query results into objects.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Data.KeyedDbRepository`2.DataProvider">
+        <member name="T:Radischevo.Wahha.Data.DbSingleOperation`1">
             <summary>
-            Gets or sets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
-            used to perform database queries. If no data provider is set, 
-            the default instance will be used.
+            Represents an operation, that queries the database using 
+            the specified command and returns a single entity of specified type.
             </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSingleOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSingleOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSingleOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSingleOperation`1"/> class.
+            </summary>
+            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
+            used to transform database query results into objects.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSingleOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns the result.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbScalarOperation`1">
+            <summary>
+            Represents the operation that queries the database using 
+            the specified command and converts the first column of 
+            the first row in the resultset to the 
+            <typeparamref name="TResult"/> type. If no rows returned or field type 
+            does not support the required conversion, a default value is returned.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbScalarOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbScalarOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbScalarOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns the scalar result.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.SubsetExtensions.ToSubset``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
@@ -2016,6 +2201,78 @@
             </summary>
             <typeparam name="T">The type of the object to return.</typeparam>
             <param name="key">The key the object is stored with.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbSelectOperation`1">
+            <summary>
+            Represents an operation, that queries the database using 
+            the specified command and returns a collection of entities 
+            of specified type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSelectOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSelectOperation`1"/> class.
+            </summary>
+            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
+            used to transform database query results into objects.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns the result.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbSelectOperation`1.BufferSize">
+            <summary>
+            Gets the initial size of the 
+            resulting collection.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbSubsetOperation`1">
+            <summary>
+            Represents an operation, that queries the database using 
+            the specified command and returns a partial collection 
+            of entities of specified type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSubsetOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSubsetOperation`1"/> class.
+            </summary>
+            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
+            used to transform database query results into objects.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns the result.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbSubsetOperation`1.BufferSize">
+            <summary>
+            Gets the initial size of the 
+            resulting collection.
+            </summary>
         </member>
     </members>
 </doc>

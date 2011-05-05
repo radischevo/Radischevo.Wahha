@@ -7,37 +7,38 @@ namespace ConsoleTester
 {
 	internal static class SqlQueries
 	{
-		internal static string SelectQuery = @"DECLARE @results TABLE ([index] bigint, [productId] bigint)
-			INSERT INTO @results ([index], [productId])
-			SELECT [t].[index], [t].[product]
-			FROM (
-				SELECT ROW_NUMBER() OVER (ORDER BY [p].[id] ASC) AS [index], [p].[id] AS [product]
-				FROM [dbo].[workle.products] AS [p]
-					INNER JOIN [dbo].[workle.product.data.1] AS [d]
-					ON [p].[id] = [d].[productId]
-				) AS [t]
-			WHERE [t].[index] BETWEEN (@skip + 1) AND (@skip + @take)
+		internal static string SelectQuery = @"SELECT [C].[Id] AS [id], [C].[Title] AS [title], [C].[RegionId] AS [region.id] 
+			FROM [dbo].[Workle.Cities] AS [C] ORDER BY [Title] ASC";
 
-			SELECT [p].*, [d].[field_1_value] AS [data.field_1_value], [d].[field_5_value] as [data.field_5_value]
-				FROM [dbo].[workle.products] AS [p]
-				INNER JOIN [dbo].[workle.product.data.1] AS [d]
-				ON [d].[productId] = [p].[id]
-				INNER JOIN @results AS [r]
-				ON [r].[productId] = [p].[id]
-				ORDER BY [r].[index] ASC";
+		internal static string SelectQueryPaged = @"
+			DECLARE @index TABLE ([index] [int] IDENTITY(1, 1), [id] [bigint])
 
-		internal static string SingleQuery = @"
-			SELECT [p].* FROM [dbo].[workle.products] AS [p]
-				WHERE [p].[id] = @id";
+			INSERT INTO @index ([id])
+			SELECT [C].[Id]
+				FROM [dbo].[Workle.Cities] AS [C] 
+				ORDER BY [Title] ASC
+			
+			SELECT [C].[Id] AS [id], [C].[Title] AS [title], [C].[RegionId] AS [region.id] 
+				FROM [dbo].[Workle.Cities] AS [C]
+				INNER JOIN @index AS [I]
+				ON [C].[Id] = [I].[id]
+				WHERE [I].[index] BETWEEN @skip + 1 AND @skip + @take
+				ORDER BY [I].[index] ASC
 
-		internal static string DataQuery = @"
-			SELECT [d].* 
-			FROM [dbo].[workle.product.data.1] AS [d]
-			WHERE [d].[productId] = @id";
+			SELECT COUNT(1) FROM @index";
 
-		internal static string CollectionDataQuery = @"
-			SELECT [d].* 
-			FROM [dbo].[workle.product.data.1] AS [d]
-			WHERE [d].[productId] = @id";
+		internal static string SingleQuery = @"SELECT [C].[Id] AS [id], [C].[Title] AS [title], [C].[RegionId] AS [region.id] 
+			FROM [dbo].[Workle.Cities] AS [C] WHERE [C].[Id] = @id";
+
+		internal static string ScalarQuery = @"SELECT COUNT(1) FROM [dbo].[Workle.Cities]";
+
+		internal static string ScalarInsertQuery = @"INSERT INTO [dbo].[Workle.Cities] ([RegionId], [Title], [Enabled]) 
+			VALUES (@regionId, @title, 1);
+			SELECT SCOPE_IDENTITY()";
+
+		internal static string UpdateQuery = @"UPDATE [dbo].[Workle.Cities] SET 
+			[Title] = @title WHERE [Id] = @id";
+
+		internal static string DeleteQuery = @"DELETE FROM [dbo].[Workle.Cities] WHERE [Id] = @id";
 	}
 }

@@ -83,6 +83,11 @@
     <Compile Include="Cryptography\Crc32.cs" />
     <Compile Include="Cryptography\Crc64.cs" />
     <Compile Include="Cryptography\Elf32.cs" />
+    <Compile Include="Interfaces\IContextOperation`1.cs" />
+    <Compile Include="Interfaces\IContextOperation.cs" />
+    <Compile Include="Interfaces\IObjectFactory.cs" />
+    <Compile Include="Interfaces\IOperation.cs" />
+    <Compile Include="Interfaces\IOperation`1.cs" />
     <Compile Include="Services\DefaultServiceLocator.cs" />
     <Compile Include="Services\DelegatedServiceLocator.cs" />
     <Compile Include="EnumerableLink`1.cs" />
@@ -147,6 +152,8 @@
     <Compile Include="Reflection\DynamicAccessor.cs" />
     <Compile Include="Reflection\FieldAccessor.cs" />
     <Compile Include="Reflection\PropertyAccessor.cs" />
+    <Compile Include="Services\ObjectFactoryBuilder.cs" />
+    <Compile Include="Services\ObjectFactory`1.cs" />
     <Compile Include="Services\ServiceLocator.cs" />
     <Compile Include="Extensions\ServiceLocatorExtensions.cs" />
     <Compile Include="Tuple.cs" />

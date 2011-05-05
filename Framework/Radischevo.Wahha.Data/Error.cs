@@ -169,5 +169,16 @@ namespace Radischevo.Wahha.Data
 		{
 			return new ArgumentException(Res.Error_CouldNotMaterializeCollectionLink, parameter);
 		}
+
+		internal static Exception OperationIsNotValid()
+		{
+			return new DbOperationValidationException();
+		}
+
+		internal static Exception OperationCommandIsNotInitialized()
+		{
+			return new DbOperationValidationException(
+				Res.Error_OperationCommandIsNotInitialized);
+		}
 	}
 }

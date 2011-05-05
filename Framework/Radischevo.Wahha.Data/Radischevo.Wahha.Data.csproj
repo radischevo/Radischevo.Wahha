@@ -68,6 +68,8 @@
     <Compile Include="Engine\DbDataRecord.cs" />
     <Compile Include="Extensions\AssociatorExtensions.cs" />
     <Compile Include="Caching\CacheProviderExtensions.cs" />
+    <Compile Include="Interfaces\IDbOperation.cs" />
+    <Compile Include="Interfaces\IDbOperation`1.cs" />
     <Compile Include="Interfaces\IValueSetTransformer.cs" />
     <Compile Include="Interfaces\IValueSetValidator.cs" />
     <Compile Include="Materialization\AssociatorAction`1.cs" />
@@ -107,7 +109,7 @@
     <Compile Include="Engine\DbFieldLookup.cs" />
     <Compile Include="Engine\DbParameterCollection.cs" />
     <Compile Include="Engine\DbParameterDescriptor.cs" />
-    <Compile Include="DbQueryType.cs" />
+    <Compile Include="Engine\DbQueryType.cs" />
     <Compile Include="Extensions\SubsetExtensions.cs" />
     <Compile Include="Interfaces\IDbColumnMapper.cs" />
     <Compile Include="Interfaces\IDbDataReader.cs" />
@@ -117,7 +119,6 @@
     <Compile Include="Interfaces\IDbQueryService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISubset.cs" />
-    <Compile Include="KeyedDbRepository.cs" />
     <Compile Include="Engine\DbDataProviderExtensions.cs" />
     <Compile Include="Materialization\LinkAssociatorAction`1.cs" />
     <Compile Include="Materialization\LinkMaterializerAction.cs" />
@@ -129,6 +130,17 @@
     <Compile Include="Materialization\SingleLinkAssociator`1.cs" />
     <Compile Include="Materialization\SubsetSchemeValidator.cs" />
     <Compile Include="Materialization\SubsetMapper.cs" />
+    <Compile Include="Operations\CachedDbCommandOperation`1.cs" />
+    <Compile Include="Operations\DbOperationScope.cs" />
+    <Compile Include="Operations\DbSubsetOperation`1.cs" />
+    <Compile Include="Operations\DbCommandOperation`1.cs" />
+    <Compile Include="Operations\DbQueryOperation`1.cs" />
+    <Compile Include="Operations\DbNonQueryOperation.cs" />
+    <Compile Include="Operations\DbOperationValidationException.cs" />
+    <Compile Include="Operations\DbOperation`1.cs" />
+    <Compile Include="Operations\DbScalarOperation`1.cs" />
+    <Compile Include="Operations\DbSelectOperation`1.cs" />
+    <Compile Include="Operations\DbSingleOperation`1.cs" />
     <Compile Include="Provider\CommonDbDataProvider.cs" />
     <Compile Include="Provider\OdbcDataProvider.cs" />
     <Compile Include="Subset.cs" />
@@ -139,7 +151,6 @@
     <Compile Include="Engine\ObjectEnumerator.cs" />
     <Compile Include="Engine\ObjectReader.cs" />
     <Compile Include="Interfaces\IDbDataProviderFactory.cs" />
-    <Compile Include="DbRepository.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Error_CouldNotConstructObject" xml:space="preserve">
+    <value>Could not find the appropriate constructor of the '{0}' type.</value>
+  </data>
   <data name="Error_CouldNotConvertType" xml:space="preserve">
     <value>Could not convert the '{0}' argument to the specified type '{1}'.</value>
   </data>

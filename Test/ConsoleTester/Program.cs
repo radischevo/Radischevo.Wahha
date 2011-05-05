@@ -17,20 +17,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Radischevo.Wahha.Web.Text;
 
 using A = Radischevo.Wahha.Web.Abstractions;
+using Radischevo.Wahha.Data;
 
 namespace ConsoleTester
 {
-	public class Maza
-	{
-		public int Value
-		{
-			get
-			{
-				return 10;
-			}
-		}
-	}
-
 	class Program
 	{
 		static Random _random = new Random();
@@ -39,34 +29,12 @@ namespace ConsoleTester
 		{
 			Program p = new Program();
 			//p.MultipleThreadTest();
-			//p.SingleThreadTest();
+			p.SingleThreadTest();
 			//p.RouteTest();
-			p.SgmlTest();
+			//p.SgmlTest();
 			//p.InheritanceTest();
 
 			Console.ReadKey();
-		}
-
-		private void SerializeLink(Item item)
-		{
-			using (FileStream fs = new FileStream(Path.Combine(
-				Environment.CurrentDirectory, "data-{0}.txt".Format(item.Id)), 
-				FileMode.OpenOrCreate, FileAccess.Write))
-			{
-				BinaryFormatter bf = new BinaryFormatter();
-				bf.Serialize(fs, item);
-			}
-		}
-
-		private Item DeserializeLink(long id)
-		{
-			using (FileStream fs = new FileStream(Path.Combine(
-				Environment.CurrentDirectory, "data-{0}.txt".Format(id)),
-				FileMode.Open, FileAccess.Read))
-			{
-				BinaryFormatter bf = new BinaryFormatter();
-				return (Item)bf.Deserialize(fs);
-			}
 		}
 
 		public void InheritanceTest()
@@ -122,70 +90,46 @@ namespace ConsoleTester
 
 		public void SingleThreadTest()
 		{
-			Stopwatch sw = new Stopwatch();
-			IItemRepository items = ServiceLocator
-				.Instance.GetService<IItemRepository>();
+			var selectCommand = new SelectCityCommand();
+			var subsetCommand = new SelectCitySubsetCommand(0, 10);
+			var singleCommand = new SingleCityCommand(40289);
+			var insertCommand = new InsertCityCommand(new City() {
+				Title = "Мухосранск", RegionId = 3140
+			});
 
-			Console.WriteLine("Single thread test");
-			sw.Start();
-			IEnumerable<Item> list = items.Select(13000, 20);			
-			Output(list);
-			sw.Stop();
-
-			Console.WriteLine("{0}ms elapsed", sw.ElapsedMilliseconds);
-		}
-
-		public void MultipleThreadTest()
-		{
-			Console.WriteLine("Multiple thread test");
-			for (int i = 0; i < 10; ++i)
+			using (var scope = new DbOperationScope())
 			{
-				Thread thread = new Thread(new ThreadStart(MultipleThreadTestTarget));
-				thread.Name = String.Format("#{0}", i + 1);
-				thread.Start();
-				Thread.Sleep(10);
+				PrintCities(scope.Execute(subsetCommand));
+
+				var oldCity = scope.Execute(singleCommand);
+				PrintCity(scope.Execute(singleCommand));
+
+				City added = scope.Execute(insertCommand);
+				PrintCity(added);
+
+				var delete = new DeleteCityCommand(oldCity);
+				scope.Execute(delete);
 			}
 		}
 
-		public void MultipleThreadTestTarget()
+		private void PrintCities(IEnumerable<City> cities)
 		{
-			IItemRepository items = Configuration.Instance
-				.Container.Resolve<IItemRepository>();
+			Console.WriteLine("Printing cities... {0}", cities.Total());
+			Console.WriteLine("=============================================");
+			Console.WriteLine();
 
-			IEnumerable<Item> list = items.Select(_random.Next(10000, 51000), 20);
-			Action<IEnumerable<Item>> action = new Action<IEnumerable<Item>>(Output);
-			action.BeginInvoke(list.Take(10), null, null);
-			action.BeginInvoke(list.Skip(10), null, null);
+			foreach (City city in cities)
+				PrintCity(city);
 
-			MultipleThreadTestCallback();
+			Console.WriteLine();
 		}
 
-		public void Output(IEnumerable<Item> items)
+		private void PrintCity(City city)
 		{
-			try
-			{
-				foreach (Item item in items)
-				{
-					Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}",
-						item.Id, item.Alias, item.Name, item.DateCreated.ToString("dd.MM.yyyy"),
-						item.DateLastModified.ToString("dd.MM.yyyy"), 
-						item.Data.Value.Comments);
-
-					SerializeLink(item);
-
-					Item otherItem = DeserializeLink(item.Id);
-					Console.WriteLine("Deserialized => {0}", otherItem.Id);
-				}
-			}
-			catch
-			{
-				Console.WriteLine("!!! Thread conflict occured");
-			}
-		}
-
-		public void MultipleThreadTestCallback()
-		{
-			Console.WriteLine("Execution of thread {0} complete.", Thread.CurrentThread.Name);
+			if (city == null)
+				Console.WriteLine("(NULL)");
+			else
+				Console.WriteLine("{0} (id: {1}, region: {2})", city.Title, city.Id, city.RegionId);
 		}
 
 		public void SgmlTest()

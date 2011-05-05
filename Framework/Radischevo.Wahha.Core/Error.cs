@@ -168,8 +168,14 @@ namespace Radischevo.Wahha.Core
 
 		internal static Exception InvalidFormatExpression(string expression)
 		{
-			return new ArgumentException(String.Format(Res.Error_InvalidFormatExpression,
-				expression));
+			return new ArgumentException(String.Format(
+				Res.Error_InvalidFormatExpression, expression));
+		}
+
+		internal static Exception CouldNotFindAppropriateConstructor(Type type)
+		{
+			return new MissingMethodException(String.Format(
+				Res.Error_CouldNotConstructObject, type.FullName));
 		}
 	}
 }

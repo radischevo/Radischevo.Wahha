@@ -114,10 +114,10 @@ namespace Radischevo.Wahha.Data
 		#endregion
 	}
 
-	internal sealed class SelectorAction<TAssociation, TRepository> 
+	internal sealed class SelectorAction<TAssociation, TOperation> 
 		: SelectorActionImpl<TAssociation>
 		where TAssociation : class
-		where TRepository : IRepository<TAssociation>
+		where TOperation : IDbOperation<TAssociation>
 	{
 		#region Constructors
 		public SelectorAction(Expression<Func<TRepository, TAssociation>> selector)
