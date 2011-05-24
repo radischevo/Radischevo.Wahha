@@ -29,6 +29,13 @@ namespace Radischevo.Wahha.Data
 		ISingleAssociationBuilder<TAssociation> With<TRepository>(
 			Expression<Func<TRepository, TAssociation>> selector)
 			where TRepository : IRepository<TAssociation>;
+
+		ISingleAssociationBuilder<TAssociation> With<TOperationFactory>(
+			Expression<Func<TOperationFactory, IDbOperation<TAssociation>>> operation);
+
+		ISingleAssociationBuilder<TAssociation> With<TOperation>(
+			Expression<Func<TOperation>> operation)
+			where TOperation : IDbOperation<TAssociation>;
 	}
 
 	public interface ICollectionAssociationSelectorBuilder<TAssociation>
@@ -38,6 +45,13 @@ namespace Radischevo.Wahha.Data
 		ICollectionAssociationBuilder<TAssociation> With<TRepository>(
 			Expression<Func<TRepository, IEnumerable<TAssociation>>> selector)
 			where TRepository : IRepository<TAssociation>;
+
+		ICollectionAssociationBuilder<TAssociation> With<TOperationFactory>(
+			Expression<Func<TOperationFactory, IDbOperation<IEnumerable<TAssociation>>>> operation);
+
+		ICollectionAssociationBuilder<TAssociation> With<TOperation>(
+			Expression<Func<TOperation>> operation)
+			where TOperation : IDbOperation<IEnumerable<TAssociation>>;
 	}
 
 	public interface ICollectionAssociationBuilder<TAssociation>
@@ -101,7 +115,30 @@ namespace Radischevo.Wahha.Data
 			where TRepository : IRepository<TAssociation>
 		{
 			LinkAssociatorAction<TAssociation> action = 
-				new SelectorAction<TAssociation, TRepository>(selector);
+				new RepositoryBasedSingleSelectorAction<TAssociation, TRepository>(selector);
+			action.Order = 1;
+			_associator.Actions.Add(action);
+
+			return this;
+		}
+
+		public ISingleAssociationBuilder<TAssociation> With<TFactory>(
+			Expression<Func<TFactory, IDbOperation<TAssociation>>> operation)
+		{
+			LinkAssociatorAction<TAssociation> action = 
+				new OperationFactoryBasedSingleSelectorAction<TAssociation, TFactory>(operation);
+			action.Order = 1;
+			_associator.Actions.Add(action);
+
+			return this;
+		}
+
+		public ISingleAssociationBuilder<TAssociation> With<TOperation>(
+			Expression<Func<TOperation>> operation)
+			where TOperation : IDbOperation<TAssociation>
+		{
+			LinkAssociatorAction<TAssociation> action =
+				new OperationBasedSingleSelectorAction<TAssociation, TOperation>(operation);
 			action.Order = 1;
 			_associator.Actions.Add(action);
 
@@ -171,7 +208,30 @@ namespace Radischevo.Wahha.Data
 			where TRepository : IRepository<TAssociation>
 		{
 			LinkAssociatorAction<IEnumerable<TAssociation>> action =
-				new CollectionLinkSelectorAction<TAssociation, TRepository>(selector);
+				new RepositoryBasedCollectionSelectorAction<TAssociation, TRepository>(selector);
+			action.Order = 1;
+			_associator.Actions.Add(action);
+
+			return this;
+		}
+
+		public ICollectionAssociationBuilder<TAssociation> With<TFactory>(
+			Expression<Func<TFactory, IDbOperation<IEnumerable<TAssociation>>>> operation)
+		{
+			LinkAssociatorAction<IEnumerable<TAssociation>> action =
+				new OperationFactoryBasedCollectionSelectorAction<TAssociation, TFactory>(operation);
+			action.Order = 1;
+			_associator.Actions.Add(action);
+
+			return this;
+		}
+
+		public ICollectionAssociationBuilder<TAssociation> With<TOperation>(
+			Expression<Func<TOperation>> operation)
+			where TOperation : IDbOperation<IEnumerable<TAssociation>>
+		{
+			LinkAssociatorAction<IEnumerable<TAssociation>> action =
+				new OperationBasedCollectionSelectorAction<TAssociation, TOperation>(operation);
 			action.Order = 1;
 			_associator.Actions.Add(action);
 

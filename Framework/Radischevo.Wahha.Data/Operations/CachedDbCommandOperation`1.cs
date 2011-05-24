@@ -27,7 +27,7 @@ namespace Radischevo.Wahha.Data
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.CachedDbCommandOperation{TResult}"/> class.
 		/// </summary>
-		public CachedDbCommandOperation()
+		protected CachedDbCommandOperation()
 			: base()
 		{
 			_tags = new List<string>();

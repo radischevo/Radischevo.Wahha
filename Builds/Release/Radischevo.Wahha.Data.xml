@@ -864,6 +864,61 @@
             Framework data providers that access relational databases.
             </summary>
         </member>
+        <member name="T:Radischevo.Wahha.Data.DbSelectOperation`1">
+            <summary>
+            Represents an operation, that queries the database using 
+            the specified command and returns a collection of entities 
+            of specified type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbQueryOperation`2">
+            <summary>
+            Defines the base class for the operation, that queries the database using 
+            the specified command and converts the result to the specified entity type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity for materialization.</typeparam>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbQueryOperation`2.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbQueryOperation`2"/> class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbQueryOperation`2.Materializer">
+            <summary>
+            Gets or sets the <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
+            used to transform database query results into objects.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSelectOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSelectOperation`1"/> class.
+            </summary>
+            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
+            used to transform database query results into objects.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns the result.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbSelectOperation`1.BufferSize">
+            <summary>
+            Gets the initial size of the 
+            resulting collection.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Data.DataRecordExtensions">
             <summary>
             Provides additional extension methods 
@@ -1949,25 +2004,6 @@
             of the SQL statement.
             </summary>
         </member>
-        <member name="T:Radischevo.Wahha.Data.DbQueryOperation`2">
-            <summary>
-            Defines the base class for the operation, that queries the database using 
-            the specified command and converts the result to the specified entity type.
-            </summary>
-            <typeparam name="TEntity">The type of the entity for materialization.</typeparam>
-            <typeparam name="TResult">The type of the result.</typeparam>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbQueryOperation`2.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbQueryOperation`2"/> class.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.DbQueryOperation`2.Materializer">
-            <summary>
-            Gets or sets the <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
-            used to transform database query results into objects.
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Data.DbSingleOperation`1">
             <summary>
             Represents an operation, that queries the database using 
@@ -2019,6 +2055,42 @@
             </summary>
             <param name="provider">The database communication provider 
             using to retrieve or store the data.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.DbSubsetOperation`1">
+            <summary>
+            Represents an operation, that queries the database using 
+            the specified command and returns a partial collection 
+            of entities of specified type.
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSubsetOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbSubsetOperation`1"/> class.
+            </summary>
+            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
+            used to transform database query results into objects.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns the result.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbSubsetOperation`1.BufferSize">
+            <summary>
+            Gets the initial size of the 
+            resulting collection.
+            </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.SubsetExtensions.ToSubset``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
@@ -2202,29 +2274,20 @@
             <typeparam name="T">The type of the object to return.</typeparam>
             <param name="key">The key the object is stored with.</param>
         </member>
-        <member name="T:Radischevo.Wahha.Data.DbSelectOperation`1">
+        <member name="T:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1">
             <summary>
-            Represents an operation, that queries the database using 
-            the specified command and returns a collection of entities 
-            of specified type.
+            Defines the base class for the operation, that executes 
+            an SQL statement against the database and invalidates 
+            the result cache storage.
             </summary>
-            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TResult">The type of the result.</typeparam>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.#ctor">
+        <member name="M:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.#ctor">
             <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.DbSelectOperation`1"/> class.
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1"/> class.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.DbSelectOperation`1"/> class.
-            </summary>
-            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
-            used to transform database query results into objects.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+        <member name="M:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Execute(Radischevo.Wahha.Data.IDbDataProvider)">
             <summary>
             Executes the operation against the provided data source 
             and returns the result.
@@ -2232,46 +2295,22 @@
             <param name="provider">The database communication provider 
             using to retrieve or store the data.</param>
         </member>
-        <member name="P:Radischevo.Wahha.Data.DbSelectOperation`1.BufferSize">
+        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Cache">
             <summary>
-            Gets the initial size of the 
-            resulting collection.
+            Gets or sets the caching provider used 
+            to store the query results.
             </summary>
         </member>
-        <member name="T:Radischevo.Wahha.Data.DbSubsetOperation`1">
+        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Tags">
             <summary>
-            Represents an operation, that queries the database using 
-            the specified command and returns a partial collection 
-            of entities of specified type.
-            </summary>
-            <typeparam name="TEntity">The type of the entity.</typeparam>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.DbSubsetOperation`1"/> class.
+            Gets the collection of tags which 
+            will be invalidated.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
+        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.EnableInvalidation">
             <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.DbSubsetOperation`1"/> class.
-            </summary>
-            <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
-            used to transform database query results into objects.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
-            <summary>
-            Executes the operation against the provided data source 
-            and returns the result.
-            </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.DbSubsetOperation`1.BufferSize">
-            <summary>
-            Gets the initial size of the 
-            resulting collection.
+            Gets or sets the value indicating whether 
+            cache invalidation is enabled.
             </summary>
         </member>
     </members>

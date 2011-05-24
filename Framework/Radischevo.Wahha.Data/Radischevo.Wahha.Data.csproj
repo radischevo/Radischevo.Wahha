@@ -74,6 +74,12 @@
     <Compile Include="Interfaces\IValueSetValidator.cs" />
     <Compile Include="Materialization\AssociatorAction`1.cs" />
     <Compile Include="Materialization\Associator`1.cs" />
+    <Compile Include="Materialization\OperationBasedAssociationLoader`1.cs" />
+    <Compile Include="Materialization\ConstructorBasedSelectorAction`1.cs" />
+    <Compile Include="Materialization\MethodBasedAssociationLoader`1.cs" />
+    <Compile Include="Materialization\OperationBasedSelectorActions.cs" />
+    <Compile Include="Materialization\OperationFactoryBasedAssociationLoader`1.cs" />
+    <Compile Include="Materialization\OperationFactoryBasedSelectorActions.cs" />
     <Compile Include="Materialization\DefaultAssociationLoader`1.cs" />
     <Compile Include="Materialization\EntityAssociatorAction`1.cs" />
     <Compile Include="Materialization\EntityAssociator`1.cs" />
@@ -81,7 +87,8 @@
     <Compile Include="Materialization\EntityInitializer`1.cs" />
     <Compile Include="Materialization\EntityLoaderBuilder`1.cs" />
     <Compile Include="Materialization\EntityMaterializerAction`1.cs" />
-    <Compile Include="Materialization\RepositoryAssociationLoader`1.cs" />
+    <Compile Include="Materialization\MethodBasedSelectorAction`1.cs" />
+    <Compile Include="Materialization\RepositoryBasedAssociationLoader`1.cs" />
     <Compile Include="Interfaces\IAssociationLoader`1.cs" />
     <Compile Include="Materialization\InitializerBase`1.cs" />
     <Compile Include="Materialization\LinkAssociator`1.cs" />
@@ -114,9 +121,7 @@
     <Compile Include="Interfaces\IDbColumnMapper.cs" />
     <Compile Include="Interfaces\IDbDataReader.cs" />
     <Compile Include="Interfaces\IDbDataRecord.cs" />
-    <Compile Include="Interfaces\IDbEntityLoader.cs" />
     <Compile Include="Interfaces\IDbMaterializer.cs" />
-    <Compile Include="Interfaces\IDbQueryService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISubset.cs" />
     <Compile Include="Engine\DbDataProviderExtensions.cs" />
@@ -127,10 +132,13 @@
     <Compile Include="Materialization\NullValueSetValidator.cs" />
     <Compile Include="Materialization\ObjectMaterializer`1.cs" />
     <Compile Include="Materialization\LinkSelectorAction.cs" />
+    <Compile Include="Materialization\RepositoryBasedSelectorActions.cs" />
+    <Compile Include="Materialization\ScopedDbOperationExecutor.cs" />
     <Compile Include="Materialization\SingleLinkAssociator`1.cs" />
     <Compile Include="Materialization\SubsetSchemeValidator.cs" />
     <Compile Include="Materialization\SubsetMapper.cs" />
     <Compile Include="Operations\CachedDbCommandOperation`1.cs" />
+    <Compile Include="Operations\InvalidatingDbCommandOperation`1.cs" />
     <Compile Include="Operations\DbOperationScope.cs" />
     <Compile Include="Operations\DbSubsetOperation`1.cs" />
     <Compile Include="Operations\DbCommandOperation`1.cs" />

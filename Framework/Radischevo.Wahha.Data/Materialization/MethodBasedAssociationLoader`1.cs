@@ -9,12 +9,11 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Data
 {
 	[Serializable]
-	internal abstract class RepositoryAssociationLoader<TAssociation> 
+	internal abstract class MethodBasedAssociationLoader<TAssociation>
 		: IAssociationLoader<TAssociation>, ISerializable
 		where TAssociation : class
 	{
 		#region Static Fields
-		private static readonly BindingFlags _staticFlags = BindingFlags.Static | BindingFlags.Public;
 		private static readonly MethodInfo _serviceResolveMethod = typeof(IServiceProvider).GetMethod("GetService",
 			BindingFlags.Instance | BindingFlags.Public, null, new Type[] { typeof(Type) }, null);
 		private static readonly MemberInfo _locatorInstance = typeof(ServiceLocator).GetProperty("Instance",
@@ -22,36 +21,62 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Fields
-		private Type _type;
+		private Type _declaringType;
 		private MethodInfo _method;
 		private object[] _arguments;
-		private Func<TAssociation> _selector;
+		private Func<TAssociation> _factory;
 		#endregion
 
 		#region Constructors
-		protected RepositoryAssociationLoader(Type type, MethodInfo method, object[] arguments)
+		protected MethodBasedAssociationLoader(Type declaringType, MethodInfo method, object[] arguments)
 		{
-			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			Precondition.Require(declaringType, () => Error.ArgumentNull("factoryType"));
 			Precondition.Require(method, () => Error.ArgumentNull("method"));
 			Precondition.Require(arguments, () => Error.ArgumentNull("arguments"));
 
-			_type = type;
+			_declaringType = declaringType;
 			_method = method;
 			_arguments = arguments;
 		}
 
-		protected RepositoryAssociationLoader(SerializationInfo info, StreamingContext context)
+		protected MethodBasedAssociationLoader(SerializationInfo info, StreamingContext context)
 		{
-			_type = (Type)info.GetValue("type", typeof(Type));
+			_declaringType = (Type)info.GetValue("type", typeof(Type));
 			_method = (MethodInfo)info.GetValue("method", typeof(MethodInfo));
 			_arguments = (object[])info.GetValue("arguments", typeof(object[]));
+		}
+		#endregion
+
+		#region Instance Properties
+		protected Type DeclaringType
+		{
+			get
+			{
+				return _declaringType;
+			}
+		}
+
+		protected MethodInfo Method
+		{
+			get
+			{
+				return _method;
+			}
+		}
+
+		protected object[] Arguments
+		{
+			get
+			{
+				return _arguments;
+			}
 		}
 		#endregion
 
 		#region Instance Methods
 		private void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("type", _type);
+			info.AddValue("type", _declaringType);
 			info.AddValue("method", _method);
 			info.AddValue("arguments", _arguments);
 		}
@@ -69,26 +94,32 @@ namespace Radischevo.Wahha.Data
 			return list;
 		}
 
-		private Func<TAssociation> CreateDelegate()
+		protected virtual MethodCallExpression CreateMethodInvocation()
 		{
 			MemberExpression service = Expression.MakeMemberAccess(null, _locatorInstance);
-			ConstantExpression serviceType = Expression.Constant(_type, typeof(Type));
+			ConstantExpression serviceType = Expression.Constant(_declaringType, typeof(Type));
 
 			MethodCallExpression resolver = Expression.Call(service, _serviceResolveMethod, serviceType);
-			UnaryExpression conversion = Expression.Convert(resolver, _type);
+			UnaryExpression conversion = Expression.Convert(resolver, _declaringType);
 
-			MethodCallExpression method = Expression.Call(conversion, _method, CreateMethodParameters());
-			Expression<Func<TAssociation>> func = Expression.Lambda<Func<TAssociation>>(method);
+			return Expression.Call(conversion, _method, CreateMethodParameters());
+		}
 
-			return func.Compile();
+		protected virtual Func<TAssociation> CreateValueFactory()
+		{
+			Expression expression = CreateMethodInvocation();
+			Expression<Func<TAssociation>> invoker = 
+				Expression.Lambda<Func<TAssociation>>(expression);
+
+			return invoker.Compile();
 		}
 
 		public TAssociation Load()
 		{
-			if (_selector == null)
-				_selector = CreateDelegate();
+			if (_factory == null)
+				_factory = CreateValueFactory();
 
-			return _selector();
+			return _factory();
 		}
 		#endregion
 
@@ -96,44 +127,6 @@ namespace Radischevo.Wahha.Data
 		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			GetObjectData(info, context);
-		}
-		#endregion
-	}
-
-	[Serializable]
-	internal sealed class SingleAssociationLoader<TRepository, TAssociation>
-		: RepositoryAssociationLoader<TAssociation>
-		where TAssociation : class
-		where TRepository : IRepository<TAssociation>
-	{
-		#region Constructors
-		public SingleAssociationLoader(MethodInfo method, object[] arguments)
-			: base(typeof(TRepository), method, arguments)
-		{
-		}
-
-		private SingleAssociationLoader(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-		}
-		#endregion
-	}
-
-	[Serializable]
-	internal sealed class CollectionAssociationLoader<TRepository, TAssociation>
-		: RepositoryAssociationLoader<IEnumerable<TAssociation>>
-		where TAssociation : class
-		where TRepository : IRepository<TAssociation>
-	{
-		#region Constructors
-		public CollectionAssociationLoader(MethodInfo method, object[] arguments)
-			: base(typeof(TRepository), method, arguments)
-		{
-		}
-
-		private CollectionAssociationLoader(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
 		}
 		#endregion
 	}

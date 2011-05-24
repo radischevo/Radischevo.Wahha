@@ -18,6 +18,7 @@ using Radischevo.Wahha.Web.Text;
 
 using A = Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Data;
+using System.Linq.Expressions;
 
 namespace ConsoleTester
 {
