@@ -14,7 +14,7 @@ namespace Radischevo.Wahha.Data
 			: base(declaringType, method, arguments)
 		{
 			if (!typeof(TAssociation).IsAssignableFrom(method.ReturnType))
-				throw new ArgumentException("Invalid factory method");
+				throw Error.InvalidMethodReturnType("method", method.ReturnType, typeof(TAssociation));
 		}
 
 		protected RepositoryBasedAssociationLoader(SerializationInfo info, StreamingContext context)

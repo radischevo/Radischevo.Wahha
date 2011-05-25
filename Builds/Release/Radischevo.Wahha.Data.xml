@@ -80,6 +80,11 @@
               Looks up a localized string similar to The provided link can not be materialized since it can not be explicitly converted to the &apos;Link&lt;TAssociation&gt;&apos; type..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ExpressionMustBeAConstructorCall">
+            <summary>
+              Looks up a localized string similar to The provided expression &apos;{0}&apos; must be a constructor call..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_FormatParameterMismatch">
             <summary>
               Looks up a localized string similar to Index (zero based) must be greater than or equal to zero and less than the size of the argument list..
@@ -103,6 +108,16 @@
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_IncompatibleProviderType">
             <summary>
               Looks up a localized string similar to The type &apos;{0}&apos; must implement the IDbDataProvider interface and have a public parameterless constructor..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_InvalidConstructorExpressionType">
+            <summary>
+              Looks up a localized string similar to The provided expression constructs objects of &apos;{0}&apos; type, but the type compatible with &apos;{1}&apos; is required..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_InvalidMethodReturnType">
+            <summary>
+              Looks up a localized string similar to The provided method returns a value of &apos;{0}&apos; type, but the &apos;{1}&apos; type is required..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_MethodCallMustTargetLambdaArgument">
@@ -201,14 +216,13 @@
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperation`1.Validate">
             <summary>
-            When overridden in a derived class, validates 
-            the command arguments and returns a boolean value 
-            indicating whether the command is valid for execution.
+            When overridden in a derived class, returns a boolean value 
+            indicating whether the operation is valid for execution.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
             <summary>
-            When overridden in a derived class, executes the command 
+            When overridden in a derived class, executes the operation 
             against the provided data source.
             </summary>
             <param name="provider">The database communication provider 

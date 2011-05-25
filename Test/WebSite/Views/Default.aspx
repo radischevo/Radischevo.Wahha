@@ -20,8 +20,6 @@
 		<input type="button" value="Вернуться" disabled="disabled" />
 	</div>
     <%= Html.Templates.Display("this") %>
-    <% Html.Component<MegaController>(a => a.MessagesAsync(10)); %>
-    <% Html.Component<MegaController>(a => a.SimpleAction()); %>
     <% Html.Component<SmallComponent>(a => a.WriteMessage("Мегакомпонент")); %>
     <% Html.Component<MainController>(a => a.SampleComponent(new Section("Maza"))); %>
 </asp:Content>

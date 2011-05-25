@@ -19,8 +19,8 @@ namespace Radischevo.Wahha.Data
 		#region Instance Methods
 		protected override IAssociationLoader<TAssociation> CreateSelector()
 		{
-			return new OperationFactoryBasedAssociationLoader<TAssociation>(
-				typeof(TOperationFactory), Selector.Method, ExtractMethodParameters(Selector));
+			return new OperationFactoryBasedAssociationLoader<TAssociation>(typeof(TOperationFactory), 
+				Selector.Method, ExpressionParameterExtractor.ExtractParameters(Selector.Arguments));
 		}
 		#endregion
 	}
@@ -40,8 +40,8 @@ namespace Radischevo.Wahha.Data
 		#region Instance Methods
 		protected override IAssociationLoader<IEnumerable<TAssociation>> CreateSelector()
 		{
-			return new OperationFactoryBasedAssociationLoader<IEnumerable<TAssociation>>(
-				typeof(TOperationFactory), Selector.Method, ExtractMethodParameters(Selector));
+			return new OperationFactoryBasedAssociationLoader<IEnumerable<TAssociation>>(typeof(TOperationFactory), 
+				Selector.Method, ExpressionParameterExtractor.ExtractParameters(Selector.Arguments));
 		}
 		#endregion
 	}

@@ -169,6 +169,15 @@ namespace Radischevo.Wahha.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The provided expression &apos;{0}&apos; must be a constructor call..
+        /// </summary>
+        internal static string Error_ExpressionMustBeAConstructorCall {
+            get {
+                return ResourceManager.GetString("Error_ExpressionMustBeAConstructorCall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Index (zero based) must be greater than or equal to zero and less than the size of the argument list..
         /// </summary>
         internal static string Error_FormatParameterMismatch {
@@ -210,6 +219,24 @@ namespace Radischevo.Wahha.Data.Resources {
         internal static string Error_IncompatibleProviderType {
             get {
                 return ResourceManager.GetString("Error_IncompatibleProviderType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The provided expression constructs objects of &apos;{0}&apos; type, but the type compatible with &apos;{1}&apos; is required..
+        /// </summary>
+        internal static string Error_InvalidConstructorExpressionType {
+            get {
+                return ResourceManager.GetString("Error_InvalidConstructorExpressionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The provided method returns a value of &apos;{0}&apos; type, but the &apos;{1}&apos; type is required..
+        /// </summary>
+        internal static string Error_InvalidMethodReturnType {
+            get {
+                return ResourceManager.GetString("Error_InvalidMethodReturnType", resourceCulture);
             }
         }
         

@@ -153,6 +153,9 @@
   <data name="Error_CouldNotMaterializeCollectionLink" xml:space="preserve">
     <value>The provided link can not be materialized since it can not be explicitly converted to the 'Link&lt;TAssociation&gt;' type.</value>
   </data>
+  <data name="Error_ExpressionMustBeAConstructorCall" xml:space="preserve">
+    <value>The provided expression '{0}' must be a constructor call.</value>
+  </data>
   <data name="Error_FormatParameterMismatch" xml:space="preserve">
     <value>Index (zero based) must be greater than or equal to zero and less than the size of the argument list.</value>
   </data>
@@ -167,6 +170,12 @@
   </data>
   <data name="Error_IncompatibleProviderType" xml:space="preserve">
     <value>The type '{0}' must implement the IDbDataProvider interface and have a public parameterless constructor.</value>
+  </data>
+  <data name="Error_InvalidConstructorExpressionType" xml:space="preserve">
+    <value>The provided expression constructs objects of '{0}' type, but the type compatible with '{1}' is required.</value>
+  </data>
+  <data name="Error_InvalidMethodReturnType" xml:space="preserve">
+    <value>The provided method returns a value of '{0}' type, but the '{1}' type is required.</value>
   </data>
   <data name="Error_MethodCallMustTargetLambdaArgument" xml:space="preserve">
     <value>Expression parameter '{0}' must target the lambda argument.</value>

@@ -22,7 +22,7 @@ namespace Radischevo.Wahha.Data
 		{
 			Type operationType = typeof(IDbOperation<>).MakeGenericType(typeof(TAssociation));
 			if (!operationType.IsAssignableFrom(method.ReturnType))
-				throw new ArgumentException("Invalid factory method");
+				throw Error.InvalidMethodReturnType("method", method.ReturnType, operationType);
 		}
 
 		protected OperationFactoryBasedAssociationLoader(SerializationInfo info, StreamingContext context)

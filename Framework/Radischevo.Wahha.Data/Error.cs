@@ -180,5 +180,25 @@ namespace Radischevo.Wahha.Data
 			return new DbOperationValidationException(
 				Res.Error_OperationCommandIsNotInitialized);
 		}
+
+		internal static Exception InvalidMethodReturnType(string parameterName, 
+			Type actualType, Type requiredType)
+		{
+			return new ArgumentException(String.Format(Res.Error_InvalidMethodReturnType, 
+				actualType.FullName, requiredType.FullName), parameterName);
+		}
+
+		internal static Exception InvalidConstructorExpressionType(string parameterName, 
+			Type actualType, Type requiredType)
+		{
+			return new ArgumentException(String.Format(Res.Error_InvalidConstructorExpressionType,
+				actualType.FullName, requiredType.FullName), parameterName);
+		}
+
+		internal static Exception ExpressionMustBeAConstructorCall(string parameterName)
+		{
+			return new InvalidOperationException(String.Format(
+				Res.Error_ExpressionMustBeAConstructorCall, parameterName));
+		}
 	}
 }

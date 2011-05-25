@@ -38,9 +38,8 @@ namespace Radischevo.Wahha.Data
 		}
 
 		/// <summary>
-		/// When overridden in a derived class, validates 
-		/// the command arguments and returns a boolean value 
-		/// indicating whether the command is valid for execution.
+		/// When overridden in a derived class, returns a boolean value 
+		/// indicating whether the operation is valid for execution.
 		/// </summary>
 		protected virtual bool Validate()
 		{
@@ -48,7 +47,7 @@ namespace Radischevo.Wahha.Data
 		}
 
 		/// <summary>
-		/// When overridden in a derived class, executes the command 
+		/// When overridden in a derived class, executes the operation 
 		/// against the provided data source.
 		/// </summary>
 		/// <param name="provider">The database communication provider 

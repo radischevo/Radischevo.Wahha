@@ -74,6 +74,7 @@
     <Compile Include="Interfaces\IValueSetValidator.cs" />
     <Compile Include="Materialization\AssociatorAction`1.cs" />
     <Compile Include="Materialization\Associator`1.cs" />
+    <Compile Include="Materialization\ExpressionParameterExtractor.cs" />
     <Compile Include="Materialization\OperationBasedAssociationLoader`1.cs" />
     <Compile Include="Materialization\ConstructorBasedSelectorAction`1.cs" />
     <Compile Include="Materialization\MethodBasedAssociationLoader`1.cs" />

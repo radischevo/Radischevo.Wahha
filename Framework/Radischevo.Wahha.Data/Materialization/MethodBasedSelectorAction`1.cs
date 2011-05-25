@@ -40,43 +40,6 @@ namespace Radischevo.Wahha.Data
 
 			return method;
 		}
-
-		protected static object[] ExtractMethodParameters(MethodCallExpression method)
-		{
-			int length = method.Arguments.Count;
-			object[] values = new object[length];
-			if (length > 0)
-			{
-				for (int i = 0; i < length; i++)
-					values[i] = ExtractMethodParameter(method.Arguments[i]);
-			}
-			return values;
-		}
-
-		private static object ExtractMethodParameter(Expression expression)
-		{
-			object value = null;
-			ConstantExpression ce = (expression as ConstantExpression);
-			if (ce == null)
-			{
-				Expression<Func<object>> le =
-					Expression.Lambda<Func<object>>(
-					Expression.Convert(expression, typeof(object)),
-					new ParameterExpression[0]);
-				try
-				{
-					value = le.Compile()();
-				}
-				catch
-				{
-					value = null;
-				}
-			}
-			else
-				value = ce.Value;
-
-			return value;
-		}
 		#endregion
 	}
 }
