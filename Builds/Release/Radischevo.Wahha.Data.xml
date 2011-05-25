@@ -1497,6 +1497,45 @@
             which is supported by the current provider.
             </summary>
         </member>
+        <member name="T:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1">
+            <summary>
+            Defines the base class for the operation, that executes 
+            an SQL statement against the database and invalidates 
+            the result cache storage.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Execute(Radischevo.Wahha.Data.IDbDataProvider)">
+            <summary>
+            Executes the operation against the provided data source 
+            and returns the result.
+            </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Cache">
+            <summary>
+            Gets or sets the caching provider used 
+            to store the query results.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Tags">
+            <summary>
+            Gets the collection of tags which 
+            will be invalidated.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.EnableInvalidation">
+            <summary>
+            Gets or sets the value indicating whether 
+            cache invalidation is enabled.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Data.DbDataReader">
             <summary>
             Acts as a high-level decorator for the 
@@ -2287,45 +2326,6 @@
             </summary>
             <typeparam name="T">The type of the object to return.</typeparam>
             <param name="key">The key the object is stored with.</param>
-        </member>
-        <member name="T:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1">
-            <summary>
-            Defines the base class for the operation, that executes 
-            an SQL statement against the database and invalidates 
-            the result cache storage.
-            </summary>
-            <typeparam name="TResult">The type of the result.</typeparam>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1"/> class.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Execute(Radischevo.Wahha.Data.IDbDataProvider)">
-            <summary>
-            Executes the operation against the provided data source 
-            and returns the result.
-            </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Cache">
-            <summary>
-            Gets or sets the caching provider used 
-            to store the query results.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Tags">
-            <summary>
-            Gets the collection of tags which 
-            will be invalidated.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.EnableInvalidation">
-            <summary>
-            Gets or sets the value indicating whether 
-            cache invalidation is enabled.
-            </summary>
         </member>
     </members>
 </doc>
