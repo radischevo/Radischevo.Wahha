@@ -34,7 +34,15 @@ namespace Radischevo.Wahha.Data
 			Precondition.Require(Validate(), () =>
 				Error.OperationIsNotValid());
 
-			return ExecuteInternal(provider);
+			try
+			{
+				OnExecuting();
+				return ExecuteInternal(provider);
+			}
+			finally
+			{
+				OnExecuted();
+			}
 		}
 
 		/// <summary>
@@ -44,6 +52,24 @@ namespace Radischevo.Wahha.Data
 		protected virtual bool Validate()
 		{
 			return true;
+		}
+
+		/// <summary>
+		/// When overridden in a derived class, 
+		/// performs additional tasks before 
+		/// the operation is executed.
+		/// </summary>
+		protected virtual void OnExecuting()
+		{
+		}
+
+		/// <summary>
+		/// When overridden in a derived class, 
+		/// performs additional tasks immediately 
+		/// after the operation finishes executing.
+		/// </summary>
+		protected virtual void OnExecuted()
+		{
 		}
 
 		/// <summary>

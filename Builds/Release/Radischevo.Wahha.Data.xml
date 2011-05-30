@@ -220,6 +220,20 @@
             indicating whether the operation is valid for execution.
             </summary>
         </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.OnExecuting">
+            <summary>
+            When overridden in a derived class, 
+            performs additional tasks before 
+            the operation is executed.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.OnExecuted">
+            <summary>
+            When overridden in a derived class, 
+            performs additional tasks immediately 
+            after the operation finishes executing.
+            </summary>
+        </member>
         <member name="M:Radischevo.Wahha.Data.DbOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
             <summary>
             When overridden in a derived class, executes the operation 
