@@ -120,6 +120,7 @@
     <Compile Include="Scripting\Serialization\ObjectConverter.cs" />
     <Compile Include="Scripting\Serialization\ScriptIgnoreAttribute.cs" />
     <Compile Include="Scripting\Serialization\SimpleTypeResolver.cs" />
+    <Compile Include="Scripting\Serialization\WeakTypeResolver.cs" />
     <Compile Include="Scripting\Templates\CodeBlockExpression.cs" />
     <Compile Include="Scripting\Templates\CodeBlockType.cs" />
     <Compile Include="Scripting\Templates\CompiledTemplate.cs" />

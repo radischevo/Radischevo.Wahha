@@ -43,11 +43,21 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\FileExistenceCache.cs" />
+    <Compile Include="Infrastructure\TemplateFileInfo.cs" />
+    <Compile Include="Infrastructure\VirtualPathFactoryManager.cs" />
+    <Compile Include="Interfaces\ITemplateFile.cs" />
     <Compile Include="Interfaces\IViewStartPageChild.cs" />
+    <Compile Include="Interfaces\IVirtualPathFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\HelperResult.cs" />
+    <Compile Include="UI\WebPageBase.cs" />
+    <Compile Include="UI\WebPageExecutingBase.cs" />
+    <Compile Include="UI\WebPageRenderingBase.cs" />
     <Compile Include="ViewStartPage.cs" />
   </ItemGroup>
   <ItemGroup>

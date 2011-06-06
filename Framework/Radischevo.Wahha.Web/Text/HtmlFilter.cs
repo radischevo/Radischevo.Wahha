@@ -407,6 +407,7 @@ namespace Radischevo.Wahha.Web.Text
 					_settings, parent, element, writer);
 				
 				filter.RenderMode = renderMode;
+				filter.Parameters = Parameters;
 				filter.Execute();
 
 				return writer.ToString();
