@@ -129,6 +129,7 @@
     <Compile Include="Scripting\RouteConstraintDefinition.cs" />
     <Compile Include="Scripting\RouteDefinition.cs" />
     <Compile Include="Scripting\RouteReader.cs" />
+    <Compile Include="SecureConnectionOption.cs" />
     <Compile Include="VirtualPathData.cs" />
     <Compile Include="Extensions\WebFormRoute.cs" />
   </ItemGroup>

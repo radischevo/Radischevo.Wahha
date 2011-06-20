@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{984F9545-7298-42DE-876E-F883AB1F9EE5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Radischevo.Wahha.Web.Templates</RootNamespace>
+    <AssemblyName>Radischevo.Wahha.Web.Templates</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Builds\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Builds\Debug\Radischevo.Wahha.Web.Templates.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Builds\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Builds\Release\Radischevo.Wahha.Web.Templates.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Radischevo.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\References\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configurations\HostSection.cs" />
+    <Compile Include="Configurations\RazorPagesSection.cs" />
+    <Compile Include="Configurations\RazorWebSectionGroup.cs" />
+    <Compile Include="Engine\AssemblyBuilderWrapper.cs" />
+    <Compile Include="Engine\HostingEnvironmentWrapper.cs" />
+    <Compile Include="Engine\IAssemblyBuilder.cs" />
+    <Compile Include="Engine\IHostingEnvironment.cs" />
+    <Compile Include="Engine\RazorBuildProvider.cs" />
+    <Compile Include="Engine\WebCodeRazorHost.cs" />
+    <Compile Include="Engine\WebPageRazorHost.cs" />
+    <Compile Include="Engine\WebRazorHostFactory.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Infrastructure\DisposableAction.cs" />
+    <Compile Include="Infrastructure\FileExistenceCache.cs" />
+    <Compile Include="Infrastructure\SectionWriter.cs" />
+    <Compile Include="Infrastructure\TemplateFileInfo.cs" />
+    <Compile Include="Infrastructure\TemplateStack.cs" />
+    <Compile Include="Infrastructure\VirtualPathFactoryManager.cs" />
+    <Compile Include="Infrastructure\TemplateContext.cs" />
+    <Compile Include="Interfaces\ITemplateFile.cs" />
+    <Compile Include="Interfaces\IVirtualPathFactory.cs" />
+    <Compile Include="Interfaces\IWebPageRequestExecutor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scope\IScopeStorageProvider.cs" />
+    <Compile Include="Scope\ScopeStorage.cs" />
+    <Compile Include="Scope\ScopeStorageComparer.cs" />
+    <Compile Include="Scope\ScopeStorageDictionary.cs" />
+    <Compile Include="Scope\StaticScopeStorageProvider.cs" />
+    <Compile Include="Scope\WebConfigScopeStorageDictionary.cs" />
+    <Compile Include="UI\TemplateResult.cs" />
+    <Compile Include="UI\TemplateBase.cs" />
+    <Compile Include="UI\TemplateExecutingBase.cs" />
+    <Compile Include="UI\TemplateRenderingBase.cs" />
+    <Compile Include="UI\Template.cs" />
+    <Compile Include="ViewStartPage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">
+      <Project>{C4A83864-BF32-49D8-BC23-C69F025628EC}</Project>
+      <Name>Radischevo.Wahha.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Radischevo.Wahha.Data\Radischevo.Wahha.Data.csproj">
+      <Project>{C7346189-E495-4A61-9398-F90B69AB619A}</Project>
+      <Name>Radischevo.Wahha.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Radischevo.Wahha.Web\Radischevo.Wahha.Web.csproj">
+      <Project>{2DEB7611-864B-48C4-9CE7-5100F314371D}</Project>
+      <Name>Radischevo.Wahha.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Radischevo.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

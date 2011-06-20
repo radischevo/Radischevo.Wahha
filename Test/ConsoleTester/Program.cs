@@ -19,9 +19,30 @@ using Radischevo.Wahha.Web.Text;
 using A = Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Data;
 using System.Linq.Expressions;
+using Radischevo.Wahha.Web.Scripting.Serialization;
 
 namespace ConsoleTester
 {
+	class SerializedItem
+	{
+		public SerializedItem()
+		{
+			Currencies = new HashSet<string>();
+		}
+
+		public ICollection<string> Currencies
+		{
+			get;
+			set;
+		}
+
+		public bool Required
+		{
+			get;
+			set;
+		}
+	}
+
 	class Program
 	{
 		static Random _random = new Random();
@@ -32,10 +53,19 @@ namespace ConsoleTester
 			//p.MultipleThreadTest();
 			//p.SingleThreadTest();
 			//p.RouteTest();
-			p.SgmlTest();
+			//p.SgmlTest();
 			//p.InheritanceTest();
+			p.JsonTest();
 
 			Console.ReadKey();
+		}
+
+		public void JsonTest()
+		{
+			string data = @"{""Currencies"":null,""Required"":false}";
+			JavaScriptSerializer service = new JavaScriptSerializer();
+			var result = service.Deserialize(typeof(SerializedItem), data);
+			Console.Write(result);
 		}
 
 		public void InheritanceTest()
@@ -72,11 +102,15 @@ namespace ConsoleTester
 		public void RouteTest()
 		{
 			A.HttpContextBase httpContext = new A.HttpContextWrapper(new HttpContext(
-				new HttpRequest("default.aspx", "http://sergey.starcafe.ru/blog/797.html", null),
+				new HttpRequest("default.aspx", "https://sergey.starcafe.ru/blog/797.html", null),
 				new HttpResponse(Console.Out)));
+			
 			RequestContext context = new RequestContext(httpContext, new RouteData());
 
-			RouteTable.Routes.Add("blog-list", new Route("{user}.[host]/blog/{id}.html", new MvcRouteHandler()));
+			Route blogRoute = new Route("{user}.[host]/blog/{id}.html", new MvcRouteHandler());
+			blogRoute.SecureConnection = SecureConnectionOption.Preferred;
+
+			RouteTable.Routes.Add("blog-list", blogRoute);
 			RouteTable.Routes.Variables.Add("host", "starcafe.ru");
 
 			var data = RouteTable.Routes.GetVirtualPath(context, "blog-list", new ValueDictionary(new {

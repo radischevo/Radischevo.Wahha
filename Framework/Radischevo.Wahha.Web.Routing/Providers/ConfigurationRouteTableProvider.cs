@@ -99,6 +99,8 @@ namespace Radischevo.Wahha.Web.Routing.Providers
 
 			route.Defaults.Merge(defaults);
 			route.Tokens.Merge(tokens);
+			route.SecureConnection = descriptor.Attributes
+				.GetValue<SecureConnectionOption>("secure");
 
 			foreach (IRouteConstraint constraint in constraints)
 				route.Constraints.Add(constraint);

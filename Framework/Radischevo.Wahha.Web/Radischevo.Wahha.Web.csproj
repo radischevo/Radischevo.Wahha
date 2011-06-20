@@ -104,6 +104,8 @@
     <Compile Include="Interfaces\IHttpValueSet.cs" />
     <Compile Include="Modules\HttpCompressionModule.cs" />
     <Compile Include="Hosting\AssemblyResourceVirtualFile.cs" />
+    <Compile Include="Modules\HttpContainerModule.cs" />
+    <Compile Include="Modules\HttpContainerModule`1.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

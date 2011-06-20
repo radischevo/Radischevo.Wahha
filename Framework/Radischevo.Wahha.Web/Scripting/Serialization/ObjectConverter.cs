@@ -11,9 +11,9 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
     {
         #region Static Fields
         private static readonly Type[] _emptyTypeArray = Type.EmptyTypes;
+		private static Type _enumerableGenericType = typeof(IEnumerable<>);
+		private static Type _idictionaryGenericType = typeof(IDictionary<,>);
         private static Type _dictionaryGenericType = typeof(Dictionary<,>);
-        private static Type _enumerableGenericType = typeof(IEnumerable<>);
-        private static Type _idictionaryGenericType = typeof(IDictionary<,>);
         private static Type _listGenericType = typeof(List<>);
         #endregion
 
@@ -66,32 +66,32 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
             return (type.GetGenericArguments().Length == 2);
         }
 
-        internal static bool IsClientInstantiatableType(Type t, 
+        internal static bool IsClientInstantiatableType(Type type, 
             JavaScriptSerializer serializer)
         {
-            if (t == null)
+            if (type == null)
                 return false;
             
-            if (t.IsAbstract)
+            if (type.IsAbstract)
                 return false;
             
-            if (t.IsInterface)
+            if (type.IsInterface)
                 return false;
             
-            if (t.IsArray)
+            if (type.IsArray)
                 return false;
             
-            if (t == typeof(object))
+            if (type == typeof(object))
                 return false;
             
-            JavaScriptConverter conv = null;
-            if (serializer.TryGetConverter(t, out conv))
+            JavaScriptConverter converter = null;
+            if (serializer.TryGetConverter(type, out converter))
                 return true;
             
-            if (t.IsValueType)
+            if (type.IsValueType)
                 return true;
 
-            if (t.GetConstructor(BindingFlags.Instance | BindingFlags.Public, 
+            if (type.GetConstructor(BindingFlags.Instance | BindingFlags.Public, 
                 null, _emptyTypeArray, null) != null)
                 return true;
 
@@ -137,8 +137,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
         private static bool TryConvertObjectToTypeInternal(object obj, Type type, 
             JavaScriptSerializer serializer, bool throwOnError, out object convertedObject)
         {
-			Type instanceType = (obj == null) ? typeof(string) : obj.GetType();
-
+			Type instanceType = obj.GetType();
             if (type == null || type.IsAssignableFrom(instanceType))
             {
                 convertedObject = obj;
@@ -150,7 +149,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
                 return ConvertDictionary(dictionary, type, serializer, 
                     throwOnError, out convertedObject);
             
-            IList list = (obj as IList);
+			IList list = (obj as IList);
             if (list != null)
             {
                 if (ConvertList(list, type, serializer, throwOnError, out list))
@@ -158,7 +157,6 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
                     convertedObject = list;
                     return true;
                 }
-
                 convertedObject = null;
                 return false;
             }
@@ -221,7 +219,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
             IDictionary dictionary = (obj as IDictionary);
             if (dictionary != null)
             {
-                if (!TryConvertObjectToTypeInternal(propertyValue, null, serializer, throwOnError, out propertyValue))
+                if (!TryConvertObjectToType(propertyValue, null, serializer, throwOnError, out propertyValue))
                     return false;
 
                 dictionary[memberName] = propertyValue;
@@ -237,7 +235,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
                 MethodInfo setMethod = property.GetSetMethod();
                 if (setMethod != null)
                 {
-                    if (!TryConvertObjectToTypeInternal(propertyValue, property.PropertyType,
+                    if (!TryConvertObjectToType(propertyValue, property.PropertyType,
                         serializer, throwOnError, out propertyValue))
                         return false;
 
@@ -261,7 +259,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
 
             if (field != null)
             {
-                if (!TryConvertObjectToTypeInternal(propertyValue, field.FieldType,
+                if (!TryConvertObjectToType(propertyValue, field.FieldType,
                     serializer, throwOnError, out propertyValue))
                     return false;
 
@@ -287,7 +285,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
             foreach (object obj in oldList)
             {
                 object result;
-                if (!TryConvertObjectToTypeInternal(obj, elementType, serializer, throwOnError, out result))
+                if (!TryConvertObjectToType(obj, elementType, serializer, throwOnError, out result))
                     return false;
                 
                 newList.Add(result);
@@ -305,7 +303,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
 
             if (dictionary.TryGetValue(JavaScriptSerializer.ServerTypeFieldName, out typeKey))
             {
-                if (!TryConvertObjectToTypeInternal(typeKey, typeof(string), serializer, throwOnError, out typeKey))
+                if (!TryConvertObjectToType(typeKey, typeof(string), serializer, throwOnError, out typeKey))
                 {
                     convertedObject = null;
                     return false;
@@ -378,7 +376,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
                     foreach (string key in list)
                     {
                         object value;
-                        if (!TryConvertObjectToTypeInternal(dictionary[key], 
+                        if (!TryConvertObjectToType(dictionary[key], 
                             valueType, serializer, throwOnError, out value))
                         {
                             convertedObject = null;
@@ -461,7 +459,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
                     }
                     else
                     {
-                        if (genericListType.IsAssignableFrom(type))
+						if (!type.IsAssignableFrom(genericListType))
                         {
                             if (throwOnError)
                                 throw Error.CouldNotCreateListType(genericListType);

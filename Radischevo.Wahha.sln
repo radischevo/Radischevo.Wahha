@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radischevo.Wahha.Web.Mvc.Ht
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radischevo.Wahha.Web.Mvc.Html.Forms", "Framework\Radischevo.Wahha.Web.Mvc.Html.Forms\Radischevo.Wahha.Web.Mvc.Html.Forms.csproj", "{543E3ED7-CAE9-424F-AAAE-D25DB2F00C8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radischevo.Wahha.Web.Templates", "Framework\Radischevo.Wahha.Web.Templates\Radischevo.Wahha.Web.Templates.csproj", "{984F9545-7298-42DE-876E-F883AB1F9EE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -162,6 +164,18 @@ Global
 		{543E3ED7-CAE9-424F-AAAE-D25DB2F00C8B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{543E3ED7-CAE9-424F-AAAE-D25DB2F00C8B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{543E3ED7-CAE9-424F-AAAE-D25DB2F00C8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Debug|.NET.ActiveCfg = Debug|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Debug|x86.ActiveCfg = Debug|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Debug|x86.Build.0 = Debug|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Release|.NET.ActiveCfg = Release|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Release|Any CPU.ActiveCfg = Release|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Release|Mixed Platforms.Build.0 = Release|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Release|x86.ActiveCfg = Release|x86
+		{984F9545-7298-42DE-876E-F883AB1F9EE5}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
