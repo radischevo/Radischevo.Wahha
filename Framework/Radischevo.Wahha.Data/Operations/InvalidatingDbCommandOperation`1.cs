@@ -15,7 +15,6 @@ namespace Radischevo.Wahha.Data
 	{
 		#region Instance Fields
 		private ITaggedCacheProvider _cache;
-		private bool _enableInvalidation;
 		private List<string> _tags;
 		#endregion
 
@@ -27,7 +26,6 @@ namespace Radischevo.Wahha.Data
 			: base()
 		{
 			_tags = new List<string>();
-			_enableInvalidation = true;
 		}
 		#endregion
 
@@ -62,22 +60,6 @@ namespace Radischevo.Wahha.Data
 				return _tags;
 			}
 		}
-
-		/// <summary>
-		/// Gets or sets the value indicating whether 
-		/// cache invalidation is enabled.
-		/// </summary>
-		public bool EnableInvalidation
-		{
-			get
-			{
-				return (_enableInvalidation && Cache != null);
-			}
-			set
-			{
-				_enableInvalidation = value;
-			}
-		}
 		#endregion
 
 		#region Instance Methods
@@ -95,8 +77,7 @@ namespace Radischevo.Wahha.Data
 			}
 			finally
 			{
-				if (EnableInvalidation)
-					Cache.Invalidate(Tags);
+				Cache.Invalidate(Tags);
 			}
 		}
 		#endregion

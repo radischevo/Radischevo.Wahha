@@ -24,6 +24,11 @@ namespace Radischevo.Wahha.Data.Provider
 		#endregion
 
 		#region Instance Methods
+		/// <summary>
+		/// Creates an <see cref="T:System.Data.IDbConnection"/> instance 
+		/// which is supported by the current provider.
+		/// </summary>
+		/// <param name="connectionString">The database connection string.</param>
 		protected override IDbConnection CreateConnection(string connectionString)
 		{
 			return new OdbcConnection(connectionString);

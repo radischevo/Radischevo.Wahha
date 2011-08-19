@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -9,15 +8,8 @@ namespace Radischevo.Wahha.Web.Mvc
 {
     public class ReflectedParameterBinding : ParameterBinding
 	{
-		#region Static Fields
-		private static readonly char[] _separator = new char[] { ',' };
-		#endregion
-
 		#region Instance Fields
 		private ParameterInfo _parameter;
-        private string[] _include;
-        private string[] _exclude;
-        private Predicate<string> _memberFilter;
         private string _name;
         private IModelBinder _binder;
         private ParameterSource _source;
@@ -27,8 +19,6 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Constructors
         public ReflectedParameterBinding(ParameterInfo parameter)
         {
-            _exclude = new string[0];
-            _include = new string[0];
             _parameter = parameter;
             _name = parameter.Name;
             
@@ -42,22 +32,6 @@ namespace Radischevo.Wahha.Web.Mvc
             get
             {
                 return _name;
-            }
-        }
-
-        public override IEnumerable<string> Include
-        {
-            get
-            {
-                return _include;
-            }
-        }
-
-        public override IEnumerable<string> Exclude
-        {
-            get
-            {
-                return _exclude;
             }
         }
 
@@ -111,24 +85,10 @@ namespace Radischevo.Wahha.Web.Mvc
             BindAttribute attribute = (BindAttribute)Attribute.GetCustomAttribute(_parameter, typeof(BindAttribute));
             if (attribute != null)
             {
-                string include = attribute.Include;
-                string exclude = attribute.Exclude;
-
                 _name = attribute.Name ?? _parameter.Name;
-                _include = (String.IsNullOrEmpty(include)) ? new string[0] : 
-                    include.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                _exclude = (String.IsNullOrEmpty(exclude)) ? new string[0] :
-                    exclude.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-
-				_source = ParameterSource.FromString(attribute.Source);
+                _source = ParameterSource.FromString(attribute.Source);
                 _defaultValue = attribute.Default;
-                _memberFilter = s => BindAttribute.IsUpdateAllowed(s, _include, _exclude);
             }
-        }
-
-        public override Predicate<string> GetMemberFilter()
-        {
-            return _memberFilter;
         }
         #endregion
     }

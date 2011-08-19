@@ -20,7 +20,6 @@ namespace Radischevo.Wahha.Data
 		private ITaggedCacheProvider _cache;
 		private TimeSpan _expirationTimeout;
 		private List<string> _tags;
-		private bool _enableCaching;
 		#endregion
 
 		#region Constructors
@@ -31,7 +30,6 @@ namespace Radischevo.Wahha.Data
 			: base()
 		{
 			_tags = new List<string>();
-			_enableCaching = true;
 		}
 		#endregion
 
@@ -82,22 +80,6 @@ namespace Radischevo.Wahha.Data
 				_expirationTimeout = value;
 			}
 		}
-
-		/// <summary>
-		/// Gets or sets the value indicating whether 
-		/// the caching of results is enabled.
-		/// </summary>
-		public bool EnableCaching
-		{
-			get
-			{
-				return (_enableCaching && Cache != null);
-			}
-			set
-			{
-				_enableCaching = value;
-			}
-		}
 		#endregion
 
 		#region Instance Methods
@@ -109,15 +91,11 @@ namespace Radischevo.Wahha.Data
 		/// using to retrieve or store the data.</param>
 		public override TResult Execute(IDbDataProvider provider)
 		{
-			if (EnableCaching)
-			{
-				string cacheKey = CreateCacheKey(Command);
-				return Cache.Get<TResult>(cacheKey,
-					() => base.Execute(provider),
-					DateTime.Now.Add(_expirationTimeout),
-					Tags);
-			}
-			return base.Execute(provider);
+			string cacheKey = CreateCacheKey(Command);
+			return Cache.Get<TResult>(cacheKey,
+				() => base.Execute(provider),
+				DateTime.Now.Add(_expirationTimeout),
+				Tags);
 		}
 
 		/// <summary>

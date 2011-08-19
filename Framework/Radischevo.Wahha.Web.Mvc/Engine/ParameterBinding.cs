@@ -42,29 +42,6 @@ namespace Radischevo.Wahha.Web.Mvc
                 return null;
             }
         }
-
-        public virtual IEnumerable<string> Include
-        {
-            get
-            {
-                return new string[0];
-            }
-        }
-
-        public virtual IEnumerable<string> Exclude
-        {
-            get
-            {
-                return new string[0];
-            }
-        }
-        #endregion
-
-        #region Instance Methods
-        public virtual Predicate<string> GetMemberFilter()
-        {
-            return null;
-        }
         #endregion
     }
 }

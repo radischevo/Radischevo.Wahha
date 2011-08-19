@@ -80,6 +80,11 @@
               Looks up a localized string similar to The provided link can not be materialized since it can not be explicitly converted to the &apos;Link&lt;TAssociation&gt;&apos; type..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_CouldNotSetIsolationLevelAfterInitialize">
+            <summary>
+              Looks up a localized string similar to Could not change transaction isolation level since the Execute method was already called..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_ExpressionMustBeAConstructorCall">
             <summary>
               Looks up a localized string similar to The provided expression &apos;{0}&apos; must be a constructor call..
@@ -214,26 +219,6 @@
             <param name="provider">The database communication provider 
             using to retrieve or store the data.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbOperation`1.Validate">
-            <summary>
-            When overridden in a derived class, returns a boolean value 
-            indicating whether the operation is valid for execution.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbOperation`1.OnExecuting">
-            <summary>
-            When overridden in a derived class, 
-            performs additional tasks before 
-            the operation is executed.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbOperation`1.OnExecuted">
-            <summary>
-            When overridden in a derived class, 
-            performs additional tasks immediately 
-            after the operation finishes executing.
-            </summary>
-        </member>
         <member name="M:Radischevo.Wahha.Data.DbOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
             <summary>
             When overridden in a derived class, executes the operation 
@@ -255,12 +240,13 @@
             <see cref="T:Radischevo.Wahha.Data.DbCommandOperation`1"/> class.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbCommandOperation`1.Validate">
+        <member name="M:Radischevo.Wahha.Data.DbCommandOperation`1.Execute(Radischevo.Wahha.Data.IDbDataProvider)">
             <summary>
-            When overridden in a derived class, validates 
-            the command arguments and returns a boolean value 
-            indicating whether the command is valid for execution.
+            Executes the operation against the provided data source 
+            and returns the result.
             </summary>
+            <param name="provider">The database communication provider 
+            using to retrieve or store the data.</param>
         </member>
         <member name="P:Radischevo.Wahha.Data.DbCommandOperation`1.Command">
             <summary>
@@ -441,24 +427,24 @@
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Initialize(System.String,System.Boolean)">
             <summary>
             Initializes an instance of 
-            the <see cref="!:IDataProvider"/>
+            the <see cref="!:IDataProvider"/>.
             </summary>
-            <param name="connectionString">The database connection string</param>
-            <param name="useTransaction">True to use a transaction</param>
+            <param name="connectionString">The database connection string.</param>
+            <param name="useTransaction">True to use a transaction.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.BeginTransaction(System.Data.IsolationLevel)">
             <summary>
-            Starts the database transaction with the specified isolation level
+            Starts the database transaction with the specified isolation level.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Commit">
             <summary>
-            Commits the current transaction (if present)
+            Commits the current transaction.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Rollback">
             <summary>
-            Rolls back the current transaction
+            Rolls back the current transaction.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Close">
@@ -497,6 +483,140 @@
         <member name="P:Radischevo.Wahha.Data.IDbDataProvider.State">
             <summary>
             Gets the current connection state
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.Provider.CommonDbDataProvider"/> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.CreateConnection(System.String)">
+            <summary>
+            When overridden in a derived class, creates 
+            an <see cref="T:System.Data.IDbConnection"/> instance 
+            which is supported by the current provider.
+            </summary>
+            <param name="connectionString">The database connection string.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.CreateCommand">
+            <summary>
+            When overridden in a derived class, creates 
+            an <see cref="T:System.Data.IDbCommand"/> instance 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.CreateDataAdapter">
+            <summary>
+            When overridden in a derived class, creates 
+            an <see cref="T:System.Data.IDbDataAdapter"/> instance 
+            which is supported by the current provider.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.ValidateCommand(System.Data.IDbCommand)">
+            <summary>
+            When overridden in a derived class, validates the 
+            provided <see cref="T:System.Data.IDbCommand"/>.
+            </summary>
+            <param name="command">The <see cref="T:System.Data.IDbCommand"/> instance to validate.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Initialize(System.String,System.Boolean)">
+            <summary>
+            When overridden in a derived class, performs initialization
+            routines for the current <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> class.
+            </summary>
+            <param name="connectionString">The database connection string.</param>
+            <param name="useTransaction">True to use a transaction.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Open">
+            <summary>
+            When overridden in a derived class opens the underlying 
+            database connection.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.CloseOnError">
+            <summary>
+            When overridden in a derived class closes the underlying 
+            database connection and rolls back the current transaction.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Close">
+            <summary>
+            Closes the underlying database connection.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Commit">
+            <summary>
+            Commits the current transaction.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Rollback">
+            <summary>
+            Rolls back the current transaction.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.BeginTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Starts the database transaction with the specified isolation level.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Execute``1(System.Data.IDbCommand,System.Func{System.Data.IDbCommand,``0})">
+            <summary>
+            Executes the <paramref name="command"/> against the current data source 
+            and converts the result using the specified <paramref name="converter"/>.
+            </summary>
+            <param name="command">The <see cref="T:System.Data.IDbCommand"/> 
+            to execute.</param>
+            <param name="converter">The action to perform convertion with.</param>
+            <typeparam name="TR">The type of the returning value.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Dispose">
+            <summary>
+            Performs application-defined tasks associated with 
+            freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Dispose(System.Boolean)">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or
+            resetting unmanaged resources.
+            </summary>
+            <param name="disposing">A value indicating whether 
+            the disposal is called explicitly.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.IsOpen">
+            <summary>
+            Gets a value indicating whether 
+            the underlying database connection 
+            is open.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.HasTransaction">
+            <summary>
+            Gets a value indicating whether 
+            the database transaction is active.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Connection">
+            <summary>
+            Gets the underlying database connection.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Transaction">
+            <summary>
+            Gets the underlying database transaction.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.UseTransaction">
+            <summary>
+            Gets or sets a value indicating whether 
+            the transaction will be used for 
+            current connection.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.State">
+            <summary>
+            Gets the current state of the connection.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.CachedDbCommandOperation`1">
@@ -544,12 +664,6 @@
             which the entry will be removed from cache.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Data.CachedDbCommandOperation`1.EnableCaching">
-            <summary>
-            Gets or sets the value indicating whether 
-            the caching of results is enabled.
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Data.Provider.OdbcDataProvider">
             <summary>
             Provides methods to access 
@@ -579,6 +693,13 @@
             Creates a new instance of 
             the <see cref="T:Radischevo.Wahha.Data.Provider.SqlDbDataProvider"/> class.
             </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.CreateConnection(System.String)">
+            <summary>
+            Creates an <see cref="T:System.Data.IDbConnection"/> instance 
+            which is supported by the current provider.
+            </summary>
+            <param name="connectionString">The database connection string.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.SqlDbDataProvider.CreateDataAdapter">
             <summary>
@@ -1267,14 +1388,14 @@
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.#ctor">
             <summary>
-            Initializes a nes instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.#ctor(Radischevo.Wahha.Data.IDbDataProvider)">
             <summary>
-            Initializes a nes instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
             </summary>
-            <param name="dataProvider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            <param name="provider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
             used to perform database queries.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.Initialize">
@@ -1306,22 +1427,26 @@
             <typeparam name="TResult">The type of the operation result.</typeparam>
             <param name="operation">The operation to execute.</param>
         </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationScope.Commit">
+            <summary>
+            Explicitly commits the current transaction.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationScope.Rollback">
+            <summary>
+            Rolls back the current transaction.
+            </summary>
+        </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.Dispose">
             <summary>
-            Performs application-defined tasks associated with freeing, releasing, or
-            resetting unmanaged resources.
+            Performs application-defined tasks associated with 
+            freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Data.DbOperationScope.Provider">
             <summary>
             Gets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
             used to perform database queries.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.DbOperationScope.UseTransaction">
-            <summary>
-            Gets or sets the value indicating whether 
-            the transaction will be used.
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Data.DbOperationScope.IsolationLevel">
@@ -1505,6 +1630,13 @@
             the <see cref="T:Radischevo.Wahha.Data.Provider.OleDbDataProvider"/> class.
             </summary>
         </member>
+        <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.CreateConnection(System.String)">
+            <summary>
+            Creates an <see cref="T:System.Data.IDbConnection"/> instance 
+            which is supported by the current provider.
+            </summary>
+            <param name="connectionString">The database connection string.</param>
+        </member>
         <member name="M:Radischevo.Wahha.Data.Provider.OleDbDataProvider.CreateDataAdapter">
             <summary>
             Creates a <see cref="T:System.Data.IDbDataAdapter"/> instance, 
@@ -1542,12 +1674,6 @@
             <summary>
             Gets the collection of tags which 
             will be invalidated.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.EnableInvalidation">
-            <summary>
-            Gets or sets the value indicating whether 
-            cache invalidation is enabled.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbDataReader">

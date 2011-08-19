@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Mvc.Validation;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -19,16 +18,6 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Static Methods
-		protected static bool AreMembersValid(BindingContext context, string modelName)
-		{
-			Precondition.Require(context, () => Error.ArgumentNull("context"));
-			modelName = modelName ?? context.ModelName;
-
-			return !context.Errors.Where(k => k.Member.StartsWith(modelName,
-				StringComparison.InvariantCultureIgnoreCase))
-				.Any(k => k.Member.Length != modelName.Length);
-		}
-
 		private static bool CanUpdateReadonlyTypedReference(Type type)
         {
             if (type.IsValueType)
@@ -43,12 +32,9 @@ namespace Radischevo.Wahha.Web.Mvc
             return true;
         }
 
-        private static bool AllowPropertyUpdate(PropertyDescriptor property, Predicate<string> filter)
+        private static bool AllowPropertyUpdate(PropertyDescriptor property)
         {
             if (property.IsReadOnly && !CanUpdateReadonlyTypedReference(property.PropertyType))
-                return false;
-
-            if (!filter(property.Name))
                 return false;
 
 			return !property.Attributes.OfType<SkipBindingAttribute>().Any();
@@ -66,10 +52,9 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual IEnumerable<PropertyDescriptor> GetModelProperties(BindingContext context)
         {
-			Predicate<string> propertyFilter = context.AllowMemberUpdate;
 			return GetTypeDescriptor(context)
 				.GetProperties().Cast<PropertyDescriptor>()
-				.Where(p => AllowPropertyUpdate(p, propertyFilter))
+				.Where(p => AllowPropertyUpdate(p))
 				.OrderBy(p => {
 					PropertyBindingOrderAttribute attribute = p.Attributes
 						.OfType<PropertyBindingOrderAttribute>()
@@ -79,20 +64,11 @@ namespace Radischevo.Wahha.Web.Mvc
 				});
         }
 
-        protected virtual ModelMetadata GetModelMetadata(BindingContext context)
-        {
-            return context.Metadata;
-        }
-        
 		private BindingContext CreateComplexModelBindingContext(BindingContext context, object result)
 		{
 			BindAttribute bind = (BindAttribute)TypeDescriptor.GetAttributes(context.ModelType)[typeof(BindAttribute)];
-			Predicate<string> propertyFilter = (bind == null) ? context.AllowMemberUpdate : 
-				(Predicate<string>)(propertyName => bind.IsUpdateAllowed(propertyName) && context.AllowMemberUpdate(propertyName));
-
 			BindingContext inner = new BindingContext(context, context.ModelType,
-				context.ModelName, context.ValueProvider, propertyFilter,
-				context.Errors) {
+				context.ModelName, context.ValueProvider, context.Errors) {
 					Model = result
 				};
 			return inner;
@@ -105,13 +81,6 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual void OnModelUpdated(BindingContext context)
         {
-			ModelValidationContext validation = new ModelValidationContext(context, context.Metadata, context.Model);
-			foreach (ModelValidationResult result in context.Validator.Validate(validation))
-			{
-				string memberKey = CreateSubMemberName(context.ModelName, result.Member);
-				if(AreMembersValid(context, memberKey))
-					context.Errors.Add(memberKey, result.Message);
-			}
         }
 
         protected void BindProperties(BindingContext context)
@@ -129,13 +98,9 @@ namespace Radischevo.Wahha.Web.Mvc
 
 			if (context.Contains(propertyKey))
 			{
-				ModelMetadata propertyMetadata = context.Metadata.GetPropertyMetadata(property.Name);
-				ModelValidator propertyValidator = context.Validator.GetPropertyValidator(property.Name);
-
 				BindingContext inner = new BindingContext(context, property.PropertyType,
-					propertyKey, context.ValueProvider, null, context.Errors) {
-						Model = property.GetValue(context.Model),
-						Metadata = propertyMetadata, Validator = propertyValidator
+					propertyKey, context.ValueProvider, context.Errors) {
+						Model = property.GetValue(context.Model)
 					};
 
 				value = GetPropertyValue(inner, property);
@@ -163,26 +128,13 @@ namespace Radischevo.Wahha.Web.Mvc
             PropertyDescriptor property)
         {
 			IModelBinder binder = GetPropertyBinder(property);
-            object value = binder.Bind(context);
-
-            if ((context.Metadata.ConvertEmptyStringToNull) 
-                && Object.Equals(value, String.Empty))
-                return null;
-
-            return value;
+            return binder.Bind(context);
         }
 
         protected virtual bool OnPropertyUpdating(BindingContext context,
             PropertyDescriptor property, object value)
         {
             string propertyKey = CreateSubMemberName(context.ModelName, property.Name);
-            ModelValidator propertyValidator = context.Validator.GetPropertyValidator(property.Name);
-			ModelValidationContext validation = new ModelValidationContext(context, 
-				context.Metadata, context.Model, value);
-
-            foreach (ModelValidationResult result in propertyValidator.Validate(validation))
-                context.Errors.Add(propertyKey, new ValidationError(result.Message, value, null));
-            
             return VerifyValueUsability(context, propertyKey, property.PropertyType, value);
         }
 

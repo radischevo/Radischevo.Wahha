@@ -31,45 +31,7 @@ namespace Radischevo.Wahha.Data
 			Precondition.Require(provider, () =>
 				Error.ArgumentNull("provider"));
 
-			Precondition.Require(Validate(), () =>
-				Error.OperationIsNotValid());
-
-			try
-			{
-				OnExecuting();
-				return ExecuteInternal(provider);
-			}
-			finally
-			{
-				OnExecuted();
-			}
-		}
-
-		/// <summary>
-		/// When overridden in a derived class, returns a boolean value 
-		/// indicating whether the operation is valid for execution.
-		/// </summary>
-		protected virtual bool Validate()
-		{
-			return true;
-		}
-
-		/// <summary>
-		/// When overridden in a derived class, 
-		/// performs additional tasks before 
-		/// the operation is executed.
-		/// </summary>
-		protected virtual void OnExecuting()
-		{
-		}
-
-		/// <summary>
-		/// When overridden in a derived class, 
-		/// performs additional tasks immediately 
-		/// after the operation finishes executing.
-		/// </summary>
-		protected virtual void OnExecuted()
-		{
+			return ExecuteInternal(provider);
 		}
 
 		/// <summary>

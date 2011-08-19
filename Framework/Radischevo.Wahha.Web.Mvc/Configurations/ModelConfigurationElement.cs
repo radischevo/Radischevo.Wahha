@@ -22,23 +22,5 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 				return (ValueProviderConfigurationElementCollection)base["valueProviders"];
 			}
 		}
-
-		[ConfigurationProperty("metadataProvider", IsRequired = false)]
-		public string MetadataProviderType
-		{
-			get
-			{
-				return base["metadataProvider"].ToString();
-			}
-		}
-
-		[ConfigurationProperty("validatorProvider", IsRequired = false)]
-		public string ValidatorProviderType
-		{
-			get
-			{
-				return base["validatorProvider"].ToString();
-			}
-		}
 	}
 }

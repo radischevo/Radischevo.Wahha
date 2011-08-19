@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Mvc.Validation;
 using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc.Configurations
@@ -13,8 +12,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         #region Instance Fields
         private ModelBinderCollection _binders;
 		private ValueProviderFactoryCollection _valueProviders;
-		private ModelMetadataProvider _metadataProvider;
-		private ModelValidatorProvider _validatorProvider;
         #endregion
 
         #region Constructors
@@ -45,36 +42,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 				return _valueProviders;
 			}
 		}
-
-		public ModelMetadataProvider MetadataProvider
-		{
-			get
-			{
-				if (_metadataProvider == null)
-					_metadataProvider = new EmptyModelMetadataProvider();
-
-				return _metadataProvider;
-			}
-			set
-			{
-				_metadataProvider = value;
-			}
-		}
-
-		public ModelValidatorProvider ValidatorProvider
-		{
-			get
-			{
-				if (_validatorProvider == null)
-					_validatorProvider = new EmptyModelValidatorProvider();
-
-				return _validatorProvider;
-			}
-			set
-			{
-				_validatorProvider = value;
-			}
-		}
         #endregion
 
         #region Static Methods
@@ -95,30 +62,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 
 			return (IValueProviderFactory)ServiceLocator.Instance.GetService(type);
 		}
-
-        private static ModelMetadataProvider CreateMetadataProvider(Type type)
-        {
-            Precondition.Require(type, () => Error.ArgumentNull("type"));
-            if (!typeof(ModelMetadataProvider).IsAssignableFrom(type))
-                throw Error.IncompatibleModelMetadataProviderType(type);
-
-			ModelMetadataProvider p = (ModelMetadataProvider)ServiceLocator.Instance.GetService(type);
-            p.Init();
-
-            return p;
-        }
-
-        private static ModelValidatorProvider CreateValidatorProvider(Type type)
-        {
-            Precondition.Require(type, () => Error.ArgumentNull("type"));
-            if (!typeof(ModelValidatorProvider).IsAssignableFrom(type))
-                throw Error.IncompatibleModelValidatorProviderType(type);
-
-			ModelValidatorProvider p = (ModelValidatorProvider)ServiceLocator.Instance.GetService(type);
-            p.Init();
-
-            return p;
-        }
         #endregion
 
         #region Instance Methods
@@ -204,14 +147,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 
 			InitBinders(element.Binders);
 			InitValueProviders(element.ValueProviders);
-
-            if (!String.IsNullOrEmpty(element.MetadataProviderType))
-                _metadataProvider = CreateMetadataProvider(
-                    Type.GetType(element.MetadataProviderType, true, true));
-
-            if (!String.IsNullOrEmpty(element.ValidatorProviderType))
-                _validatorProvider = CreateValidatorProvider(
-                    Type.GetType(element.ValidatorProviderType, true, true));
         }
         #endregion
     }

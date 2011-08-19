@@ -75,7 +75,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			IValueProvider provider = new DictionaryValueProvider(data);
 
 			BindingContext inner = new BindingContext(context, context.ModelType,
-				String.Empty, provider, context.AllowMemberUpdate, context.Errors);
+				String.Empty, provider, context.Errors);
 
 			return base.ExecuteBind(inner);
         }

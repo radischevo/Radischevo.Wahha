@@ -55,7 +55,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         #region Instance Fields
         private ViewContext _context;
         private HtmlControlHelper _controls;
-        private TemplateHelper _templates;
         #endregion
 
         #region Constructors
@@ -64,7 +63,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             Precondition.Require(context, () => Error.ArgumentNull("context"));
             _context = context;
             _controls = new HtmlControlHelper(_context);
-            _templates = new TemplateHelper(this);
         }
         #endregion
 
@@ -78,14 +76,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             get 
             {
                 return _context;
-            }
-        }
-
-        public TemplateHelper Templates
-        {
-            get
-            {
-                return _templates;
             }
         }
 
@@ -103,12 +93,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         #endregion
 
         #region Default Helper Overrides
-        protected void SetTemplateHelper(TemplateHelper helper)
-        {
-            Precondition.Require(helper, () => Error.ArgumentNull("helper"));
-            _templates = helper;
-        }
-
         protected void SetControlsHelper(HtmlControlHelper helper)
         {
             Precondition.Require(helper, () => Error.ArgumentNull("helper"));
@@ -373,7 +357,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         where TModel : class
     {
         #region Instance Fields
-        private TemplateHelper<TModel> _templates;
         private HtmlControlHelper<TModel> _controls;
         #endregion
 
@@ -382,22 +365,11 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             : base(context)
         {
             _controls = new HtmlControlHelper<TModel>(context);
-            _templates = new TemplateHelper<TModel>(this);
-
             SetControlsHelper(_controls);
-            SetTemplateHelper(_templates);
         }
         #endregion
 
         #region Instance Properties
-        public new TemplateHelper<TModel> Templates
-        {
-            get
-            {
-                return _templates;
-            }
-        }
-
         /// <summary>
         /// Gets the <see cref="Radischevo.Wahha.Web.Mvc.HtmlControlHelper"/> instance 
         /// for use in rendering HTML controls within a view.

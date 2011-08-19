@@ -32,24 +32,24 @@ namespace Radischevo.Wahha.Data
         #region Instance Methods
         /// <summary>
         /// Initializes an instance of 
-        /// the <see cref="IDataProvider" />
+        /// the <see cref="IDataProvider" />.
         /// </summary>
-        /// <param name="connectionString">The database connection string</param>
-        /// <param name="useTransaction">True to use a transaction</param>
+        /// <param name="connectionString">The database connection string.</param>
+        /// <param name="useTransaction">True to use a transaction.</param>
         void Initialize(string connectionString, bool useTransaction);
 
         /// <summary>
-        /// Starts the database transaction with the specified isolation level
+        /// Starts the database transaction with the specified isolation level.
         /// </summary>
         void BeginTransaction(IsolationLevel isolation);
 
         /// <summary>
-        /// Commits the current transaction (if present)
+        /// Commits the current transaction.
         /// </summary>
         void Commit();
 
         /// <summary>
-        /// Rolls back the current transaction
+        /// Rolls back the current transaction.
         /// </summary>
         void Rollback();
 

@@ -153,6 +153,9 @@
   <data name="Error_CouldNotMaterializeCollectionLink" xml:space="preserve">
     <value>The provided link can not be materialized since it can not be explicitly converted to the 'Link&lt;TAssociation&gt;' type.</value>
   </data>
+  <data name="Error_CouldNotSetIsolationLevelAfterInitialize" xml:space="preserve">
+    <value>Could not change transaction isolation level since the Execute method was already called.</value>
+  </data>
   <data name="Error_ExpressionMustBeAConstructorCall" xml:space="preserve">
     <value>The provided expression '{0}' must be a constructor call.</value>
   </data>

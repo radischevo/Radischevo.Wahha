@@ -145,7 +145,6 @@
     <Compile Include="Operations\DbCommandOperation`1.cs" />
     <Compile Include="Operations\DbQueryOperation`1.cs" />
     <Compile Include="Operations\DbNonQueryOperation.cs" />
-    <Compile Include="Operations\DbOperationValidationException.cs" />
     <Compile Include="Operations\DbOperation`1.cs" />
     <Compile Include="Operations\DbScalarOperation`1.cs" />
     <Compile Include="Operations\DbSelectOperation`1.cs" />

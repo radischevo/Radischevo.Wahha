@@ -104,8 +104,7 @@ namespace Radischevo.Wahha.Web.Mvc
 					bindingData.Add(elementKey, split[i]);
 
 					BindingContext inner = new BindingContext(context, elementType,
-						elementKey, new DictionaryValueProvider(bindingData), 
-						null, context.Errors);
+						elementKey, new DictionaryValueProvider(bindingData), context.Errors);
 
 					value = ElementBinder.Bind(inner);
 					convertedValues[i] = ValidateElement(context, elementKey, value);
@@ -124,7 +123,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
 					string elementKey = CreateSubMemberName(context.ModelName, index.ToString());
 					BindingContext inner = new BindingContext(context, elementType,
-						elementKey, context.ValueProvider, null, context.Errors);
+						elementKey, context.ValueProvider, context.Errors);
 
 					value = ElementBinder.Bind(inner);
 					convertedValues[index.Value] = ValidateElement(context, elementKey, value);

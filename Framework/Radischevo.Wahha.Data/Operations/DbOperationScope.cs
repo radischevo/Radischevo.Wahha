@@ -16,13 +16,12 @@ namespace Radischevo.Wahha.Data
 		private IDbDataProvider _provider;
 		private IsolationLevel _isolationLevel;
 		private bool _initialized;
-		private bool _useTransaction;
 		private bool _hasOwnedContext;
 		#endregion
 
 		#region Constructors
 		/// <summary>
-		/// Initializes a nes instance of the <see cref="DbOperationScope"/> class.
+		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.DbOperationScope"/> class.
 		/// </summary>
 		public DbOperationScope()
 			: this(DbDataProvider.Create())
@@ -31,9 +30,9 @@ namespace Radischevo.Wahha.Data
 		}
 
 		/// <summary>
-		/// Initializes a nes instance of the <see cref="DbOperationScope"/> class.
+		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.DbOperationScope"/> class.
 		/// </summary>
-		/// <param name="dataProvider">The <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
+		/// <param name="provider">The <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
 		/// used to perform database queries.</param>
 		public DbOperationScope(IDbDataProvider provider)
 		{
@@ -41,7 +40,6 @@ namespace Radischevo.Wahha.Data
 				Error.ArgumentNull("provider"));
 
 			_provider = provider;
-			_useTransaction = true;
 			_isolationLevel = IsolationLevel.ReadCommitted;
 		}
 		#endregion
@@ -60,22 +58,6 @@ namespace Radischevo.Wahha.Data
 		}
 
 		/// <summary>
-		/// Gets or sets the value indicating whether 
-		/// the transaction will be used.
-		/// </summary>
-		public bool UseTransaction
-		{
-			get
-			{
-				return _useTransaction;
-			}
-			set
-			{
-				_useTransaction = value;
-			}
-		}
-
-		/// <summary>
 		/// Gets or sets the transaction isolation level.
 		/// </summary>
 		public IsolationLevel IsolationLevel
@@ -86,6 +68,9 @@ namespace Radischevo.Wahha.Data
 			}
 			set
 			{
+				if (_initialized)
+					throw Error.CouldNotSetIsolationLevelAfterInitialize();
+
 				_isolationLevel = value;
 			}
 		}
@@ -108,8 +93,7 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		protected virtual void Initialize()
 		{
-			if (UseTransaction)
-				_provider.BeginTransaction(IsolationLevel);
+			Provider.BeginTransaction(IsolationLevel);
 		}
 
 		/// <summary>
@@ -120,7 +104,7 @@ namespace Radischevo.Wahha.Data
 		/// the disposal is called explicitly.</param>
 		protected virtual void Dispose(bool disposing)
 		{
-			_provider.Commit();
+			Commit();
 
 			if (disposing && _hasOwnedContext)
 			{
@@ -139,8 +123,16 @@ namespace Radischevo.Wahha.Data
 			Precondition.Require(operation, () =>
 				Error.ArgumentNull("operation"));
 
-			EnsureInitialized();
-			operation.Execute(Provider);
+			try
+			{
+				EnsureInitialized();
+				operation.Execute(Provider);
+			}
+			catch (Exception)
+			{
+				Rollback();
+				throw;
+			}
 		}
 
 		/// <summary>
@@ -154,13 +146,37 @@ namespace Radischevo.Wahha.Data
 			Precondition.Require(operation, () =>
 				Error.ArgumentNull("operation"));
 
-			EnsureInitialized();
-			return operation.Execute(Provider);
+			try
+			{
+				EnsureInitialized();
+				return operation.Execute(Provider);
+			}
+			catch (Exception)
+			{
+				Rollback();
+				throw;
+			}
 		}
 
 		/// <summary>
-		/// Performs application-defined tasks associated with freeing, releasing, or
-		/// resetting unmanaged resources.
+		/// Explicitly commits the current transaction.
+		/// </summary>
+		public void Commit()
+		{
+			Provider.Commit();
+		}
+
+		/// <summary>
+		/// Rolls back the current transaction.
+		/// </summary>
+		public void Rollback()
+		{
+			Provider.Rollback();
+		}
+
+		/// <summary>
+		/// Performs application-defined tasks associated with 
+		/// freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
 		public void Dispose()
 		{

@@ -9,7 +9,7 @@ namespace Radischevo.Wahha.Data
 	/// <typeparamref name="TResult"/> type. If no rows returned or field type 
 	/// does not support the required conversion, a default value is returned.
 	/// </summary>
-	public class DbScalarOperation<TResult> : DbCommandOperation<TResult>
+	public class DbScalarOperation<TResult> : CachedDbCommandOperation<TResult>
 	{
 		#region Constructors
 		/// <summary>

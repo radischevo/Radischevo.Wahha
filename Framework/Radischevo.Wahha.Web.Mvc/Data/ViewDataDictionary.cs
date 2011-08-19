@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Mvc.Validation;
 using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
@@ -12,9 +11,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Fields
         private object _model;
         private ViewDataEvaluator _evaluator;
-        private TemplateDescriptor _template;
-        private ModelMetadata _metadata;
-        private ModelValidator _validator;
+        //private TemplateDescriptor _template;
         private IDictionary<string, ViewDataDictionary> _subDataItems;
         #endregion
 
@@ -52,31 +49,11 @@ namespace Radischevo.Wahha.Web.Mvc
             
             _evaluator = new ViewDataEvaluator(this);
             _model = dictionary.Model;
-            _template = dictionary._template;
-			_metadata = dictionary._metadata;
-			_validator = dictionary._validator;
+            //_template = dictionary._template;
         }
         #endregion
 
         #region Instance Properties
-		protected virtual ModelMetadataProvider MetadataProvider
-		{
-			get
-			{
-				return Configuration.Instance
-					.Models.MetadataProvider;
-			}
-		}
-
-		protected virtual ModelValidatorProvider ValidatorProvider
-		{
-			get
-			{
-				return Configuration.Instance
-					.Models.ValidatorProvider;
-			}
-		}
-
         public object Model
         {
             get
@@ -89,40 +66,6 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public virtual ModelMetadata Metadata
-        {
-            get
-            {
-                if (_metadata == null && _model != null)
-                {
-                    Type modelType = _model.GetType();
-                    _metadata = MetadataProvider.GetMetadata(modelType);
-                }
-                return _metadata;
-            }
-            set
-            {
-                _metadata = value;
-            }
-        }
-
-        public virtual ModelValidator Validator
-        {
-            get
-            {
-                if (_validator == null && _model != null)
-                {
-                    Type modelType = _model.GetType();
-                    _validator = ValidatorProvider.GetValidator(modelType);
-                }
-                return _validator;
-            }
-            set
-            {
-                _validator = value;
-            }
-        }
-
         public IDictionary<string, ViewDataDictionary> SubDataItems
         {
             get
@@ -131,7 +74,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public TemplateDescriptor Template
+        /*public TemplateDescriptor Template
         {
             get
             {
@@ -145,7 +88,7 @@ namespace Radischevo.Wahha.Web.Mvc
             {
                 _template = value;
             }
-        }
+        }*/
 
         public new object this[string key]
         {
@@ -187,7 +130,6 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual void SetModel(object model)
         {
-            _metadata = null;
             _model = model;
         }
         #endregion

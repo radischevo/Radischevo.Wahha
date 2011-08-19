@@ -50,16 +50,17 @@ namespace Radischevo.Wahha.Data
 
 		#region Instance Methods
 		/// <summary>
-		/// When overridden in a derived class, validates 
-		/// the command arguments and returns a boolean value 
-		/// indicating whether the command is valid for execution.
+		/// Executes the operation against the provided data source 
+		/// and returns the result.
 		/// </summary>
-		protected override bool Validate()
+		/// <param name="provider">The database communication provider 
+		/// using to retrieve or store the data.</param>
+		public override TResult Execute(IDbDataProvider provider)
 		{
-			Precondition.Require(_command, () =>
+			Precondition.Require(Command, () => 
 				Error.OperationCommandIsNotInitialized());
 
-			return base.Validate();
+			return base.Execute(provider);
 		}
 		#endregion
 	}

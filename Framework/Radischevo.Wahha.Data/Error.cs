@@ -170,14 +170,9 @@ namespace Radischevo.Wahha.Data
 			return new ArgumentException(Res.Error_CouldNotMaterializeCollectionLink, parameter);
 		}
 
-		internal static Exception OperationIsNotValid()
-		{
-			return new DbOperationValidationException();
-		}
-
 		internal static Exception OperationCommandIsNotInitialized()
 		{
-			return new DbOperationValidationException(
+			return new InvalidOperationException(
 				Res.Error_OperationCommandIsNotInitialized);
 		}
 
@@ -199,6 +194,12 @@ namespace Radischevo.Wahha.Data
 		{
 			return new InvalidOperationException(String.Format(
 				Res.Error_ExpressionMustBeAConstructorCall, parameterName));
+		}
+
+		internal static Exception CouldNotSetIsolationLevelAfterInitialize()
+		{
+			return new InvalidOperationException(
+				Res.Error_CouldNotSetIsolationLevelAfterInitialize);
 		}
 	}
 }
