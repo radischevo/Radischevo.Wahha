@@ -2,6 +2,7 @@
 using System.Data;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data.Configurations;
 
 namespace Radischevo.Wahha.Data
 {
@@ -24,9 +25,19 @@ namespace Radischevo.Wahha.Data
 		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.DbOperationScope"/> class.
 		/// </summary>
 		public DbOperationScope()
-			: this(DbDataProvider.Create())
+			: this(CreateDefaultProvider())
 		{
 			_hasOwnedContext = true;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.DbOperationScope"/> class.
+		/// </summary>
+		/// <param name="provider">The <see cref="Radischevo.Wahha.Data.IDbDataProviderFactory"/> 
+		/// used to create an instance of <see cref="Radischevo.Wahha.Data.IDbDataProvider"/>.</param>
+		public DbOperationScope(IDbDataProviderFactory factory)
+			: this(CreateProvider(factory))
+		{
 		}
 
 		/// <summary>
@@ -41,6 +52,19 @@ namespace Radischevo.Wahha.Data
 
 			_provider = provider;
 			_isolationLevel = IsolationLevel.ReadCommitted;
+		}
+		#endregion
+
+		#region Static Methods
+		private static IDbDataProvider CreateDefaultProvider()
+		{
+			return CreateProvider(Configuration.Instance.Database.Factory);
+		}
+
+		private static IDbDataProvider CreateProvider(IDbDataProviderFactory factory)
+		{
+			Precondition.Require(factory, () => Error.ArgumentNull("factory"));
+			return factory.CreateProvider();
 		}
 		#endregion
 

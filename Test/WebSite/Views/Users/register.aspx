@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" Inherits="ViewPage<TemplatedItem>" MasterPageFile="~/Views/default.master" %>
-<%@ import namespace="Radischevo.Wahha.Web.Mvc.Validation" %>
 <%@ Import Namespace="Radischevo.Wahha.Web.Scripting.Templates" %>
 <asp:Content ContentPlaceHolderID="title" runat="server">Нереальный сайт MVC</asp:Content>
 <asp:Content ContentPlaceHolderID="head" runat="server">
@@ -26,8 +25,6 @@
 		for(var i = 0; i < 10; ++i) {
 			$("#clicker").click();
 		}
-        MvcValidation.apply(<%= Validation.Rules()
-            .Apply("form#default") %>);
         $("#templated").html(global({ 
 			PageTitle: "Китаец!", 
 			Title: "Крутая штука", 

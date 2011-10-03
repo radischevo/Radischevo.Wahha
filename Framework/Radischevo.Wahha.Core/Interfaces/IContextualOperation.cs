@@ -2,7 +2,7 @@
 
 namespace Radischevo.Wahha.Core
 {
-	public interface IContextOperation<TContext>
+	public interface IContextualOperation<TContext>
 	{
 		#region Instance Methods
 		void Execute(TContext context);

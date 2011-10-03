@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Radischevo.Wahha.Web.Scripting.Serialization
+namespace Radischevo.Wahha.Data.Serialization
 {
     public abstract class JavaScriptTypeResolver
     {

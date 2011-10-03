@@ -60,14 +60,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
             }
         }
 
-        public ValidationHelper Validation
-        {
-            get
-            {
-                return ViewPage.Validation;
-            }
-        }
-
         public HttpParameters HttpParameters
         {
             get

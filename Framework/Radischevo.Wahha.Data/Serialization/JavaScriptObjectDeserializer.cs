@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Radischevo.Wahha.Web.Scripting.Serialization
+namespace Radischevo.Wahha.Data.Serialization
 {
     internal class JavaScriptObjectDeserializer
     {

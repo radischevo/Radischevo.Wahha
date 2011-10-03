@@ -22,7 +22,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
         private HtmlHelper _html;
         private UrlHelper _url;
         private AjaxHelper _ajax;
-        private ValidationHelper _validation;
         private HttpParameters _httpParameters;
 		private TextWriter _output;
         #endregion
@@ -155,18 +154,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
             }
         }
 
-        public ValidationHelper Validation
-        {
-            get
-            {
-                return _validation;
-            }
-            set
-            {
-                _validation = value;
-            }
-        }
-
         public new CacheProvider Cache
         {
             get
@@ -227,7 +214,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
             _html = new HtmlHelper(context);
             _url = new UrlHelper(context);
             _ajax = new AjaxHelper(context);
-            _validation = new ValidationHelper(context);
         }
 
         /// <summary>
@@ -250,7 +236,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
         #region Instance Fields
         private ViewDataDictionary<TModel> _viewData;
         private HtmlHelper<TModel> _html;
-        private ValidationHelper<TModel> _validation;
         #endregion
 
         #region Constructors
@@ -298,18 +283,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
                 _html = value;
             }
         }
-
-        public new ValidationHelper<TModel> Validation
-        {
-            get
-            {
-                return _validation;
-            }
-            set
-            {
-                _validation = value;
-            }
-        }
         #endregion
 
         #region Instance Methods
@@ -317,7 +290,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
         {
             base.InitHelpers(context);
             base.Html = _html = new HtmlHelper<TModel>(context);
-            base.Validation = _validation = new ValidationHelper<TModel>(context);
         }
 
         protected override void SetViewData(ViewDataDictionary viewData)

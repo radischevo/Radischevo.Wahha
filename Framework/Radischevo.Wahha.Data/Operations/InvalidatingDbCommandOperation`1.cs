@@ -69,11 +69,11 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		/// <param name="provider">The database communication provider 
 		/// using to retrieve or store the data.</param>
-		public override TResult Execute(IDbDataProvider provider)
+		protected override TResult ExecuteInternal(IDbDataProvider provider)
 		{
 			try
 			{
-				return base.Execute(provider);
+				return base.ExecuteInternal(provider);
 			}
 			finally
 			{

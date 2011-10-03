@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\DatabaseConfigurationElement.cs" />
     <Compile Include="Engine\DbDataRecord.cs" />
     <Compile Include="Extensions\AssociatorExtensions.cs" />
     <Compile Include="Caching\CacheProviderExtensions.cs" />
@@ -104,9 +105,7 @@
     <Compile Include="Configurations\CacheProviderConfigurationElement.cs" />
     <Compile Include="Configurations\CacheSettings.cs" />
     <Compile Include="Configurations\DbDataProviderFactoryConfigurationElement.cs" />
-    <Compile Include="Configurations\DbDataProviderConfigurationElement.cs" />
-    <Compile Include="Configurations\DbDataProviderMappingDictionary.cs" />
-    <Compile Include="Configurations\DbDataProviderSettings.cs" />
+    <Compile Include="Configurations\DatabaseConfigurationSettings.cs" />
     <Compile Include="Configurations\SettingsSection.cs" />
     <Compile Include="Configurations\Configuration.cs" />
     <Compile Include="Caching\TaggedCacheWrapper.cs" />
@@ -139,11 +138,13 @@
     <Compile Include="Materialization\SubsetSchemeValidator.cs" />
     <Compile Include="Materialization\SubsetMapper.cs" />
     <Compile Include="Operations\CachedDbCommandOperation`1.cs" />
+    <Compile Include="Operations\DbCombinedSingleOperation`1.cs" />
+    <Compile Include="Operations\DbCombinedSelectOperation`1.cs" />
     <Compile Include="Operations\InvalidatingDbCommandOperation`1.cs" />
     <Compile Include="Operations\DbOperationScope.cs" />
     <Compile Include="Operations\DbSubsetOperation`1.cs" />
     <Compile Include="Operations\DbCommandOperation`1.cs" />
-    <Compile Include="Operations\DbQueryOperation`1.cs" />
+    <Compile Include="Operations\DbQueryOperation`2.cs" />
     <Compile Include="Operations\DbNonQueryOperation.cs" />
     <Compile Include="Operations\DbOperation`1.cs" />
     <Compile Include="Operations\DbScalarOperation`1.cs" />
@@ -151,20 +152,32 @@
     <Compile Include="Operations\DbSingleOperation`1.cs" />
     <Compile Include="Provider\CommonDbDataProvider.cs" />
     <Compile Include="Provider\OdbcDataProvider.cs" />
+    <Compile Include="Provider\OdbcDbDataProviderFactory.cs" />
+    <Compile Include="Provider\OleDbDataProviderFactory.cs" />
+    <Compile Include="Provider\SqlDbDataProviderFactory.cs" />
+    <Compile Include="Resources\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Serialization\JavaScriptConverter.cs" />
+    <Compile Include="Serialization\JavaScriptConverter`1.cs" />
+    <Compile Include="Serialization\JavaScriptObjectDeserializer.cs" />
+    <Compile Include="Serialization\JavaScriptSerializer.cs" />
+    <Compile Include="Serialization\JavaScriptString.cs" />
+    <Compile Include="Serialization\JavaScriptTypeResolver.cs" />
+    <Compile Include="Serialization\ObjectConverter.cs" />
+    <Compile Include="Serialization\ScriptIgnoreAttribute.cs" />
+    <Compile Include="Serialization\SimpleTypeResolver.cs" />
+    <Compile Include="Serialization\WeakTypeResolver.cs" />
     <Compile Include="Subset.cs" />
-    <Compile Include="Provider\DefaultDbDataProviderFactory.cs" />
+    <Compile Include="Provider\CommonDbDataProviderFactory.cs" />
     <Compile Include="Extensions\DataRecordExtensions.cs" />
     <Compile Include="Extensions\DbCommandExtensions.cs" />
     <Compile Include="Extensions\DbConnectionExtensions.cs" />
     <Compile Include="Engine\ObjectEnumerator.cs" />
     <Compile Include="Engine\ObjectReader.cs" />
     <Compile Include="Interfaces\IDbDataProviderFactory.cs" />
-    <Compile Include="Resources\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Engine\DbDataProvider.cs" />
     <Compile Include="Provider\OleDbDataProvider.cs" />
     <Compile Include="Provider\SqlDbDataProvider.cs" />
     <Compile Include="Error.cs" />
@@ -180,8 +193,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

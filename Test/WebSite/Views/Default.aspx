@@ -19,7 +19,6 @@
 		<input type="button" value="Отменить" />
 		<input type="button" value="Вернуться" disabled="disabled" />
 	</div>
-    <%= Html.Templates.Display("this") %>
     <% Html.Component<SmallComponent>(a => a.WriteMessage("Мегакомпонент")); %>
     <% Html.Component<MainController>(a => a.SampleComponent(new Section("Maza"))); %>
 </asp:Content>

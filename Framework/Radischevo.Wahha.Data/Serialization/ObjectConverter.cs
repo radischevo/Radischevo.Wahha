@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 
-namespace Radischevo.Wahha.Web.Scripting.Serialization
+namespace Radischevo.Wahha.Data.Serialization
 {
     internal static class ObjectConverter
     {

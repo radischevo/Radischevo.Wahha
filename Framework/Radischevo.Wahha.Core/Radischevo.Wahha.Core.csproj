@@ -83,8 +83,8 @@
     <Compile Include="Cryptography\Crc32.cs" />
     <Compile Include="Cryptography\Crc64.cs" />
     <Compile Include="Cryptography\Elf32.cs" />
-    <Compile Include="Interfaces\IContextOperation`1.cs" />
-    <Compile Include="Interfaces\IContextOperation.cs" />
+    <Compile Include="Interfaces\IContextualOperation`1.cs" />
+    <Compile Include="Interfaces\IContextualOperation.cs" />
     <Compile Include="Interfaces\IObjectFactory.cs" />
     <Compile Include="Interfaces\IOperation.cs" />
     <Compile Include="Interfaces\IOperation`1.cs" />

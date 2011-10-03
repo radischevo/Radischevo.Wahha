@@ -99,15 +99,19 @@ namespace ConsoleTester
 			: base()
 		{
 			_city = city;
-			Command = new DbCommandDescriptor(SqlQueries.ScalarInsertQuery, new {
-				title = city.Title,
-				regionId = city.RegionId
+		}
+
+		protected override DbCommandDescriptor CreateCommand()
+		{
+			return new DbCommandDescriptor(SqlQueries.ScalarInsertQuery, new {
+				title = _city.Title,
+				regionId = _city.RegionId
 			});
 		}
 
-		protected override City ExecuteInternal(IDbDataProvider provider)
+		protected override City ExecuteCommand(IDbDataProvider provider, DbCommandDescriptor command)
 		{
-			_city.Id = provider.Execute(Command).AsScalar<long>();
+			_city.Id = provider.Execute(command).AsScalar<long>();
 			return _city;
 		}
 	}
@@ -120,16 +124,20 @@ namespace ConsoleTester
 			: base()
 		{
 			_city = city;
-			Command = new DbCommandDescriptor(SqlQueries.UpdateQuery, new {
-				id = city.Id,
-				title = city.Title,
-				regionId = city.RegionId
+		}
+
+		protected override DbCommandDescriptor CreateCommand()
+		{
+			return new DbCommandDescriptor(SqlQueries.UpdateQuery, new {
+				id = _city.Id,
+				title = _city.Title,
+				regionId = _city.RegionId
 			});
 		}
 
-		protected override City ExecuteInternal(IDbDataProvider provider)
+		protected override City ExecuteCommand(IDbDataProvider provider, DbCommandDescriptor command)
 		{
-			provider.Execute(Command).AsNonQuery();
+			provider.Execute(command).AsNonQuery();
 			return _city;
 		}
 	}
@@ -142,14 +150,18 @@ namespace ConsoleTester
 			: base()
 		{
 			_city = city;
-			Command = new DbCommandDescriptor(SqlQueries.DeleteQuery, new {
-				id = city.Id
+		}
+
+		protected override DbCommandDescriptor CreateCommand()
+		{
+			return new DbCommandDescriptor(SqlQueries.DeleteQuery, new {
+				id = _city.Id
 			});
 		}
 
-		protected override City ExecuteInternal(IDbDataProvider provider)
+		protected override City ExecuteCommand(IDbDataProvider provider, DbCommandDescriptor command)
 		{
-			provider.Execute(Command).AsNonQuery();
+			provider.Execute(command).AsNonQuery();
 			_city.Id = 0;
 			return _city;
 		}
@@ -157,11 +169,18 @@ namespace ConsoleTester
 
 	public class SingleCityCommand : DbSingleOperation<City>
 	{
+		private long _id;
+
 		public SingleCityCommand(long id)
 			: base(new CityMaterializer())
 		{
-			Command = new DbCommandDescriptor(SqlQueries.SingleQuery, new {
-				id = id
+			_id = id;
+		}
+
+		protected override DbCommandDescriptor CreateCommand()
+		{
+			return new DbCommandDescriptor(SqlQueries.SingleQuery, new {
+				id = _id
 			});
 		}
 	}
@@ -171,17 +190,31 @@ namespace ConsoleTester
 		public SelectCityCommand()
 			: base(new CityMaterializer())
 		{
-			Command = new DbCommandDescriptor(SqlQueries.SelectQuery);
+		}
+
+		protected override DbCommandDescriptor CreateCommand()
+		{
+			return new DbCommandDescriptor(SqlQueries.SelectQuery);
 		}
 	}
 
 	public class SelectCitySubsetCommand : DbSubsetOperation<City>
 	{
+		private int _skip;
+		private int _take;
+
 		public SelectCitySubsetCommand(int skip, int take)
 			: base(new CityMaterializer())
 		{
-			Command = new DbCommandDescriptor(SqlQueries.SelectQueryPaged, new {
-				skip = skip, take = take
+			_skip = skip;
+			_take = take;
+		}
+
+		protected override DbCommandDescriptor CreateCommand()
+		{
+			return new DbCommandDescriptor(SqlQueries.SelectQueryPaged, new {
+				skip = _skip,
+				take = _take
 			});
 		}
 	}

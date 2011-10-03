@@ -11,16 +11,6 @@ namespace Radischevo.Wahha.Data
     {
         #region Instance Properties
         /// <summary>
-        /// Gets or sets the value indicating 
-        /// whether the transaction will be used
-        /// </summary>
-        bool UseTransaction
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets the current connection state
         /// </summary>
         ConnectionState State
@@ -30,14 +20,6 @@ namespace Radischevo.Wahha.Data
         #endregion
 
         #region Instance Methods
-        /// <summary>
-        /// Initializes an instance of 
-        /// the <see cref="IDataProvider" />.
-        /// </summary>
-        /// <param name="connectionString">The database connection string.</param>
-        /// <param name="useTransaction">True to use a transaction.</param>
-        void Initialize(string connectionString, bool useTransaction);
-
         /// <summary>
         /// Starts the database transaction with the specified isolation level.
         /// </summary>
@@ -57,6 +39,12 @@ namespace Radischevo.Wahha.Data
         /// Closes the underlying database connection.
         /// </summary>
         void Close();
+
+		/// <summary>
+		/// Returns a value indicating whether 
+		/// the current database connection is available.
+		/// </summary>
+		bool ValidateConnection();
 
 		/// <summary>
 		/// Executes the <paramref name="command"/> against the current data source 

@@ -4,19 +4,6 @@
         <name>Radischevo.Wahha.Web.Mvc</name>
     </assembly>
     <members>
-        <member name="T:Radischevo.Wahha.Web.Mvc.Validation.RemoteValidationAttribute">
-            <summary>
-            Specifies a custom rule validation constraint 
-            for the value of a data field.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Validation.RemoteValidationAttribute.Url">
-            <summary>
-            Gets or sets the URL of the handler, 
-            which will be used to validate the value 
-            of a data field.
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Web.Mvc.ITempDataProvider">
             <summary>
             Defines the contract for temp data providers 
@@ -265,7 +252,7 @@
             </summary>
             <param name="data">The object to serialize</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Web.Scripting.Serialization.JavaScriptConverter})">
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Data.Serialization.JavaScriptConverter})">
             <summary>
             Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
             specified object to JSON and writes the JSON to the response.
@@ -281,7 +268,7 @@
             <param name="data">The object to serialize</param>
             <param name="contentType">The content type</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Web.Scripting.Serialization.JavaScriptConverter})">
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Data.Serialization.JavaScriptConverter})">
             <summary>
             Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
             specified object to JSON and writes the JSON to the response.
@@ -299,7 +286,7 @@
             <param name="contentType">The content type</param>
             <param name="contentEncoding">The content encoding</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Text.Encoding,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Web.Scripting.Serialization.JavaScriptConverter})">
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Text.Encoding,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Data.Serialization.JavaScriptConverter})">
             <summary>
             Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
             specified object to JSON and writes the JSON to the response.
@@ -444,18 +431,6 @@
             <summary>
             Attribute used to provide details on 
             how model binding to a parameter should occur.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Exclude">
-            <summary>
-            A comma delimited black list of property 
-            names for which binding is not allowed.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Include">
-            <summary>
-            A comma delimited white list of property 
-            names for which binding is allowed.
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.BindAttribute.Name">
@@ -1380,7 +1355,7 @@
             </summary>
             <param name="data">The object to serialize.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.AjaxHelper.Serialize(System.Object,Radischevo.Wahha.Web.Scripting.Serialization.SerializationFormat)">
+        <member name="M:Radischevo.Wahha.Web.Mvc.Html.AjaxHelper.Serialize(System.Object,Radischevo.Wahha.Data.Serialization.SerializationFormat)">
             <summary>
             Converts an object to a JSON string.
             </summary>
@@ -1395,7 +1370,7 @@
             <param name="recursionLimit">Sets the limit for constraining the 
             number of object levels to process.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.AjaxHelper.Serialize(System.Object,Radischevo.Wahha.Web.Scripting.Serialization.SerializationFormat,System.Int32)">
+        <member name="M:Radischevo.Wahha.Web.Mvc.Html.AjaxHelper.Serialize(System.Object,Radischevo.Wahha.Data.Serialization.SerializationFormat,System.Int32)">
             <summary>
             Converts an object to a JSON string.
             </summary>
@@ -1510,102 +1485,6 @@
             Gets the string representation 
             of the type of controller
             </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Summary(System.Action{Radischevo.Wahha.Web.Mvc.ValidationError})">
-            <summary>
-            Returns a list of validation messages from the 
-            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see>, 
-            using the specified <paramref name="action"/> to render each of them.
-            </summary>
-            <param name="action">The action used to render an error message.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Messages(System.String,System.Action{System.Collections.Generic.IEnumerable{Radischevo.Wahha.Web.Mvc.ValidationError}})">
-            <summary>
-            Displays a validation message if the specified field contains an error in 
-            the <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see>.
-            </summary>
-            <param name="key">The name of the field.</param>
-            <param name="action">The action used to render an error message.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Message(System.String,System.Action{Radischevo.Wahha.Web.Mvc.ValidationError})">
-            <summary>
-            Displays a validation message if the specified field contains an error in 
-            the <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see>.
-            </summary>
-            <param name="key">The name of the field.</param>
-            <param name="action">The action used to render an error message.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Valid">
-            <summary>
-            Gets the value indicating whether the 
-            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> 
-            contains no errors.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Valid(System.String)">
-            <summary>
-            Gets the value indicating whether the
-            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">Errors collection</see> 
-            contains an error with the specified field name.
-            </summary>
-            <param name="key">The name of the field.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Rules">
-            <summary>
-            Gets the collection of client validation rules, 
-            which are applied to the current model.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Rules(System.String)">
-            <summary>
-            Gets the collection of client validation rules, 
-            which are applied to the current model.
-            </summary>
-            <param name="modelName">Specifies the name of the model, 
-            which will prefix the validation rule member name.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Rules(System.String,System.String)">
-            <summary>
-            Gets the collection of client validation rules, 
-            which are applied to the property of the 
-            model, accessed through the specified <paramref name="expression"/>.
-            </summary>
-            <param name="modelName">Specifies the name of the model, 
-            which will prefix the validation rule member name.</param>
-            <param name="expression">A string expression to access the 
-            model property.</param>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Context">
-            <summary>
-            Gets the current 
-            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewContext"/>
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Errors">
-            <summary>
-            Gets the <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> object 
-            containing the binding validation errors.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper`1.Rules``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
-            <summary>
-            Gets the collection of client validation rules, 
-            which are applied to the property of the 
-            model, accessed through the specified <paramref name="expression"/>.
-            </summary>
-            <param name="expression">A lambda expression accessor for the 
-            model property.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper`1.Rules``1(System.String,System.Linq.Expressions.Expression{System.Func{`0,``0}})">
-            <summary>
-            Gets the collection of client validation rules, 
-            which are applied to the property of the 
-            model, accessed through the specified <paramref name="expression"/>.
-            </summary>
-            <param name="modelName">Specifies the name of the model, 
-            which will prefix the validation rule member name.</param>
-            <param name="expression">A lambda expression accessor for the 
-            model property.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.Html.ScriptManager.#ctor(Radischevo.Wahha.Web.Mvc.ViewContext)">
             <summary>

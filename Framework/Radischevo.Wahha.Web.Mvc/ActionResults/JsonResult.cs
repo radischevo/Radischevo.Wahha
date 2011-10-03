@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Scripting.Serialization;
+using Radischevo.Wahha.Data.Serialization;
 using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc

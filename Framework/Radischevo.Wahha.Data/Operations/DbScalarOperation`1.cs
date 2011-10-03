@@ -9,14 +9,14 @@ namespace Radischevo.Wahha.Data
 	/// <typeparamref name="TResult"/> type. If no rows returned or field type 
 	/// does not support the required conversion, a default value is returned.
 	/// </summary>
-	public class DbScalarOperation<TResult> : CachedDbCommandOperation<TResult>
+	public abstract class DbScalarOperation<TResult> : CachedDbCommandOperation<TResult>
 	{
 		#region Constructors
 		/// <summary>
 		/// Initializes a new instance of the 
 		/// <see cref="Radischevo.Wahha.Data.DbScalarOperation{TResult}"/> class.
 		/// </summary>
-		public DbScalarOperation()
+		protected DbScalarOperation()
 			: base()
 		{
 		}
@@ -29,9 +29,11 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		/// <param name="provider">The database communication provider 
 		/// using to retrieve or store the data.</param>
-		protected override TResult ExecuteInternal(IDbDataProvider provider)
+		/// <param name="command">The command instance to execute.</param>
+		protected override TResult ExecuteCommand(IDbDataProvider provider, 
+			DbCommandDescriptor command)
 		{
-			return provider.Execute(Command).AsScalar<TResult>();
+			return provider.Execute(command).AsScalar<TResult>();
 		}
 		#endregion
 	}

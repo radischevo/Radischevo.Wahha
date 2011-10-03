@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Scripting.Serialization;
+using Radischevo.Wahha.Data.Serialization;
 
 namespace Radischevo.Wahha.Web.Routing.Scripting
 {
@@ -48,8 +48,7 @@ namespace Radischevo.Wahha.Web.Routing.Scripting
 			}
 		}
 
-		protected virtual void WriteDefinition(
-			RouteDefinition route, TextWriter output)
+		protected virtual void WriteDefinition(RouteDefinition route, TextWriter output)
 		{
 			output.Write(@"RouteTable.mapRoute(""");
 			output.Write(route.Name);

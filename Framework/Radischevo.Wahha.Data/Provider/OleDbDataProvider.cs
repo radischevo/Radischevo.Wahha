@@ -8,7 +8,7 @@ namespace Radischevo.Wahha.Data.Provider
 {
     /// <summary>
     /// Provides methods to access 
-    /// Microsoft Jet databases
+    /// Microsoft Jet databases.
     /// </summary>
     public class OleDbDataProvider : CommonDbDataProvider
     {
@@ -17,8 +17,9 @@ namespace Radischevo.Wahha.Data.Provider
         /// Creates a new instance of 
         /// the <see cref="T:Radischevo.Wahha.Data.Provider.OleDbDataProvider"/> class.
         /// </summary>
-        public OleDbDataProvider() 
-			: base()
+		/// <param name="connectionString">The database connection string.</param>
+        public OleDbDataProvider(string connectionString) 
+			: base(connectionString)
         {
         }
         #endregion

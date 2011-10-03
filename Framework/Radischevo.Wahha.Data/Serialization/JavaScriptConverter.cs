@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Radischevo.Wahha.Web.Scripting.Serialization
+namespace Radischevo.Wahha.Data.Serialization
 {
     public abstract class JavaScriptConverter
     {

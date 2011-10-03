@@ -114,15 +114,6 @@
     <Compile Include="HttpParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HttpMethod.cs" />
-    <Compile Include="Scripting\Serialization\JavaScriptConverter.cs" />
-    <Compile Include="Scripting\Serialization\JavaScriptObjectDeserializer.cs" />
-    <Compile Include="Scripting\Serialization\JavaScriptSerializer.cs" />
-    <Compile Include="Scripting\Serialization\JavaScriptString.cs" />
-    <Compile Include="Scripting\Serialization\JavaScriptTypeResolver.cs" />
-    <Compile Include="Scripting\Serialization\ObjectConverter.cs" />
-    <Compile Include="Scripting\Serialization\ScriptIgnoreAttribute.cs" />
-    <Compile Include="Scripting\Serialization\SimpleTypeResolver.cs" />
-    <Compile Include="Scripting\Serialization\WeakTypeResolver.cs" />
     <Compile Include="Scripting\Templates\CodeBlockExpression.cs" />
     <Compile Include="Scripting\Templates\CodeBlockType.cs" />
     <Compile Include="Scripting\Templates\CompiledTemplate.cs" />

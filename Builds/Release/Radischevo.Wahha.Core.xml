@@ -683,6 +683,17 @@
             standardized error reporting and automatic exception creation. 
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Core.Precondition.Methods">
+            <summary>
+            Gets an extension point for precondition check methods.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.Precondition.Registry">
+            <summary>
+            Descibes a type acting like an extension point 
+            for condition checking.
+            </summary>
+        </member>
         <member name="M:Radischevo.Wahha.Core.DelegateExtensions.InvokeAndForget(System.Delegate,System.Object[])">
             <summary>
             Dynamically invokes (using fire-and-forget strategy) 

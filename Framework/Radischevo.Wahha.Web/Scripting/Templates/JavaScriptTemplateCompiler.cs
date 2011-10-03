@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Scripting.Serialization;
+using Radischevo.Wahha.Data.Serialization;
 
 namespace Radischevo.Wahha.Web.Scripting.Templates
 {
@@ -162,6 +162,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 
 		#region Instance Fields
 		private StringBuilder _builder;
+		private JavaScriptSerializer _serializer;
 		private List<TemplateParameter> _parameters;
 		private string _templateName;
 		private string _codeBufferVariableName;
@@ -185,6 +186,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 			Debug = debug;
 			_inline = inline;
 			_parameters = new List<TemplateParameter>();
+			_serializer = new JavaScriptSerializer();
 			_codeBufferVariableName = "$c";
 		}
 		#endregion
@@ -379,8 +381,7 @@ namespace Radischevo.Wahha.Web.Scripting.Templates
 		{
 			base.VisitLiteral(literal);
 			AppendCodeBlock(String.Format(@"{0}.push({1});", 
-				CodeBufferVariableName, 
-				JavaScriptString.QuoteString(literal.Literal, true)));
+				CodeBufferVariableName, _serializer.Serialize(literal.Literal)));
 		}
 
 		private void VisitCodeSnippet(CodeBlockExpression codeBlock)

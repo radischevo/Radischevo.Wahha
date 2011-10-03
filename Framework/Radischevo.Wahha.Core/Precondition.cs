@@ -11,19 +11,60 @@ namespace Radischevo.Wahha.Core
     /// standardized error reporting and automatic exception creation. 
     /// </summary>
     public static class Precondition
-    {
-        #region Internal Methods
-        private static void Fail(Exception error)
+	{
+		#region Nested Types
+		/// <summary>
+		/// Descibes a type acting like an extension point 
+		/// for condition checking.
+		/// </summary>
+		public sealed class Registry : IHideObjectMembers
+		{
+			#region Instance Methods
+			public void Throw(Exception error)
+			{
+				if (error != null)
+					throw error;
+			}
+
+			public void Throw<TException>(Func<TException> error)
+				where TException : Exception
+			{
+				if (error != null)
+					Throw(error());
+			}
+			#endregion
+		}
+		#endregion
+
+		#region Static Fields
+		private static readonly Registry _methods = new Registry();
+		#endregion
+
+		#region Static Properties
+		/// <summary>
+		/// Gets an extension point for precondition check methods.
+		/// </summary>
+		public static Registry Methods
+		{
+			get
+			{
+				return _methods;
+			}
+		}
+		#endregion
+
+		#region Internal Methods
+		private static void Throw(Exception error)
         {
             if (error != null)
                 throw error;
         }
 
-		private static void Fail<TException>(Func<TException> error)
+		private static void Throw<TException>(Func<TException> error)
 			where TException : Exception
 		{
 			if (error != null)
-				Fail(error());
+				Throw(error());
 		}
         #endregion
 
@@ -31,47 +72,47 @@ namespace Radischevo.Wahha.Core
         public static void Require(bool condition, Exception error)
         {
             if (!condition)
-                Fail(error);
+                Throw(error);
         }
 
         public static void Require(object obj, Exception error)
         {
             if (obj == null)
-                Fail(error);
+                Throw(error);
         }
 
 		public static void Defined(string str, Exception error)
 		{
 			if (String.IsNullOrEmpty(str))
-				Fail(error);
+				Throw(error);
 		}
 
         public static void Exist<T>(IEnumerable<T> collection, T value, 
             Exception error)
         {
             if (!collection.Contains(value))
-                Fail(error);
+                Throw(error);
         }
 
         public static void Exist<T>(IEnumerable<T> collection, T value, 
             IEqualityComparer<T> comparer, Exception error)
         {
             if (!collection.Contains(value, comparer))
-                Fail(error);
+                Throw(error);
         }
 
         public static void Any<T>(IEnumerable<T> collection, 
             Func<T, bool> predicate, Exception error)
         {
             if (!collection.Any(predicate))
-                Fail(error);
+                Throw(error);
         }
 
         public static void All<T>(IEnumerable<T> collection,
             Func<T, bool> predicate, Exception error)
         {
             if (!collection.All(predicate))
-                Fail(error);
+                Throw(error);
         }
 
         public static void Require<TException>(
@@ -79,7 +120,7 @@ namespace Radischevo.Wahha.Core
             where TException : Exception
         {
             if (!condition)
-                Fail(error);
+                Throw(error);
         }
 
         public static void Require<TException>(
@@ -87,7 +128,7 @@ namespace Radischevo.Wahha.Core
             where TException : Exception
         {
             if (obj == null)
-                Fail(error);
+                Throw(error);
         }
 
 		public static void Defined<TException>(
@@ -95,7 +136,7 @@ namespace Radischevo.Wahha.Core
 			where TException : Exception
 		{
 			if (String.IsNullOrEmpty(str))
-				Fail(error);
+				Throw(error);
 		}
 
         public static void Exist<T, TException>(
@@ -104,7 +145,7 @@ namespace Radischevo.Wahha.Core
             where TException : Exception
         {
             if (!collection.Contains(value))
-                Fail(error);
+                Throw(error);
         }
 
         public static void Exist<T, TException>(IEnumerable<T> collection, 
@@ -112,7 +153,7 @@ namespace Radischevo.Wahha.Core
             where TException : Exception
         {
             if (!collection.Contains(value, comparer))
-                Fail(error);
+                Throw(error);
         }
 
         public static void Any<T, TException>(IEnumerable<T> collection,
@@ -120,7 +161,7 @@ namespace Radischevo.Wahha.Core
 			where TException : Exception
         {
             if (!collection.Any(predicate))
-                Fail(error);
+                Throw(error);
         }
 
         public static void All<T, TException>(IEnumerable<T> collection,
@@ -128,7 +169,7 @@ namespace Radischevo.Wahha.Core
             where TException : Exception
         {
             if (!collection.All(predicate))
-                Fail(error);
+                Throw(error);
         }
         #endregion
     }

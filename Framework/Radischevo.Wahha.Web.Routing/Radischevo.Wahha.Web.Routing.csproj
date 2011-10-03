@@ -138,6 +138,10 @@
       <Project>{C4A83864-BF32-49D8-BC23-C69F025628EC}</Project>
       <Name>Radischevo.Wahha.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Radischevo.Wahha.Data\Radischevo.Wahha.Data.csproj">
+      <Project>{C7346189-E495-4A61-9398-F90B69AB619A}</Project>
+      <Name>Radischevo.Wahha.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Radischevo.Wahha.Web\Radischevo.Wahha.Web.csproj">
       <Project>{2DEB7611-864B-48C4-9CE7-5100F314371D}</Project>
       <Name>Radischevo.Wahha.Web</Name>

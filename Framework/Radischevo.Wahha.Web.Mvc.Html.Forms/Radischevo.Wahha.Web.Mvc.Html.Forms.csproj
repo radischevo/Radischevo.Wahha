@@ -64,9 +64,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Build\ViewPageBuilder.cs" />
-    <Compile Include="UI\ViewTemplateUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Build\ViewType.cs" />
     <Compile Include="Build\ViewTypeControlBuilder.cs" />
     <Compile Include="Build\ViewTypeParserFilter.cs" />

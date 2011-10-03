@@ -11,7 +11,6 @@ using System.Web.UI.WebControls.WebParts;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Data;
 using Radischevo.Wahha.Web.Mvc;
-using Radischevo.Wahha.Web.Mvc.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Radischevo.Wahha.Web.Scripting.Templates;
@@ -89,10 +88,7 @@ public class OtherController : Controller
 
     public ActionResult CheckItemTitle([Bind(Name = "item-title")]string title)
     {
-        if (String.Equals("element", title, StringComparison.OrdinalIgnoreCase))
-            return RemoteValidationResult.Success();
-
-        return RemoteValidationResult.Failure();
+		return Content("true");
     }
 }
 

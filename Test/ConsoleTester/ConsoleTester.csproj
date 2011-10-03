@@ -56,7 +56,6 @@
     <Compile Include="City.cs" />
     <Compile Include="HtmlParserExtensions.cs" />
     <Compile Include="Inheritance.cs" />
-    <Compile Include="UnityDbDataProviderFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration.cs" />

@@ -3,7 +3,7 @@ using System.IO;
 
 using Radischevo.Wahha.Core;
 
-namespace Radischevo.Wahha.Web.Scripting.Serialization
+namespace Radischevo.Wahha.Data.Serialization
 {
 	public class WeakTypeResolver : JavaScriptTypeResolver
 	{

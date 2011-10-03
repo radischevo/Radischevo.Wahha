@@ -5,21 +5,12 @@ namespace Radischevo.Wahha.Data.Configurations
 {
     internal sealed class SettingsSection : ConfigurationSection
     {
-        [ConfigurationProperty("providers", IsRequired = true, IsDefaultCollection = true)]
-        public DbDataProviderFactoryConfigurationElement Providers
+        [ConfigurationProperty("database", IsRequired = true)]
+        public DatabaseConfigurationElement Database
         {
             get
             {
-                return (DbDataProviderFactoryConfigurationElement)base["providers"];
-            }
-        }
-
-        [ConfigurationProperty("connectionStrings")]
-        public ConnectionStringSettingsCollection ConnectionStrings
-        {
-            get
-            {
-                return (ConnectionStringSettingsCollection)base["connectionStrings"];
+                return (DatabaseConfigurationElement)base["database"];
             }
         }
 

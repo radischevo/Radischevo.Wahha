@@ -12,17 +12,12 @@
     <div><h4><%= Url.HostName(1) %>, <%= HttpParameters.Form.GetValue<bool>("permanent") %></h4>
         <h2><%= DataBinder.Eval(ViewData["Section"], "Name") %></h2>
         <a href="<%= Url.Route<MainController>(p => p.VeryComplexActionMethodName("sergey", ((Section)ViewData["Section"]).Name, 18)) %>">Новость №18</a>
-        <% Validation.Message("form", (error) => { %><h1><%= Html.Encode(error.Message) %></h1><% }); %>
     </div>
     <div>
         <h2><%= Url.MakeAbsolute("~/alena", 1) %></h2>
         <% using (Html.Controls.Form(FormMethod.Post, Url.Route("login"), new { EncType = "multipart/form-data" })) { %>
         <input type="text" name="token" value="<%= Html.Controls.Token() %>" />
         <label>Имя <%= Html.Controls.TextBox("login", "логин", new { Size = 20 })%>
-            <% Validation.Message("login", (error) =>
-               { %>
-                <img src="/TestSite/error.png" style="width:16px; height: 16px" title="<%= Html.Encode(error.Message) %>" />
-            <% }); %>
         </label>
         <label>Пароль <%= Html.Controls.Password("password", "пароль", new { Size = 30 })%></label>
         

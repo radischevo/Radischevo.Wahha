@@ -13,10 +13,6 @@ namespace Radischevo.Wahha.Data
 	/// <typeparam name="TResult">The type of operation result.</typeparam>
 	public abstract class DbCommandOperation<TResult> : DbOperation<TResult>
 	{
-		#region Instance Fields
-		private DbCommandDescriptor _command;
-		#endregion
-
 		#region Constructors
 		/// <summary>
 		/// Initializes a new instance of the 
@@ -27,41 +23,35 @@ namespace Radischevo.Wahha.Data
 		}
 		#endregion
 
-		#region Instance Properties
-		/// <summary>
-		/// Gets or sets the <see cref="Radischevo.Wahha.Data.DbCommandDescriptor">command</see> 
-		/// which will be executed by this operation.
-		/// </summary>
-		public DbCommandDescriptor Command
-		{
-			get
-			{
-				return _command;
-			}
-			set
-			{
-				Precondition.Require(value, () =>
-					Error.ArgumentNull("value"));
-
-				_command = value;
-			}
-		}
-		#endregion
-
 		#region Instance Methods
+		/// <summary>
+		/// Creates the <see cref="Radischevo.Wahha.Data.DbCommandDescriptor">command</see> 
+		/// instance which will be executed by this operation.
+		/// </summary>
+		protected abstract DbCommandDescriptor CreateCommand();
+
 		/// <summary>
 		/// Executes the operation against the provided data source 
 		/// and returns the result.
 		/// </summary>
 		/// <param name="provider">The database communication provider 
 		/// using to retrieve or store the data.</param>
-		public override TResult Execute(IDbDataProvider provider)
+		protected override TResult ExecuteInternal(IDbDataProvider provider)
 		{
-			Precondition.Require(Command, () => 
-				Error.OperationCommandIsNotInitialized());
+			DbCommandDescriptor command = CreateCommand();
+			Precondition.Require(command, () => Error.CommandIsNotInitialized());
 
-			return base.Execute(provider);
+			return ExecuteCommand(provider, command);
 		}
+
+		/// <summary>
+		/// When overridden in a derived class, executes the provided <paramref name="command"/> 
+		/// against the provided data source and returns the result.
+		/// </summary>
+		/// <param name="provider">The database communication provider 
+		/// using to retrieve or store the data.</param>
+		/// <param name="command">The command instance to execute.</param>
+		protected abstract TResult ExecuteCommand(IDbDataProvider provider, DbCommandDescriptor command);
 		#endregion
 	}
 }

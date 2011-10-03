@@ -26,7 +26,7 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		/// <param name="provider">The database communication provider 
 		/// using to retrieve or store the data.</param>
-		public virtual TResult Execute(IDbDataProvider provider)
+		public TResult Execute(IDbDataProvider provider)
 		{
 			Precondition.Require(provider, () =>
 				Error.ArgumentNull("provider"));
@@ -49,7 +49,7 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		/// <param name="provider">The database communication provider 
 		/// using to store the data.</param>
-		void IContextOperation<IDbDataProvider>.Execute(IDbDataProvider context)
+		void IContextualOperation<IDbDataProvider>.Execute(IDbDataProvider context)
 		{
 			Execute(context);
 		}

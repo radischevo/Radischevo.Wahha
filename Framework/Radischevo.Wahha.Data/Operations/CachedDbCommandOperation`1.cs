@@ -89,11 +89,14 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		/// <param name="provider">The database communication provider 
 		/// using to retrieve or store the data.</param>
-		public override TResult Execute(IDbDataProvider provider)
+		protected override TResult ExecuteInternal(IDbDataProvider provider)
 		{
-			string cacheKey = CreateCacheKey(Command);
+			DbCommandDescriptor command = CreateCommand();
+			Precondition.Require(command, () => Error.CommandIsNotInitialized());
+
+			string cacheKey = CreateCacheKey(command);
 			return Cache.Get<TResult>(cacheKey,
-				() => base.Execute(provider),
+				() => ExecuteCommand(provider, command),
 				DateTime.Now.Add(_expirationTimeout),
 				Tags);
 		}

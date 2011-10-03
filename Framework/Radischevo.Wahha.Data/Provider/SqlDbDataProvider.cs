@@ -17,8 +17,9 @@ namespace Radischevo.Wahha.Data.Provider
         /// Creates a new instance of 
         /// the <see cref="T:Radischevo.Wahha.Data.Provider.SqlDbDataProvider"/> class.
         /// </summary>
-        public SqlDbDataProvider()
-			: base()
+		/// <param name="connectionString">The database connection string.</param>
+        public SqlDbDataProvider(string connectionString)
+			: base(connectionString)
         {
         }
         #endregion

@@ -10,15 +10,10 @@
     <form action="/wahha-test/array" method="post" enctype="multipart/form-data">
         <p>
             <input type="text" name="indices" value="0" /> 1<br />
-            <% Validation.Message("indices-0", error => { %><%= error.Message %><br /><% }); %>
             <input type="text" name="indices" value="1" /> 2<br />
-            <% Validation.Message("indices-1", error => { %><%= error.Message %><br /><% }); %>
             <input type="text" name="indices" value="2" /> 3<br />
-            <% Validation.Message("indices-2", error => { %><%= error.Message %><br /><% }); %>
             <input type="text" name="indices" value="3" /> 4<br />
-            <% Validation.Message("indices-3", error => { %><%= error.Message %><br /><% }); %>
             <input type="text" name="indices" value="4" /> 5<br />
-            <% Validation.Message("indices-4", error => { %><%= error.Message %><% }); %>
         </p>
         <p>
             <input type="checkbox" name="names-1" value="Катя" /> Катя<br />

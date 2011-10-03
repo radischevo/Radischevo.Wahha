@@ -10,15 +10,16 @@ namespace Radischevo.Wahha.Data.Provider
 	/// Provides methods to access 
 	/// ODBC compliant databases.
 	/// </summary>
-	public class OdbcDataProvider : CommonDbDataProvider
+	public class OdbcDbDataProvider : CommonDbDataProvider
 	{
 		#region Constructors
 		/// <summary>
 		/// Creates a new instance of 
 		/// the <see cref="T:Radischevo.Wahha.Data.Provider.OdbcDataProvider"/> class.
 		/// </summary>
-		public OdbcDataProvider()
-			: base()
+		/// <param name="connectionString">The database connection string.</param>
+		public OdbcDbDataProvider(string connectionString)
+			: base(connectionString)
 		{
 		}
 		#endregion

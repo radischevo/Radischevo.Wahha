@@ -27,9 +27,8 @@ using Radischevo.Wahha.Data;
 using Radischevo.Wahha.Core.Expressions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Radischevo.Wahha.Web.Mvc.Validation;
 using System.Text;
-using Radischevo.Wahha.Web.Scripting.Serialization;
+using Radischevo.Wahha.Data.Serialization;
 using Radischevo.Wahha.Web.Routing.Scripting;
 
 public enum Status
@@ -66,11 +65,7 @@ public class TemplatedItem : IDataErrorInfo
 
     [HiddenInput(DisplayValue = false)]
     public int ID { get; set; }
-    [DisplayName("Элемент активен")]
-	[FieldOrder(2)]
     public bool IsActive { get; set; }
-    [DisplayName("Заголовок")]
-	[FieldOrder(1)]
     [Required(ErrorMessage = "Надо заполнить")]
     public string Title { get; set; }
     [DisplayName("Статус просмотра")]
@@ -258,12 +253,6 @@ public class MainController : Controller
     [AcceptHttpVerbs(HttpMethod.Get)]
     public ActionResult TemplatedItemTest()
     {
-        Radischevo.Wahha.Web.Mvc.Configurations.Configuration
-            .Instance.Models.MetadataProvider = new DataAnnotationsMetadataProvider();
-
-		Radischevo.Wahha.Web.Mvc.Configurations.Configuration
-            .Instance.Models.ValidatorProvider = new DataAnnotationsValidatorProvider();
-
 		var ti = new TemplatedItem() {
 			ID = 500,
 			Count = 10,
@@ -300,7 +289,7 @@ public class MainController : Controller
     public ActionResult TemplatedItemTest([Bind(Name="item-id")]int id, [Deserialize]TemplatedItem state)
     {
 		TemplatedItem item = new TemplatedItem();
-		item = BindModel(item, "item");
+
 		Errors.Add("item-title", "Заголовок слишком короткий");
 		Errors.Add("item-title", "Текст чересчур тупой");
 
@@ -405,7 +394,6 @@ public class MainController : Controller
 		throw new RequestValidationException();
 
         UserCredentials creds = new UserCredentials() { Login = "sergey", Password = "***", Other = "SomeString" };
-        BindModel<UserCredentials>(creds, new string[] { "login" });
 
         ViewData["Section"] = new Section("ya-krivetko");
         ViewData["Items"] = new object[] { 

@@ -36,7 +36,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
 			Precondition.Defined(name, () => Error.ArgumentNull("name"));
 
 			ModelStateSerializer serializer = new ModelStateSerializer();
-			string elementName = helper.Context.ViewData.Template.GetHtmlElementName(name);
+			string elementName = name;
 			string value = serializer.Serialize(data ?? helper.Context.ViewData.Model, mode);
 
 			HtmlElementBuilder builder = new HtmlElementBuilder("input");

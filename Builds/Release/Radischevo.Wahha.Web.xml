@@ -1218,39 +1218,14 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_ArrayTypeIsNotSupported">
-            <summary>
-              Looks up a localized string similar to Array type &apos;{0}&apos; is not supported..
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_AttributeListReferencesToAnUndefinedElement">
             <summary>
               Looks up a localized string similar to ATTLIST references undefined ELEMENT {0}..
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_CircularReferenceFoundAtType">
-            <summary>
-              Looks up a localized string similar to Circular reference found at type &apos;{0}&apos;..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_CommaWasExpectedInArrayDeclaration">
-            <summary>
-              Looks up a localized string similar to Comma symbol was expected in the array declaration..
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_ContentModelWasNotClosed">
             <summary>
               Looks up a localized string similar to Content Model was not closed..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_CouldNotConvertObjectToType">
-            <summary>
-              Looks up a localized string similar to Could not convert the object to the specified type &apos;{0}&apos;..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_CouldNotCreateListType">
-            <summary>
-              Looks up a localized string similar to Could not create the necessary list type &apos;{0}&apos;..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_CouldNotParseConditionalSection">
@@ -1266,21 +1241,6 @@
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_CouldNotParseNestedTemplate">
             <summary>
               Looks up a localized string similar to Could not parse the nested template referenced through the include directive..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_CouldNotResolveType">
-            <summary>
-              Looks up a localized string similar to Could not resolve type &apos;{0}&apos;..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_DepthLimitExceeded">
-            <summary>
-              Looks up a localized string similar to Depth limit exceeded..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_DeserializerTypeMismatch">
-            <summary>
-              Looks up a localized string similar to Deserializer type mismatch..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_DtdDoesNotMatchDocumentType">
@@ -1343,21 +1303,6 @@
               Looks up a localized string similar to Expecting system identifier literal but found &apos;{0}&apos;..
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_ExtraCommaAtArrayEndingFound">
-            <summary>
-              Looks up a localized string similar to Extra comma at array ending found..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_IllegalArrayStartingSymbol">
-            <summary>
-              Looks up a localized string similar to Invalid array starting symbol..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_IllegalJavaScriptPrimitive">
-            <summary>
-              Looks up a localized string similar to Illegal JavaScript primitive..
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InconsistentConnector">
             <summary>
               Looks up a localized string similar to Connector &apos;{0}&apos; is inconsistent with {1} group..
@@ -1366,11 +1311,6 @@
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InputStreamIsUndefined">
             <summary>
               Looks up a localized string similar to You must specify input either via Href or InputStream properties..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InvalidArrayEndingSymbol">
-            <summary>
-              Looks up a localized string similar to Invalid array ending symbol..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InvalidAttributeDefinitionPresenceValue">
@@ -1408,16 +1348,6 @@
               Looks up a localized string similar to Declared content type &apos;{0}&apos; is not supported..
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InvalidEnumType">
-            <summary>
-              Looks up a localized string similar to Invalid enum type &apos;{0}&apos;..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InvalidEscapeSequence">
-            <summary>
-              Looks up a localized string similar to Invalid escape sequence..
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InvalidExternalIdentifierLiteral">
             <summary>
               Looks up a localized string similar to Invalid external identifier &apos;{0}&apos;.  Expecing &apos;PUBLIC&apos; or &apos;SYSTEM&apos;..
@@ -1433,11 +1363,6 @@
               Looks up a localized string similar to Unsupported marked section type &apos;{0}&apos;..
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InvalidMemberName">
-            <summary>
-              Looks up a localized string similar to Invalid member name..
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InvalidNameCharacter">
             <summary>
               Looks up a localized string similar to Invalid name character &apos;{0}&apos;..
@@ -1446,21 +1371,6 @@
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InvalidNameStartCharacter">
             <summary>
               Looks up a localized string similar to Invalid name start character &apos;{0}&apos;..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_InvalidObjectDefinition">
-            <summary>
-              Looks up a localized string similar to Invalid object definition..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_MaximumJsonStringLengthExceeded">
-            <summary>
-              Looks up a localized string similar to Maximum JSON string length exceeded..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_MaximumRecursionDepthExceeded">
-            <summary>
-              Looks up a localized string similar to Maximum recursion depth exceeded..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_MissingTokenBeforeConnector">
@@ -1476,11 +1386,6 @@
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_NotOnAnEntityReference">
             <summary>
               Looks up a localized string similar to Not on an entity reference..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_OpeningBraceExpected">
-            <summary>
-              Looks up a localized string similar to Opening brace expected..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_ParameterEntityClosedOutsideTheScope">
@@ -1503,24 +1408,9 @@
               Looks up a localized string similar to The name of the rule &apos;{0}&apos; cannot differ from its key &apos;{1}&apos;..
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_StringIsNotQuoted">
-            <summary>
-              Looks up a localized string similar to String is not quoted..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_SuppliedDictionaryTypeIsNotSupported">
-            <summary>
-              Looks up a localized string similar to Supplied dictionary type is not supported..
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_TemplateDirectiveCannotBeEmpty">
             <summary>
               Looks up a localized string similar to Template directive must have non-empty name..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_TypeMustHaveParameterlessConstructor">
-            <summary>
-              Looks up a localized string similar to Type &apos;{0}&apos; must have a parameterless constructor..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_UnclosedElement">
@@ -1556,11 +1446,6 @@
         <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_UnsupportedExternalParameterEntityResolution">
             <summary>
               Looks up a localized string similar to External parameter entity resolution..
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Resources.Resources.Error_UnterminatedStringConstant">
-            <summary>
-              Looks up a localized string similar to Unterminated string constant..
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Abstractions.HttpPostedFileBase">

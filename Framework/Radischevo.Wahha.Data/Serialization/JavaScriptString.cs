@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace Radischevo.Wahha.Web.Scripting.Serialization
+namespace Radischevo.Wahha.Data.Serialization
 {
     internal class JavaScriptString
     {

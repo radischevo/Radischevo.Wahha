@@ -7,8 +7,8 @@ using System.Web;
 using System.Web.Caching;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data.Serialization;
 using Radischevo.Wahha.Web.Abstractions;
-using Radischevo.Wahha.Web.Scripting.Serialization;
 
 namespace Radischevo.Wahha.Web.Scripting.Templates
 {

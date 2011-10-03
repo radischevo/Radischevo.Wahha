@@ -7,7 +7,7 @@ using System.Text;
 
 using Radischevo.Wahha.Core;
 
-namespace Radischevo.Wahha.Web.Scripting.Serialization
+namespace Radischevo.Wahha.Data.Serialization
 {
     public enum SerializationFormat : int
     {
@@ -412,9 +412,9 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
                                 {
                                     IEnumerable enumerable = (obj as IEnumerable);
                                     if (enumerable != null)
-                                        this.SerializeEnumerable(enumerable, sb, depth, objectsInUse, serializationFormat);
+                                        SerializeEnumerable(enumerable, sb, depth, objectsInUse, serializationFormat);
                                     else
-                                        this.SerializeCustomObject(obj, sb, depth, objectsInUse, serializationFormat);
+                                        SerializeCustomObject(obj, sb, depth, objectsInUse, serializationFormat);
                                 }
                             }
                             finally
@@ -448,19 +448,23 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
             return (converter != null);
         }
 
+		public void RegisterConverter(JavaScriptConverter converter)
+		{
+			Precondition.Require(converter, () => Error.ArgumentNull("converter"));
+
+			IEnumerable<Type> supportedTypes = converter.SupportedTypes;
+			if (supportedTypes != null)
+			{
+				foreach (Type type in supportedTypes)
+					Converters[type] = converter;
+			}
+		}
+
         public void RegisterConverters(IEnumerable<JavaScriptConverter> converters)
         {
             Precondition.Require(converters, () => Error.ArgumentNull("converters"));
-            
             foreach (JavaScriptConverter converter in converters)
-            {
-                IEnumerable<Type> supportedTypes = converter.SupportedTypes;
-                if (supportedTypes != null)
-                {
-                    foreach (Type type in supportedTypes)
-                        Converters[type] = converter;
-                }
-            }
+				RegisterConverter(converter);
         }
 
         public string Serialize(object obj)
@@ -470,7 +474,7 @@ namespace Radischevo.Wahha.Web.Scripting.Serialization
 
         public void Serialize(object obj, StringBuilder output)
         {
-            this.Serialize(obj, output, SerializationFormat.Json);
+            Serialize(obj, output, SerializationFormat.Json);
         }
 
         public string Serialize(object obj, SerializationFormat format)

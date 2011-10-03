@@ -19,7 +19,7 @@ using Radischevo.Wahha.Web.Text;
 using A = Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Data;
 using System.Linq.Expressions;
-using Radischevo.Wahha.Web.Scripting.Serialization;
+using Radischevo.Wahha.Data.Serialization;
 
 namespace ConsoleTester
 {
@@ -51,11 +51,11 @@ namespace ConsoleTester
 		{
 			Program p = new Program();
 			//p.MultipleThreadTest();
-			//p.SingleThreadTest();
+			p.SingleThreadTest();
 			//p.RouteTest();
 			//p.SgmlTest();
 			//p.InheritanceTest();
-			p.JsonTest();
+			//p.JsonTest();
 
 			Console.ReadKey();
 		}

@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.Configuration;
-
-using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Data;
 
 namespace Radischevo.Wahha.Data.Configurations
 {
     /// <summary>
-    /// Represents module configuration 
-    /// settings.
+    /// Represents the module configuration settings.
     /// </summary>
     public sealed class Configuration
     {
@@ -20,8 +15,7 @@ namespace Radischevo.Wahha.Data.Configurations
 
         #region Instance Fields
         private CacheSettings _caching;
-        private DbDataProviderSettings _providers;
-        private NameValueCollection _connectionStrings;
+        private DatabaseConfigurationSettings _database;
         #endregion
 
         #region Constructors
@@ -31,9 +25,8 @@ namespace Radischevo.Wahha.Data.Configurations
         /// </summary>
         private Configuration()
         {
-            _connectionStrings = new NameValueCollection();
             _caching = new CacheSettings();
-            _providers = new DbDataProviderSettings();
+            _database = new DatabaseConfigurationSettings();
 
             try
             {
@@ -45,11 +38,7 @@ namespace Radischevo.Wahha.Data.Configurations
                     return;
 
                 _caching.Init(section.Cache);
-                _providers.Init(section.Providers);
-
-                foreach (ConnectionStringSettings cs in
-                    section.ConnectionStrings)
-                    _connectionStrings.Add(cs.Name, cs.ConnectionString);
+                _database.Init(section.Database);
             }
             catch (ConfigurationErrorsException ex)
             {
@@ -70,7 +59,7 @@ namespace Radischevo.Wahha.Data.Configurations
                 {
                     lock (_lock)
                     {
-                        if(_instance == null)
+                        if (_instance == null)
                             _instance = new Configuration();
                     }
                 }
@@ -80,23 +69,11 @@ namespace Radischevo.Wahha.Data.Configurations
         #endregion
 
 		#region Instance Properties
-		public DbDataProviderSettings Providers
+		public DatabaseConfigurationSettings Database
 		{
 			get
 			{
-				return _providers;
-			}
-		}
-
-		/// <summary>
-		/// Gets the collection of connection strings, 
-		/// declared within the configuration file
-		/// </summary>
-		public NameValueCollection ConnectionStrings
-		{
-			get
-			{
-				return _connectionStrings;
+				return _database;
 			}
 		}
 

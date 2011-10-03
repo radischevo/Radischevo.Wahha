@@ -9,7 +9,7 @@ namespace Radischevo.Wahha.Data
 	/// Represents the operation that executes an SQL statement 
 	/// against the data source and returns a number of rows affected.
 	/// </summary>
-	public class DbNonQueryOperation : DbCommandOperation<int>
+	public abstract class DbNonQueryOperation : InvalidatingDbCommandOperation<int>
 	{
 		#region Constructors
 		/// <summary>
@@ -29,9 +29,11 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		/// <param name="provider">The database communication provider 
 		/// using to retrieve or store the data.</param>
-		protected override int ExecuteInternal(IDbDataProvider provider)
+		/// <param name="command">The command instance to execute.</param>
+		protected override int ExecuteCommand(IDbDataProvider provider, 
+			DbCommandDescriptor command)
 		{
-			return provider.Execute(Command).AsNonQuery();
+			return provider.Execute(command).AsNonQuery();
 		}
 		#endregion
 	}

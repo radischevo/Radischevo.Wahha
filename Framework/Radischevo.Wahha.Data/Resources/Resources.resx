@@ -120,17 +120,17 @@
   <data name="Error_AmbiguousColumnName" xml:space="preserve">
     <value>Ambiguous column name '{0}' found in the data record.</value>
   </data>
+  <data name="Error_ArrayTypeIsNotSupported" xml:space="preserve">
+    <value>Array type '{0}' is not supported.</value>
+  </data>
   <data name="Error_CacheProviderDoesNotSupportTags" xml:space="preserve">
     <value>The currently configured cache provider '{0}' does not support item tagging.</value>
-  </data>
-  <data name="Error_CannotAddMoreThanOneDefaultProvider" xml:space="preserve">
-    <value>DbDataProvider collection cannot have more than one default provider. The DbDataProvider '{0}' was already marked as a default.</value>
   </data>
   <data name="Error_CannotEnumerateMoreThanOnce" xml:space="preserve">
     <value>Cannot enumerate the result set more than once.</value>
   </data>
-  <data name="Error_CaseShouldContainWhenStatements" xml:space="preserve">
-    <value>Case statement should contain at least one When statement.</value>
+  <data name="Error_CircularReferenceFoundAtType" xml:space="preserve">
+    <value>Circular reference found at type '{0}'.</value>
   </data>
   <data name="Error_ColumnNameDoesNotExistInResultSet" xml:space="preserve">
     <value>Could not find a field with the specified name '{0}' in the result set.</value>
@@ -139,10 +139,10 @@
     <value>Could not find a field with the specified ordinal '{0}' in the result set.</value>
   </data>
   <data name="Error_CommandIsNotInitialized" xml:space="preserve">
-    <value>The '{0}' property should be initialized with the System.Data.IDbCommand instance.</value>
+    <value>The database query command must be initialized to complete the operation.</value>
   </data>
-  <data name="Error_CommandTextIsNull" xml:space="preserve">
-    <value>Command text cannot be null or an empty string.</value>
+  <data name="Error_CommaWasExpectedInArrayDeclaration" xml:space="preserve">
+    <value>Comma symbol was expected in the array declaration.</value>
   </data>
   <data name="Error_ConnectionStringNotConfigured" xml:space="preserve">
     <value>Couldn't find any connection strings in the configuration file.</value>
@@ -150,17 +150,41 @@
   <data name="Error_ConnectionStringNotInitialized" xml:space="preserve">
     <value>Connection string cannot be null or an empty string.</value>
   </data>
+  <data name="Error_CouldNotConvertObjectToType" xml:space="preserve">
+    <value>Could not convert the object to the specified type '{0}'.</value>
+  </data>
+  <data name="Error_CouldNotCreateListType" xml:space="preserve">
+    <value>Could not create the necessary list type '{0}'.</value>
+  </data>
   <data name="Error_CouldNotMaterializeCollectionLink" xml:space="preserve">
     <value>The provided link can not be materialized since it can not be explicitly converted to the 'Link&lt;TAssociation&gt;' type.</value>
+  </data>
+  <data name="Error_CouldNotResolveType" xml:space="preserve">
+    <value>Could not resolve type '{0}'.</value>
   </data>
   <data name="Error_CouldNotSetIsolationLevelAfterInitialize" xml:space="preserve">
     <value>Could not change transaction isolation level since the Execute method was already called.</value>
   </data>
+  <data name="Error_DepthLimitExceeded" xml:space="preserve">
+    <value>Depth limit exceeded.</value>
+  </data>
+  <data name="Error_DeserializerTypeMismatch" xml:space="preserve">
+    <value>Deserializer type mismatch.</value>
+  </data>
   <data name="Error_ExpressionMustBeAConstructorCall" xml:space="preserve">
     <value>The provided expression '{0}' must be a constructor call.</value>
   </data>
+  <data name="Error_ExtraCommaAtArrayEndingFound" xml:space="preserve">
+    <value>Extra comma at array ending found.</value>
+  </data>
   <data name="Error_FormatParameterMismatch" xml:space="preserve">
     <value>Index (zero based) must be greater than or equal to zero and less than the size of the argument list.</value>
+  </data>
+  <data name="Error_IllegalArrayStartingSymbol" xml:space="preserve">
+    <value>Invalid array starting symbol.</value>
+  </data>
+  <data name="Error_IllegalJavaScriptPrimitive" xml:space="preserve">
+    <value>Illegal JavaScript primitive.</value>
   </data>
   <data name="Error_IncompatibleCacheProviderType" xml:space="preserve">
     <value>The type '{0}' must implement the ICacheProvider or ITaggedCacheProvider interface and have a public parameterless constructor.</value>
@@ -171,14 +195,32 @@
   <data name="Error_IncompatibleProviderFactoryType" xml:space="preserve">
     <value>The type '{0}' must implement the IDbDataProviderFactory interface and have a public parameterless constructor.</value>
   </data>
-  <data name="Error_IncompatibleProviderType" xml:space="preserve">
-    <value>The type '{0}' must implement the IDbDataProvider interface and have a public parameterless constructor.</value>
+  <data name="Error_InvalidArrayEndingSymbol" xml:space="preserve">
+    <value>Invalid array ending symbol.</value>
   </data>
   <data name="Error_InvalidConstructorExpressionType" xml:space="preserve">
     <value>The provided expression constructs objects of '{0}' type, but the type compatible with '{1}' is required.</value>
   </data>
+  <data name="Error_InvalidEnumType" xml:space="preserve">
+    <value>Invalid enum type '{0}'.</value>
+  </data>
+  <data name="Error_InvalidEscapeSequence" xml:space="preserve">
+    <value>Invalid escape sequence.</value>
+  </data>
+  <data name="Error_InvalidMemberName" xml:space="preserve">
+    <value>Invalid member name.</value>
+  </data>
   <data name="Error_InvalidMethodReturnType" xml:space="preserve">
     <value>The provided method returns a value of '{0}' type, but the '{1}' type is required.</value>
+  </data>
+  <data name="Error_InvalidObjectDefinition" xml:space="preserve">
+    <value>Invalid object definition.</value>
+  </data>
+  <data name="Error_MaximumJsonStringLengthExceeded" xml:space="preserve">
+    <value>Maximum JSON string length exceeded.</value>
+  </data>
+  <data name="Error_MaximumRecursionDepthExceeded" xml:space="preserve">
+    <value>Maximum recursion depth exceeded.</value>
   </data>
   <data name="Error_MethodCallMustTargetLambdaArgument" xml:space="preserve">
     <value>Expression parameter '{0}' must target the lambda argument.</value>
@@ -186,8 +228,8 @@
   <data name="Error_ObjectDisposed" xml:space="preserve">
     <value>Cannot access the '{0}'. The object is disposed.</value>
   </data>
-  <data name="Error_OperationCommandIsNotInitialized" xml:space="preserve">
-    <value>The 'Command' property should be initialized with the Radischevo.Wahha.Data.DbCommandDescriptor instance before the operation can execute.</value>
+  <data name="Error_OpeningBraceExpected" xml:space="preserve">
+    <value>Opening brace expected.</value>
   </data>
   <data name="Error_ParameterMustBeGreaterThan" xml:space="preserve">
     <value>The value of the '{0}' parameter should be greater than {1}.</value>
@@ -195,17 +237,20 @@
   <data name="Error_ParameterMustBeGreaterThanOrEqual" xml:space="preserve">
     <value>The value of the '{0}' parameter should be greater than or equal to {1}.</value>
   </data>
-  <data name="Error_ProviderNotConfigured" xml:space="preserve">
-    <value>The default data provider is not set. Please check the configuration file.</value>
-  </data>
-  <data name="Error_ProviderTypeMappingNotConfigured" xml:space="preserve">
-    <value>Could not find a DbDataProvider type mapped to specified name '{0}'.</value>
-  </data>
   <data name="Error_ReaderIsEmpty" xml:space="preserve">
     <value>Cannot read the result set from the closed data reader.</value>
   </data>
   <data name="Error_SelectorMustBeAMethodCall" xml:space="preserve">
     <value>Selector expression '{0}' must be a method call.</value>
+  </data>
+  <data name="Error_StringIsNotQuoted" xml:space="preserve">
+    <value>String is not quoted.</value>
+  </data>
+  <data name="Error_SuppliedDictionaryTypeIsNotSupported" xml:space="preserve">
+    <value>Supplied dictionary type is not supported.</value>
+  </data>
+  <data name="Error_TypeMustHaveParameterlessConstructor" xml:space="preserve">
+    <value>Type '{0}' must have a parameterless constructor.</value>
   </data>
   <data name="Error_UnableToConnect" xml:space="preserve">
     <value>Data provider could not connect to the specified data source.</value>
@@ -215,5 +260,8 @@
   </data>
   <data name="Error_UnsupportedCommandType" xml:space="preserve">
     <value>The database command type '{0}' is not supported by the provider.</value>
+  </data>
+  <data name="Error_UnterminatedStringConstant" xml:space="preserve">
+    <value>Unterminated string constant.</value>
   </data>
 </root>

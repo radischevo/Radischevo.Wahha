@@ -9,9 +9,8 @@ namespace Radischevo.Wahha.Data.Provider
 	public abstract class CommonDbDataProvider : IDbDataProvider
 	{
 		#region Instance Fields
-		private IDbTransaction _transaction;
 		private IDbConnection _connection;
-		private bool _useTransaction;
+		private IDbTransaction _transaction;
 		#endregion
 
 		#region Constructors
@@ -19,8 +18,13 @@ namespace Radischevo.Wahha.Data.Provider
 		/// Initializes a new instance of the 
 		/// <see cref="CommonDbDataProvider"/> class.
 		/// </summary>
-		protected CommonDbDataProvider()
+		/// <param name="connectionString">The database connection string.</param>
+		protected CommonDbDataProvider(string connectionString)
         {
+			Precondition.Defined(connectionString, () => 
+				Error.ConnectionStringNotInitialized());
+
+			_connection = CreateConnection(connectionString);
         }
 		#endregion
 
@@ -74,23 +78,6 @@ namespace Radischevo.Wahha.Data.Provider
 			get
 			{
 				return _transaction;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets a value indicating whether 
-		/// the transaction will be used for 
-		/// current connection.
-		/// </summary>
-		public bool UseTransaction
-		{
-			get
-			{
-				return _useTransaction;
-			}
-			set
-			{
-				_useTransaction = value;
 			}
 		}
 
@@ -151,18 +138,22 @@ namespace Radischevo.Wahha.Data.Provider
 		}
 
 		/// <summary>
-		/// When overridden in a derived class, performs initialization
-		/// routines for the current <see cref="Radischevo.Wahha.Data.IDbDataProvider" /> class.
+		/// Returns a value indicating whether the current 
+		/// database connection is available.
 		/// </summary>
-		/// <param name="connectionString">The database connection string.</param>
-		/// <param name="useTransaction">True to use a transaction.</param>
-		public virtual void Initialize(string connectionString, bool useTransaction)
+		public virtual bool ValidateConnection()
 		{
-			if (String.IsNullOrEmpty(connectionString))
-				throw Error.ConnectionStringNotInitialized();
+			try
+			{
+				_connection.Open();
+				_connection.Close();
 
-			_connection = CreateConnection(connectionString);
-			_useTransaction = useTransaction;
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
 		}
 		#endregion
 
@@ -174,12 +165,7 @@ namespace Radischevo.Wahha.Data.Provider
 		protected virtual void Open()
 		{
 			if (_connection.State == ConnectionState.Closed)
-			{
 				_connection.Open();
-
-				if (_useTransaction && !HasTransaction)
-					_transaction = _connection.BeginTransaction();
-			}
 		}
 
 		/// <summary>
@@ -236,7 +222,6 @@ namespace Radischevo.Wahha.Data.Provider
 		{
 			if (!HasTransaction)
 			{
-				_useTransaction = true;
 				if (_connection.State == ConnectionState.Closed)
 					_connection.Open();
 
@@ -299,7 +284,7 @@ namespace Radischevo.Wahha.Data.Provider
 		{
 			Close();
 
-			if (_transaction != null)
+			if (HasTransaction)
 				_transaction.Dispose();
 
 			_connection.Dispose();

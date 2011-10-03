@@ -3,9 +3,13 @@
 namespace Radischevo.Wahha.Data
 {
     public interface IDbDataProviderFactory
-    {
-        IDbDataProvider CreateProvider(Type providerType);
-        IDbDataProvider CreateProvider(string providerName);
-        void DisposeProvider(IDbDataProvider provider);
+	{
+		#region Instance Methods
+		IDbDataProvider CreateProvider();
+
+		IDbDataProvider CreateProvider(string connectionString);
+
+		void DisposeProvider(IDbDataProvider provider);
+		#endregion
     }
 }

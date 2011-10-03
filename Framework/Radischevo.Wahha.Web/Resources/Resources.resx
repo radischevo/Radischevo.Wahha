@@ -117,26 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Error_ArrayTypeIsNotSupported" xml:space="preserve">
-    <value>Array type '{0}' is not supported.</value>
-  </data>
   <data name="Error_AttributeListReferencesToAnUndefinedElement" xml:space="preserve">
     <value>ATTLIST references undefined ELEMENT {0}.</value>
   </data>
-  <data name="Error_CircularReferenceFoundAtType" xml:space="preserve">
-    <value>Circular reference found at type '{0}'.</value>
-  </data>
-  <data name="Error_CommaWasExpectedInArrayDeclaration" xml:space="preserve">
-    <value>Comma symbol was expected in the array declaration.</value>
-  </data>
   <data name="Error_ContentModelWasNotClosed" xml:space="preserve">
     <value>Content Model was not closed.</value>
-  </data>
-  <data name="Error_CouldNotConvertObjectToType" xml:space="preserve">
-    <value>Could not convert the object to the specified type '{0}'.</value>
-  </data>
-  <data name="Error_CouldNotCreateListType" xml:space="preserve">
-    <value>Could not create the necessary list type '{0}'.</value>
   </data>
   <data name="Error_CouldNotParseConditionalSection" xml:space="preserve">
     <value>Expecting '[' but found {0}.</value>
@@ -146,15 +131,6 @@
   </data>
   <data name="Error_CouldNotParseNestedTemplate" xml:space="preserve">
     <value>Could not parse the nested template referenced through the include directive.</value>
-  </data>
-  <data name="Error_CouldNotResolveType" xml:space="preserve">
-    <value>Could not resolve type '{0}'.</value>
-  </data>
-  <data name="Error_DepthLimitExceeded" xml:space="preserve">
-    <value>Depth limit exceeded.</value>
-  </data>
-  <data name="Error_DeserializerTypeMismatch" xml:space="preserve">
-    <value>Deserializer type mismatch.</value>
   </data>
   <data name="Error_DtdDoesNotMatchDocumentType" xml:space="preserve">
     <value>DTD does not match the document type.</value>
@@ -192,23 +168,11 @@
   <data name="Error_ExpectingSystemIdentifierLiteral" xml:space="preserve">
     <value>Expecting system identifier literal but found '{0}'.</value>
   </data>
-  <data name="Error_ExtraCommaAtArrayEndingFound" xml:space="preserve">
-    <value>Extra comma at array ending found.</value>
-  </data>
-  <data name="Error_IllegalArrayStartingSymbol" xml:space="preserve">
-    <value>Invalid array starting symbol.</value>
-  </data>
-  <data name="Error_IllegalJavaScriptPrimitive" xml:space="preserve">
-    <value>Illegal JavaScript primitive.</value>
-  </data>
   <data name="Error_InconsistentConnector" xml:space="preserve">
     <value>Connector '{0}' is inconsistent with {1} group.</value>
   </data>
   <data name="Error_InputStreamIsUndefined" xml:space="preserve">
     <value>You must specify input either via Href or InputStream properties.</value>
-  </data>
-  <data name="Error_InvalidArrayEndingSymbol" xml:space="preserve">
-    <value>Invalid array ending symbol.</value>
   </data>
   <data name="Error_InvalidAttributeDefinitionPresenceValue" xml:space="preserve">
     <value>Attribute value '{0}' not supported.</value>
@@ -231,12 +195,6 @@
   <data name="Error_InvalidDeclaredContentTypeValue" xml:space="preserve">
     <value>Declared content type '{0}' is not supported.</value>
   </data>
-  <data name="Error_InvalidEnumType" xml:space="preserve">
-    <value>Invalid enum type '{0}'.</value>
-  </data>
-  <data name="Error_InvalidEscapeSequence" xml:space="preserve">
-    <value>Invalid escape sequence.</value>
-  </data>
   <data name="Error_InvalidExternalIdentifierLiteral" xml:space="preserve">
     <value>Invalid external identifier '{0}'.  Expecing 'PUBLIC' or 'SYSTEM'.</value>
   </data>
@@ -246,23 +204,11 @@
   <data name="Error_InvalidMarkedSectionType" xml:space="preserve">
     <value>Unsupported marked section type '{0}'.</value>
   </data>
-  <data name="Error_InvalidMemberName" xml:space="preserve">
-    <value>Invalid member name.</value>
-  </data>
   <data name="Error_InvalidNameCharacter" xml:space="preserve">
     <value>Invalid name character '{0}'.</value>
   </data>
   <data name="Error_InvalidNameStartCharacter" xml:space="preserve">
     <value>Invalid name start character '{0}'.</value>
-  </data>
-  <data name="Error_InvalidObjectDefinition" xml:space="preserve">
-    <value>Invalid object definition.</value>
-  </data>
-  <data name="Error_MaximumJsonStringLengthExceeded" xml:space="preserve">
-    <value>Maximum JSON string length exceeded.</value>
-  </data>
-  <data name="Error_MaximumRecursionDepthExceeded" xml:space="preserve">
-    <value>Maximum recursion depth exceeded.</value>
   </data>
   <data name="Error_MissingTokenBeforeConnector" xml:space="preserve">
     <value>Missing token before connector '{0}'.</value>
@@ -272,9 +218,6 @@
   </data>
   <data name="Error_NotOnAnEntityReference" xml:space="preserve">
     <value>Not on an entity reference.</value>
-  </data>
-  <data name="Error_OpeningBraceExpected" xml:space="preserve">
-    <value>Opening brace expected.</value>
   </data>
   <data name="Error_ParameterEntityClosedOutsideTheScope" xml:space="preserve">
     <value>Parameter entity cannot close a paren outside it's own scope.</value>
@@ -288,17 +231,8 @@
   <data name="Error_RuleNameCannotDifferFromKey" xml:space="preserve">
     <value>The name of the rule '{0}' cannot differ from its key '{1}'.</value>
   </data>
-  <data name="Error_StringIsNotQuoted" xml:space="preserve">
-    <value>String is not quoted.</value>
-  </data>
-  <data name="Error_SuppliedDictionaryTypeIsNotSupported" xml:space="preserve">
-    <value>Supplied dictionary type is not supported.</value>
-  </data>
   <data name="Error_TemplateDirectiveCannotBeEmpty" xml:space="preserve">
     <value>Template directive must have non-empty name.</value>
-  </data>
-  <data name="Error_TypeMustHaveParameterlessConstructor" xml:space="preserve">
-    <value>Type '{0}' must have a parameterless constructor.</value>
   </data>
   <data name="Error_UnclosedElement" xml:space="preserve">
     <value>{0} starting on line {0} was never closed.</value>
@@ -320,8 +254,5 @@
   </data>
   <data name="Error_UnsupportedExternalParameterEntityResolution" xml:space="preserve">
     <value>External parameter entity resolution.</value>
-  </data>
-  <data name="Error_UnterminatedStringConstant" xml:space="preserve">
-    <value>Unterminated string constant.</value>
   </data>
 </root>

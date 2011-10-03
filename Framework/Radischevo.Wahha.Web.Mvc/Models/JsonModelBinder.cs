@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Web.Scripting.Serialization;
+using Radischevo.Wahha.Data.Serialization;
 
 namespace Radischevo.Wahha.Web.Mvc
 {

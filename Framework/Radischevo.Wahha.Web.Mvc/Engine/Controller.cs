@@ -7,8 +7,8 @@ using System.Web;
 using System.Web.SessionState;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data.Serialization;
 using Radischevo.Wahha.Web.Routing;
-using Radischevo.Wahha.Web.Scripting.Serialization;
 using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
