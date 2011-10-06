@@ -128,7 +128,7 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public bool NextResult()
         {
-			ResetAccessedFields();
+			ResetAccessedKeys();
 			ResetLookupTable();
 
             if (_reader.NextResult())
@@ -145,7 +145,7 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public bool Read()
         {
-			ResetAccessedFields();
+			ResetAccessedKeys();
             return _reader.Read();
         }
 

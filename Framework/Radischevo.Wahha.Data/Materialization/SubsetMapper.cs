@@ -3,7 +3,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	public sealed class SubsetMapper : IValueSetTransformer
+	public sealed class SubsetMapper : IDbValueSetTransformer
 	{
 		#region Instance Fields
 		private string _prefix;
@@ -36,7 +36,7 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public IValueSet Transform(IValueSet source)
+		public IDbValueSet Transform(IDbValueSet source)
 		{
 			if (String.IsNullOrEmpty(_prefix))
 				return source;

@@ -3,7 +3,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	internal sealed class NullValueSetTransformer : IValueSetTransformer
+	internal sealed class NullValueSetTransformer : IDbValueSetTransformer
 	{
 		#region Constructors
 		public NullValueSetTransformer()
@@ -12,7 +12,7 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public IValueSet Transform(IValueSet source)
+		public IDbValueSet Transform(IDbValueSet source)
 		{
 			return source;
 		}

@@ -3,7 +3,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	internal sealed class NullValueSetValidator : IValueSetValidator
+	internal sealed class NullValueSetValidator : IDbValueSetValidator
 	{
 		#region Constructors
 		public NullValueSetValidator()
@@ -12,7 +12,7 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public bool Valid(IValueSet source)
+		public bool Valid(IDbValueSet source)
 		{
 			return source.ContainsAny();
 		}

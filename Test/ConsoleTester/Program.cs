@@ -51,13 +51,78 @@ namespace ConsoleTester
 		{
 			Program p = new Program();
 			//p.MultipleThreadTest();
-			p.SingleThreadTest();
+			//p.SingleThreadTest();
 			//p.RouteTest();
 			//p.SgmlTest();
 			//p.InheritanceTest();
 			//p.JsonTest();
+			//p.ValueSetTest();
+			p.ReaderTest();
+			p.DeserializeTest();
 
 			Console.ReadKey();
+		}
+
+		public void ReaderTest()
+		{
+			var selectCommand = new ExecuteQueryCommand(0, 100);
+			DbQueryResult results;
+			using (var scope = new DbOperationScope())
+			{
+				results = scope.Execute(selectCommand);
+			}
+
+			using (FileStream fs = new FileStream(Path.Combine(Environment.CurrentDirectory, "cities.dat"), FileMode.Create, FileAccess.Write))
+			{
+				BinaryFormatter formatter = new BinaryFormatter();
+				formatter.Serialize(fs, results);
+			}
+			Console.WriteLine("Serialization done");
+		}
+
+		public void DeserializeTest()
+		{
+			using (FileStream fs = new FileStream(Path.Combine(Environment.CurrentDirectory, "cities.dat"), FileMode.OpenOrCreate, FileAccess.Read))
+			{
+				BinaryFormatter formatter = new BinaryFormatter();
+				DbQueryResult results = (DbQueryResult)formatter.Deserialize(fs);
+
+				using (var reader = new DbQueryResultReader(results))
+				{
+					while (reader.Read())
+					{
+						Console.WriteLine("[ id: {0}, title: {1}, region: {2} ]",
+							reader.GetValue<long>("id"), reader.GetValue<string>("title"),
+							reader.GetValue<long>("region.id"));
+					}
+					if (reader.NextResult() && reader.Read())
+						Console.WriteLine("Total cities: {0}", reader.GetInt32(0));
+				}
+				Console.WriteLine("Task completed");
+			}
+		}
+
+		public void ValueSetTest()
+		{
+			ValueDictionary values = new ValueDictionary();
+			values["id"] = 10;
+			values["name"] = "Name";
+			values["region.id"] = 5;
+			values["region.country.id"] = 1;
+
+			IDbValueSet dbs = values.ToDbValueSet();
+			Console.Write("id = {0}, ", dbs["id"]);
+			Console.Write("name = {0}, ", dbs["name"]);
+
+			IDbValueSet rs = dbs.Subset(k => k.StartsWith("region.")).Transform(k => k.Substring("region.".Length));
+			Console.Write("region = {0}, ", rs["id"]);
+
+			IDbValueSet cs = rs.Subset(k => k.StartsWith("country.")).Transform(k => k.Substring("country.".Length));
+			Console.WriteLine("country = {0}", cs["id"]);
+
+			Console.WriteLine("Accessed keys total: {0}", String.Join(", ", dbs.AccessedKeys));
+			Console.WriteLine("Accessed keys in region: {0}", String.Join(", ", rs.AccessedKeys));
+			Console.WriteLine("Accessed keys in country: {0}", String.Join(", ", cs.AccessedKeys));
 		}
 
 		public void JsonTest()
@@ -126,24 +191,33 @@ namespace ConsoleTester
 		public void SingleThreadTest()
 		{
 			var selectCommand = new SelectCityCommand();
-			var subsetCommand = new SelectCitySubsetCommand(0, 10);
-			var singleCommand = new SingleCityCommand(40289);
 			var insertCommand = new InsertCityCommand(new City() {
 				Title = "Мухосранск", RegionId = 3140
+			});
+			var insertCommand2 = new InsertCityCommand(new City() {
+				Title = "Жепьебрильск", RegionId = 3140
+			});
+			var insertCommand3 = new InsertCityCommand(new City() {
+				Title = "Собянинск",
+				RegionId = 3140
 			});
 
 			using (var scope = new DbOperationScope())
 			{
-				PrintCities(scope.Execute(subsetCommand));
-
-				var oldCity = scope.Execute(singleCommand);
-				PrintCity(scope.Execute(singleCommand));
+				PrintCities(scope.Execute(selectCommand));
 
 				City added = scope.Execute(insertCommand);
 				PrintCity(added);
 
-				var delete = new DeleteCityCommand(oldCity);
-				scope.Execute(delete);
+				scope.Commit();
+
+				City added2 = scope.Execute(insertCommand2);
+				PrintCity(added2);
+
+				scope.Commit();
+
+				City added3 = scope.Execute(insertCommand3);
+				PrintCity(added3);
 			}
 		}
 

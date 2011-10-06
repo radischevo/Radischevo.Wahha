@@ -11,26 +11,26 @@ namespace Radischevo.Wahha.Data
 		where TAssociation : class
 	{
 		#region Instance Fields
-		private IValueSet _source;
-		private List<IValueSetTransformer> _transformers;
-		private List<IValueSetValidator> _validators;
+		private IDbValueSet _source;
+		private List<IDbValueSetTransformer> _transformers;
+		private List<IDbValueSetValidator> _validators;
 		#endregion
 
 		#region Constructors
-		public LinkMaterializerAction(IValueSet source)
+		public LinkMaterializerAction(IDbValueSet source)
 			: base()
 		{
 			Precondition.Require(source, () => Error.ArgumentNull("source"));
 			_source = source;
-			_transformers = new List<IValueSetTransformer>();
-			_validators = new List<IValueSetValidator>();
+			_transformers = new List<IDbValueSetTransformer>();
+			_validators = new List<IDbValueSetValidator>();
 
 			_validators.Add(new NullValueSetValidator());
 		}
 		#endregion
 
 		#region Instance Properties
-		public ICollection<IValueSetTransformer> Transformers
+		public ICollection<IDbValueSetTransformer> Transformers
 		{
 			get
 			{
@@ -38,7 +38,7 @@ namespace Radischevo.Wahha.Data
 			}
 		}
 
-		public ICollection<IValueSetValidator> Validators
+		public ICollection<IDbValueSetValidator> Validators
 		{
 			get
 			{
@@ -46,7 +46,7 @@ namespace Radischevo.Wahha.Data
 			}
 		}
 
-		public IValueSet Source
+		public IDbValueSet Source
 		{
 			get
 			{
@@ -62,9 +62,9 @@ namespace Radischevo.Wahha.Data
 			return new LinkValueInitializer<TAssociation>(type);
 		}
 
-		protected virtual bool Validate(IValueSet values)
+		protected virtual bool Validate(IDbValueSet values)
 		{
-			foreach (IValueSetValidator validator in Validators)
+			foreach (IDbValueSetValidator validator in Validators)
 				if (!validator.Valid(values))
 					return false;
 
@@ -74,9 +74,9 @@ namespace Radischevo.Wahha.Data
 		public override ILink<TAssociation> Execute(ILink<TAssociation> link)
 		{
 			LinkValueInitializer<TAssociation> initializer = CreateInitializer();
-			IValueSet subset = Source;
+			IDbValueSet subset = Source;
 
-			foreach (IValueSetTransformer transformer in Transformers)
+			foreach (IDbValueSetTransformer transformer in Transformers)
 				subset = transformer.Transform(subset);
 
 			if (Validate(subset) && initializer != null)
@@ -93,7 +93,7 @@ namespace Radischevo.Wahha.Data
 		where TMaterializer : IDbMaterializer<TAssociation>
 	{
 		#region Constructors
-		public LinkMaterializerAction(IValueSet source)
+		public LinkMaterializerAction(IDbValueSet source)
 			: base(source)
 		{
 		}

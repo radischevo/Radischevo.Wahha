@@ -67,12 +67,20 @@
   <ItemGroup>
     <Compile Include="Configurations\DatabaseConfigurationElement.cs" />
     <Compile Include="Engine\DbDataRecord.cs" />
+    <Compile Include="Engine\DbQueryResult.cs" />
+    <Compile Include="Engine\DbQueryResultReader.cs" />
+    <Compile Include="Engine\DbQueryResultRow.cs" />
+    <Compile Include="Engine\DbDataRecordBase.cs" />
+    <Compile Include="Engine\DbQueryResultRowEnumerator.cs" />
+    <Compile Include="Engine\DbSubQueryResult.cs" />
     <Compile Include="Extensions\AssociatorExtensions.cs" />
     <Compile Include="Caching\CacheProviderExtensions.cs" />
+    <Compile Include="Extensions\DbValueSetExtensions.cs" />
     <Compile Include="Interfaces\IDbOperation.cs" />
     <Compile Include="Interfaces\IDbOperation`1.cs" />
-    <Compile Include="Interfaces\IValueSetTransformer.cs" />
-    <Compile Include="Interfaces\IValueSetValidator.cs" />
+    <Compile Include="Interfaces\IDbValueSet.cs" />
+    <Compile Include="Interfaces\IDbValueSetTransformer.cs" />
+    <Compile Include="Interfaces\IDbValueSetValidator.cs" />
     <Compile Include="Materialization\AssociatorAction`1.cs" />
     <Compile Include="Materialization\Associator`1.cs" />
     <Compile Include="Materialization\ExpressionParameterExtractor.cs" />
@@ -124,7 +132,7 @@
     <Compile Include="Interfaces\IDbMaterializer.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISubset.cs" />
-    <Compile Include="Engine\DbDataProviderExtensions.cs" />
+    <Compile Include="Extensions\DbDataProviderExtensions.cs" />
     <Compile Include="Materialization\LinkAssociatorAction`1.cs" />
     <Compile Include="Materialization\LinkMaterializerAction.cs" />
     <Compile Include="Materialization\LinkValueInitializer`1.cs" />

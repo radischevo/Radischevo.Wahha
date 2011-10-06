@@ -70,18 +70,24 @@ namespace ConsoleTester
 
 	public class CityMaterializer : ObjectMaterializer<City>
 	{
-		protected override City CreateInstance(IValueSet source)
+		protected override City CreateInstance(IDbValueSet source)
 		{
 			return new City();
 		}
 
-		protected override City Execute(City entity, IValueSet source)
+		protected override City Execute(City entity, IDbValueSet source)
 		{
+			var sub = source.Subset(k => k.StartsWith("region.")).Transform(k => k.Substring("region.".Length));
+
 			entity.Id = source.GetValue<long>("id");
 			entity.Title = source.GetValue<string>("title");
-			entity.RegionId = source.GetValue<long>("region.id");
+			entity.RegionId = sub.GetValue<long>("id");
 
 			long client = (entity.Id == 38708) ? 0 : 38708;
+
+			
+			bool b = sub.AccessedKeys.Any();
+
 			//Associate(entity.Capital).With<CityOperations>(b => b.Single(client)).Apply();
 			Associate(entity.Capital).With(() => new SingleCityCommand(client)).Apply();
 
@@ -198,13 +204,12 @@ namespace ConsoleTester
 		}
 	}
 
-	public class SelectCitySubsetCommand : DbSubsetOperation<City>
+	public class SelectCitySubsetCommand : DbCommandOperation<IEnumerable<City>>
 	{
 		private int _skip;
 		private int _take;
 
 		public SelectCitySubsetCommand(int skip, int take)
-			: base(new CityMaterializer())
 		{
 			_skip = skip;
 			_take = take;
@@ -216,6 +221,38 @@ namespace ConsoleTester
 				skip = _skip,
 				take = _take
 			});
+		}
+
+		protected override IEnumerable<City> ExecuteCommand(IDbDataProvider provider, 
+			DbCommandDescriptor command)
+		{
+			return provider.Execute(command).AsEntitySet<City>(new CityMaterializer());
+		}
+	}
+
+	public class ExecuteQueryCommand : DbCommandOperation<DbQueryResult>
+	{
+		private int _skip;
+		private int _take;
+
+		public ExecuteQueryCommand(int skip, int take)
+		{
+			_skip = skip;
+			_take = take;
+		}
+
+		protected override DbCommandDescriptor CreateCommand()
+		{
+			return new DbCommandDescriptor(SqlQueries.SelectQueryPaged, new {
+				skip = _skip,
+				take = _take
+			});
+		}
+
+		protected override DbQueryResult ExecuteCommand(IDbDataProvider provider, 
+			DbCommandDescriptor command)
+		{
+			return provider.Execute(command).AsDataReader(reader => new DbQueryResult(reader));
 		}
 	}
 }

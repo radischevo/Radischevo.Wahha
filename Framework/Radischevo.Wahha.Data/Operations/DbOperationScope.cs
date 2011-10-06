@@ -17,6 +17,7 @@ namespace Radischevo.Wahha.Data
 		private IDbDataProvider _provider;
 		private IsolationLevel _isolationLevel;
 		private bool _initialized;
+		private bool _transactionActive;
 		private bool _hasOwnedContext;
 		#endregion
 
@@ -108,6 +109,16 @@ namespace Radischevo.Wahha.Data
 				_initialized = true;
 				Initialize();
 			}
+			EnsureTransactionActive();
+		}
+
+		private void EnsureTransactionActive()
+		{
+			if (!_transactionActive)
+			{
+				Provider.BeginTransaction(IsolationLevel);
+				_transactionActive = true;
+			}
 		}
 
 		/// <summary>
@@ -117,7 +128,6 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		protected virtual void Initialize()
 		{
-			Provider.BeginTransaction(IsolationLevel);
 		}
 
 		/// <summary>
@@ -188,6 +198,7 @@ namespace Radischevo.Wahha.Data
 		public void Commit()
 		{
 			Provider.Commit();
+			_transactionActive = false;
 		}
 
 		/// <summary>
@@ -196,6 +207,7 @@ namespace Radischevo.Wahha.Data
 		public void Rollback()
 		{
 			Provider.Rollback();
+			_transactionActive = false;
 		}
 
 		/// <summary>

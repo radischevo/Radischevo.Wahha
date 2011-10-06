@@ -3,10 +3,10 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	public interface IValueSetValidator
+	public interface IDbValueSetTransformer
 	{
 		#region Instance Methods
-		bool Valid(IValueSet source);
+		IDbValueSet Transform(IDbValueSet source);
 		#endregion
 	}
 }

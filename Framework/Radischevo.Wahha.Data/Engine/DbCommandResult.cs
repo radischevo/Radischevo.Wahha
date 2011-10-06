@@ -241,9 +241,8 @@ namespace Radischevo.Wahha.Data
         public IEnumerable<TEntity> AsEntitySet<TEntity>(Func<IDbDataRecord, TEntity> converter)
         {
             Precondition.Require(_command, () => Error.CommandIsNotInitialized());
-
 			return Execute((command) => DataReaderConverter(command, reader => 
-				new ObjectReader<TEntity>(reader, converter).ToList()));
+				new ObjectReader<TEntity>(new DbQueryResultReader(reader), converter)));
         }
 
 		/// <summary>
@@ -260,7 +259,7 @@ namespace Radischevo.Wahha.Data
 			Precondition.Require(materializer, () => Error.ArgumentNull("materializer"));
 
 			return Execute((command) => DataReaderConverter(command, reader =>
-				new ObjectReader<TEntity>(reader, materializer.Materialize).ToList()));
+				new ObjectReader<TEntity>(new DbQueryResultReader(reader), materializer.Materialize)));
 		}
         #endregion
 

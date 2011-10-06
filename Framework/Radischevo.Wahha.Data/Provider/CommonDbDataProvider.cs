@@ -199,9 +199,11 @@ namespace Radischevo.Wahha.Data.Provider
 		public void Commit()
 		{
 			if (HasTransaction)
+			{
 				_transaction.Commit();
-
-			_transaction = null;
+				_transaction.Dispose();
+				_transaction = null;
+			}
 		}
 
 		/// <summary>
@@ -210,9 +212,11 @@ namespace Radischevo.Wahha.Data.Provider
 		public void Rollback()
 		{
 			if (HasTransaction)
+			{
 				_transaction.Rollback();
-
-			_transaction = null;
+				_transaction.Dispose();
+				_transaction = null;
+			}
 		}
 
 		/// <summary>

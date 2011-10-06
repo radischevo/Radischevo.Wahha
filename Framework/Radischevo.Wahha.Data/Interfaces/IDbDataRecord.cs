@@ -11,7 +11,7 @@ namespace Radischevo.Wahha.Data
     /// each row for a DataReader, based on the 
     /// <see cref="System.Data.IDataRecord"/> interface.
     /// </summary>
-    public interface IDbDataRecord : IDataRecord, IValueSet
+    public interface IDbDataRecord : IDataRecord, IDbValueSet
     {
         #region Instance Properties
         /// <summary>
@@ -19,7 +19,7 @@ namespace Radischevo.Wahha.Data
         /// which values were accessed by calling 
         /// value-getter methods of the current row.
         /// </summary>
-        IEnumerable<string> AccessedFields
+        IEnumerable<string> AccessedKeys
         { 
             get; 
         }

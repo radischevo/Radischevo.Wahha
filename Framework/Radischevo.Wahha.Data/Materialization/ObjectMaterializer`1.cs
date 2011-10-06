@@ -12,12 +12,12 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public TEntity Materialize(IValueSet source)
+		public TEntity Materialize(IDbValueSet source)
 		{
 			return Materialize(CreateInstance(source), source);
 		}
 
-		public virtual TEntity Materialize(TEntity entity, IValueSet source)
+		public virtual TEntity Materialize(TEntity entity, IDbValueSet source)
 		{
 			Precondition.Require(entity, () => Error.ArgumentNull("entity"));
 			Precondition.Require(source, () => Error.ArgumentNull("source"));
@@ -25,9 +25,9 @@ namespace Radischevo.Wahha.Data
 			return Execute(entity, source);
 		}
 
-		protected abstract TEntity CreateInstance(IValueSet source);
+		protected abstract TEntity CreateInstance(IDbValueSet source);
 
-		protected abstract TEntity Execute(TEntity entity, IValueSet source);
+		protected abstract TEntity Execute(TEntity entity, IDbValueSet source);
 
 		protected ISingleAssociationSelectorBuilder<TAssociation> 
 			Associate<TAssociation>(Link<TAssociation> link)

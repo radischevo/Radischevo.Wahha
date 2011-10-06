@@ -5,7 +5,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	public sealed class SubsetSchemeValidator : IValueSetValidator
+	public sealed class SubsetSchemeValidator : IDbValueSetValidator
 	{
 		#region Instance Fields
 		private List<string> _scheme;
@@ -30,7 +30,7 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public bool Valid(IValueSet source)
+		public bool Valid(IDbValueSet source)
 		{
 			Precondition.Require(source, () => Error.ArgumentNull("source"));
 			return source.ContainsAll(_scheme.ToArray());

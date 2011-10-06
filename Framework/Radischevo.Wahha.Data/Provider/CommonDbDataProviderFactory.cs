@@ -18,7 +18,7 @@ namespace Radischevo.Wahha.Data.Provider
 		/// Creates a new instance of the <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
 		/// class, using the default connection string defined in the configuration file.
 		/// </summary>
-		public IDbDataProvider CreateProvider()
+		public virtual IDbDataProvider CreateProvider()
 		{
 			string connectionString = Configuration.Instance
 				.Database.ConnectionStrings["default"];
@@ -34,7 +34,7 @@ namespace Radischevo.Wahha.Data.Provider
 		/// <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> class, 
 		/// using the specified connection string.
 		/// </summary>
-		public abstract IDbDataProvider CreateProvider(string connectionString);
+		protected abstract IDbDataProvider CreateProvider(string connectionString);
 
 		/// <summary>
 		/// When overridden in a derived class, disposes the specified 

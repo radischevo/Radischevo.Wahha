@@ -12,6 +12,7 @@ namespace Radischevo.Wahha.Data
     /// <see cref="Radischevo.Wahha.Data.DbDataReader"/> 
     /// class.
     /// </summary>
+	[Serializable]
     public sealed class DbFieldLookup
     {
         #region Instance Fields

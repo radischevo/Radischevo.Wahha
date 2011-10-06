@@ -7,8 +7,6 @@ namespace Radischevo.Wahha.Data
 		#region Instance Methods
 		IDbDataProvider CreateProvider();
 
-		IDbDataProvider CreateProvider(string connectionString);
-
 		void DisposeProvider(IDbDataProvider provider);
 		#endregion
     }

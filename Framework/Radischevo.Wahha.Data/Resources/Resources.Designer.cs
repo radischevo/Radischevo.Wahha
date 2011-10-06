@@ -205,6 +205,15 @@ namespace Radischevo.Wahha.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid attempt to call {0} when reader is closed..
+        /// </summary>
+        internal static string Error_DataReaderIsClosed {
+            get {
+                return ResourceManager.GetString("Error_DataReaderIsClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Depth limit exceeded..
         /// </summary>
         internal static string Error_DepthLimitExceeded {
@@ -304,11 +313,38 @@ namespace Radischevo.Wahha.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buffer offset &apos;{1}&apos; plus the bytes available &apos;{0}&apos; is greater than the length of the passed in buffer..
+        /// </summary>
+        internal static string Error_InvalidBufferSizeOrIndex {
+            get {
+                return ResourceManager.GetString("Error_InvalidBufferSizeOrIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The provided expression constructs objects of &apos;{0}&apos; type, but the type compatible with &apos;{1}&apos; is required..
         /// </summary>
         internal static string Error_InvalidConstructorExpressionType {
             get {
                 return ResourceManager.GetString("Error_InvalidConstructorExpressionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data length &apos;{0}&apos; is less than 0..
+        /// </summary>
+        internal static string Error_InvalidDataLength {
+            get {
+                return ResourceManager.GetString("Error_InvalidDataLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid destination buffer (size of {0}) offset: {1}.
+        /// </summary>
+        internal static string Error_InvalidDestinationBufferIndex {
+            get {
+                return ResourceManager.GetString("Error_InvalidDestinationBufferIndex", resourceCulture);
             }
         }
         
@@ -354,6 +390,15 @@ namespace Radischevo.Wahha.Data.Resources {
         internal static string Error_InvalidObjectDefinition {
             get {
                 return ResourceManager.GetString("Error_InvalidObjectDefinition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid source buffer (size of {0}) offset: {1}.
+        /// </summary>
+        internal static string Error_InvalidSourceBufferIndex {
+            get {
+                return ResourceManager.GetString("Error_InvalidSourceBufferIndex", resourceCulture);
             }
         }
         
