@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Radischevo.Wahha.Data;
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data.Caching;
 
 namespace ConsoleTester
 {
@@ -204,13 +205,20 @@ namespace ConsoleTester
 		}
 	}
 
-	public class SelectCitySubsetCommand : DbCommandOperation<IEnumerable<City>>
+	public class SelectCitySubsetCommand : CachedDbCommandOperation<IEnumerable<City>>
 	{
 		private int _skip;
 		private int _take;
 
-		public SelectCitySubsetCommand(int skip, int take)
+		public SelectCitySubsetCommand(ITaggedCacheProvider cache, int skip, int take)
 		{
+			Cache = cache;
+			ExpirationTimeout = TimeSpan.FromHours(1);
+
+			Tags.Add("global");
+			Tags.Add("cities");
+			Tags.Add("regions");
+
 			_skip = skip;
 			_take = take;
 		}
@@ -226,7 +234,7 @@ namespace ConsoleTester
 		protected override IEnumerable<City> ExecuteCommand(IDbDataProvider provider, 
 			DbCommandDescriptor command)
 		{
-			return provider.Execute(command).AsEntitySet<City>(new CityMaterializer());
+			return provider.Execute(command).AsEntitySet<City>(new CityMaterializer()).ToList();
 		}
 	}
 

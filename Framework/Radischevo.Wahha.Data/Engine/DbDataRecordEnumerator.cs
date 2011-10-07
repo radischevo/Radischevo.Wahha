@@ -92,9 +92,12 @@ namespace Radischevo.Wahha.Data
 
         private void Dispose(bool disposing)
         {
-            IDisposable disp = (_enumerator as IDisposable);
-            if (disp != null)
-                disp.Dispose();
+			if (disposing)
+			{
+				IDisposable disp = (_enumerator as IDisposable);
+				if (disp != null)
+					disp.Dispose();
+			}
         }
         #endregion
 

@@ -11,7 +11,7 @@ namespace Radischevo.Wahha.Data
 	/// Represents the combined result set of a database query.
 	/// </summary>
 	[Serializable]
-	public sealed class DbQueryResult : IEnumerable<DbSubQueryResult>
+	public class DbQueryResult : IEnumerable<DbSubQueryResult>
 	{
 		#region Instance Fields
 		private ICollection<DbSubQueryResult> _results;
@@ -37,7 +37,7 @@ namespace Radischevo.Wahha.Data
 		/// Gets the number of independent subquery 
 		/// results in the result set.
 		/// </summary>
-		public int Count
+		public virtual int Count
 		{
 			get
 			{
@@ -63,7 +63,7 @@ namespace Radischevo.Wahha.Data
 		/// <summary>
 		/// Returns an enumerator that iterates through the collection.
 		/// </summary>
-		public IEnumerator<DbSubQueryResult> GetEnumerator()
+		public virtual IEnumerator<DbSubQueryResult> GetEnumerator()
 		{
 			return _results.GetEnumerator();
 		}

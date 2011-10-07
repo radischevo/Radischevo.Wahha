@@ -65,13 +65,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\InMemoryCacheProvider.cs" />
     <Compile Include="Configurations\DatabaseConfigurationElement.cs" />
     <Compile Include="Engine\DbDataRecord.cs" />
     <Compile Include="Engine\DbQueryResult.cs" />
     <Compile Include="Engine\DbQueryResultReader.cs" />
     <Compile Include="Engine\DbQueryResultRow.cs" />
     <Compile Include="Engine\DbDataRecordBase.cs" />
-    <Compile Include="Engine\DbQueryResultRowEnumerator.cs" />
     <Compile Include="Engine\DbSubQueryResult.cs" />
     <Compile Include="Extensions\AssociatorExtensions.cs" />
     <Compile Include="Caching\CacheProviderExtensions.cs" />
@@ -106,8 +106,8 @@
     <Compile Include="Materialization\Fluent.cs" />
     <Compile Include="Caching\CacheItemSelector.cs" />
     <Compile Include="Caching\CacheProvider.cs" />
-    <Compile Include="Caching\ICacheProvider.cs" />
-    <Compile Include="Caching\ITaggedCacheProvider.cs" />
+    <Compile Include="Interfaces\ICacheProvider.cs" />
+    <Compile Include="Interfaces\ITaggedCacheProvider.cs" />
     <Compile Include="Caching\NullCacheProvider.cs" />
     <Compile Include="Configurations\CacheConfigurationElement.cs" />
     <Compile Include="Configurations\CacheProviderConfigurationElement.cs" />

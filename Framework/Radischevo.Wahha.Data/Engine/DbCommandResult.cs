@@ -22,7 +22,7 @@ namespace Radischevo.Wahha.Data
 
         #region Constructors
 		/// <summary>
-        /// Creates a new instance of the 
+        /// Initializes a new instance of the 
 		/// <see cref="Radischevo.Wahha.Data.DbCommandResult"/> class.
         /// </summary>
         /// <param name="provider">The <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
@@ -33,7 +33,7 @@ namespace Radischevo.Wahha.Data
 		}
 
         /// <summary>
-        /// Creates a new instance of the 
+        /// Initializes a new instance of the 
 		/// <see cref="Radischevo.Wahha.Data.DbCommandResult"/> class.
         /// </summary>
         /// <param name="provider">The <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
@@ -79,6 +79,9 @@ namespace Radischevo.Wahha.Data
             }
         }
 
+		/// <summary>
+		/// Gets the command behaviour.
+		/// </summary>
 		public CommandBehavior Behavior
 		{
 			get
@@ -93,6 +96,11 @@ namespace Radischevo.Wahha.Data
         #endregion
 
 		#region Instance Methods
+		/// <summary>
+		/// Creates a new <see cref="System.Data.IDbCommand"/> to 
+		/// use with the current data provider and initializes 
+		/// its text, timeouts and parameters.
+		/// </summary>
 		protected virtual IDbCommand CreateCommand()
 		{
 			IDbCommand command = _provider.CreateCommand();
@@ -140,6 +148,12 @@ namespace Radischevo.Wahha.Data
 			}
 		}
 
+		/// <summary>
+		/// Executes the command against the specified data 
+		/// source and transforms its results using the specified converter.
+		/// </summary>
+		/// <typeparam name="TResult">The type of the execution result.</typeparam>
+		/// <param name="converter">The action to perform conversion with.</param>
 		protected virtual TResult Execute<TResult>(Func<IDbCommand, TResult> converter)
 		{
 			using (IDbCommand command = CreateCommand())
@@ -161,6 +175,11 @@ namespace Radischevo.Wahha.Data
             return this;
         }
 
+		/// <summary>
+		/// Sets the command behaviour, providing a description 
+		/// of the results of the query and its effect on the database.
+		/// </summary>
+		/// <param name="behavior">The target behaviour to set.</param>
 		public DbCommandResult Using(CommandBehavior behavior)
 		{
 			Behavior = behavior;
@@ -241,7 +260,7 @@ namespace Radischevo.Wahha.Data
         public IEnumerable<TEntity> AsEntitySet<TEntity>(Func<IDbDataRecord, TEntity> converter)
         {
             Precondition.Require(_command, () => Error.CommandIsNotInitialized());
-			return Execute((command) => DataReaderConverter(command, reader => 
+			return ExecuteOnce((command) => DataReaderConverter(command, reader => 
 				new ObjectReader<TEntity>(new DbQueryResultReader(reader), converter)));
         }
 
@@ -258,7 +277,7 @@ namespace Radischevo.Wahha.Data
 			Precondition.Require(_command, () => Error.CommandIsNotInitialized());
 			Precondition.Require(materializer, () => Error.ArgumentNull("materializer"));
 
-			return Execute((command) => DataReaderConverter(command, reader =>
+			return ExecuteOnce((command) => DataReaderConverter(command, reader =>
 				new ObjectReader<TEntity>(new DbQueryResultReader(reader), materializer.Materialize)));
 		}
         #endregion

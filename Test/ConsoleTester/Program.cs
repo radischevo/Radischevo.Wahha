@@ -20,6 +20,7 @@ using A = Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Data;
 using System.Linq.Expressions;
 using Radischevo.Wahha.Data.Serialization;
+using Radischevo.Wahha.Data.Caching;
 
 namespace ConsoleTester
 {
@@ -46,6 +47,8 @@ namespace ConsoleTester
 	class Program
 	{
 		static Random _random = new Random();
+		static InMemoryCacheProvider _cache = new InMemoryCacheProvider();
+		static object _consoleLock = new object();
 
 		static void Main(string[] args)
 		{
@@ -57,10 +60,67 @@ namespace ConsoleTester
 			//p.InheritanceTest();
 			//p.JsonTest();
 			//p.ValueSetTest();
-			p.ReaderTest();
-			p.DeserializeTest();
+			//p.ReaderTest();
+			//p.DeserializeTest();
+			//p.CacheTest();
+			p.MultithreadCacheTest();
 
 			Console.ReadKey();
+		}
+
+		public void CacheTest()
+		{
+			var operation = new SelectCitySubsetCommand(_cache, 0, 30);
+			using (var scope = new DbOperationScope())
+			{
+				var results = scope.Execute(operation);
+				Console.WriteLine("{0} cities selected", results.Count());
+
+				results = scope.Execute(operation);
+				Console.WriteLine("{0} cached cities selected", results.Count());
+
+				_cache.Invalidate("cities");
+
+				results = scope.Execute(operation);
+				Console.WriteLine("{0} after cached cities selected", results.Count());
+			}
+		}
+
+		public void MultithreadCacheTest()
+		{
+			Action first = () => {
+				var operation = new SelectCitySubsetCommand(_cache, 0, 100);
+				using (var scope = new DbOperationScope())
+				{
+					Thread.Sleep(40);
+					lock (_consoleLock)
+					{
+						var cities = scope.Execute(operation);
+
+						Console.WriteLine();
+						Console.WriteLine("PRINTING RESULTS");
+
+						Console.WriteLine("Stats => reads: {0}, writes: {1}, hits: {2}, misses: {3}, invalidates: {4}",
+							_cache.Reads, _cache.Writes, _cache.Hits, _cache.Misses / 2, _cache.Invalidations);
+					}
+				}
+			};
+			Action second = () => {
+				Thread.Sleep(78);
+				lock (_consoleLock)
+				{
+					_cache.Invalidate("cities");
+
+					Console.WriteLine();
+					Console.WriteLine("Cache INVALIDATED");
+					Console.WriteLine();
+				}
+			};
+			for (int i = 0; i < 50; ++i)
+			{
+				first.InvokeAndForget();
+				second.InvokeAndForget();
+			}
 		}
 
 		public void ReaderTest()

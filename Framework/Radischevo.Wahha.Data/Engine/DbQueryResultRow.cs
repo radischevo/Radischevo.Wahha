@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 
@@ -10,7 +11,7 @@ namespace Radischevo.Wahha.Data
 	/// Represents a single row of the database query result.
 	/// </summary>
 	[Serializable]
-	public sealed class DbQueryResultRow : DbDataRecordBase, IDbDataRecord
+	public class DbQueryResultRow : DbDataRecordBase, IDbDataRecord
 	{
 		#region Instance Fields
 		private DbFieldLookup _lookup;
@@ -91,13 +92,13 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Utility Methods
-		private void MarkAccessedKey(string name)
+		protected void MarkAccessedKey(string name)
 		{
 			if (!_accessedKeys.Contains(name))
 				_accessedKeys.Add(name);
 		}
 
-		private void MarkAccessedKey(int ordinal)
+		protected void MarkAccessedKey(int ordinal)
 		{
 			string name;
 			if (_lookup.TryGetName(ordinal, out name))

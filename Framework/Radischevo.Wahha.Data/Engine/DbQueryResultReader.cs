@@ -12,13 +12,79 @@ namespace Radischevo.Wahha.Data
 	/// </summary>
 	public sealed class DbQueryResultReader : DbDataRecordBase, IDbDataReader
 	{
+		#region Nested Types
+		private sealed class EnumeratorWrapper : IEnumerator<IDbDataRecord>, IEnumerator
+		{
+			#region Instance Fields
+			private IEnumerator<DbQueryResultRow> _enumerator;
+			#endregion
+
+			#region Constructors
+			public EnumeratorWrapper(IEnumerator<DbQueryResultRow> enumerator)
+			{
+				Precondition.Require(enumerator, () => 
+					Error.ArgumentNull("enumerator"));
+				_enumerator = enumerator;
+			}
+			#endregion
+
+			#region Instance Properties
+			public IDbDataRecord Current
+			{
+				get
+				{
+					return _enumerator.Current;
+				}
+			}
+			#endregion
+
+			#region Instance Methods
+			public bool MoveNext()
+			{
+				return _enumerator.MoveNext();
+			}
+
+			public void Reset()
+			{
+				_enumerator.Reset();
+			}
+
+			public void Dispose()
+			{
+				Dispose(true);
+				GC.SuppressFinalize(this);
+			}
+
+			private void Dispose(bool disposing)
+			{
+				if (disposing)
+				{
+					IDisposable d = (_enumerator as IDisposable);
+					if (d != null)
+						d.Dispose();
+				}
+			}
+			#endregion
+
+			#region IEnumerator Members
+			object IEnumerator.Current
+			{
+				get
+				{
+					return Current;
+				}
+			}
+			#endregion
+		}
+		#endregion
+
 		#region Instance Fields
 		private int _depth;
 		private int _recordsAffected;
 		private bool _isClosed;
 		private DbQueryResult _result;
 		private IEnumerator<DbSubQueryResult> _resultIterator;
-		private DbQueryResultRowEnumerator _rowIterator;
+		private IEnumerator<DbQueryResultRow> _rowIterator;
 		#endregion
 
 		#region Constructors
@@ -146,9 +212,9 @@ namespace Radischevo.Wahha.Data
 			EnsureReaderNotClosed("NextResult");
 			if (_resultIterator.MoveNext())
 			{
-				DbSubQueryResult current = _resultIterator.Current;
+				IEnumerable<DbQueryResultRow> current = _resultIterator.Current;
 				if (current != null)
-					_rowIterator = new DbQueryResultRowEnumerator(current);
+					_rowIterator = current.GetEnumerator();
 
 				return true;
 			}
@@ -358,7 +424,7 @@ namespace Radischevo.Wahha.Data
 			if (enumerator == null)
 				throw Error.ReaderIsEmpty();
 
-			return _rowIterator;
+			return new EnumeratorWrapper(enumerator);
 		}
 		#endregion
 

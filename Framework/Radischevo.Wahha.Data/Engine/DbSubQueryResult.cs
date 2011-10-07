@@ -11,7 +11,7 @@ namespace Radischevo.Wahha.Data
 	/// Represents a database query result.
 	/// </summary>
 	[Serializable]
-	public sealed class DbSubQueryResult : IEnumerable<DbQueryResultRow>, IEnumerable<IDbDataRecord>
+	public class DbSubQueryResult : IEnumerable<DbQueryResultRow>
 	{
 		#region Instance Fields
 		private ICollection<DbQueryResultRow> _rows;
@@ -37,7 +37,7 @@ namespace Radischevo.Wahha.Data
 		/// Gets the number of rows in the 
 		/// current result set.
 		/// </summary>
-		public int RowCount
+		public virtual int RowCount
 		{
 			get
 			{
@@ -73,23 +73,16 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		private DbQueryResultRowEnumerator GetEnumerator()
+		/// <summary>
+		/// Returns an enumerator that iterates through a collection.
+		/// </summary>
+		public virtual IEnumerator<DbQueryResultRow> GetEnumerator()
 		{
-			return new DbQueryResultRowEnumerator(_rows);
+			return _rows.GetEnumerator();
 		}
 		#endregion
 
 		#region IEnumerable Members
-		IEnumerator<DbQueryResultRow> IEnumerable<DbQueryResultRow>.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		IEnumerator<IDbDataRecord> IEnumerable<IDbDataRecord>.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();

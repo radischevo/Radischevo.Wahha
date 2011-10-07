@@ -4,7 +4,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Caching
 {
-    internal class CacheLockDictionary : ReaderWriterCache<string, object>
+    internal sealed class CacheLockDictionary : ReaderWriterCache<string, object>
     {
         #region Constructors
         public CacheLockDictionary()
@@ -13,7 +13,7 @@ namespace Radischevo.Wahha.Web.Caching
         #endregion
 
         #region Instance Methods
-        internal object Get(string key)
+        public object Get(string key)
         {
             return base.GetOrCreate(key, () => new object());
         }

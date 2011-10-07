@@ -65,8 +65,11 @@ namespace Radischevo.Wahha.Data
 
         private void Dispose(bool disposing) 
         {
-            if (_reader != null)
-                _reader.Dispose();
+			if (disposing)
+			{
+				if (_reader != null)
+					_reader.Dispose();
+			}
         }
 
         public bool MoveNext()
