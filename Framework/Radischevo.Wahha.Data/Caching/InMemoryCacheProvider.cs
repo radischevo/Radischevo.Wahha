@@ -173,11 +173,6 @@ namespace Radischevo.Wahha.Data.Caching
 		private ReaderWriterLockSlim _entriesLock;
 		private ReaderWriterLockSlim _tagsLock;
 		private Func<DateTime> _dateAccessor;
-		private long _hits;
-		private long _misses;
-		private long _writes;
-		private long _reads;
-		private long _invalidations;
 		#endregion
 
 		#region Constructors
@@ -205,46 +200,6 @@ namespace Radischevo.Wahha.Data.Caching
 				{
 					_entriesLock.ExitReadLock();
 				}
-			}
-		}
-
-		public long Reads
-		{
-			get
-			{
-				return _reads;
-			}
-		}
-
-		public long Writes
-		{
-			get
-			{
-				return _writes;
-			}
-		}
-
-		public long Hits
-		{
-			get
-			{
-				return _hits;
-			}
-		}
-
-		public long Misses
-		{
-			get
-			{
-				return _misses;
-			}
-		}
-
-		public long Invalidations
-		{
-			get
-			{
-				return _invalidations;
 			}
 		}
 		#endregion
@@ -324,12 +279,8 @@ namespace Radischevo.Wahha.Data.Caching
 			if (_entries.TryGetValue(key, out entry))
 			{
 				if (ValidateEntryExpiration(entry))
-				{
-					Interlocked.Increment(ref _hits);
 					return true;
-				}
 			}
-			Interlocked.Increment(ref _misses);
 			return false;
 		}
 
@@ -341,17 +292,13 @@ namespace Radischevo.Wahha.Data.Caching
 		{
 			Precondition.Defined(key, () => Error.ArgumentNull("key"));
 
-			Interlocked.Increment(ref _reads);
 			_entriesLock.EnterReadLock();
 			try
 			{
 				CacheEntry entry;
 				if (_entries.TryGetValue(key, out entry))
-				{
-					Interlocked.Increment(ref _hits);
 					return Converter.ChangeType<T>(entry.Value);
-				}
-				Interlocked.Increment(ref _misses);
+				
 				return default(T);
 			}
 			finally
@@ -371,7 +318,6 @@ namespace Radischevo.Wahha.Data.Caching
 			Precondition.Defined(key, () => Error.ArgumentNull("key"));
 			Precondition.Require(selector, () => Error.ArgumentNull("selector"));
 
-			Interlocked.Increment(ref _reads);
 			_entriesLock.EnterUpgradeableReadLock();
 			try
 			{
@@ -382,11 +328,8 @@ namespace Radischevo.Wahha.Data.Caching
 					try
 					{
 						if (!TryGetEntryAndValidate(key, out entry))
-						{
-							Interlocked.Increment(ref _writes);
 							_entries[key] = entry = new CacheEntry(key, selector(),
 								expiration, CreateEntryTags(tags));
-						}
 					}
 					finally
 					{
@@ -415,7 +358,6 @@ namespace Radischevo.Wahha.Data.Caching
 				CacheEntry entry;
 				if (!TryGetEntryAndValidate(key, out entry))
 				{
-					Interlocked.Increment(ref _writes);
 					_entries[key] = entry = new CacheEntry(key, value,
 						expiration, CreateEntryTags(tags));
 
@@ -440,7 +382,6 @@ namespace Radischevo.Wahha.Data.Caching
 			_entriesLock.EnterWriteLock();
 			try
 			{
-				Interlocked.Increment(ref _writes);
 				_entries[key] = new CacheEntry(key, value, 
 					expiration, CreateEntryTags(tags));
 			}
@@ -456,7 +397,6 @@ namespace Radischevo.Wahha.Data.Caching
 			_entriesLock.EnterWriteLock();
 			try
 			{
-				Interlocked.Increment(ref _writes);
 				_entries.Remove(key);
 			}
 			finally
@@ -473,8 +413,6 @@ namespace Radischevo.Wahha.Data.Caching
 			try
 			{
 				DateTime time = _dateAccessor();
-				Interlocked.Increment(ref _invalidations);
-
 				foreach (string value in tags)
 					_tags[value] = new CacheTag(value, time.ToFileTimeUtc());
 			}

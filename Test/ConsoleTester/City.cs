@@ -5,6 +5,7 @@ using System.Text;
 using Radischevo.Wahha.Data;
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Data.Caching;
+using System.Threading;
 
 namespace ConsoleTester
 {
