@@ -4,9 +4,17 @@ using System.Net;
 namespace Radischevo.Wahha.Web.Mvc
 {
     public class HttpNotFoundResult : HttpStatusResult
-    {
-        public HttpNotFoundResult(bool throwError)
+	{
+		#region Constructors
+		public HttpNotFoundResult()
+			: this(false)
+		{
+		}
+
+		public HttpNotFoundResult(bool throwError)
             : base(HttpStatusCode.NotFound, "Not Found", throwError)
-        {   }
-    }
+        {
+		}
+		#endregion
+	}
 }

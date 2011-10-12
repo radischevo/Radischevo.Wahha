@@ -13,8 +13,26 @@ namespace Radischevo.Wahha.Web.Mvc
         private Encoding _contentEncoding;
         #endregion
 
-        #region Instance Properties
-        public string Script
+		#region Constructors
+		public JavaScriptResult()
+			: this(null, null)
+		{
+		}
+
+		public JavaScriptResult(string script)
+			: this(script, null)
+		{
+		}
+
+		public JavaScriptResult(string script, Encoding contentEncoding)
+		{
+			_script = script;
+			_contentEncoding = contentEncoding;
+		}
+		#endregion
+
+		#region Instance Properties
+		public string Script
         {
             get
             {
@@ -43,14 +61,16 @@ namespace Radischevo.Wahha.Web.Mvc
         public override void Execute(ControllerContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-            HttpResponseBase response = context.Context.Response;
+			if (context.IsChild)
+				throw Error.CannotExecuteResultInChildAction();
 
+            HttpResponseBase response = context.Context.Response;
             response.ContentType = "application/x-javascript";
             
             if (_contentEncoding != null)
                 response.ContentEncoding = _contentEncoding;
             
-            if (_script != null)
+            if (!String.IsNullOrEmpty(_script))
                 response.Write(_script);
         }
         #endregion

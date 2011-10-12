@@ -11,9 +11,33 @@ namespace Radischevo.Wahha.Web.Mvc
     {
         #region Constructors
         public ViewResult()
-            : base()
+            : this(String.Empty, null)
         {
         }
+
+		public ViewResult(string viewName)
+			: this(viewName, null)
+		{
+		}
+
+		public ViewResult(IView view)
+			: this(view, null)
+		{
+		}
+
+		public ViewResult(string viewName, ViewDataDictionary viewData)
+			: base()
+		{
+			ViewName = viewName;
+			ViewData = viewData;
+		}
+
+		public ViewResult(IView view, ViewDataDictionary viewData)
+			: base()
+		{
+			View = view;
+			ViewData = viewData;
+		}
         #endregion
 
         #region Instance Methods

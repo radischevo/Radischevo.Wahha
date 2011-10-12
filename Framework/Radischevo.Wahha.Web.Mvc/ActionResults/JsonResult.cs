@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Radischevo.Wahha.Core;
@@ -19,11 +20,42 @@ namespace Radischevo.Wahha.Web.Mvc
         private Encoding _contentEncoding;
         private string _contentType;
         private SerializationFormat _format;
-        private IEnumerable<JavaScriptConverter> _converters;
+        private List<JavaScriptConverter> _converters;
         #endregion
 
-        #region Instance Properties
-        public object Data
+		#region Constructors
+		public JsonResult()
+			: this(null, null, null, SerializationFormat.Json, null)
+		{
+		}
+
+		public JsonResult(object data)
+			: this(data, null, null, SerializationFormat.Json, null)
+		{
+		}
+
+		public JsonResult(object data, string contentType,
+			Encoding contentEncoding, SerializationFormat format)
+			: this(data, contentType, contentEncoding, format, null)
+		{
+		}
+
+		public JsonResult(object data, string contentType,
+			Encoding contentEncoding, SerializationFormat format, 
+			IEnumerable<JavaScriptConverter> converters)
+		{
+			_converters = new List<JavaScriptConverter>(
+				converters ?? Enumerable.Empty<JavaScriptConverter>());
+
+			_data = data;
+			_contentType = contentType;
+			_contentEncoding = contentEncoding;
+			_format = format;
+		}
+		#endregion
+
+		#region Instance Properties
+		public object Data
         {
             get
             {
@@ -71,15 +103,11 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public IEnumerable<JavaScriptConverter> Converters
+        public ICollection<JavaScriptConverter> Converters
         {
             get
             {
                 return _converters;
-            }
-            set
-            {
-                _converters = value;
             }
         }
         #endregion
@@ -94,15 +122,16 @@ namespace Radischevo.Wahha.Web.Mvc
         public override void Execute(ControllerContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
+			if (context.IsChild)
+				throw Error.CannotExecuteResultInChildAction();
+
             HttpResponseBase response = context.Context.Response;
+            string callbackFunction = context.Context.Request
+				.Parameters.GetValue<string>("callback");
 
-            string callbackFunction = context.Context.Request.Parameters.GetValue<string>("callback");
             string data = String.Empty;
-
-            if (!String.IsNullOrEmpty(_contentType))
-                response.ContentType = _contentType;
-            else
-                response.ContentType = _defaultContentType;
+            response.ContentType = (String.IsNullOrEmpty(_contentType)) 
+				? _defaultContentType : _contentType;
             
             if (_contentEncoding != null) 
                 response.ContentEncoding = _contentEncoding;
@@ -111,14 +140,12 @@ namespace Radischevo.Wahha.Web.Mvc
             {
                 #pragma warning disable 0618
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                if (_converters != null)
-                    serializer.RegisterConverters(_converters);
-
+                serializer.RegisterConverters(_converters);
                 data = serializer.Serialize(_data, _format);
                 #pragma warning restore 0618
             }
             response.Write(String.IsNullOrEmpty(callbackFunction) ? data 
-                : String.Format("if(typeof {0} === 'function') { {0}({1}); }", 
+                : String.Format("if(typeof {0}==='function'){{0}({1});}", 
                     callbackFunction, data));
         }
         #endregion

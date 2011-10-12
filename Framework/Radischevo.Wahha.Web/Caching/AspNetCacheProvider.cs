@@ -10,9 +10,28 @@ using Radischevo.Wahha.Data.Caching;
 namespace Radischevo.Wahha.Web.Caching
 {
     public class AspNetCacheProvider : ITaggedCacheProvider
-    {
-        #region Constants
-        private const string _tagKeyPrefix = "__SYS-CACHE-TAG:";
+	{
+		#region Nested Types
+		private sealed class CacheLockDictionary : ReaderWriterCache<string, object>
+		{
+			#region Constructors
+			public CacheLockDictionary()
+				: base()
+			{
+			}
+			#endregion
+
+			#region Instance Methods
+			public object Get(string key)
+			{
+				return base.GetOrCreate(key, () => new object());
+			}
+			#endregion
+		}
+		#endregion
+
+		#region Constants
+		private const string _tagKeyPrefix = "__SYS-CACHE-TAG:";
         #endregion
 
         #region Static Fields
@@ -58,7 +77,7 @@ namespace Radischevo.Wahha.Web.Caching
             if (tags == null || !tags.Any())
                 return null;
 
-            long version = DateTime.UtcNow.Ticks;
+			long version = DateTime.Now.ToFileTimeUtc();
 			foreach (string tag in tags)
 			{
                 cache.Add(CreateTagStoreKey(tag), version, null,
@@ -81,7 +100,7 @@ namespace Radischevo.Wahha.Web.Caching
             if (tags == null)
                 return;
 
-            long version = DateTime.UtcNow.Ticks;
+			long version = DateTime.Now.ToFileTimeUtc();
 			foreach (string tag in tags)
 			{
 				Cache.Insert(CreateTagStoreKey(tag), version, null,

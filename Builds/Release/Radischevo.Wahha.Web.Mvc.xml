@@ -708,6 +708,11 @@
               Looks up a localized string similar to Cannot call instance method &apos;{0}&apos; on non-controller type &apos;{1}&apos;..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CannotExecuteResultInChildAction">
+            <summary>
+              Looks up a localized string similar to Child actions are not allowed to return results of this type..
+            </summary>
+        </member>
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.Error_CannotRedirectFromChildAction">
             <summary>
               Looks up a localized string similar to Child actions are not allowed to perform redirects..
@@ -1001,21 +1006,6 @@
         <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.String_NumberDataTypeRule">
             <summary>
               Looks up a localized string similar to number.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.String_TriState_No">
-            <summary>
-              Looks up a localized string similar to No.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.String_TriState_NotSet">
-            <summary>
-              Looks up a localized string similar to Not set.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.Resources.Resources.String_TriState_Yes">
-            <summary>
-              Looks up a localized string similar to Yes.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.TempDataDictionary.GetValue``1(System.String,``0,System.IFormatProvider)">

@@ -29,13 +29,21 @@ namespace Radischevo.Wahha.Web.Mvc
         }
 
         public XmlResult(object data)
-            : this(data, null)
+            : this(data, null, null)
         {
         }
 
-        public XmlResult(object data, params Type[] includedTypes)
+		public XmlResult(object data, string contentType)
+			: this(data, contentType, null)
+		{
+		}
+
+        public XmlResult(object data, string contentType, 
+			Encoding contentEncoding, params Type[] includedTypes)
         {
             _data = data;
+			_contentType = contentType;
+			_contentEncoding = contentEncoding;
             _includedTypes = includedTypes ?? new Type[] { typeof(object) };
         }
         #endregion
@@ -82,12 +90,12 @@ namespace Radischevo.Wahha.Web.Mvc
         public override void Execute(ControllerContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
-            HttpResponseBase response = context.Context.Response;
+			if (context.IsChild)
+				throw Error.CannotExecuteResultInChildAction();
 
-            if (!String.IsNullOrEmpty(_contentType))
-                response.ContentType = _contentType;
-            else
-                response.ContentType = _defaultContentType;
+            HttpResponseBase response = context.Context.Response;
+            response.ContentType = (String.IsNullOrEmpty(_contentType)) 
+				? _defaultContentType : _contentType;
 
             if (_contentEncoding != null)
                 response.ContentEncoding = _contentEncoding;

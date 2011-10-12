@@ -30,7 +30,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         public StaticFileResult(string path,
             string fileName, string contentType, 
-            Encoding contentEncoding) : base()
+            Encoding contentEncoding) 
+			: base()
         {
             Precondition.Defined(path, () => Error.ArgumentNull("path"));
 

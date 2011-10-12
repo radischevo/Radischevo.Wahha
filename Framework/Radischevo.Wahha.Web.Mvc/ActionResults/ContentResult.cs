@@ -14,8 +14,33 @@ namespace Radischevo.Wahha.Web.Mvc
         private string _contentType;
         #endregion
 
-        #region Instance Properties
-        public string Content
+		#region Constructors
+		public ContentResult()
+			: this(null, null, null)
+		{
+		}
+
+		public ContentResult(string content)
+			: this(content, null, null)
+		{
+		}
+
+		public ContentResult(string content, string contentType)
+			: this(content, contentType, null)
+		{
+		}
+
+		public ContentResult(string content, 
+			string contentType, Encoding contentEncoding)
+		{
+			_content = content;
+			_contentType = contentType;
+			_contentEncoding = contentEncoding;
+		}
+		#endregion
+
+		#region Instance Properties
+		public string Content
         {
             get
             {
@@ -64,7 +89,7 @@ namespace Radischevo.Wahha.Web.Mvc
             if (_contentEncoding != null)
                 response.ContentEncoding = _contentEncoding;
             
-            if (_content != null)
+            if (!String.IsNullOrEmpty(_content))
                 response.Write(_content);
         }
         #endregion

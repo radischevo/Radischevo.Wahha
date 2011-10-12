@@ -256,12 +256,7 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual ContentResult Content(string content, 
             string contentType, Encoding contentEncoding)
         {
-            return new ContentResult()
-            {
-                Content = content,
-                ContentType = contentType,
-                ContentEncoding = contentEncoding
-            };
+            return new ContentResult(content, contentType, contentEncoding);
         }
 
         /// <summary>
@@ -334,12 +329,8 @@ namespace Radischevo.Wahha.Web.Mvc
             string contentType, Encoding contentEncoding, 
             IEnumerable<JavaScriptConverter> converters)
         {
-            return new JsonResult() {
-                Data = data,
-                ContentType = contentType,
-                ContentEncoding = contentEncoding,
-                Converters = converters
-            };
+            return new JsonResult(data, contentType, contentEncoding, 
+				SerializationFormat.Json, converters);
         }
 
         /// <summary>
@@ -428,13 +419,12 @@ namespace Radischevo.Wahha.Web.Mvc
         protected virtual ActionResult Route(string routeName, 
             ValueDictionary values, string suffix)
         {
-			values = values ?? new ValueDictionary();
+			VirtualPathData vp = RouteTable.Routes.GetVirtualPath(Context, 
+				routeName, values ?? new ValueDictionary());
+			if (vp == null)
+				return EmptyResult.Instance;
 
-            VirtualPathData vp = RouteTable.Routes.GetVirtualPath(Context, routeName, values);
-            if (vp != null)
-                return new RedirectResult(String.Concat(vp.VirtualPath, suffix));
-
-            return EmptyResult.Instance;
+            return new RedirectResult(String.Concat(vp.VirtualPath, suffix));
         }
 
 		protected ActionResult Route<TController>(

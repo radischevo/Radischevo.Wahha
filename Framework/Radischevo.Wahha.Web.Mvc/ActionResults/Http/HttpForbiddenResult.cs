@@ -4,9 +4,17 @@ using System.Net;
 namespace Radischevo.Wahha.Web.Mvc
 {
     public class HttpForbiddenResult : HttpStatusResult
-    {
-        public HttpForbiddenResult(bool throwError)
-            : base(HttpStatusCode.Forbidden, "Forbidden", throwError)
-        {   }
+	{
+		#region Constructors
+		public HttpForbiddenResult()
+			: this(false)
+		{
+		}
+
+		public HttpForbiddenResult(bool throwError)
+			: base(HttpStatusCode.Forbidden, "Forbidden", throwError)
+		{
+		}
+		#endregion		
     }
 }

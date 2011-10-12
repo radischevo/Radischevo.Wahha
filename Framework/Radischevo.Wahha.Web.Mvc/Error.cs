@@ -405,5 +405,11 @@ namespace Radischevo.Wahha.Web.Mvc
 			return new ArgumentException(String.Format(
 				Res.Error_IncompatibleFilterProviderType, type.Name));
 		}
+
+		internal static Exception CannotExecuteResultInChildAction()
+		{
+			return new InvalidOperationException(
+				Res.Error_CannotExecuteResultInChildAction);
+		}
 	}
 }

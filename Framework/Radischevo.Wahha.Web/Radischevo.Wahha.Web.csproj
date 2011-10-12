@@ -91,7 +91,6 @@
     <Compile Include="Abstractions\Implementation\HttpSessionStateWrapper.cs" />
     <Compile Include="Abstractions\Implementation\HttpStaticObjectsCollectionWrapper.cs" />
     <Compile Include="Caching\AspNetCacheProvider.cs" />
-    <Compile Include="Caching\CacheLockDictionary.cs" />
     <Compile Include="Compilation\BuildManagerWrapper.cs" />
     <Compile Include="Compilation\IBuildManager.cs" />
     <Compile Include="Error.cs" />

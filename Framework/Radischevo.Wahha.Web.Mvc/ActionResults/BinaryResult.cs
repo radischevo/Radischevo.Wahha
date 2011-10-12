@@ -66,6 +66,8 @@ namespace Radischevo.Wahha.Web.Mvc
         public override void Execute(ControllerContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
+			if (context.IsChild)
+				throw Error.CannotExecuteResultInChildAction();
 
             if (!String.IsNullOrEmpty(_contentType))
                 context.Context.Response.ContentType = ContentType;

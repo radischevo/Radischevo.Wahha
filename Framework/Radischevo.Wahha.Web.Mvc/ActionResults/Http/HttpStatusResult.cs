@@ -7,42 +7,93 @@ using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-    public abstract class HttpStatusResult : EmptyResult
+    public class HttpStatusResult : EmptyResult
     {
         #region Instance Fields
-        private HttpStatusCode _statusCode;
+        private int _statusCode;
         private string _message;
-        private bool _throwError;
+		private ValueDictionary _headers;
         #endregion
 
         #region Constructors
-        protected HttpStatusResult(HttpStatusCode statusCode,
-            string message, bool throwError)
+		public HttpStatusResult(HttpStatusCode statusCode, string message)
+			: this(statusCode, message, null)
+		{
+		}
+
+		public HttpStatusResult(int statusCode, string message)
+			: this(statusCode, message, null)
+		{
+		}
+
+		public HttpStatusResult(HttpStatusCode statusCode, string message, object headers)
+			: this((int)statusCode, message, new ValueDictionary(headers))
+		{
+		}
+
+		public HttpStatusResult(int statusCode, string message, object headers)
+			: this(statusCode, message, new ValueDictionary(headers))
+		{
+		}
+
+		public HttpStatusResult(HttpStatusCode statusCode, string message, IValueSet headers)
+			: this((int)statusCode, message, headers)
+		{
+		}
+
+        public HttpStatusResult(int statusCode, string message, IValueSet headers)
         {
+			Precondition.Require(statusCode > 0,
+				() => Error.ArgumentOutOfRange("statusCode"));
+
             _statusCode = statusCode;
             _message = message;
-            _throwError = throwError;
+			_headers = new ValueDictionary(headers);
         }
         #endregion
 
-        #region Instance Methods
-        public override void Execute(ControllerContext context)
+		#region Instance Properties
+		public int StatusCode
+		{
+			get
+			{
+				return _statusCode;
+			}
+		}
+
+		public string Message
+		{
+			get
+			{
+				return _message;
+			}
+		}
+
+		public ValueDictionary Headers
+		{
+			get
+			{
+				return _headers;
+			}
+		}
+		#endregion
+
+		#region Instance Methods
+		public override void Execute(ControllerContext context)
         {
             Precondition.Require(context, () => Error.ArgumentNull("context"));
+			if (context.IsChild)
+				throw Error.CannotExecuteResultInChildAction();
+
             HttpResponseBase response = context.Context.Response;
 
-            response.Clear();
+			response.Clear();
+            response.StatusCode = StatusCode;
+            response.StatusDescription = Message ?? String.Empty;
+			response.TrySkipIisCustomErrors = true;
 
-            if (_throwError)
-            {
-                throw new HttpException((int)_statusCode, _message ?? String.Empty);
-            }
-            else
-            {
-                response.StatusCode = (int)_statusCode;
-                response.StatusDescription = _message ?? String.Empty;
-				response.TrySkipIisCustomErrors = true;
-            }
+			foreach (string key in Headers.Keys)
+				response.AppendHeader(key, Headers.GetValue<string>(key));
         }
         #endregion
     }
