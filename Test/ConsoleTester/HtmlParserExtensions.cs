@@ -99,7 +99,8 @@ namespace ConsoleTester
 				if (!Uri.TryCreate("http://" + location, UriKind.Absolute, out uri))
 					return null;
 
-			if (!uri.Host.EndsWith(domain, StringComparison.OrdinalIgnoreCase))
+			if ((uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps) 
+				&& !uri.Host.EndsWith(domain, StringComparison.OrdinalIgnoreCase))
 			{
 				if (!String.IsNullOrEmpty(redirect))
 					element.SetAttribute("href", String.Format("{0}?url={1}", redirect, 
@@ -170,7 +171,7 @@ namespace ConsoleTester
 						element.InnerText.Length > 30)
 					{
 						element.SetAttribute("title", element.InnerText);
-						element.InnerXml = element.InnerText.Substring(0, 30) + "…";
+						element.InnerText = element.InnerText.Substring(0, 30) + "…";
 					}
 					return context.CrossDomainLink(element);
 				})

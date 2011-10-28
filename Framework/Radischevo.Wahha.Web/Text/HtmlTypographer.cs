@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -301,7 +302,7 @@ namespace Radischevo.Wahha.Web.Text
         {
             if (Settings.ExtractLinks && Char.IsLetter(ch) && (
                 _input.Match("http://") || _input.Match("https://") ||
-                _input.Match("ftp://") || _input.Match("mailto://") ||
+                _input.Match("ftp://") || _input.Match("mailto:") ||
                 _input.Match("www.")))
             {
                 StringBuilder lb = new StringBuilder();
@@ -321,29 +322,27 @@ namespace Radischevo.Wahha.Web.Text
                 while (_input.Read());
 
                 // отдаем обратно не буквы-цифры и слеши
-                while (lb.Length > 0 && !(Char.IsLetterOrDigit(lb[lb.Length - 1]) 
-                    || lb[lb.Length - 1] == '/'))
+                while (lb.Length > 0 && Char.IsPunctuation(lb[lb.Length - 1]))
                 {
                     lb.Length--;
                     _input.Position--;
                 }
 
                 url = (lb[0] == 'w') ? "http://" + lb.ToString() : lb.ToString();
-                if (url.Length - url.IndexOf("://") < 4) // это ссылка в никуда
-                    _output.Append(lb.ToString());
-                else
-                {
-                    Uri uri = new Uri(url, UriKind.RelativeOrAbsolute);
-                    if (uri.IsAbsoluteUri && String.Equals(uri.Scheme, "mailto",
-                        StringComparison.OrdinalIgnoreCase))
-                        lb.Remove(0, 9);
+                Uri uri;
+				if (Uri.TryCreate(url, UriKind.Absolute, out uri))
+				{
+					if (String.Equals(uri.Scheme, "mailto", StringComparison.OrdinalIgnoreCase))
+						lb.Remove(0, 7);
 
-                    HtmlElementBuilder tag = new HtmlElementBuilder("a");
-                    tag.Attributes["href"] = uri.OriginalString;
-                    
-                    tag.InnerHtml = lb.ToString();
-                    Write(FormatElement(tag, HtmlElementRenderMode.Normal));
-                }
+					HtmlElementBuilder tag = new HtmlElementBuilder("a");
+					tag.Attributes["href"] = uri.OriginalString;
+					tag.InnerHtml = SecurityElement.Escape(lb.ToString());
+
+					Write(FormatElement(tag, HtmlElementRenderMode.Normal));
+				}
+				else
+					_output.Append(lb.ToString());
             }
             else if (Char.IsWhiteSpace(ch))
             {
