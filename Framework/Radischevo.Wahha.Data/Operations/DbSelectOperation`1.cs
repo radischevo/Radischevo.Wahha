@@ -58,7 +58,7 @@ namespace Radischevo.Wahha.Data
 		protected override IEnumerable<TEntity> ExecuteCommand(DbOperationContext context, 
 			DbCommandDescriptor command)
 		{
-			return context.DataProvider.Execute(command).AsDataReader(reader => {
+			return context.Provider.Execute(command).AsDataReader(reader => {
 				List<TEntity> collection = new List<TEntity>(BufferSize);
 				while (reader.Read())
 					collection.Add(Materializer.Materialize(reader));

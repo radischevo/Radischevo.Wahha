@@ -5,6 +5,9 @@ using Radischevo.Wahha.Data.Caching;
 
 namespace Radischevo.Wahha.Data
 {
+	/// <summary>
+	/// Represents the context of the database operation.
+	/// </summary>
 	public abstract class DbOperationContext
 	{
 		#region Constructors
@@ -23,17 +26,17 @@ namespace Radischevo.Wahha.Data
 		/// gets the <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
 		/// used to perform database queries.
 		/// </summary>
-		public abstract IDbDataProvider DataProvider
+		public abstract IDbDataProvider Provider
 		{
 			get;
 		}
 
 		/// <summary>
 		/// When overridden in a derived class, 
-		/// gets the <see cref="Radischevo.Wahha.Data.Caching.IScopedCacheProvider"/> 
+		/// gets the <see cref="Radischevo.Wahha.Data.Caching.ITaggedCacheProvider"/> 
 		/// used to access the application cache within a scope.
 		/// </summary>
-		public abstract ITaggedCacheProvider CacheProvider
+		public abstract ITaggedCacheProvider Cache
 		{
 			get;
 		}

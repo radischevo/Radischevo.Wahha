@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Data.Configurations;
 using Radischevo.Wahha.Data.Caching;
+using Radischevo.Wahha.Data.Configurations;
 
 namespace Radischevo.Wahha.Data
 {
@@ -14,9 +15,118 @@ namespace Radischevo.Wahha.Data
 	/// </summary>
 	public class DbOperationScope : DbOperationContext, IDisposable
 	{
+		#region Nested Types
+		private sealed class ScopedCacheProvider : ITaggedCacheProvider
+		{
+			#region Instance Fields
+			private bool _disposed;
+			private readonly ITaggedCacheProvider _provider;
+			private readonly HashSet<string> _invalidations;
+			private readonly List<Action<ITaggedCacheProvider>> _deferredActions;
+			#endregion
+
+			#region Constructors
+			public ScopedCacheProvider(ITaggedCacheProvider provider)
+			{
+				Precondition.Require(provider, () => Error.ArgumentNull("provider"));
+
+				_provider = provider;
+				_invalidations = new HashSet<string>();
+				_deferredActions = new List<Action<ITaggedCacheProvider>>();
+			}
+			#endregion
+
+			#region Instance Methods
+			private void Init(IValueSet settings)
+			{
+			}
+
+			public void Commit()
+			{
+				try
+				{
+					foreach (Action<ITaggedCacheProvider> action in _deferredActions)
+						action(_provider);
+				}
+				finally
+				{
+					Rollback();
+				}
+			}
+
+			public void Rollback()
+			{
+				_deferredActions.Clear();
+				_invalidations.Clear();
+			}
+
+			public void Invalidate(IEnumerable<string> tags)
+			{
+				Precondition.Require(tags, () => Error.ArgumentNull("tags"));
+
+				_deferredActions.Add(a => a.Invalidate(tags));
+				_invalidations.UnionWith(tags);
+			}
+
+			public T Get<T>(string key)
+			{
+				return _provider.Get<T>(key);
+			}
+
+			public T Get<T>(string key, CacheItemSelector<T> selector, DateTime expiration)
+			{
+				return _provider.Get<T>(key, selector, expiration);
+			}
+
+			public T Get<T>(string key, CacheItemSelector<T> selector,
+				DateTime expiration, IEnumerable<string> tags)
+			{
+				Precondition.Require(selector, () => Error.ArgumentNull("selector"));
+				if (tags != null && _invalidations.Overlaps(tags))
+					return selector();
+
+				return _provider.Get(key, selector, expiration, tags);
+			}
+
+			public bool Add<T>(string key, T value, DateTime expiration)
+			{
+				return Add(key, value, expiration, null);
+			}
+
+			public bool Add<T>(string key, T value, DateTime expiration, IEnumerable<string> tags)
+			{
+				_deferredActions.Add(a => a.Add(key, value, expiration, tags));
+				return true;
+			}
+
+			public void Insert<T>(string key, T value, DateTime expiration)
+			{
+				Insert(key, value, expiration, null);
+			}
+
+			public void Insert<T>(string key, T value, DateTime expiration, IEnumerable<string> tags)
+			{
+				_deferredActions.Add(a => a.Insert(key, value, expiration, tags));
+			}
+
+			public void Remove(string key)
+			{
+				_deferredActions.Add(a => a.Remove(key));
+			}
+			#endregion
+
+			#region Interface Implementation
+			void ICacheProvider.Init(IValueSet settings)
+			{
+				Init(settings);
+			}
+			#endregion
+		}
+		#endregion
+
 		#region Instance Fields
-		private IDbDataProvider _dataProvider;
-		private DbOperationScopeCacheProvider _cacheProvider;
+		private IDbDataProvider _provider;
+		private ScopedCacheProvider _cache;
 		private IsolationLevel _isolationLevel;
 		private bool _transactionActive;
 		private bool _hasOwnedContext;
@@ -40,21 +150,22 @@ namespace Radischevo.Wahha.Data
 		public DbOperationScope(IDbDataProviderFactory factory)
 			: this(CreateProvider(factory))
 		{
+			_hasOwnedContext = true;
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.DbOperationScope"/> class.
 		/// </summary>
-		/// <param name="dataProvider">The <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
+		/// <param name="provider">The <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
 		/// used to perform database queries.</param>
-		public DbOperationScope(IDbDataProvider dataProvider)
+		public DbOperationScope(IDbDataProvider provider)
 			: base()
 		{
-			Precondition.Require(dataProvider, () => 
-				Error.ArgumentNull("dataProvider"));
+			Precondition.Require(provider, () => 
+				Error.ArgumentNull("provider"));
 
-			_dataProvider = dataProvider;
-			_cacheProvider = new DbOperationScopeCacheProvider(Caching.CacheProvider.Instance);
+			_provider = provider;
+			_cache = new ScopedCacheProvider(CacheProvider.Instance);
 			_isolationLevel = IsolationLevel.ReadCommitted;
 		}
 		#endregion
@@ -64,23 +175,25 @@ namespace Radischevo.Wahha.Data
 		/// Gets the <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
 		/// used to perform database queries.
 		/// </summary>
-		public override IDbDataProvider DataProvider
+		public override IDbDataProvider Provider
 		{
 			get
 			{
-				return _dataProvider;
+				return _provider;
 			}
 		}
 
 		/// <summary>
-		/// Gets the <see cref="Radischevo.Wahha.Data.Caching.IScopedCacheProvider"/> 
+		/// Gets the <see cref="Radischevo.Wahha.Data.Caching.ITaggedCacheProvider"/> 
 		/// used to access the application cache within a scope.
 		/// </summary>
-		public override ITaggedCacheProvider CacheProvider
+		public override ITaggedCacheProvider Cache
 		{
 			get
 			{
-				return _cacheProvider;
+				// cache scope can only be accessed within a transaction.
+				EnsureTransaction(); 
+				return _cache;
 			}
 		}
 
@@ -101,7 +214,6 @@ namespace Radischevo.Wahha.Data
 						throw Error.CouldNotSetIsolationLevelAfterInitialize();
 
 					_isolationLevel = value;
-					_cacheProvider.AllowDirtyWrites = (value == IsolationLevel.ReadUncommitted);
 				}
 			}
 		}
@@ -125,7 +237,7 @@ namespace Radischevo.Wahha.Data
 		{
 			if (!_transactionActive)
 			{
-				_dataProvider.BeginTransaction(_isolationLevel);
+				_provider.BeginTransaction(_isolationLevel);
 				_transactionActive = true;
 			}
 		}
@@ -138,13 +250,14 @@ namespace Radischevo.Wahha.Data
 		/// the disposal is called explicitly.</param>
 		protected virtual void Dispose(bool disposing)
 		{
-			Commit();
-
-			if (disposing && _hasOwnedContext)
+			if (disposing)
 			{
-				IDisposable disposable = (_dataProvider as IDisposable);
-				if (disposable != null)
-					disposable.Dispose();
+				if (_hasOwnedContext)
+				{
+					IDisposable disposable = (_provider as IDisposable);
+					if (disposable != null)
+						disposable.Dispose();
+				}
 			}
 		}
 
@@ -199,8 +312,8 @@ namespace Radischevo.Wahha.Data
 		{
 			if (_transactionActive)
 			{
-				_dataProvider.Commit();
-				_cacheProvider.Commit();
+				_provider.Commit();
+				_cache.Commit();
 
 				_transactionActive = false;
 			}
@@ -213,8 +326,8 @@ namespace Radischevo.Wahha.Data
 		{
 			if (_transactionActive)
 			{
-				_dataProvider.Rollback();
-				_cacheProvider.Rollback();
+				_provider.Rollback();
+				_cache.Rollback();
 
 				_transactionActive = false;
 			}

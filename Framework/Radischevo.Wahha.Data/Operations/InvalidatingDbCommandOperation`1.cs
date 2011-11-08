@@ -56,7 +56,7 @@ namespace Radischevo.Wahha.Data
 			}
 			finally
 			{
-				context.CacheProvider.Invalidate(Tags);
+				context.Cache.Invalidate(Tags);
 			}
 		}
 		#endregion

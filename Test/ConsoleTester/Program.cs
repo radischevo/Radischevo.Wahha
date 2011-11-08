@@ -8,6 +8,7 @@ using System.Web;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Data;
+using DC = Radischevo.Wahha.Data.Configurations;
 using Radischevo.Wahha.Data.Serialization;
 using Radischevo.Wahha.Web.Routing;
 using Radischevo.Wahha.Web.Mvc;
@@ -16,6 +17,7 @@ using Radischevo.Wahha.Web.Text;
 using A = Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Data.Provider;
 using System.Threading;
+using Radischevo.Wahha.Data.Caching;
 
 namespace ConsoleTester
 {
@@ -27,8 +29,11 @@ namespace ConsoleTester
 		{
 			Program p = new Program();
 			//p.SgmlTest();
-			p.TransactionTest();
+			//p.TransactionTest();
+			var threads = p.TransactionTestThread();
+
 			Console.ReadKey();
+			threads.ForEach(thread => thread.Abort());
 		}
 
 		public void SgmlTest()
@@ -84,19 +89,44 @@ namespace ConsoleTester
 			{
 				using (DbOperationScope outer = new DbOperationScope())
 				{
-					Console.WriteLine("Current => {0}", outer.Execute(selectOperation).Scalar<Guid>());
+					outer.IsolationLevel = System.Data.IsolationLevel.ReadCommitted;
+
+					Guid currentKey = outer.Execute(selectOperation).Scalar<Guid>();
+					Console.WriteLine("Thread {0}, Current => {1}", 
+						Thread.CurrentThread.ManagedThreadId, currentKey);
+
 					var key = Guid.NewGuid();
-					var updateOperation = new TextModifyOperation("UPDATE [dbo].[Workle.Users] SET [Key]=@key WHERE [Id]=@id",
+					var updateOperation = new TextModifyOperation("UPDATE [dbo].[Workle.Users] SET [Key]=@key WHERE [Id]=@id AND [Key]=@current",
 						new {
 							id = 1,
-							key = key
+							key = key,
+							current = currentKey
 						}, "users");
-					outer.Execute(updateOperation);
-					Console.WriteLine("Key changed to {0}", key);
-					Console.WriteLine("Updated => {0}", outer.Execute(selectOperation).Scalar<Guid>());
+
+					Console.WriteLine("Thread {0}, Key changed to {1}, {2} rows affected",
+						Thread.CurrentThread.ManagedThreadId, key, outer.Execute(updateOperation));
+
+					Console.WriteLine("Thread {0}, Updated => {1}\n", 
+						Thread.CurrentThread.ManagedThreadId, 
+						outer.Execute(selectOperation).Scalar<Guid>());
+
+					outer.Commit();
 				}
-				Thread.Sleep(4000);
+				Thread.Sleep(1000);
 			}
+		}
+
+		public IEnumerable<Thread> TransactionTestThread()
+		{
+			DC.Configuration.Instance.Caching.ProviderType = typeof(InMemoryCacheProvider);
+
+			Thread thread1 = new Thread(TransactionTest);
+			Thread thread2 = new Thread(TransactionTest);
+
+			thread1.Start();
+			thread2.Start();
+
+			return new Thread[] { thread1, thread2 };
 		}
 	}
 }

@@ -26,18 +26,21 @@ namespace Radischevo.Wahha.Data
         void BeginTransaction(IsolationLevel isolation);
 
         /// <summary>
-        /// Commits the current transaction.
+        /// Accepts all changes have been made 
+		/// within the current transaction.
         /// </summary>
         void Commit();
 
-        /// <summary>
-        /// Rolls back the current transaction.
-        /// </summary>
+		/// <summary>
+		/// Discards all changes have been made 
+		/// within the current transaction.
+		/// </summary>
         void Rollback();
 
-        /// <summary>
-        /// Closes the underlying database connection.
-        /// </summary>
+		/// <summary>
+		/// Closes the underlying database connection discarding 
+		/// all changes have been made.
+		/// </summary>
         void Close();
 
 		/// <summary>

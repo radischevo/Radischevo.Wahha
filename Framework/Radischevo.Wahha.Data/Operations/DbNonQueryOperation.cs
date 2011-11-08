@@ -32,7 +32,7 @@ namespace Radischevo.Wahha.Data
 		protected override int ExecuteCommand(DbOperationContext context, 
 			DbCommandDescriptor command)
 		{
-			return context.DataProvider.Execute(command).AsNonQuery();
+			return context.Provider.Execute(command).AsNonQuery();
 		}
 		#endregion
 	}

@@ -5,7 +5,7 @@ using Radischevo.Wahha.Data;
 
 namespace ConsoleTester
 {
-	public class TextModifyOperation : InvalidatingDbCommandOperation<DbQueryResult>
+	public class TextModifyOperation : InvalidatingDbCommandOperation<int>
 	{
 		private string _text;
 		private object _parameters;
@@ -30,9 +30,9 @@ namespace ConsoleTester
 			return new DbCommandDescriptor(_text, _parameters);
 		}
 
-		protected override DbQueryResult ExecuteCommand(DbOperationContext context, DbCommandDescriptor command)
+		protected override int ExecuteCommand(DbOperationContext context, DbCommandDescriptor command)
 		{
-			return context.DataProvider.Execute(command).AsDataReader(reader => new DbQueryResult(reader));
+			return context.Provider.Execute(command).AsNonQuery();
 		}
 	}
 }

@@ -43,7 +43,7 @@ namespace Radischevo.Wahha.Data
 		protected override TEntity ExecuteCommand(DbOperationContext context, 
 			DbCommandDescriptor command)
 		{
-			return context.DataProvider.Execute(command).AsDataReader<TEntity>(reader => {
+			return context.Provider.Execute(command).AsDataReader<TEntity>(reader => {
 				if (reader.Read())
 					return Materializer.Materialize(reader);
 

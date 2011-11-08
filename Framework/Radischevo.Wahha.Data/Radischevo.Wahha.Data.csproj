@@ -149,7 +149,6 @@
     <Compile Include="Operations\DbCombinedSingleOperation`1.cs" />
     <Compile Include="Operations\DbCombinedSelectOperation`1.cs" />
     <Compile Include="Operations\DbOperationContext.cs" />
-    <Compile Include="Operations\DbOperationScopeCacheProvider.cs" />
     <Compile Include="Operations\InvalidatingDbCommandOperation`1.cs" />
     <Compile Include="Operations\DbOperationScope.cs" />
     <Compile Include="Operations\DbSubsetOperation`1.cs" />

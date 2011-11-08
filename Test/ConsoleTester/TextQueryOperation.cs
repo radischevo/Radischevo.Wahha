@@ -32,7 +32,7 @@ namespace ConsoleTester
 
 		protected override DbQueryResult ExecuteCommand(DbOperationContext context, DbCommandDescriptor command)
 		{
-			return context.DataProvider.Execute(command).AsDataReader(reader => new DbQueryResult(reader));
+			return context.Provider.Execute(command).AsDataReader(reader => new DbQueryResult(reader));
 		}
 	}
 }

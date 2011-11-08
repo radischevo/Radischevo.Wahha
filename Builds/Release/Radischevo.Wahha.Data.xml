@@ -600,17 +600,20 @@
         </member>
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Commit">
             <summary>
-            Commits the current transaction.
+            Accepts all changes have been made 
+            within the current transaction.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Rollback">
             <summary>
-            Rolls back the current transaction.
+            Discards all changes have been made 
+            within the current transaction.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.Close">
             <summary>
-            Closes the underlying database connection.
+            Closes the underlying database connection discarding 
+            all changes have been made.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.IDbDataProvider.ValidateConnection">
@@ -702,7 +705,8 @@
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Close">
             <summary>
-            Closes the underlying database connection.
+            Closes the underlying database connection discarding 
+            all changes have been made.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Commit">
@@ -712,7 +716,8 @@
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Rollback">
             <summary>
-            Rolls back the current transaction.
+            Discards changes have been made 
+            since the last commit.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.BeginTransaction(System.Data.IsolationLevel)">
@@ -2025,23 +2030,28 @@
             within a single transaction.
             </summary>
         </member>
+        <member name="T:Radischevo.Wahha.Data.DbOperationContext">
+            <summary>
+            Represents the context of the database operation.
+            </summary>
+        </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationContext.#ctor">
             <summary>
             Initializes a new instance of the 
             <see cref="T:Radischevo.Wahha.Data.DbOperationContext"/> class.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Data.DbOperationContext.DataProvider">
+        <member name="P:Radischevo.Wahha.Data.DbOperationContext.Provider">
             <summary>
             When overridden in a derived class, 
             gets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
             used to perform database queries.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Data.DbOperationContext.CacheProvider">
+        <member name="P:Radischevo.Wahha.Data.DbOperationContext.Cache">
             <summary>
             When overridden in a derived class, 
-            gets the <see cref="!:Radischevo.Wahha.Data.Caching.IScopedCacheProvider"/> 
+            gets the <see cref="T:Radischevo.Wahha.Data.Caching.ITaggedCacheProvider"/> 
             used to access the application cache within a scope.
             </summary>
         </member>
@@ -2061,7 +2071,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
             </summary>
-            <param name="dataProvider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            <param name="provider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
             used to perform database queries.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.Dispose(System.Boolean)">
@@ -2102,15 +2112,15 @@
             freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Data.DbOperationScope.DataProvider">
+        <member name="P:Radischevo.Wahha.Data.DbOperationScope.Provider">
             <summary>
             Gets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
             used to perform database queries.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Data.DbOperationScope.CacheProvider">
+        <member name="P:Radischevo.Wahha.Data.DbOperationScope.Cache">
             <summary>
-            Gets the <see cref="!:Radischevo.Wahha.Data.Caching.IScopedCacheProvider"/> 
+            Gets the <see cref="T:Radischevo.Wahha.Data.Caching.ITaggedCacheProvider"/> 
             used to access the application cache within a scope.
             </summary>
         </member>

@@ -182,13 +182,14 @@ namespace Radischevo.Wahha.Data.Provider
 		}
 
 		/// <summary>
-		/// Closes the underlying database connection.
+		/// Closes the underlying database connection discarding 
+		/// all changes have been made.
 		/// </summary>
 		public void Close()
 		{
 			if (_connection.State != ConnectionState.Closed)
 			{
-				Commit();
+				Rollback();
 				_connection.Close();
 			}
 		}
@@ -207,7 +208,8 @@ namespace Radischevo.Wahha.Data.Provider
 		}
 
 		/// <summary>
-		/// Rolls back the current transaction.
+		/// Discards changes have been made 
+		/// since the last commit.
 		/// </summary>
 		public void Rollback()
 		{
@@ -286,12 +288,11 @@ namespace Radischevo.Wahha.Data.Provider
 		/// the disposal is called explicitly.</param>
 		protected virtual void Dispose(bool disposing)
 		{
-			Close();
-
-			if (HasTransaction)
-				_transaction.Dispose();
-
-			_connection.Dispose();
+			if (disposing)
+			{
+				Close();
+				_connection.Dispose();
+			}
 		}
 		#endregion
 	}

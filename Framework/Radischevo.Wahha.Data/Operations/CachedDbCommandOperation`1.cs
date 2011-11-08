@@ -74,7 +74,7 @@ namespace Radischevo.Wahha.Data
 			Precondition.Require(command, () => Error.CommandIsNotInitialized());
 
 			string cacheKey = CreateCacheKey(command);
-			return context.CacheProvider.Get<TResult>(cacheKey,
+			return context.Cache.Get<TResult>(cacheKey,
 				() => ExecuteCommand(context, command),
 				DateTime.Now.Add(_expirationTimeout),
 				Tags);

@@ -40,7 +40,7 @@ namespace Radischevo.Wahha.Data
 		/// <param name="context">Provides the current operation context.</param>
 		protected override IEnumerable<TEntity> ExecuteInternal(DbOperationContext context)
 		{
-			context.CacheProvider.Invalidate(Tags);
+			context.Cache.Invalidate(Tags);
 			return base.ExecuteInternal(context);
 		}
 		#endregion
