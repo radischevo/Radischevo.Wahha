@@ -237,7 +237,7 @@ namespace Radischevo.Wahha.Data
 						throw Error.IsolationLevelCannotBeModified();
 
 					_isolationLevel = value;
-					_cache.AllowDirtyReads = (value == IsolationLevel.ReadUncommitted);
+					_cache.AllowDirtyReads = (value < IsolationLevel.ReadCommitted);
 				}
 			}
 		}

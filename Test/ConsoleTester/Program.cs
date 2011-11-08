@@ -89,7 +89,7 @@ namespace ConsoleTester
 			{
 				using (DbOperationScope outer = new DbOperationScope())
 				{
-					outer.IsolationLevel = System.Data.IsolationLevel.ReadUncommitted;
+					outer.IsolationLevel = System.Data.IsolationLevel.RepeatableRead;
 
 					Guid currentKey = outer.Execute(selectOperation).Scalar<Guid>();
 					Console.WriteLine("Thread {0}, Current => {1}", 
