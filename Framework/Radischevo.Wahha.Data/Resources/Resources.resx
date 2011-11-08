@@ -162,9 +162,6 @@
   <data name="Error_CouldNotResolveType" xml:space="preserve">
     <value>Could not resolve type '{0}'.</value>
   </data>
-  <data name="Error_CouldNotSetIsolationLevelAfterInitialize" xml:space="preserve">
-    <value>Could not change transaction isolation level since the Execute method was already called.</value>
-  </data>
   <data name="Error_DepthLimitExceeded" xml:space="preserve">
     <value>Depth limit exceeded.</value>
   </data>
@@ -278,5 +275,8 @@
   </data>
   <data name="Error_InvalidSourceBufferIndex" xml:space="preserve">
     <value>Invalid source buffer (size of {0}) offset: {1}</value>
+  </data>
+  <data name="Error_IsolationLevelCannotBeModified" xml:space="preserve">
+    <value>Isolation level of the operation scope can not be modified since the transaction has already been started.</value>
   </data>
 </root>

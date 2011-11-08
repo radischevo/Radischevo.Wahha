@@ -146,12 +146,6 @@ namespace Radischevo.Wahha.Data
 				Res.Error_ExpressionMustBeAConstructorCall, parameterName));
 		}
 
-		internal static Exception CouldNotSetIsolationLevelAfterInitialize()
-		{
-			return new InvalidOperationException(
-				Res.Error_CouldNotSetIsolationLevelAfterInitialize);
-		}
-
 		internal static Exception ArrayTypeIsNotSupported(Type type)
 		{
 			return new InvalidOperationException(String.Format(
@@ -305,6 +299,11 @@ namespace Radischevo.Wahha.Data
 		{
 			return new IndexOutOfRangeException(String.Format(
 				Res.Error_InvalidBufferSizeOrIndex, maxLength, bufferOffset));
+		}
+
+		internal static Exception IsolationLevelCannotBeModified()
+		{
+			return new InvalidOperationException(Res.Error_IsolationLevelCannotBeModified);
 		}
 	}
 }

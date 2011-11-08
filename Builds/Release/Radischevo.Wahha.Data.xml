@@ -95,11 +95,6 @@
               Looks up a localized string similar to Could not resolve type &apos;{0}&apos;..
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_CouldNotSetIsolationLevelAfterInitialize">
-            <summary>
-              Looks up a localized string similar to Could not change transaction isolation level since the Execute method was already called..
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_DataReaderIsClosed">
             <summary>
               Looks up a localized string similar to Invalid attempt to call {0} when reader is closed..
@@ -208,6 +203,11 @@
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_InvalidSourceBufferIndex">
             <summary>
               Looks up a localized string similar to Invalid source buffer (size of {0}) offset: {1}.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_IsolationLevelCannotBeModified">
+            <summary>
+              Looks up a localized string similar to Isolation level of the operation scope can not be modified since the transaction has already been started..
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_MaximumJsonStringLengthExceeded">

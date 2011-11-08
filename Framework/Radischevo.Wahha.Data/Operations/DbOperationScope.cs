@@ -20,6 +20,7 @@ namespace Radischevo.Wahha.Data
 		{
 			#region Instance Fields
 			private bool _disposed;
+			private bool _allowDirtyReads;
 			private readonly ITaggedCacheProvider _provider;
 			private readonly HashSet<string> _invalidations;
 			private readonly List<Action<ITaggedCacheProvider>> _deferredActions;
@@ -33,6 +34,20 @@ namespace Radischevo.Wahha.Data
 				_provider = provider;
 				_invalidations = new HashSet<string>();
 				_deferredActions = new List<Action<ITaggedCacheProvider>>();
+			}
+			#endregion
+
+			#region Instance Properties
+			public bool AllowDirtyReads
+			{
+				get
+				{
+					return _allowDirtyReads;
+				}
+				set
+				{
+					_allowDirtyReads = value;
+				}
 			}
 			#endregion
 
@@ -82,10 +97,11 @@ namespace Radischevo.Wahha.Data
 				DateTime expiration, IEnumerable<string> tags)
 			{
 				Precondition.Require(selector, () => Error.ArgumentNull("selector"));
-				if (tags != null && _invalidations.Overlaps(tags))
+				if (_allowDirtyReads || (tags != null && _invalidations.Overlaps(tags)))
 				{
 					T value = selector();
-					_deferredActions.Add(a => a.Insert(key, value, expiration, tags));
+					if (!_allowDirtyReads)
+						_deferredActions.Add(a => a.Insert(key, value, expiration, tags));
 
 					return value;
 				}
@@ -99,7 +115,9 @@ namespace Radischevo.Wahha.Data
 
 			public bool Add<T>(string key, T value, DateTime expiration, IEnumerable<string> tags)
 			{
-				_deferredActions.Add(a => a.Add(key, value, expiration, tags));
+				if (!_allowDirtyReads)
+					_deferredActions.Add(a => a.Add(key, value, expiration, tags));
+
 				return true;
 			}
 
@@ -110,7 +128,8 @@ namespace Radischevo.Wahha.Data
 
 			public void Insert<T>(string key, T value, DateTime expiration, IEnumerable<string> tags)
 			{
-				_deferredActions.Add(a => a.Insert(key, value, expiration, tags));
+				if (!_allowDirtyReads)
+					_deferredActions.Add(a => a.Insert(key, value, expiration, tags));
 			}
 
 			public void Remove(string key)
@@ -119,7 +138,7 @@ namespace Radischevo.Wahha.Data
 			}
 			#endregion
 
-			#region Interface Implementation
+			#region Interface Implementations
 			void ICacheProvider.Init(IValueSet settings)
 			{
 				Init(settings);
@@ -215,9 +234,10 @@ namespace Radischevo.Wahha.Data
 				if (_isolationLevel != value)
 				{
 					if (_transactionActive)
-						throw Error.CouldNotSetIsolationLevelAfterInitialize();
+						throw Error.IsolationLevelCannotBeModified();
 
 					_isolationLevel = value;
+					_cache.AllowDirtyReads = (value == IsolationLevel.ReadUncommitted);
 				}
 			}
 		}

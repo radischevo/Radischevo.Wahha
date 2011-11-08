@@ -196,15 +196,6 @@ namespace Radischevo.Wahha.Data.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not change transaction isolation level since the Execute method was already called..
-        /// </summary>
-        internal static string Error_CouldNotSetIsolationLevelAfterInitialize {
-            get {
-                return ResourceManager.GetString("Error_CouldNotSetIsolationLevelAfterInitialize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Invalid attempt to call {0} when reader is closed..
         /// </summary>
         internal static string Error_DataReaderIsClosed {
@@ -399,6 +390,15 @@ namespace Radischevo.Wahha.Data.Resources {
         internal static string Error_InvalidSourceBufferIndex {
             get {
                 return ResourceManager.GetString("Error_InvalidSourceBufferIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Isolation level of the operation scope can not be modified since the transaction has already been started..
+        /// </summary>
+        internal static string Error_IsolationLevelCannotBeModified {
+            get {
+                return ResourceManager.GetString("Error_IsolationLevelCannotBeModified", resourceCulture);
             }
         }
         
