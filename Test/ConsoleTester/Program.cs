@@ -106,13 +106,30 @@ namespace ConsoleTester
 					Console.WriteLine("Thread {0}, Key changed to {1}, {2} rows affected",
 						Thread.CurrentThread.ManagedThreadId, key, outer.Execute(updateOperation));
 
+					Thread.Sleep(4000);
+
 					Console.WriteLine("Thread {0}, Updated => {1}\n", 
 						Thread.CurrentThread.ManagedThreadId, 
 						outer.Execute(selectOperation).Scalar<Guid>());
 
 					outer.Commit();
 				}
-				Thread.Sleep(5000);
+			}
+		}
+
+		private void TransactionTest2()
+		{
+			var selectOperation = new TextQueryOperation("SELECT [Key] FROM [dbo].[Workle.Users] WHERE [Id]=@id", new {
+				id = 1
+			}, "global", "users");
+			while (true)
+			{
+				using (DbOperationScope outer = new DbOperationScope())
+				{
+					Console.WriteLine("Select => {0}", 
+						outer.Execute(selectOperation).Scalar<Guid>());
+				}
+				Thread.Sleep(2400);
 			}
 		}
 
@@ -121,7 +138,7 @@ namespace ConsoleTester
 			DC.Configuration.Instance.Caching.ProviderType = typeof(InMemoryCacheProvider);
 
 			Thread thread1 = new Thread(TransactionTest);
-			Thread thread2 = new Thread(TransactionTest);
+			Thread thread2 = new Thread(TransactionTest2);
 
 			thread1.Start();
 			thread2.Start();

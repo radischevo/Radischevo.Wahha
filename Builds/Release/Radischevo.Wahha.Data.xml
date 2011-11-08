@@ -2546,6 +2546,48 @@
             <param name="context">Provides the current operation context.</param>
             <param name="command">The command instance to execute.</param>
         </member>
+        <member name="T:Radischevo.Wahha.Data.ValidationException">
+            <summary>
+            The exception that is thrown when a validation error occurs.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.ValidationException.#ctor(Radischevo.Wahha.Data.ValidationContext)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.ValidationException"/> class.
+            </summary>
+            <param name="context">The validation context to copy errors from.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.ValidationException.#ctor(System.Collections.Generic.IEnumerable{Radischevo.Wahha.Data.ValidationError})">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.ValidationException"/> class.
+            </summary>
+            <param name="errors">The collection of errors detected.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.ValidationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.ValidationException"/> 
+            class with serialized data.
+            </summary>
+            <param name="info">The object that holds the serialized object data.</param>
+            <param name="context">The contextual information about the source or destination.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.ValidationException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> 
+            with information about the exception.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds 
+            the serialized object data about the exception being thrown.</param>
+            <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> 
+            that contains contextual information about the source or destination.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.ValidationException.Errors">
+            <summary>
+            Gets the collection of validation errors detected.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Data.DbScalarOperation`1">
             <summary>
             Represents the operation that queries the database using 
@@ -2851,48 +2893,6 @@
             <summary>
             Gets the number of independent subquery 
             results in the result set.
-            </summary>
-        </member>
-        <member name="T:Radischevo.Wahha.Data.ValidationException">
-            <summary>
-            The exception that is thrown when a validation error occurs.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.ValidationException.#ctor(Radischevo.Wahha.Data.ValidationContext)">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.ValidationException"/> class.
-            </summary>
-            <param name="context">The validation context to copy errors from.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.ValidationException.#ctor(System.Collections.Generic.IEnumerable{Radischevo.Wahha.Data.ValidationError})">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.ValidationException"/> class.
-            </summary>
-            <param name="errors">The collection of errors detected.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.ValidationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.ValidationException"/> 
-            class with serialized data.
-            </summary>
-            <param name="info">The object that holds the serialized object data.</param>
-            <param name="context">The contextual information about the source or destination.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.ValidationException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> 
-            with information about the exception.
-            </summary>
-            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds 
-            the serialized object data about the exception being thrown.</param>
-            <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> 
-            that contains contextual information about the source or destination.</param>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.ValidationException.Errors">
-            <summary>
-            Gets the collection of validation errors detected.
             </summary>
         </member>
     </members>

@@ -83,8 +83,12 @@ namespace Radischevo.Wahha.Data
 			{
 				Precondition.Require(selector, () => Error.ArgumentNull("selector"));
 				if (tags != null && _invalidations.Overlaps(tags))
-					return selector();
+				{
+					T value = selector();
+					_deferredActions.Add(a => a.Insert(key, value, expiration, tags));
 
+					return value;
+				}
 				return _provider.Get(key, selector, expiration, tags);
 			}
 
