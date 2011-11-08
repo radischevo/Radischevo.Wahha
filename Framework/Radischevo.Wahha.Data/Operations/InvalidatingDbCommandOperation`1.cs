@@ -14,7 +14,6 @@ namespace Radischevo.Wahha.Data
 	public abstract class InvalidatingDbCommandOperation<TResult> : DbCommandOperation<TResult>
 	{
 		#region Instance Fields
-		private ITaggedCacheProvider _cache;
 		private List<string> _tags;
 		#endregion
 
@@ -30,25 +29,6 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Properties
-		/// <summary>
-		/// Gets or sets the caching provider used 
-		/// to store the query results.
-		/// </summary>
-		protected ITaggedCacheProvider Cache
-		{
-			get
-			{
-				if (_cache == null)
-					_cache = CacheProvider.Instance;
-
-				return _cache;
-			}
-			set
-			{
-				_cache = value;
-			}
-		}
-
 		/// <summary>
 		/// Gets the collection of tags which 
 		/// will be invalidated.
@@ -67,17 +47,16 @@ namespace Radischevo.Wahha.Data
 		/// Executes the operation against the provided data source 
 		/// and returns the result.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to retrieve or store the data.</param>
-		protected override TResult ExecuteInternal(IDbDataProvider provider)
+		/// <param name="context">Provides the current operation context.</param>
+		protected override TResult ExecuteInternal(DbOperationContext context)
 		{
 			try
 			{
-				return base.ExecuteInternal(provider);
+				return base.ExecuteInternal(context);
 			}
 			finally
 			{
-				Cache.Invalidate(Tags);
+				context.CacheProvider.Invalidate(Tags);
 			}
 		}
 		#endregion

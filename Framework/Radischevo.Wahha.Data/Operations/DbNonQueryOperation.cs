@@ -27,13 +27,12 @@ namespace Radischevo.Wahha.Data
 		/// Executes the operation against the provided data source 
 		/// and returns a number of rows affected.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to retrieve or store the data.</param>
+		/// <param name="context">Provides the current operation context.</param>
 		/// <param name="command">The command instance to execute.</param>
-		protected override int ExecuteCommand(IDbDataProvider provider, 
+		protected override int ExecuteCommand(DbOperationContext context, 
 			DbCommandDescriptor command)
 		{
-			return provider.Execute(command).AsNonQuery();
+			return context.DataProvider.Execute(command).AsNonQuery();
 		}
 		#endregion
 	}

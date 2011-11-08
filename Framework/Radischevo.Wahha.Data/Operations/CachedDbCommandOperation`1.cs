@@ -17,7 +17,6 @@ namespace Radischevo.Wahha.Data
 	public abstract class CachedDbCommandOperation<TResult> : DbCommandOperation<TResult>
 	{
 		#region Instance Fields
-		private ITaggedCacheProvider _cache;
 		private TimeSpan _expirationTimeout;
 		private List<string> _tags;
 		#endregion
@@ -34,25 +33,6 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Properties
-		/// <summary>
-		/// Gets or sets the caching provider used 
-		/// to store the query result.
-		/// </summary>
-		protected ITaggedCacheProvider Cache
-		{
-			get
-			{
-				if (_cache == null)
-					_cache = CacheProvider.Instance;
-
-				return _cache;
-			}
-			set
-			{
-				_cache = value;
-			}
-		}
-
 		/// <summary>
 		/// Gets the collection of tags which 
 		/// is used to mark cache storage entries.
@@ -87,16 +67,15 @@ namespace Radischevo.Wahha.Data
 		/// Executes the operation against the provided data source 
 		/// and returns the result.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to retrieve or store the data.</param>
-		protected override TResult ExecuteInternal(IDbDataProvider provider)
+		/// <param name="context">Provides the current operation context.</param>
+		protected override TResult ExecuteInternal(DbOperationContext context)
 		{
 			DbCommandDescriptor command = CreateCommand();
 			Precondition.Require(command, () => Error.CommandIsNotInitialized());
 
 			string cacheKey = CreateCacheKey(command);
-			return Cache.Get<TResult>(cacheKey,
-				() => ExecuteCommand(provider, command),
+			return context.CacheProvider.Get<TResult>(cacheKey,
+				() => ExecuteCommand(context, command),
 				DateTime.Now.Add(_expirationTimeout),
 				Tags);
 		}

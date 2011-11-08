@@ -34,24 +34,22 @@ namespace Radischevo.Wahha.Data
 		/// Executes the operation against the provided data source 
 		/// and returns the result.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to retrieve or store the data.</param>
-		protected override TResult ExecuteInternal(IDbDataProvider provider)
+		/// <param name="context">Provides the current operation context.</param>
+		protected override TResult ExecuteInternal(DbOperationContext context)
 		{
 			DbCommandDescriptor command = CreateCommand();
 			Precondition.Require(command, () => Error.CommandIsNotInitialized());
 
-			return ExecuteCommand(provider, command);
+			return ExecuteCommand(context, command);
 		}
 
 		/// <summary>
 		/// When overridden in a derived class, executes the provided <paramref name="command"/> 
 		/// against the provided data source and returns the result.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to retrieve or store the data.</param>
+		/// <param name="context">Provides the current operation context.</param>
 		/// <param name="command">The command instance to execute.</param>
-		protected abstract TResult ExecuteCommand(IDbDataProvider provider, DbCommandDescriptor command);
+		protected abstract TResult ExecuteCommand(DbOperationContext context, DbCommandDescriptor command);
 		#endregion
 	}
 }

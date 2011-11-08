@@ -37,12 +37,11 @@ namespace Radischevo.Wahha.Data
 		/// Executes the operation against the provided data source 
 		/// and returns the result.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to retrieve or store the data.</param>
-		protected override IEnumerable<TEntity> ExecuteInternal(IDbDataProvider provider)
+		/// <param name="context">Provides the current operation context.</param>
+		protected override IEnumerable<TEntity> ExecuteInternal(DbOperationContext context)
 		{
-			Cache.Invalidate(Tags);
-			return base.ExecuteInternal(provider);
+			context.CacheProvider.Invalidate(Tags);
+			return base.ExecuteInternal(context);
 		}
 		#endregion
 	}

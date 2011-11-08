@@ -38,13 +38,12 @@ namespace Radischevo.Wahha.Data
 		/// Executes the provided <paramref name="command"/> 
 		/// against the provided data source and returns the result.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to retrieve or store the data.</param>
+		/// <param name="context">Provides the current operation context.</param>
 		/// <param name="command">The command instance to execute.</param>
-		protected override TEntity ExecuteCommand(IDbDataProvider provider, 
+		protected override TEntity ExecuteCommand(DbOperationContext context, 
 			DbCommandDescriptor command)
 		{
-			return provider.Execute(command).AsDataReader<TEntity>(reader => {
+			return context.DataProvider.Execute(command).AsDataReader<TEntity>(reader => {
 				if (reader.Read())
 					return Materializer.Materialize(reader);
 

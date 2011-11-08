@@ -324,28 +324,32 @@
             <see cref="T:Radischevo.Wahha.Data.DbOperation`1"/> class.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbOperation`1.Execute(Radischevo.Wahha.Data.IDbDataProvider)">
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.Validate(Radischevo.Wahha.Data.ValidationContext)">
+            <summary>
+            When overridden in a derived class, determines 
+            whether the operation is valid for execution 
+            and populates the provided context with detected errors.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.Execute(Radischevo.Wahha.Data.DbOperationContext)">
             <summary>
             Executes the operation against the provided data source 
             and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.ExecuteInternal(Radischevo.Wahha.Data.DbOperationContext)">
             <summary>
             When overridden in a derived class, executes the operation 
             against the provided data source.
             </summary>
-            <param name="provider">The database communication provider 
-            to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbOperation`1.Radischevo#Wahha#Core#IContextualOperation{Radischevo#Wahha#Data#IDbDataProvider}#Execute(Radischevo.Wahha.Data.IDbDataProvider)">
+        <member name="M:Radischevo.Wahha.Data.DbOperation`1.Radischevo#Wahha#Core#IContextualOperation{Radischevo#Wahha#Data#DbOperationContext}#Execute(Radischevo.Wahha.Data.DbOperationContext)">
             <summary>
             Executes the operation against the provided data source.
             </summary>
-            <param name="provider">The database communication provider 
-            using to store the data.</param>
+            <param name="context">Provides the current operation context.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbCommandOperation`1.#ctor">
             <summary>
@@ -359,21 +363,19 @@
             instance which will be executed by this operation.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbCommandOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+        <member name="M:Radischevo.Wahha.Data.DbCommandOperation`1.ExecuteInternal(Radischevo.Wahha.Data.DbOperationContext)">
             <summary>
             Executes the operation against the provided data source 
             and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbCommandOperation`1.ExecuteCommand(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.DbCommandDescriptor)">
+        <member name="M:Radischevo.Wahha.Data.DbCommandOperation`1.ExecuteCommand(Radischevo.Wahha.Data.DbOperationContext,Radischevo.Wahha.Data.DbCommandDescriptor)">
             <summary>
             When overridden in a derived class, executes the provided <paramref name="command"/> 
             against the provided data source and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
             <param name="command">The command instance to execute.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.#ctor">
@@ -381,19 +383,12 @@
             Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1"/> class.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+        <member name="M:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.ExecuteInternal(Radischevo.Wahha.Data.DbOperationContext)">
             <summary>
             Executes the operation against the provided data source 
             and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Cache">
-            <summary>
-            Gets or sets the caching provider used 
-            to store the query results.
-            </summary>
+            <param name="context">Provides the current operation context.</param>
         </member>
         <member name="P:Radischevo.Wahha.Data.InvalidatingDbCommandOperation`1.Tags">
             <summary>
@@ -407,13 +402,12 @@
             <see cref="T:Radischevo.Wahha.Data.DbNonQueryOperation"/> class.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbNonQueryOperation.ExecuteCommand(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.DbCommandDescriptor)">
+        <member name="M:Radischevo.Wahha.Data.DbNonQueryOperation.ExecuteCommand(Radischevo.Wahha.Data.DbOperationContext,Radischevo.Wahha.Data.DbCommandDescriptor)">
             <summary>
             Executes the operation against the provided data source 
             and returns a number of rows affected.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
             <param name="command">The command instance to execute.</param>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbCommandResult">
@@ -790,13 +784,12 @@
             Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.CachedDbCommandOperation`1"/> class.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.CachedDbCommandOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+        <member name="M:Radischevo.Wahha.Data.CachedDbCommandOperation`1.ExecuteInternal(Radischevo.Wahha.Data.DbOperationContext)">
             <summary>
             Executes the operation against the provided data source 
             and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.CachedDbCommandOperation`1.CreateCacheKey(Radischevo.Wahha.Data.DbCommandDescriptor)">
             <summary>
@@ -804,12 +797,6 @@
             of the provided command and its parameters values.
             </summary>
             <param name="command">The command to create fingerprint from.</param>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.CachedDbCommandOperation`1.Cache">
-            <summary>
-            Gets or sets the caching provider used 
-            to store the query result.
-            </summary>
         </member>
         <member name="P:Radischevo.Wahha.Data.CachedDbCommandOperation`1.Tags">
             <summary>
@@ -1706,13 +1693,12 @@
             <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
             used to transform database query results into objects.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.ExecuteCommand(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.DbCommandDescriptor)">
+        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.ExecuteCommand(Radischevo.Wahha.Data.DbOperationContext,Radischevo.Wahha.Data.DbCommandDescriptor)">
             <summary>
             Executes the provided <paramref name="command"/> 
             against the provided data source and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
             <param name="command">The command instance to execute.</param>
         </member>
         <member name="P:Radischevo.Wahha.Data.DbSelectOperation`1.BufferSize">
@@ -2039,6 +2025,26 @@
             within a single transaction.
             </summary>
         </member>
+        <member name="M:Radischevo.Wahha.Data.DbOperationContext.#ctor">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.DbOperationContext"/> class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbOperationContext.DataProvider">
+            <summary>
+            When overridden in a derived class, 
+            gets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            used to perform database queries.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbOperationContext.CacheProvider">
+            <summary>
+            When overridden in a derived class, 
+            gets the <see cref="!:Radischevo.Wahha.Data.Caching.IScopedCacheProvider"/> 
+            used to access the application cache within a scope.
+            </summary>
+        </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
@@ -2048,22 +2054,15 @@
             <summary>
             Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
             </summary>
-            <param name="provider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProviderFactory"/> 
+            <param name="factory">The <see cref="T:Radischevo.Wahha.Data.IDbDataProviderFactory"/> 
             used to create an instance of <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/>.</param>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.#ctor(Radischevo.Wahha.Data.IDbDataProvider)">
             <summary>
             Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbOperationScope"/> class.
             </summary>
-            <param name="provider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
+            <param name="dataProvider">The <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
             used to perform database queries.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbOperationScope.Initialize">
-            <summary>
-            Perform initialization tasks before the first 
-            operation is executed, i.e. starts new transaction 
-            if necessary.
-            </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.Dispose(System.Boolean)">
             <summary>
@@ -2103,10 +2102,16 @@
             freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Data.DbOperationScope.Provider">
+        <member name="P:Radischevo.Wahha.Data.DbOperationScope.DataProvider">
             <summary>
             Gets the <see cref="T:Radischevo.Wahha.Data.IDbDataProvider"/> 
             used to perform database queries.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.DbOperationScope.CacheProvider">
+            <summary>
+            Gets the <see cref="!:Radischevo.Wahha.Data.Caching.IScopedCacheProvider"/> 
+            used to access the application cache within a scope.
             </summary>
         </member>
         <member name="P:Radischevo.Wahha.Data.DbOperationScope.IsolationLevel">
@@ -2494,13 +2499,12 @@
             <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
             used to transform database query results into objects.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbCombinedSelectOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+        <member name="M:Radischevo.Wahha.Data.DbCombinedSelectOperation`1.ExecuteInternal(Radischevo.Wahha.Data.DbOperationContext)">
             <summary>
             Executes the operation against the provided data source 
             and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbSingleOperation`1">
             <summary>
@@ -2523,13 +2527,12 @@
             <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
             used to transform database query results into objects.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbSingleOperation`1.ExecuteCommand(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.DbCommandDescriptor)">
+        <member name="M:Radischevo.Wahha.Data.DbSingleOperation`1.ExecuteCommand(Radischevo.Wahha.Data.DbOperationContext,Radischevo.Wahha.Data.DbCommandDescriptor)">
             <summary>
             Executes the provided <paramref name="command"/> 
             against the provided data source and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
             <param name="command">The command instance to execute.</param>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbScalarOperation`1">
@@ -2547,13 +2550,12 @@
             <see cref="T:Radischevo.Wahha.Data.DbScalarOperation`1"/> class.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbScalarOperation`1.ExecuteCommand(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.DbCommandDescriptor)">
+        <member name="M:Radischevo.Wahha.Data.DbScalarOperation`1.ExecuteCommand(Radischevo.Wahha.Data.DbOperationContext,Radischevo.Wahha.Data.DbCommandDescriptor)">
             <summary>
             Executes the operation against the provided data source 
             and returns the scalar result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
             <param name="command">The command instance to execute.</param>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbSubsetOperation`1">
@@ -2578,13 +2580,12 @@
             <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
             used to transform database query results into objects.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.ExecuteCommand(Radischevo.Wahha.Data.IDbDataProvider,Radischevo.Wahha.Data.DbCommandDescriptor)">
+        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.ExecuteCommand(Radischevo.Wahha.Data.DbOperationContext,Radischevo.Wahha.Data.DbCommandDescriptor)">
             <summary>
             Executes the provided <paramref name="command"/> 
             against the provided data source and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
             <param name="command">The command instance to execute.</param>
         </member>
         <member name="P:Radischevo.Wahha.Data.DbSubsetOperation`1.BufferSize">
@@ -2668,13 +2669,12 @@
             <param name="materializer">The <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
             used to transform database query results into objects.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbCombinedSingleOperation`1.ExecuteInternal(Radischevo.Wahha.Data.IDbDataProvider)">
+        <member name="M:Radischevo.Wahha.Data.DbCombinedSingleOperation`1.ExecuteInternal(Radischevo.Wahha.Data.DbOperationContext)">
             <summary>
             Executes the operation against the provided data source 
             and returns the result.
             </summary>
-            <param name="provider">The database communication provider 
-            using to retrieve or store the data.</param>
+            <param name="context">Provides the current operation context.</param>
         </member>
         <member name="T:Radischevo.Wahha.Data.Configurations.Configuration">
             <summary>
@@ -2840,6 +2840,48 @@
             <summary>
             Gets the number of independent subquery 
             results in the result set.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.ValidationException">
+            <summary>
+            The exception that is thrown when a validation error occurs.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.ValidationException.#ctor(Radischevo.Wahha.Data.ValidationContext)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.ValidationException"/> class.
+            </summary>
+            <param name="context">The validation context to copy errors from.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.ValidationException.#ctor(System.Collections.Generic.IEnumerable{Radischevo.Wahha.Data.ValidationError})">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Radischevo.Wahha.Data.ValidationException"/> class.
+            </summary>
+            <param name="errors">The collection of errors detected.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.ValidationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.ValidationException"/> 
+            class with serialized data.
+            </summary>
+            <param name="info">The object that holds the serialized object data.</param>
+            <param name="context">The contextual information about the source or destination.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.ValidationException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> 
+            with information about the exception.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds 
+            the serialized object data about the exception being thrown.</param>
+            <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> 
+            that contains contextual information about the source or destination.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.ValidationException.Errors">
+            <summary>
+            Gets the collection of validation errors detected.
             </summary>
         </member>
     </members>

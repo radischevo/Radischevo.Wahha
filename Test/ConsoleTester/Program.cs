@@ -15,6 +15,7 @@ using Radischevo.Wahha.Web.Text;
 
 using A = Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Data.Provider;
+using System.Threading;
 
 namespace ConsoleTester
 {
@@ -25,8 +26,8 @@ namespace ConsoleTester
 		static void Main(string[] args)
 		{
 			Program p = new Program();
-			p.SgmlTest();
-
+			//p.SgmlTest();
+			p.TransactionTest();
 			Console.ReadKey();
 		}
 
@@ -71,6 +72,30 @@ namespace ConsoleTester
 				{
 					sw.Write(filter.Execute(sr, parameters));
 				}
+			}
+		}
+
+		public void TransactionTest()
+		{
+			var selectOperation = new TextQueryOperation("SELECT [Key] FROM [dbo].[Workle.Users] WHERE [Id]=@id", new {
+				id = 1
+			}, "global", "users");
+			while (true)
+			{
+				using (DbOperationScope outer = new DbOperationScope())
+				{
+					Console.WriteLine("Current => {0}", outer.Execute(selectOperation).Scalar<Guid>());
+					var key = Guid.NewGuid();
+					var updateOperation = new TextModifyOperation("UPDATE [dbo].[Workle.Users] SET [Key]=@key WHERE [Id]=@id",
+						new {
+							id = 1,
+							key = key
+						}, "users");
+					outer.Execute(updateOperation);
+					Console.WriteLine("Key changed to {0}", key);
+					Console.WriteLine("Updated => {0}", outer.Execute(selectOperation).Scalar<Guid>());
+				}
+				Thread.Sleep(4000);
 			}
 		}
 	}

@@ -53,13 +53,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextModifyOperation.cs" />
     <Compile Include="FastFoodQueries.cs" />
     <Compile Include="HtmlParserExtensions.cs" />
     <Compile Include="Inheritance.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="TextCommandOperation.cs" />
+    <Compile Include="TextQueryOperation.cs" />
     <Compile Include="UnityServiceLocator.cs" />
   </ItemGroup>
   <ItemGroup>

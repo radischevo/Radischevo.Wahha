@@ -3,6 +3,7 @@ using System.Data;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Data.Configurations;
+using Radischevo.Wahha.Data.Caching;
 
 namespace Radischevo.Wahha.Data
 {
@@ -11,12 +12,12 @@ namespace Radischevo.Wahha.Data
 	/// be used to execute several database operations 
 	/// within a single transaction.
 	/// </summary>
-	public class DbOperationScope : IDisposable
+	public class DbOperationScope : DbOperationContext, IDisposable
 	{
 		#region Instance Fields
-		private IDbDataProvider _provider;
+		private IDbDataProvider _dataProvider;
+		private DbOperationScopeCacheProvider _cacheProvider;
 		private IsolationLevel _isolationLevel;
-		private bool _initialized;
 		private bool _transactionActive;
 		private bool _hasOwnedContext;
 		#endregion
@@ -34,7 +35,7 @@ namespace Radischevo.Wahha.Data
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.DbOperationScope"/> class.
 		/// </summary>
-		/// <param name="provider">The <see cref="Radischevo.Wahha.Data.IDbDataProviderFactory"/> 
+		/// <param name="factory">The <see cref="Radischevo.Wahha.Data.IDbDataProviderFactory"/> 
 		/// used to create an instance of <see cref="Radischevo.Wahha.Data.IDbDataProvider"/>.</param>
 		public DbOperationScope(IDbDataProviderFactory factory)
 			: this(CreateProvider(factory))
@@ -44,15 +45,65 @@ namespace Radischevo.Wahha.Data
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.DbOperationScope"/> class.
 		/// </summary>
-		/// <param name="provider">The <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
+		/// <param name="dataProvider">The <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
 		/// used to perform database queries.</param>
-		public DbOperationScope(IDbDataProvider provider)
+		public DbOperationScope(IDbDataProvider dataProvider)
+			: base()
 		{
-			Precondition.Require(provider, () => 
-				Error.ArgumentNull("provider"));
+			Precondition.Require(dataProvider, () => 
+				Error.ArgumentNull("dataProvider"));
 
-			_provider = provider;
+			_dataProvider = dataProvider;
+			_cacheProvider = new DbOperationScopeCacheProvider(Caching.CacheProvider.Instance);
 			_isolationLevel = IsolationLevel.ReadCommitted;
+		}
+		#endregion
+
+		#region Instance Properties
+		/// <summary>
+		/// Gets the <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
+		/// used to perform database queries.
+		/// </summary>
+		public override IDbDataProvider DataProvider
+		{
+			get
+			{
+				return _dataProvider;
+			}
+		}
+
+		/// <summary>
+		/// Gets the <see cref="Radischevo.Wahha.Data.Caching.IScopedCacheProvider"/> 
+		/// used to access the application cache within a scope.
+		/// </summary>
+		public override ITaggedCacheProvider CacheProvider
+		{
+			get
+			{
+				return _cacheProvider;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the transaction isolation level.
+		/// </summary>
+		public IsolationLevel IsolationLevel
+		{
+			get
+			{
+				return _isolationLevel;
+			}
+			set
+			{
+				if (_isolationLevel != value)
+				{
+					if (_transactionActive)
+						throw Error.CouldNotSetIsolationLevelAfterInitialize();
+
+					_isolationLevel = value;
+					_cacheProvider.AllowDirtyWrites = (value == IsolationLevel.ReadUncommitted);
+				}
+			}
 		}
 		#endregion
 
@@ -69,65 +120,14 @@ namespace Radischevo.Wahha.Data
 		}
 		#endregion
 
-		#region Instance Properties
-		/// <summary>
-		/// Gets the <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
-		/// used to perform database queries.
-		/// </summary>
-		protected IDbDataProvider Provider
-		{
-			get
-			{
-				return _provider;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the transaction isolation level.
-		/// </summary>
-		public IsolationLevel IsolationLevel
-		{
-			get
-			{
-				return _isolationLevel;
-			}
-			set
-			{
-				if (_initialized)
-					throw Error.CouldNotSetIsolationLevelAfterInitialize();
-
-				_isolationLevel = value;
-			}
-		}
-		#endregion
-
 		#region Instance Methods
-		private void EnsureInitialized()
-		{
-			if (!_initialized)
-			{
-				_initialized = true;
-				Initialize();
-			}
-			EnsureTransactionActive();
-		}
-
-		private void EnsureTransactionActive()
+		private void EnsureTransaction()
 		{
 			if (!_transactionActive)
 			{
-				Provider.BeginTransaction(IsolationLevel);
+				_dataProvider.BeginTransaction(_isolationLevel);
 				_transactionActive = true;
 			}
-		}
-
-		/// <summary>
-		/// Perform initialization tasks before the first 
-		/// operation is executed, i.e. starts new transaction 
-		/// if necessary.
-		/// </summary>
-		protected virtual void Initialize()
-		{
 		}
 
 		/// <summary>
@@ -142,7 +142,7 @@ namespace Radischevo.Wahha.Data
 
 			if (disposing && _hasOwnedContext)
 			{
-				IDisposable disposable = (_provider as IDisposable);
+				IDisposable disposable = (_dataProvider as IDisposable);
 				if (disposable != null)
 					disposable.Dispose();
 			}
@@ -159,8 +159,8 @@ namespace Radischevo.Wahha.Data
 
 			try
 			{
-				EnsureInitialized();
-				operation.Execute(Provider);
+				EnsureTransaction();
+				operation.Execute(this);
 			}
 			catch (Exception)
 			{
@@ -182,8 +182,8 @@ namespace Radischevo.Wahha.Data
 
 			try
 			{
-				EnsureInitialized();
-				return operation.Execute(Provider);
+				EnsureTransaction();
+				return operation.Execute(this);
 			}
 			catch (Exception)
 			{
@@ -197,8 +197,13 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		public void Commit()
 		{
-			Provider.Commit();
-			_transactionActive = false;
+			if (_transactionActive)
+			{
+				_dataProvider.Commit();
+				_cacheProvider.Commit();
+
+				_transactionActive = false;
+			}
 		}
 
 		/// <summary>
@@ -206,8 +211,13 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		public void Rollback()
 		{
-			Provider.Rollback();
-			_transactionActive = false;
+			if (_transactionActive)
+			{
+				_dataProvider.Rollback();
+				_cacheProvider.Rollback();
+
+				_transactionActive = false;
+			}
 		}
 
 		/// <summary>

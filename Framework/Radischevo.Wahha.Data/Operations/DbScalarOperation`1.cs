@@ -27,13 +27,12 @@ namespace Radischevo.Wahha.Data
 		/// Executes the operation against the provided data source 
 		/// and returns the scalar result.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to retrieve or store the data.</param>
+		/// <param name="context">Provides the current operation context.</param>
 		/// <param name="command">The command instance to execute.</param>
-		protected override TResult ExecuteCommand(IDbDataProvider provider, 
+		protected override TResult ExecuteCommand(DbOperationContext context, 
 			DbCommandDescriptor command)
 		{
-			return provider.Execute(command).AsScalar<TResult>();
+			return context.DataProvider.Execute(command).AsScalar<TResult>();
 		}
 		#endregion
 	}

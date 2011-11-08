@@ -20,36 +20,51 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
+		private void ValidateOperation()
+		{
+			ValidationContext context = new ValidationContext();
+			Validate(context);
+
+			if (!context.IsValid)
+				throw new ValidationException(context);
+		}
+
+		/// <summary>
+		/// When overridden in a derived class, determines 
+		/// whether the operation is valid for execution 
+		/// and populates the provided context with detected errors.
+		/// </summary>
+		protected virtual void Validate(ValidationContext context)
+		{
+		}
+
 		/// <summary>
 		/// Executes the operation against the provided data source 
 		/// and returns the result.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to retrieve or store the data.</param>
-		public TResult Execute(IDbDataProvider provider)
+		/// <param name="context">Provides the current operation context.</param>
+		public TResult Execute(DbOperationContext context)
 		{
-			Precondition.Require(provider, () =>
-				Error.ArgumentNull("provider"));
+			Precondition.Require(context, () => Error.ArgumentNull("context"));
 
-			return ExecuteInternal(provider);
+			ValidateOperation();
+			return ExecuteInternal(context);
 		}
 
 		/// <summary>
 		/// When overridden in a derived class, executes the operation 
 		/// against the provided data source.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// to retrieve or store the data.</param>
-		protected abstract TResult ExecuteInternal(IDbDataProvider provider);
+		/// <param name="context">Provides the current operation context.</param>
+		protected abstract TResult ExecuteInternal(DbOperationContext context);
 		#endregion
 
 		#region Interface Members
 		/// <summary>
 		/// Executes the operation against the provided data source.
 		/// </summary>
-		/// <param name="provider">The database communication provider 
-		/// using to store the data.</param>
-		void IContextualOperation<IDbDataProvider>.Execute(IDbDataProvider context)
+		/// <param name="context">Provides the current operation context.</param>
+		void IContextualOperation<DbOperationContext>.Execute(DbOperationContext context)
 		{
 			Execute(context);
 		}
