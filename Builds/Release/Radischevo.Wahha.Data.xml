@@ -587,6 +587,11 @@
             <param name="value">Specifies the value of the parameter. If a null value is provided, 
             parameter value will be set to <see cref="F:System.DBNull.Value"/>.</param>
         </member>
+        <member name="T:Radischevo.Wahha.Data.Provider.CommonDbDataProvider">
+            <summary>
+            Provides common methods to interact with relational databases.
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Data.IDbDataProvider">
             <summary>
             Defines the database connection 
@@ -695,12 +700,6 @@
             <summary>
             When overridden in a derived class opens the underlying 
             database connection.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.CloseOnError">
-            <summary>
-            When overridden in a derived class closes the underlying 
-            database connection and rolls back the current transaction.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProvider.Close">
@@ -2098,12 +2097,14 @@
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.Commit">
             <summary>
-            Explicitly commits the current transaction.
+            Accepts all changes that have 
+            been made since the last commit.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.Rollback">
             <summary>
-            Rolls back the current transaction.
+            Discards all changes that have 
+            been made since the last commit.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbOperationScope.Dispose">

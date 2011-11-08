@@ -6,6 +6,9 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data.Provider
 {
+	/// <summary>
+	/// Provides common methods to interact with relational databases.
+	/// </summary>
 	public abstract class CommonDbDataProvider : IDbDataProvider
 	{
 		#region Instance Fields
@@ -169,19 +172,6 @@ namespace Radischevo.Wahha.Data.Provider
 		}
 
 		/// <summary>
-		/// When overridden in a derived class closes the underlying 
-		/// database connection and rolls back the current transaction.
-		/// </summary>
-		protected void CloseOnError()
-		{
-			if (_connection.State != ConnectionState.Closed)
-			{
-				Rollback();
-				_connection.Close();
-			}
-		}
-
-		/// <summary>
 		/// Closes the underlying database connection discarding 
 		/// all changes have been made.
 		/// </summary>
@@ -262,7 +252,7 @@ namespace Radischevo.Wahha.Data.Provider
 			}
 			catch (DbException)
 			{
-				CloseOnError();
+				Close();
 				throw;
 			}
 			return result;

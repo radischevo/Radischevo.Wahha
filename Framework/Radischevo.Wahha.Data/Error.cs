@@ -303,7 +303,8 @@ namespace Radischevo.Wahha.Data
 
 		internal static Exception InvalidBufferSizeOrIndex(int maxLength, int bufferOffset)
 		{
-			return new IndexOutOfRangeException(String.Format(Res.Error_InvalidBufferSizeOrIndex, maxLength, bufferOffset));
+			return new IndexOutOfRangeException(String.Format(
+				Res.Error_InvalidBufferSizeOrIndex, maxLength, bufferOffset));
 		}
 	}
 }

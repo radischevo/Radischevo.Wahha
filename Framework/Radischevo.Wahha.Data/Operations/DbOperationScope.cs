@@ -125,11 +125,11 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Fields
-		private IDbDataProvider _provider;
-		private ScopedCacheProvider _cache;
+		private readonly IDbDataProvider _provider;
+		private readonly ScopedCacheProvider _cache;
+		private readonly bool _hasOwnedContext;
 		private IsolationLevel _isolationLevel;
 		private bool _transactionActive;
-		private bool _hasOwnedContext;
 		#endregion
 
 		#region Constructors
@@ -306,7 +306,8 @@ namespace Radischevo.Wahha.Data
 		}
 
 		/// <summary>
-		/// Explicitly commits the current transaction.
+		/// Accepts all changes that have 
+		/// been made since the last commit.
 		/// </summary>
 		public void Commit()
 		{
@@ -320,7 +321,8 @@ namespace Radischevo.Wahha.Data
 		}
 
 		/// <summary>
-		/// Rolls back the current transaction.
+		/// Discards all changes that have 
+		/// been made since the last commit.
 		/// </summary>
 		public void Rollback()
 		{
