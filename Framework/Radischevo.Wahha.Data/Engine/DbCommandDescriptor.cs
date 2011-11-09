@@ -8,11 +8,15 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Data
 {
     public class DbCommandDescriptor
-    {
-        #region Instance Fields
-        private string _text;
+	{
+		#region Constants
+		private const int DEFAULT_TIMEOUT = 10;
+		#endregion
+
+		#region Instance Fields
+		private string _text;
+		private int _timeout;
         private CommandType _type;
-        private int _timeout;
         private DbParameterCollection _parameters;
         #endregion
 
@@ -27,13 +31,9 @@ namespace Radischevo.Wahha.Data
         {
         }
 
-        public DbCommandDescriptor(string text,
-            CommandType type)
+        public DbCommandDescriptor(string text, CommandType type)
+			: this(text, type, null)
         {
-            _text = text;
-            _type = type;
-            _timeout = 10;
-            _parameters = new DbParameterCollection();
         }
 
 		public DbCommandDescriptor(string text, IValueSet parameters)
@@ -46,30 +46,17 @@ namespace Radischevo.Wahha.Data
 		{
 		}
 
-		public DbCommandDescriptor(string text, object[] parameters)
-			: this(text, CommandType.Text, parameters)
+		public DbCommandDescriptor(string text, CommandType type, object parameters)
+			: this(text, type, new ValueDictionary(parameters))
 		{
 		}
 
-        public DbCommandDescriptor(string text, 
-            CommandType type, IValueSet parameters)
-            : this(text, type)
+        public DbCommandDescriptor(string text, CommandType type, IValueSet parameters)
         {
-            AppendParameters(parameters);
-        }
-
-        public DbCommandDescriptor(string text, 
-            CommandType type, object parameters)
-            : this(text, type)
-        {
-            AppendParameters(new ValueDictionary(parameters));
-        }
-
-        public DbCommandDescriptor(string text,
-            CommandType type, object[] parameters)
-            : this(text, type)
-        {
-            AppendParameters(parameters);
+			_text = text;
+			_type = type;
+			_timeout = DEFAULT_TIMEOUT;
+			_parameters = CreateParameters(parameters);
         }
         #endregion
 
@@ -125,37 +112,25 @@ namespace Radischevo.Wahha.Data
         }
         #endregion
 
-        #region Instance Methods
-        private void AppendParameters(IValueSet values)
-        {
-            if (values == null)
-                return;
+		#region Static Methods
+		private static string BuildParameterName(string name)
+		{
+			return (name.StartsWith("@")) ? name : "@" + name;
+		}
 
-            foreach (string key in values.Keys)
-            {
-                string parameterName = (key.StartsWith("@")) ? key : "@" + key;
-                _parameters.Add(new DbParameterDescriptor(
-                    parameterName, values[key]));
-            }
-        }
+		private static DbParameterCollection CreateParameters(IValueSet values)
+		{
+			if (values == null)
+				return null;
 
-        private void AppendParameters(object[] parameters)
-        {
-            if (parameters == null || parameters.Length < 1)
-                return;
-
-            string[] paramPlaceHolders = new string[parameters.Length];
-            string parameterName;
-
-            for (int i = 0; i < paramPlaceHolders.Length; i++)
-            {
-                parameterName = "@p" + i.ToString(CultureInfo.InvariantCulture);
-                paramPlaceHolders[i] = parameterName;
-
-                _parameters.Add(new DbParameterDescriptor(parameterName, parameters[i]));
-            }
-            _text = String.Format(CultureInfo.InvariantCulture, Text, paramPlaceHolders);
-        }
-        #endregion
+			DbParameterCollection collection = new DbParameterCollection();
+			foreach (string key in values.Keys)
+			{
+				collection.Add(new DbParameterDescriptor(
+					BuildParameterName(key), values[key]));
+			}
+			return collection;
+		}
+		#endregion
     }
 }
