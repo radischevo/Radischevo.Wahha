@@ -19,8 +19,9 @@ namespace Radischevo.Wahha.Data
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.DbQueryOperation{TEntity,TResult}"/> class.
 		/// </summary>
-		protected DbQueryOperation()
+		protected DbQueryOperation(IDbMaterializer<TEntity> materializer)
 		{
+			Materializer = materializer;
 		}
 		#endregion
 

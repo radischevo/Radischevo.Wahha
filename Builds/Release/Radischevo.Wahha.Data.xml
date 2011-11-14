@@ -1671,7 +1671,7 @@
             <typeparam name="TEntity">The type of the entity for materialization.</typeparam>
             <typeparam name="TResult">The type of the result.</typeparam>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbQueryOperation`2.#ctor">
+        <member name="M:Radischevo.Wahha.Data.DbQueryOperation`2.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
             <summary>
             Initializes a new instance of the <see cref="T:Radischevo.Wahha.Data.DbQueryOperation`2"/> class.
             </summary>
@@ -1680,12 +1680,6 @@
             <summary>
             Gets or sets the <see cref="T:Radischevo.Wahha.Data.IDbMaterializer`1"/>
             used to transform database query results into objects.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.DbSelectOperation`1"/> class.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbSelectOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
@@ -2495,12 +2489,6 @@
             </summary>
             <typeparam name="TEntity">The type of the entity.</typeparam>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbCombinedSelectOperation`1.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.DbCombinedSelectOperation`1"/> class.
-            </summary>
-        </member>
         <member name="M:Radischevo.Wahha.Data.DbCombinedSelectOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
             <summary>
             Initializes a new instance of the 
@@ -2522,12 +2510,6 @@
             the specified command and returns a single entity of specified type.
             </summary>
             <typeparam name="TEntity">The type of the entity.</typeparam>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbSingleOperation`1.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.DbSingleOperation`1"/> class.
-            </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbSingleOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
             <summary>
@@ -2618,12 +2600,6 @@
             </summary>
             <typeparam name="TEntity">The type of the entity.</typeparam>
         </member>
-        <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.DbSubsetOperation`1"/> class.
-            </summary>
-        </member>
         <member name="M:Radischevo.Wahha.Data.DbSubsetOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
             <summary>
             Initializes a new instance of the 
@@ -2706,12 +2682,6 @@
             the specified command and returns a single entity of specified type.
             </summary>
             <typeparam name="TEntity">The type of the entity.</typeparam>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.DbCombinedSingleOperation`1.#ctor">
-            <summary>
-            Initializes a new instance of the 
-            <see cref="T:Radischevo.Wahha.Data.DbCombinedSingleOperation`1"/> class.
-            </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.DbCombinedSingleOperation`1.#ctor(Radischevo.Wahha.Data.IDbMaterializer{`0})">
             <summary>

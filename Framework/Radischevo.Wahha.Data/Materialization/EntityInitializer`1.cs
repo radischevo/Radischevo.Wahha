@@ -14,7 +14,7 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public TEntity Initialize(TEntity entity, IValueSet source)
+		public TEntity Initialize(TEntity entity, IDbValueSet source)
 		{
 			Precondition.Require(source, () => Error.ArgumentNull("source"));
 
@@ -24,15 +24,15 @@ namespace Radischevo.Wahha.Data
 			return LoadValue(entity, source);
 		}
 
-		private TEntity CreateValue(IValueSet source)
+		private TEntity CreateValue(IDbValueSet source)
 		{
-			Func<IValueSet, TEntity> action = Creator.Build(MaterializerType);
+			Func<IDbValueSet, TEntity> action = Creator.Build(MaterializerType);
 			return action(source);
 		}
 
-		private TEntity LoadValue(TEntity entity, IValueSet source)
+		private TEntity LoadValue(TEntity entity, IDbValueSet source)
 		{
-			Func<TEntity, IValueSet, TEntity> action = Loader.Build(MaterializerType);
+			Func<TEntity, IDbValueSet, TEntity> action = Loader.Build(MaterializerType);
 			return action(entity, source);
 		}
 		#endregion

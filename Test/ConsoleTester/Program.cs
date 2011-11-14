@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -30,10 +31,12 @@ namespace ConsoleTester
 			Program p = new Program();
 			//p.SgmlTest();
 			//p.TransactionTest();
-			var threads = p.TransactionTestThread();
+			//var threads = p.TransactionTestThread();
+
+			p.MaterializerTest2();
 
 			Console.ReadKey();
-			threads.ForEach(thread => thread.Abort());
+			//threads.ForEach(thread => thread.Abort());
 		}
 
 		public void SgmlTest()
@@ -144,6 +147,28 @@ namespace ConsoleTester
 			thread2.Start();
 
 			return new Thread[] { thread1, thread2 };
+		}
+
+		public void MaterializerTest2()
+		{
+			var users = SelectUsers(5);
+			Console.WriteLine("Displaying {0} of {1} users.", users.Count(), users.Total());
+			Console.WriteLine();
+			foreach (var user in users)
+			{
+				Console.WriteLine("{0} => {1}, {2} {3}, {4} ({5})",
+					user.Id, user.Email, user.Profile.FirstName, user.Profile.LastName,
+					user.Speciality.Id, user.Speciality.Name);
+			}
+		}
+
+		private IEnumerable<User> SelectUsers(int count)
+		{
+			var operation = new SelectUsersOperation(count);
+			using (var scope = new DbOperationScope())
+			{
+				return scope.Execute(operation);
+			}
 		}
 	}
 }

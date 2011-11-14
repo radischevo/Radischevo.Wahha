@@ -62,6 +62,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="TextQueryOperation.cs" />
     <Compile Include="UnityServiceLocator.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

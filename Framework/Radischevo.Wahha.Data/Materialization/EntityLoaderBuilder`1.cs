@@ -18,18 +18,18 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Methods
-		public Func<TEntity, IValueSet, TEntity> Build(Type type)
+		public Func<TEntity, IDbValueSet, TEntity> Build(Type type)
 		{
 			BindingFlags instanceFlags = BindingFlags.Instance | BindingFlags.Public;
 			MethodInfo resolveMethod = typeof(IServiceProvider).GetMethod("GetService",
 				instanceFlags, null, new Type[] { typeof(Type) }, null);
 			MethodInfo materializeMethod = type.GetMethod("Materialize", 
-				instanceFlags, null, new Type[] { typeof(TEntity), typeof(IValueSet) }, null);
+				instanceFlags, null, new Type[] { typeof(TEntity), typeof(IDbValueSet) }, null);
 
 			Precondition.Require(materializeMethod, () => Error.IncompatibleMaterializerType(type));
 
 			ParameterExpression entity = Expression.Parameter(typeof(TEntity), "entity");
-			ParameterExpression values = Expression.Parameter(typeof(IValueSet), "values");
+			ParameterExpression values = Expression.Parameter(typeof(IDbValueSet), "values");
 			
 			ConstantExpression service = Expression.Constant(ServiceLocator.Instance, typeof(IServiceLocator));
 			ConstantExpression serviceType = Expression.Constant(type, typeof(Type));
@@ -38,8 +38,8 @@ namespace Radischevo.Wahha.Data
 			UnaryExpression conversion = Expression.Convert(resolver, type);
 			MethodCallExpression invocation = Expression.Call(conversion, materializeMethod, entity, values);
 
-			Expression<Func<TEntity, IValueSet, TEntity>> func = 
-				Expression.Lambda<Func<TEntity, IValueSet, TEntity>>(invocation, entity, values);
+			Expression<Func<TEntity, IDbValueSet, TEntity>> func = 
+				Expression.Lambda<Func<TEntity, IDbValueSet, TEntity>>(invocation, entity, values);
 
 			return func.Compile();
 		}

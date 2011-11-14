@@ -15,15 +15,6 @@ namespace Radischevo.Wahha.Data
 		/// Initializes a new instance of the 
 		/// <see cref="Radischevo.Wahha.Data.DbCombinedSelectOperation{TEntity}"/> class.
 		/// </summary>
-		protected DbCombinedSelectOperation()
-			: base()
-		{
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the 
-		/// <see cref="Radischevo.Wahha.Data.DbCombinedSelectOperation{TEntity}"/> class.
-		/// </summary>
 		/// <param name="materializer">The <see cref="Radischevo.Wahha.Data.IDbMaterializer{TEntity}"/>
 		/// used to transform database query results into objects.</param>
 		protected DbCombinedSelectOperation(IDbMaterializer<TEntity> materializer)
