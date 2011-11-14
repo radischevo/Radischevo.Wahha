@@ -70,6 +70,7 @@ namespace Radischevo.Wahha.Core
 		/// <param name="key">The key to find.</param>
 		public static TValue GetValue<TValue>(this IValueSet values, string name)
 		{
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
 			return values.GetValue<TValue>(name, default(TValue), CultureInfo.CurrentCulture);
 		}
 
@@ -81,6 +82,7 @@ namespace Radischevo.Wahha.Core
 		/// <param name="defaultValue">The default value of the variable.</param>
 		public static TValue GetValue<TValue>(this IValueSet values, string name, TValue defaultValue)
 		{
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
 			return values.GetValue<TValue>(name, defaultValue, CultureInfo.CurrentCulture);
 		}
 
@@ -93,12 +95,13 @@ namespace Radischevo.Wahha.Core
 		/// supplies culture-specific formatting information.</param>
 		public static TValue GetValue<TValue>(this IValueSet values, string name, IFormatProvider provider)
 		{
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
 			return values.GetValue<TValue>(name, default(TValue), provider);
 		}
 		
         public static IValueSet Subset(this IValueSet values, Func<string, bool> keySelector)
         {
-            return new SubsetWrapper(values, keySelector);
+			return new SubsetWrapper(values, keySelector);
         }
 
         public static IValueSet Transform(this IValueSet values, Func<string, string> keyTransformer)
@@ -114,6 +117,8 @@ namespace Radischevo.Wahha.Core
 		public static bool ContainsAll(this IValueSet values,
 			IEqualityComparer<string> comparer, params string[] keys)
 		{
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
+
 			foreach (string key in keys)
 				if (!values.Keys.Contains(key, comparer))
 					return false;
@@ -123,6 +128,7 @@ namespace Radischevo.Wahha.Core
 
 		public static bool ContainsAny(this IValueSet values)
 		{
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
 			return values.Keys.Any();
 		}
 
@@ -134,6 +140,8 @@ namespace Radischevo.Wahha.Core
 		public static bool ContainsAny(this IValueSet values, 
 			IEqualityComparer<string> comparer, params string[] keys)
 		{
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
+
 			if (keys == null || keys.Length < 1)
 				return ContainsAny(values);
 

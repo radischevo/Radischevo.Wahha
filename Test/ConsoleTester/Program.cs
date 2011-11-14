@@ -151,14 +151,14 @@ namespace ConsoleTester
 
 		public void MaterializerTest2()
 		{
-			var users = SelectUsers(5);
+			var users = SelectUsers(30);
 			Console.WriteLine("Displaying {0} of {1} users.", users.Count(), users.Total());
 			Console.WriteLine();
 			foreach (var user in users)
 			{
 				Console.WriteLine("{0} => {1}, {2} {3}, {4} ({5})",
 					user.Id, user.Email, user.Profile.FirstName, user.Profile.LastName,
-					user.Speciality.Id, user.Speciality.Name);
+					user.Speciality.Evaluate(a => a.Id), user.Speciality.Evaluate(a => a.Name));
 			}
 		}
 

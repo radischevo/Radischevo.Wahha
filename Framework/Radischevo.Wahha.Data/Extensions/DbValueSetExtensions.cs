@@ -72,7 +72,9 @@ namespace Radischevo.Wahha.Data
 		#region Extension Methods
 		public static IDbValueSet ToDbValueSet(this IValueSet values)
 		{
-			return new DbValueSet(values);
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
+			IDbValueSet converted = (values as IDbValueSet);
+			return (converted == null) ? new DbValueSet(values) : converted;
 		}
 
 		public static IDbValueSet Subset(this IDbValueSet values, Func<string, bool> keySelector)

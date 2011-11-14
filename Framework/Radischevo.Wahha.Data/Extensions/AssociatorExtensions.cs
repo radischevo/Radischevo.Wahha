@@ -32,6 +32,20 @@ namespace Radischevo.Wahha.Data
 		{
 			return builder.Validate(new SubsetSchemeValidator(columns));
 		}
+
+		public static ISingleAssociationBuilder<TAssociation> Defined<TAssociation>(
+			this ISingleAssociationBuilder<TAssociation> builder, params string[] columns)
+			where TAssociation : class
+		{
+			return builder.Validate(new DefinedSchemeValidator(columns));
+		}
+
+		public static IEntityAssociationBuilder<TAssociation> Defined<TAssociation>(
+			this IEntityAssociationBuilder<TAssociation> builder, params string[] columns)
+			where TAssociation : class
+		{
+			return builder.Validate(new DefinedSchemeValidator(columns));
+		}
 		#endregion
 	}
 }

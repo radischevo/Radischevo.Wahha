@@ -145,7 +145,8 @@ namespace ConsoleTester
 
 			Associate(entity.ProfileLink).Subset("Profile.").Apply<ProfileMaterializer>(source);
 			Associate(entity.SpecialityLink).With(() => new SingleSpecialityOperation(
-				source.GetValue<long>("Speciality.Id"))).Subset("Speciality.").Apply<SpecialityMaterializer>(source);
+				source.GetValue<long>("speciality.Id"))).Subset("Speciality.")
+				.Defined("Id").Apply<SpecialityMaterializer>(source);
 
 			return entity;
 		}
@@ -218,10 +219,10 @@ namespace ConsoleTester
 			return new DbCommandDescriptor(@"SELECT TOP(@count) A.[Id], A.[Email], A.[ActivationKey], 
 				A.[DateRegistered], A.[DateLastVisited], B.[Id] AS [Speciality.Id], B.[Name] AS [Speciality.Name], 
 				C.[FirstName] AS [Profile.FirstName], C.[LastName] AS [Profile.LastName], C.[NotificationEmail] AS [Profile.NotificationEmail]
-				FROM [dbo].[Workle.Users] AS [A] JOIN [dbo].[Workle.Specialities] AS [B] ON [A].[MainSpecialityId] = [B].[Id]
+				FROM [dbo].[Workle.Users] AS [A] LEFT JOIN [dbo].[Workle.Specialities] AS [B] ON [A].[MainSpecialityId] = [B].[Id]
 				JOIN [dbo].[Workle.Profiles] AS [C] ON [A].[Id] = [C].[Id] WHERE [A].[Deleted] = 0;
 
-				SELECT COUNT(1) FROM [dbo].[Workle.Users] AS [A] JOIN [dbo].[Workle.Specialities] AS [B] ON [A].[MainSpecialityId] = [B].[Id]
+				SELECT COUNT(1) FROM [dbo].[Workle.Users] AS [A] LEFT JOIN [dbo].[Workle.Specialities] AS [B] ON [A].[MainSpecialityId] = [B].[Id]
 				JOIN [dbo].[Workle.Profiles] AS [C] ON [A].[Id] = [C].[Id] WHERE [A].[Deleted] = 0;", new { count = _count });
 				
 		}
