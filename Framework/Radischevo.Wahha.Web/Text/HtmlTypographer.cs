@@ -306,7 +306,6 @@ namespace Radischevo.Wahha.Web.Text
                 _input.Match("www.")))
             {
                 StringBuilder lb = new StringBuilder();
-                int startIndex = _input.Position;
                 string url;
 
                 // едим все до пробела, или до конца строки

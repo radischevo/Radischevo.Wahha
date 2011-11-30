@@ -19,7 +19,6 @@ namespace Radischevo.Wahha.Data
 		private sealed class ScopedCacheProvider : ITaggedCacheProvider
 		{
 			#region Instance Fields
-			private bool _disposed;
 			private bool _allowDirtyReads;
 			private readonly ITaggedCacheProvider _provider;
 			private readonly HashSet<string> _invalidations;

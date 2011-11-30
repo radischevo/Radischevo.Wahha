@@ -288,7 +288,6 @@ namespace Radischevo.Wahha.Web.Text.Sgml
 
         private char ParseDeclarationComment(bool full)
         {
-            int start = _current.Line;
             // -^-...--
             // This method scans over a comment inside a markup declaration.
             char ch = _current.ReadChar();
@@ -321,7 +320,6 @@ namespace Radischevo.Wahha.Web.Text.Sgml
 
         private void ParseIgnoreSection()
         {
-            int start = _current.Line;
             // <!-^-...-->
             char ch = _current.SkipWhitespace();
             if (ch != '[') 
@@ -351,7 +349,7 @@ namespace Radischevo.Wahha.Web.Text.Sgml
         private Entity ParseParameterEntity(string term)
         {
             // almost the same as this.current.ScanToken, except we also terminate on ';'
-            char ch = _current.ReadChar();
+            _current.ReadChar();
             string name = _current.ScanToken(_builder, ";" + term, false);
             if (_current.LastChar == ';')
                 _current.ReadChar();

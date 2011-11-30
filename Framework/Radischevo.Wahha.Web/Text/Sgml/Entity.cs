@@ -686,7 +686,9 @@ namespace Radischevo.Wahha.Web.Text.Sgml
             if (_isHtml && v >= 0x80 & v <= 0x9F)
             {
                 // This range of control characters is mapped to Windows-1252!
+				#pragma warning disable 0219
                 int size = _ctrlMap.Length;
+				#pragma warning restore 0219
                 int i = v - 0x80;
                 int unicode = _ctrlMap[i];
 

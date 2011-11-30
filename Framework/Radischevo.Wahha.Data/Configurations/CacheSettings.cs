@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Data.Caching;
@@ -51,9 +52,10 @@ namespace Radischevo.Wahha.Data.Configurations
                 return;
 
             _providerType = Type.GetType(element.Provider.Type, false, true);
-
-            foreach (string key in element.Settings.AllKeys)
-                _settings[key] = element.Settings[key].Value;
+			
+			foreach (NameValueConfigurationElement item in element.Settings) {
+				_settings[item.Name] = item.Value;
+			}
         }
         #endregion
     }

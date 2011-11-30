@@ -248,5 +248,14 @@ namespace Radischevo.Wahha.Web.Routing.Resources {
                 return ResourceManager.GetString("Error_UnexpectedSymbolInRoute", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Looks up a localized string similar to Could not parse the configuration file. See the inner exception for details..
+        /// </summary>
+        internal static string Error_UnableToLoadConfiguration {
+            get {
+                return ResourceManager.GetString("Error_UnableToLoadConfiguration", resourceCulture);
+            }
+        }
     }
 }

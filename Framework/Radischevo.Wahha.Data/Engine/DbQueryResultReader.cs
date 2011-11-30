@@ -82,7 +82,6 @@ namespace Radischevo.Wahha.Data
 		private int _depth;
 		private int _recordsAffected;
 		private bool _isClosed;
-		private DbQueryResult _result;
 		private IEnumerator<DbSubQueryResult> _resultIterator;
 		private IEnumerator<DbQueryResultRow> _rowIterator;
 		#endregion
@@ -100,7 +99,6 @@ namespace Radischevo.Wahha.Data
 		{
 			Precondition.Require(result, () => Error.ArgumentNull("result"));
 
-			_result = result;
 			_recordsAffected = -1;
 			_resultIterator = result.GetEnumerator();
 

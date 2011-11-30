@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>/home/sergey/Projects/Radischevo.Wahha/Builds/Release/Radischevo.Wahha.Web.Templates</name>
+    </assembly>
+    <members>
+        <member name="T:Radischevo.Wahha.Web.Templates.FileExistenceCache">
+            <summary>
+            This class caches the result of VirtualPathProvider.FileExists for a short
+            period of time, and recomputes it if necessary.
+            The default MapPathBasedVirtualPathProvider caches the result of
+            the FileExists call with the appropriate dependencies, so it is less
+            expensive on subsequent calls, but it still needs to do MapPath which can
+            take quite some time.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Templates.TemplateFileInfo">
+            <summary>
+            Specifies properties of a template such as VirtualPath.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Templates.TemplateStack">
+            <summary>
+            Template stacks store a stack of template files.
+            The stack can be queried to identify properties of
+            the current executing file such as the virtual path of the file.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Templates.ITemplateFile">
+            <summary>
+            An interface that provides information about the current executing file.
+            WebPageRenderingBase implements this type so that all pages excluding
+            AppStart pages could be queried to identify the current executing file.
+            </summary>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Templates.Scope.ScopeStorageComparer">
+            <summary>
+            Custom comparer for the context dictionaries
+            The comparer treats strings as a special case, performing case insesitive comparison.
+            This guaratees that we remain consistent throughout the chain of contexts since PageData dictionary
+            behaves in this manner.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Templates.Scope.ScopeStorageDictionary.#ctor(System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <param name="backingStore">
+            The dictionary to use as a storage. Since the dictionary would be used as-is, we expect the implementer to
+            use the same key-value comparison logic as we do here.
+            </param>
+        </member>
+    </members>
+</doc>

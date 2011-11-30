@@ -16,7 +16,9 @@ namespace Radischevo.Wahha.Web
 
 			try
 			{
+				#pragma warning disable 0219
 				string id = session.SessionID;
+				#pragma warning restore 0219
 			}
 			catch (HttpException)
 			{

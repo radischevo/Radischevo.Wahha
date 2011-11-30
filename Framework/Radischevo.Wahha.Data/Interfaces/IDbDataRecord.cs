@@ -13,18 +13,6 @@ namespace Radischevo.Wahha.Data
     /// </summary>
     public interface IDbDataRecord : IDataRecord, IDbValueSet
     {
-        #region Instance Properties
-        /// <summary>
-        /// Gets the collection of column names, 
-        /// which values were accessed by calling 
-        /// value-getter methods of the current row.
-        /// </summary>
-        IEnumerable<string> AccessedKeys
-        { 
-            get; 
-        }
-        #endregion
-
         #region Instance Methods
         /// <summary>
         /// Returns a value indicating whether the column 

@@ -51,7 +51,7 @@ namespace Radischevo.Wahha.Core
         #endregion
 
         #region Instance Fields
-        private FieldInfo _field;
+		private FieldInfo _field;
         private DynamicAccessor _accessor;
         #endregion
 
@@ -63,12 +63,21 @@ namespace Radischevo.Wahha.Core
         public FieldAccessor(FieldInfo field)
         {
 			Precondition.Require(field, () => Error.ArgumentNull("field"));
-
-            _field = field;
+			_field = field;
             _accessor = CreateAccessor(field);
         }
         #endregion
-
+		
+		#region Instance Properties
+        public MemberInfo Member
+        {
+            get
+            {
+                return _field;
+            }
+        }
+        #endregion
+		
         #region Static Methods
         private static DynamicAccessor CreateAccessor(FieldInfo field)
         {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+
 using Res = Radischevo.Wahha.Web.Routing.Resources.Resources;
 
 namespace Radischevo.Wahha.Web.Routing
@@ -141,6 +143,11 @@ namespace Radischevo.Wahha.Web.Routing
         {
             return new InvalidOperationException(
                 Res.Error_RoutableControlRequiresRoutablePage);
+        }
+		
+		internal static Exception UnableToLoadConfiguration(Exception inner)
+        {
+            return new ConfigurationErrorsException(Res.Error_UnableToLoadConfiguration, inner);
         }
     }
 }

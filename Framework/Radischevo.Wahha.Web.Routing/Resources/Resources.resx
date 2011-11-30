@@ -180,4 +180,7 @@
   <data name="Error_UnexpectedSymbolInRoute" xml:space="preserve">
     <value>An unexpected symbol '{0}' found in this path segment: '{1}'. Please check the route syntax.</value>
   </data>
+  <data name="Error_UnableToLoadConfiguration" xml:space="preserve">
+    <value>Could not parse the configuration file. See the inner exception for details.</value>
+  </data>
 </root>

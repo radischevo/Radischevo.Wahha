@@ -24,7 +24,7 @@ namespace ConsoleTester
 {
 	class Program
 	{
-		static Random _random = new Random();
+		//static Random _random = new Random();
 
 		static void Main(string[] args)
 		{

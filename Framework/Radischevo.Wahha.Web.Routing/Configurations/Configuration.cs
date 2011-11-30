@@ -30,15 +30,22 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
 			_variables = new NameValueConfigurationCollection();
 
             SettingsSection section =
-                    ConfigurationManager.GetSection("radischevo.wahha/web/routing")
-                    as SettingsSection;
+				ConfigurationManager.GetSection("radischevo.wahha/web/routing")
+				as SettingsSection;
 
-            if (section != null)
+            if (section == null)
+				return;
+			
+			try
             {
                 InitRouteTableProvider(section.Provider);
 				InitVariables(section.Variables);
                 LoadRouteTable(section.Routes);
             }
+			catch(ConfigurationErrorsException ex)
+			{
+				throw Error.UnableToLoadConfiguration(ex);
+			}
         }
         #endregion
 

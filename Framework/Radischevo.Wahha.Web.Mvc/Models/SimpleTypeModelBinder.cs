@@ -33,9 +33,11 @@ namespace Radischevo.Wahha.Web.Mvc
 			if (valueType.Equals(typeof(int)))
 				return Accumulate<int>(accumulator, value, (a, b) => a | b);
 
+			#pragma warning disable 0675
 			if (valueType.Equals(typeof(sbyte)))
 				return Accumulate<sbyte>(accumulator, value, (a, b) => (sbyte)(a | b));
-
+			#pragma warning restore 0675
+			
 			if (valueType.Equals(typeof(byte)))
 				return Accumulate<byte>(accumulator, value, (a, b) => (byte)(a | b));
 

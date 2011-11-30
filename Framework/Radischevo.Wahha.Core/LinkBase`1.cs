@@ -284,7 +284,9 @@ namespace Radischevo.Wahha.Core
 				if (declaringType == null)
 				{
 					info.AddValue("dynamicMethod", true);
+#pragma warning disable 0219
 					T value = Value;
+#pragma warning restore 0219
 				}
 				else
 				{

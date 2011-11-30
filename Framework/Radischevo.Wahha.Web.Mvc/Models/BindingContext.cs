@@ -14,7 +14,6 @@ namespace Radischevo.Wahha.Web.Mvc
         private object _model;
         private Type _modelType;
         private string _modelName;
-        private string _inputStream;
 		private IValueProvider _valueProvider;
         private ValidationErrorCollection _errors;
         private bool _fallbackToEmptyPrefix;

@@ -430,7 +430,6 @@ namespace Radischevo.Wahha.Web.Text.Sgml
                         if (NodeType == XmlNodeType.Attribute || 
                             NodeType == XmlNodeType.Element)
                         {
-                            string key = "xmlns:" + prefix;
                             for (int i = _stack.Count - 1; i > 0; --i)
                             {
                                 SgmlNode node = _stack[i];
@@ -997,7 +996,6 @@ namespace Radischevo.Wahha.Web.Text.Sgml
             if (_current == null)
                 OpenInput();
 
-            State start = _state;
             if (_node.Simulated)
             {
                 _node.Simulated = false;
