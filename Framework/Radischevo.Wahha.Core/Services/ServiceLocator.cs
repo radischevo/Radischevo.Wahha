@@ -45,6 +45,15 @@ namespace Radischevo.Wahha.Core
 		#endregion
 
 		#region Static Methods
+		private static ServiceLocator Create(Type providerType)
+		{
+			if (!IsProvider(providerType))
+				throw Error.IncompatibleServiceLocatorType(providerType);
+
+			IServiceLocator provider = (IServiceLocator)Activator.CreateInstance(providerType);
+			return new ServiceLocator(provider);
+		}
+		
 		internal static bool IsProvider(Type type)
 		{
 			Precondition.Require(type, () => Error.ArgumentNull("type"));
@@ -59,22 +68,6 @@ namespace Radischevo.Wahha.Core
 				return false;
 
 			return true;
-		}
-
-		public static ServiceLocator Create(Type providerType)
-		{
-			if (!IsProvider(providerType))
-				throw Error.IncompatibleServiceLocatorType(providerType);
-
-			IServiceLocator provider = (IServiceLocator)Activator.CreateInstance(providerType);
-			return new ServiceLocator(provider);
-		}
-
-		public static ServiceLocator Create<TLocator>()
-			where TLocator : IServiceLocator, new()
-		{
-			IServiceLocator provider = new TLocator();
-			return new ServiceLocator(provider);
 		}
 		#endregion
 
