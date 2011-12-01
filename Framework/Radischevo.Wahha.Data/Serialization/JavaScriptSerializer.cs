@@ -221,10 +221,11 @@ namespace Radischevo.Wahha.Data.Serialization
 
             foreach (DictionaryEntry entry in obj)
             {
-                string key = (entry.Key as string);
-                if (key == null)
-                    throw Error.SuppliedDictionaryTypeIsNotSupported();
-
+				Type keyType = (entry.Key == null) ? typeof(object) : entry.Key.GetType();
+				if (!keyType.IsPrimitive) 
+					throw Error.SuppliedDictionaryTypeIsNotSupported();
+				
+                string key = Convert.ToString(entry.Key, CultureInfo.InvariantCulture);
                 if (hasTypeKey && string.Equals(key, ServerTypeFieldName, StringComparison.Ordinal))
                 {
                     hasTypeKey = false;

@@ -1,16 +1,10 @@
 ﻿<Properties>
   <AuthorInfo Name="Sergey Rodyushkin" Email="" Copyright="(C) 2008-2011 Radischevo Solutions" Company="Radischevo Solutions" Trademark="Radischevo Solutions" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Framework/Radischevo.Wahha.Core/Services/ServiceLocator.cs">
-    <Files>
-      <File FileName="Test/ConsoleTester/Program.cs" Line="159" Column="5" />
-      <File FileName="Framework/Radischevo.Wahha.Core/Services/ServiceLocator.cs" Line="31" Column="10" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="ConsoleTester" expanded="True" selected="True" />
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

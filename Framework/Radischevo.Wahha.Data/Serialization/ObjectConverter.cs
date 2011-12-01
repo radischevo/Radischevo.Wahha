@@ -352,7 +352,7 @@ namespace Radischevo.Wahha.Data.Serialization
             if (IsGenericDictionary(type))
             {
                 Type keyType = type.GetGenericArguments()[0];
-                if (keyType != typeof(string) && keyType != typeof(object))
+                if (!keyType.IsPrimitive)
                 {
                     if (throwOnError)
                         throw Error.SuppliedDictionaryTypeIsNotSupported();
@@ -375,14 +375,17 @@ namespace Radischevo.Wahha.Data.Serialization
                 {
                     foreach (string key in list)
                     {
+						object convertedKey = Convert.ChangeType(
+							key, keyType, CultureInfo.InvariantCulture);
                         object value;
+						
                         if (!TryConvertObjectToType(dictionary[key], 
                             valueType, serializer, throwOnError, out value))
                         {
                             convertedObject = null;
                             return false;
                         }
-                        dict[key] = value;
+                        dict[convertedKey] = value;
                     }
 
                     convertedObject = dict;
