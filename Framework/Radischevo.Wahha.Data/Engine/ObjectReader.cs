@@ -42,8 +42,12 @@ namespace Radischevo.Wahha.Data
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_enumerator != null)
-                _enumerator.Dispose();
+			if (disposing)
+			{
+	            if (_enumerator != null)
+	                _enumerator.Dispose();
+			}
+			_enumerator = null;
         }
 
         IEnumerator IEnumerable.GetEnumerator()

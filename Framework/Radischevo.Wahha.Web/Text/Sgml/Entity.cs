@@ -737,11 +737,9 @@ namespace Radischevo.Wahha.Web.Text.Sgml
             if (isDisposing)
             {
                 if (_reader != null)
-                {
                     _reader.Dispose();
-                    _reader = null;
-                }
             }
+			_reader = null;
         }
         #endregion
     }

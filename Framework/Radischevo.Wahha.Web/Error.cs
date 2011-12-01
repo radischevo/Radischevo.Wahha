@@ -292,5 +292,10 @@ namespace Radischevo.Wahha.Web
 			return new ArgumentException(String.Format(Resources.Resources
 				.Error_RuleNameCannotDifferFromKey, key, actualValue));
 		}
+		
+		internal static Exception ObjectDisposed(string objectName)
+		{
+			return new ObjectDisposedException(objectName);
+		}
 	}
 }

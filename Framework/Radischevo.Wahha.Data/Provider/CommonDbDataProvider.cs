@@ -2,6 +2,8 @@
 using System.Data;
 using System.Data.Common;
 
+using ST = System.Transactions;
+
 using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data.Provider
@@ -14,6 +16,7 @@ namespace Radischevo.Wahha.Data.Provider
 		#region Instance Fields
 		private IDbConnection _connection;
 		private IDbTransaction _transaction;
+		private bool _disposed;
 		#endregion
 
 		#region Constructors
@@ -44,8 +47,7 @@ namespace Radischevo.Wahha.Data.Provider
 				if (_connection == null)
 					return false;
 
-				return (_connection.State
-					!= ConnectionState.Closed);
+				return (_connection.State != ConnectionState.Closed);
 			}
 		}
 
@@ -115,6 +117,9 @@ namespace Radischevo.Wahha.Data.Provider
 		/// </summary>
 		public virtual IDbCommand CreateCommand()
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("connection"));
+			
 			IDbCommand command = _connection.CreateCommand();
 			command.Connection = _connection;
 
@@ -146,6 +151,9 @@ namespace Radischevo.Wahha.Data.Provider
 		/// </summary>
 		public virtual bool ValidateConnection()
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("connection"));
+			
 			try
 			{
 				_connection.Open();
@@ -161,6 +169,13 @@ namespace Radischevo.Wahha.Data.Provider
 		#endregion
 
 		#region Manipulation Methods
+		private bool ExecutedWithinTransactionScope()
+		{
+			ST.Transaction scoped = ST.Transaction.Current;
+			return (scoped != null && scoped.TransactionInformation.Status 
+				== ST.TransactionStatus.Active);
+		}
+		
 		/// <summary>
 		/// When overridden in a derived class opens the underlying 
 		/// database connection.
@@ -177,6 +192,9 @@ namespace Radischevo.Wahha.Data.Provider
 		/// </summary>
 		public void Close()
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("connection"));
+			
 			if (_connection.State != ConnectionState.Closed)
 			{
 				Rollback();
@@ -189,6 +207,9 @@ namespace Radischevo.Wahha.Data.Provider
 		/// </summary>
 		public void Commit()
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("connection"));
+			
 			if (HasTransaction)
 			{
 				_transaction.Commit();
@@ -203,6 +224,9 @@ namespace Radischevo.Wahha.Data.Provider
 		/// </summary>
 		public void Rollback()
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("connection"));
+			
 			if (HasTransaction)
 			{
 				_transaction.Rollback();
@@ -216,7 +240,10 @@ namespace Radischevo.Wahha.Data.Provider
 		/// </summary>
 		public virtual void BeginTransaction(IsolationLevel isolation)
 		{
-			if (!HasTransaction)
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("connection"));
+			
+			if (!HasTransaction && !ExecutedWithinTransactionScope())
 			{
 				if (_connection.State == ConnectionState.Closed)
 					_connection.Open();
@@ -235,6 +262,7 @@ namespace Radischevo.Wahha.Data.Provider
 		/// <typeparam name="TR">The type of the returning value.</typeparam>
 		public virtual TR Execute<TR>(IDbCommand command, Func<IDbCommand, TR> converter)
 		{
+			Precondition.Require(!_disposed, () => Error.ObjectDisposed("connection"));
 			Precondition.Require(command, () => Error.ArgumentNull("command"));
 			Precondition.Require(ValidateCommand(command), () => 
 				Error.UnsupportedCommandType(command.GetType()));
@@ -278,11 +306,13 @@ namespace Radischevo.Wahha.Data.Provider
 		/// the disposal is called explicitly.</param>
 		protected virtual void Dispose(bool disposing)
 		{
-			if (disposing)
+			if (disposing && !_disposed)
 			{
 				Close();
 				_connection.Dispose();
 			}
+			_connection = null;
+			_disposed = true;
 		}
 		#endregion
 	}

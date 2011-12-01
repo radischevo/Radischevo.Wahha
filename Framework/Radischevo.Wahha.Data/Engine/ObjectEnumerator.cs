@@ -14,6 +14,7 @@ namespace Radischevo.Wahha.Data
         private IEnumerator<IDbDataRecord> _enumerator;
         private Func<IDbDataRecord, TEntity> _translator;
         private IDbDataReader _reader;
+		private bool _disposed;
         #endregion
 
         #region Constructors
@@ -65,15 +66,21 @@ namespace Radischevo.Wahha.Data
 
         private void Dispose(bool disposing) 
         {
-			if (disposing)
+			if (disposing && !_disposed)
 			{
-				if (_reader != null)
-					_reader.Dispose();
+				_reader.Dispose();
+				_enumerator.Dispose();
 			}
+			_reader = null;
+			_enumerator = null;
+			_disposed = true;
         }
 
         public bool MoveNext()
         {
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("enumerator"));
+			
             if (_enumerator.MoveNext())
             {
                 _current = _translator(_enumerator.Current);
@@ -84,6 +91,7 @@ namespace Radischevo.Wahha.Data
 
         public void Reset() 
         {
+			throw Error.CannotEnumerateMoreThanOnce();
         }
         #endregion
     }

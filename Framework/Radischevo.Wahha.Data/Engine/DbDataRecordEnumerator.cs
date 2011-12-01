@@ -19,6 +19,7 @@ namespace Radischevo.Wahha.Data
         private DbFieldLookup _lookup;
         private IDbDataReader _reader;
         private IDbDataRecord _current;
+		private bool _disposed;
         #endregion
 
         #region Constructors
@@ -62,6 +63,9 @@ namespace Radischevo.Wahha.Data
         /// </summary>
         public bool MoveNext()
         {
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("enumerator"));
+			
             _current = null;
             if (_enumerator.MoveNext())
             {
@@ -98,6 +102,8 @@ namespace Radischevo.Wahha.Data
 				if (disp != null)
 					disp.Dispose();
 			}
+			_enumerator = null;
+			_disposed = true;
         }
         #endregion
 

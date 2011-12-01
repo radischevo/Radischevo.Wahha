@@ -147,11 +147,12 @@ namespace Radischevo.Wahha.Data
 		#endregion
 
 		#region Instance Fields
-		private readonly IDbDataProvider _provider;
-		private readonly ScopedCacheProvider _cache;
 		private readonly bool _hasOwnedContext;
+		private IDbDataProvider _provider;
+		private ScopedCacheProvider _cache;
 		private IsolationLevel _isolationLevel;
 		private bool _transactionActive;
+		private bool _disposed;
 		#endregion
 
 		#region Constructors
@@ -212,7 +213,7 @@ namespace Radischevo.Wahha.Data
 		public override ITaggedCacheProvider Cache
 		{
 			get
-			{
+			{		
 				// cache scope can only be accessed within a transaction.
 				EnsureTransaction(); 
 				return _cache;
@@ -258,7 +259,7 @@ namespace Radischevo.Wahha.Data
 		#region Instance Methods
 		private void EnsureTransaction()
 		{
-			if (!_transactionActive)
+			if (!_transactionActive && !_disposed)
 			{
 				_provider.BeginTransaction(_isolationLevel);
 				_transactionActive = true;
@@ -282,6 +283,9 @@ namespace Radischevo.Wahha.Data
 						disposable.Dispose();
 				}
 			}
+			_provider = null;
+			_cache = null;
+			_disposed = true;
 		}
 
 		/// <summary>
@@ -290,6 +294,8 @@ namespace Radischevo.Wahha.Data
 		/// <param name="operation">The operation to execute.</param>
 		public void Execute(IDbOperation operation)
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("provider"));
 			Precondition.Require(operation, () =>
 				Error.ArgumentNull("operation"));
 
@@ -313,6 +319,8 @@ namespace Radischevo.Wahha.Data
 		/// <param name="operation">The operation to execute.</param>
 		public TResult Execute<TResult>(IDbOperation<TResult> operation)
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("provider"));
 			Precondition.Require(operation, () =>
 				Error.ArgumentNull("operation"));
 
@@ -334,6 +342,9 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		public void Commit()
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("provider"));
+			
 			if (_transactionActive)
 			{
 				_provider.Commit();
@@ -349,6 +360,9 @@ namespace Radischevo.Wahha.Data
 		/// </summary>
 		public void Rollback()
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("provider"));
+			
 			if (_transactionActive)
 			{
 				_provider.Rollback();

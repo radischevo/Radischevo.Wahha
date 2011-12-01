@@ -19,6 +19,7 @@ using A = Radischevo.Wahha.Web.Abstractions;
 using Radischevo.Wahha.Data.Provider;
 using System.Threading;
 using Radischevo.Wahha.Data.Caching;
+using System.Transactions;
 
 namespace ConsoleTester
 {

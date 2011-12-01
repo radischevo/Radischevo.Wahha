@@ -22,6 +22,7 @@ namespace Radischevo.Wahha.Web.Text
 		private IValueSet _parameters;
 		private XmlReader _reader;
 		private XmlWriter _writer;
+		private bool _disposed;
 		#endregion
 
 		#region Constructors
@@ -198,6 +199,9 @@ namespace Radischevo.Wahha.Web.Text
 		/// </summary>
 		public virtual void Execute()
 		{
+			Precondition.Require(!_disposed, () => 
+				Error.ObjectDisposed("reader"));
+			
 			XmlDocument document = new XmlDocument();
 			document.PreserveWhitespace = _settings.PreserveWhitespace;
 			document.Load(Reader);
@@ -424,14 +428,20 @@ namespace Radischevo.Wahha.Web.Text
 
 		protected virtual void Dispose(bool disposing)
 		{
-			IDisposable reader = (_reader as IDisposable);
-			IDisposable writer = (_writer as IDisposable);
-
-			if (reader != null)
-				reader.Dispose();
-			
-			if (writer != null)
-				writer.Dispose();
+			if (disposing) 
+			{
+				IDisposable reader = (_reader as IDisposable);
+				IDisposable writer = (_writer as IDisposable);
+	
+				if (reader != null)
+					reader.Dispose();
+				
+				if (writer != null)
+					writer.Dispose();
+			}
+			_reader = null;
+			_writer = null;
+			_disposed = true;
 		}
 		#endregion
 	}

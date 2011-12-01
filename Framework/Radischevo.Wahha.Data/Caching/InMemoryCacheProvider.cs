@@ -173,6 +173,7 @@ namespace Radischevo.Wahha.Data.Caching
 		private ReaderWriterLockSlim _entriesLock;
 		private ReaderWriterLockSlim _tagsLock;
 		private Func<DateTime> _dateAccessor;
+		private bool _disposed;
 		#endregion
 
 		#region Constructors
@@ -191,6 +192,9 @@ namespace Radischevo.Wahha.Data.Caching
 		{
 			get
 			{
+				Precondition.Require(!_disposed, 
+					() => Error.ObjectDisposed("entries"));
+				
 				try
 				{
 					_entriesLock.EnterReadLock();
@@ -291,6 +295,7 @@ namespace Radischevo.Wahha.Data.Caching
 		public virtual T Get<T>(string key)
 		{
 			Precondition.Defined(key, () => Error.ArgumentNull("key"));
+			Precondition.Require(!_disposed, () => Error.ObjectDisposed("entries"));
 
 			_entriesLock.EnterReadLock();
 			try
@@ -317,6 +322,7 @@ namespace Radischevo.Wahha.Data.Caching
 		{
 			Precondition.Defined(key, () => Error.ArgumentNull("key"));
 			Precondition.Require(selector, () => Error.ArgumentNull("selector"));
+			Precondition.Require(!_disposed, () => Error.ObjectDisposed("entries"));
 
 			_entriesLock.EnterUpgradeableReadLock();
 			try
@@ -352,6 +358,8 @@ namespace Radischevo.Wahha.Data.Caching
 		public virtual bool Add<T>(string key, T value, DateTime expiration, IEnumerable<string> tags)
 		{
 			Precondition.Defined(key, () => Error.ArgumentNull("key"));
+			Precondition.Require(!_disposed, () => Error.ObjectDisposed("entries"));
+			
 			_entriesLock.EnterWriteLock();
 			try
 			{
@@ -379,6 +387,8 @@ namespace Radischevo.Wahha.Data.Caching
 		public virtual void Insert<T>(string key, T value, DateTime expiration, IEnumerable<string> tags)
 		{
 			Precondition.Defined(key, () => Error.ArgumentNull("key"));
+			Precondition.Require(!_disposed, () => Error.ObjectDisposed("entries"));
+			
 			_entriesLock.EnterWriteLock();
 			try
 			{
@@ -394,6 +404,8 @@ namespace Radischevo.Wahha.Data.Caching
 		public virtual void Remove(string key)
 		{
 			Precondition.Defined(key, () => Error.ArgumentNull("key"));
+			Precondition.Require(!_disposed, () => Error.ObjectDisposed("entries"));
+			
 			_entriesLock.EnterWriteLock();
 			try
 			{
@@ -408,6 +420,8 @@ namespace Radischevo.Wahha.Data.Caching
 		public virtual void Invalidate(IEnumerable<string> tags)
 		{
 			Precondition.Require(tags, () => Error.ArgumentNull("tags"));
+			Precondition.Require(!_disposed, () => Error.ObjectDisposed("entries"));
+			
 			_tagsLock.EnterWriteLock();
 
 			try
@@ -435,6 +449,9 @@ namespace Radischevo.Wahha.Data.Caching
 				_entriesLock.Dispose();
 				_tagsLock.Dispose();
 			}
+			_entries = null;
+			_tags = null;
+			_disposed = true;
 		}
 		#endregion
 
