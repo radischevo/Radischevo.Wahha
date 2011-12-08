@@ -198,7 +198,6 @@
     <Compile Include="Engine\ControllerDescriptorCache.cs" />
     <Compile Include="Models\ComplexTypeModelBinder.cs" />
     <Compile Include="Models\HttpPostedFileBinder.cs" />
-    <Compile Include="Models\JsonModelBinder.cs" />
     <Compile Include="Engine\ControllerDescriptor.cs" />
     <Compile Include="Engine\MethodDispatcherCache.cs" />
     <Compile Include="Models\ModelBinderBase.cs" />
@@ -211,7 +210,6 @@
     <Compile Include="Models\Providers\HeaderValueProvider.cs" />
     <Compile Include="Models\Providers\HttpFileCollectionValueProvider.cs" />
     <Compile Include="Models\Providers\HttpValueProvider.cs" />
-    <Compile Include="Models\Providers\InputStreamValueProvider.cs" />
     <Compile Include="Models\Providers\ParameterValueProvider.cs" />
     <Compile Include="Models\Providers\QueryStringValueProvider.cs" />
     <Compile Include="Models\Providers\RouteTokenValueProvider.cs" />
@@ -307,6 +305,7 @@
     <Compile Include="Data\ViewDataDictionary`1.cs" />
     <Compile Include="Data\ViewDataInfo.cs" />
     <Compile Include="Engine\ValidationErrorCollection.cs" />
+    <Compile Include="Models\Providers\JsonValueProviderFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">

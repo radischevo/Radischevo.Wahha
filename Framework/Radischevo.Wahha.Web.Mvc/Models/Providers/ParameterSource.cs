@@ -42,7 +42,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			get
 			{
 				return new ParameterSource(
-					"Parameters", "Url", "Form", 
+					"Json", "Parameters", "Url", "Form", 
 					"File", "QueryString"
 				);
 			}

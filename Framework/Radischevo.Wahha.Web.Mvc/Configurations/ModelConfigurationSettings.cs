@@ -98,7 +98,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 
 		private void InitDefaultValueProviders()
 		{
-			_valueProviders.Add("InputStream", new InputStreamValueProviderFactory());
+			_valueProviders.Add("Json", new JsonValueProviderFactory());
 			_valueProviders.Add("Header", new HeaderValueProviderFactory());
 			_valueProviders.Add("Cookie", new CookieValueProviderFactory());
 			_valueProviders.Add("Session", new SessionStateValueProviderFactory());
