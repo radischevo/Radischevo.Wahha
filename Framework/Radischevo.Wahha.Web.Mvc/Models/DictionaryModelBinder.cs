@@ -103,7 +103,7 @@ namespace Radischevo.Wahha.Web.Mvc
 					CreateKeyBindingData(keyField, formKey));
 
 				BindingContext keyContext = new BindingContext(context, keyType,
-					keyField, keyProvider, context.Errors);
+					keyField, keyProvider, context.ModelState);
 
 				object boundKey = KeyBinder.Bind(keyContext);
 				if (boundKey == null)
@@ -115,7 +115,7 @@ namespace Radischevo.Wahha.Web.Mvc
 
 				string formValue = CreateSubMemberName(context.ModelName, formKey);
 				BindingContext valueContext = new BindingContext(context, valueType,
-					formValue, context.ValueProvider, context.Errors);
+					formValue, context.ValueProvider, context.ModelState);
 
 				TValue value = ValidateValue(context, formValue, ValueBinder.Bind(valueContext));
 				convertedValues.Add(key, value);

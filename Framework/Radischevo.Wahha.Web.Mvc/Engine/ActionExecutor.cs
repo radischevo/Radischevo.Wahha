@@ -221,7 +221,7 @@ namespace Radischevo.Wahha.Web.Mvc
             IModelBinder binder = GetBinder(parameter);
             BindingContext bc = new BindingContext(context, parameter.Type, 
                 parameter.Binding.Name, GetValueProvider(context, parameter.Binding.Source), 
-				GetController().Errors);
+				GetController().ModelState);
             bc.FallbackToEmptyPrefix = (String.Equals(parameter.Binding.Name, parameter.Name));
 
             return binder.Bind(bc) ?? parameter.Binding.DefaultValue;

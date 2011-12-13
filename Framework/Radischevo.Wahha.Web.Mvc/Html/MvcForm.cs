@@ -17,7 +17,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         #region Instance Fields
         private bool _disposed;
         private HttpResponseBase _response;
-        private FormMethod _method;
         #endregion
 
         #region Constructors
@@ -25,13 +24,6 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         {
             Precondition.Require(response, () => Error.ArgumentNull("response"));
             _response = response;
-        }
-
-        public MvcForm(HttpResponseBase response, FormMethod method)
-        {
-            Precondition.Require(response, () => Error.ArgumentNull("response"));
-            _response = response;
-            _method = method;
         }
         #endregion
 
@@ -44,7 +36,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (disposing && !_disposed)
             {
                 _disposed = true;
 

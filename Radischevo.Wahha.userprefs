@@ -1,23 +1,16 @@
 ﻿<Properties>
   <AuthorInfo Name="Sergey Rodyushkin" Email="" Copyright="(C) 2008-2011 Radischevo Solutions" Company="Radischevo Solutions" Trademark="Radischevo Solutions" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Test/ConsoleTester/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Test/Website/views/default.aspx">
     <Files>
-      <File FileName="Test/ConsoleTester/Program.cs" Line="63" Column="16" />
+      <File FileName="Test/Website/views/default.aspx" Line="10" Column="8" />
+      <File FileName="Test/Website/web.config" Line="23" Column="20" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="ConsoleTester" expanded="True">
-            <Node name="Program.cs" selected="True" />
-          </Node>
-          <Node name="Radischevo.Wahha.Data" expanded="True">
-            <Node name="Serialization" expanded="True" />
-          </Node>
-          <Node name="Radischevo.Wahha.Web.Mvc" expanded="True">
-            <Node name="Html" expanded="True">
-              <Node name="Helpers" expanded="True" />
-            </Node>
+          <Node name="Website" expanded="True" selected="True">
+            <Node name="views" expanded="True" />
           </Node>
         </State>
       </Pad>

@@ -15,14 +15,14 @@ namespace Radischevo.Wahha.Web.Mvc
         private Type _modelType;
         private string _modelName;
 		private IValueProvider _valueProvider;
-        private ValidationErrorCollection _errors;
+        private ModelStateCollection _modelState;
         private bool _fallbackToEmptyPrefix;
         #endregion
 
         #region Constructors
         public BindingContext(ControllerContext context, Type modelType, 
             string modelName, IValueProvider valueProvider, 
-			ValidationErrorCollection errors) 
+			ModelStateCollection modelState) 
             : base(context)
         {
             Precondition.Require(modelType, () => Error.ArgumentNull("modelType"));
@@ -31,7 +31,7 @@ namespace Radischevo.Wahha.Web.Mvc
             _modelType = modelType;
             _modelName = modelName;
 			_valueProvider = valueProvider;
-            _errors = errors;
+            _modelState = modelState;
         }
 
 		public BindingContext(BindingContext parent)
@@ -40,7 +40,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			_modelType = parent._modelType;
 			_modelName = parent._modelName;
 			_valueProvider = parent._valueProvider;
-			_errors = parent._errors;
+			_modelState = parent._modelState;
 			_model = parent._model;
 		}
         #endregion
@@ -86,14 +86,14 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public ValidationErrorCollection Errors
+        public ModelStateCollection ModelState
         {
             get
             {
-                if (_errors == null)
-                    _errors = new ValidationErrorCollection();
+                if (_modelState == null)
+                    _modelState = new ModelStateCollection();
 
-                return _errors;
+                return _modelState;
             }
         }
 

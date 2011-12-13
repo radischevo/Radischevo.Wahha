@@ -66,7 +66,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		private BindingContext CreateComplexModelBindingContext(BindingContext context, object result)
 		{
 			BindingContext inner = new BindingContext(context, context.ModelType,
-				context.ModelName, context.ValueProvider, context.Errors) {
+				context.ModelName, context.ValueProvider, context.ModelState) {
 					Model = result
 				};
 			return inner;
@@ -85,7 +85,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			foreach (ModelValidator validator in validators)
 			{
 				foreach (ValidationError error in validator.Validate(inner))
-					context.Errors.Add(error.Key, error);
+					context.ModelState.Add(error.Key, error);
 			}
         }
 
@@ -105,7 +105,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			if (context.Contains(propertyKey))
 			{
 				BindingContext inner = new BindingContext(context, property.PropertyType,
-					propertyKey, context.ValueProvider, context.Errors) {
+					propertyKey, context.ValueProvider, context.ModelState) {
 						Model = property.GetValue(context.Model)
 					};
 
@@ -156,7 +156,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
             catch (Exception ex)
             {
-                context.Errors.Add(propertyKey, new ValidationError(ex.Message, value, ex));
+                context.ModelState.Add(propertyKey, new ValidationError(ex.Message, value, ex));
             }
         }
 

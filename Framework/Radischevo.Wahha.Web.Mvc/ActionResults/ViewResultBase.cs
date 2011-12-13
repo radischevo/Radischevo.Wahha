@@ -15,7 +15,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Fields
         private TempDataDictionary _tempData;
         private ViewDataDictionary _viewData;
-        private ValidationErrorCollection _errors;
+        private ModelStateCollection _modelState;
         private ViewEngineCollection _viewEngines;
         private string _viewName;
         private IView _view;
@@ -115,18 +115,18 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public ValidationErrorCollection Errors
+        public ModelStateCollection ModelState
         {
             get
             {
-                if (_errors == null)
-                    _errors = new ValidationErrorCollection();
+                if (_modelState == null)
+                    _modelState = new ModelStateCollection();
 
-                return _errors;
+                return _modelState;
             }
             set
             {
-                _errors = value;
+                _modelState = value;
             }
         }
         #endregion
@@ -150,7 +150,7 @@ namespace Radischevo.Wahha.Web.Mvc
             }
 
             ViewContext vc = new ViewContext(context, View, ViewData, TempData);
-            vc.Errors = Errors;
+            vc.ModelState = ModelState;
 
             try
             {

@@ -258,79 +258,45 @@ namespace Radischevo.Wahha.Web.Mvc
         {
             return new ContentResult(content, contentType, contentEncoding);
         }
-
-        /// <summary>
-        /// Returns a <see cref="Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
-        /// specified object to JSON and writes the JSON to the response.
-        /// </summary>
-        /// <param name="data">The object to serialize</param>
-        protected JsonResult Json(object data)
-        {
-            return Json(data, null, null, null);
-        }
-
+		
         /// <summary>
         /// Returns a <see cref="Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
         /// specified object to JSON and writes the JSON to the response.
         /// </summary>
         /// <param name="data">The object to serialize</param>
         /// <param name="converters">A collection of custom object-to-JSON converters.</param>
-        protected JsonResult Json(object data, IEnumerable<JavaScriptConverter> converters)
+        protected JsonResult Json(object data, params JavaScriptConverter[] converters)
         {
-            return Json(data, null, null, converters);
+            return Json(data, null, null, SerializationFormat.Json, converters);
         }
 
-        /// <summary>
+		/// <summary>
         /// Returns a <see cref="Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
         /// specified object to JSON and writes the JSON to the response.
         /// </summary>
         /// <param name="data">The object to serialize</param>
-        /// <param name="contentType">The content type</param>
-        protected JsonResult Json(object data, string contentType)
-        {
-            return Json(data, contentType, null, null);
-        }
-
-        /// <summary>
-        /// Returns a <see cref="Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
-        /// specified object to JSON and writes the JSON to the response.
-        /// </summary>
-        /// <param name="data">The object to serialize</param>
-        /// <param name="contentType">The content type</param>
+        /// <param name="format">Specifies the serialization format.</param>
         /// <param name="converters">A collection of custom object-to-JSON converters.</param>
-        protected JsonResult Json(object data, string contentType, 
-            IEnumerable<JavaScriptConverter> converters)
+        protected JsonResult Json(object data, SerializationFormat format, 
+			params JavaScriptConverter[] converters)
         {
-            return Json(data, contentType, null, converters);
+            return Json(data, null, null, format, converters);
         }
-
+		
         /// <summary>
         /// Returns a <see cref="Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
         /// specified object to JSON and writes the JSON to the response.
         /// </summary>
-        /// <param name="data">The object to serialize</param>
-        /// <param name="contentType">The content type</param>
-        /// <param name="contentEncoding">The content encoding</param>
-        protected JsonResult Json(object data,
-            string contentType, Encoding contentEncoding)
-        {
-            return Json(data, contentType, contentEncoding, null);
-        }
-
-        /// <summary>
-        /// Returns a <see cref="Radischevo.Wahha.Web.Mvc.JsonResult"/> which serializes the 
-        /// specified object to JSON and writes the JSON to the response.
-        /// </summary>
-        /// <param name="data">The object to serialize</param>
-        /// <param name="contentType">The content type</param>
-        /// <param name="contentEncoding">The content encoding</param>
+        /// <param name="data">The object to serialize.</param>
+        /// <param name="contentType">The content type.</param>
+        /// <param name="contentEncoding">The content encoding.</param>
+        /// <param name="format">Specifies the serialization format.</param>
         /// <param name="converters">A collection of custom object-to-JSON converters.</param>
-        protected virtual JsonResult Json(object data, 
-            string contentType, Encoding contentEncoding, 
-            IEnumerable<JavaScriptConverter> converters)
+        protected virtual JsonResult Json(object data, string contentType, 
+			Encoding contentEncoding, SerializationFormat format, 
+			params JavaScriptConverter[] converters)
         {
-            return new JsonResult(data, contentType, contentEncoding, 
-				SerializationFormat.Json, converters);
+            return new JsonResult(data, contentType, contentEncoding, format, converters);
         }
 
         /// <summary>
@@ -515,7 +481,7 @@ namespace Radischevo.Wahha.Web.Mvc
                 ViewName = viewName,
                 ViewData = data,
                 TempData = TempData,
-                Errors = Errors
+                ModelState = ModelState
             };
         }
 
@@ -558,12 +524,11 @@ namespace Radischevo.Wahha.Web.Mvc
             if (model != null)
                 data.Model = model;
 
-            return new ViewResult()
-            {
+            return new ViewResult() {
                 View = view,
                 ViewData = data,
                 TempData = TempData,
-                Errors = Errors
+                ModelState = ModelState
             };
         }
         #endregion

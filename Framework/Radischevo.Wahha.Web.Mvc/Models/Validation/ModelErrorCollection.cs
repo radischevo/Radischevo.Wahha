@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +9,17 @@ using Radischevo.Wahha.Data;
 namespace Radischevo.Wahha.Web.Mvc
 {
     /// <summary>
-    /// A collection of <see cref="Radischevo.Wahha.Web.Mvc.ValidationError"/> instances.
+    /// A collection of <see cref="Radischevo.Wahha.Web.Mvc.ValidationError"/> instances 
+    /// related to the current model binding state.
     /// </summary>
-    public sealed class ValidationErrorCollection : IEnumerable, IEnumerable<ValidationError>
-    {
+    public sealed class ModelErrorCollection : IEnumerable<ValidationError>
+	{
         #region Instance Fields
         private Dictionary<string, ICollection<ValidationError>> _errors;
         #endregion
 
         #region Constructors
-        public ValidationErrorCollection()
+        public ModelErrorCollection()
         {
             _errors = new Dictionary<string, ICollection<ValidationError>>(
 				StringComparer.OrdinalIgnoreCase);
@@ -26,7 +27,7 @@ namespace Radischevo.Wahha.Web.Mvc
         #endregion
 
         #region Instance Properties
-        public int Count
+		public int Count
         {
             get
             {
@@ -56,7 +57,7 @@ namespace Radischevo.Wahha.Web.Mvc
                 return _errors.Keys;
             }
         }
-        #endregion
+		#endregion
 
         #region Instance Methods
 		private ICollection<ValidationError> GetOrCreateItem(string key)
@@ -69,27 +70,8 @@ namespace Radischevo.Wahha.Web.Mvc
 		}
 
         /// <summary>
-        /// Adds a validation error message to the 
-        /// <see cref="Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/>
-        /// </summary>
-        public void Add(string key, string message)
-        {
-            Add(key, new ValidationError(key, message));
-        }
-
-        public void Add(string key, Exception exception)
-        {
-            Add(key, new ValidationError(key, exception));
-        }
-
-        public void Add(string key, string message, Exception exception)
-        {
-            Add(key, new ValidationError(key, null, message, exception));
-        }
-
-        /// <summary>
         /// Adds a validation error to the 
-        /// <see cref="Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/>
+        /// <see cref="Radischevo.Wahha.Web.Mvc.ModelErrorCollection"/>
         /// </summary>
         public void Add(string key, ValidationError error)
         {
@@ -99,32 +81,40 @@ namespace Radischevo.Wahha.Web.Mvc
 			ICollection<ValidationError> list = GetOrCreateItem(key);
 			list.Add(error);
         }
-
-		public bool IsValid()
+		
+		/// <summary>
+		/// Gets a value indicating whether the current 
+		/// collection contains a record with the specified key.
+		/// </summary>
+		/// <param name="key">The key to find.</param> 
+		public bool Contains(string key)
 		{
-			return (_errors.Count == 0);
+			return _errors.ContainsKey(key);
 		}
-
-		public bool IsValid(string key)
-		{
-			ICollection<ValidationError> list;
-			if (_errors.TryGetValue(key, out list))
-				return (list.Count < 1);
-			
-			return true;
-		}
-
+		
+		/// <summary>
+		/// Clears this instance.
+		/// </summary>
 		public void Clear()
 		{
 			_errors.Clear();
 		}
-
+		
+		/// <summary>
+		/// Removes all errors with the specified key.
+		/// </summary>
+		/// <param name="key">The key to remove.</param>
         public void Clear(string key)
         {
             _errors.Remove(key);
         }
-
-        public ValidationErrorCollection Merge(ValidationErrorCollection errors)
+		
+		/// <summary>
+		/// Adds all errors from the provided collection to the 
+		/// current instance.
+		/// </summary>
+		/// <param name="errors">The collection containing errors to add.</param>
+        public ModelErrorCollection Merge(ModelErrorCollection errors)
         {
             if (errors == null)
                 return this;
@@ -137,16 +127,18 @@ namespace Radischevo.Wahha.Web.Mvc
 			}
             return this;
         }
+        
+		public IEnumerator<ValidationError> GetEnumerator ()
+		{
+			return _errors.SelectMany(a => a.Value).GetEnumerator();
+		}
+		#endregion
 
-        public IEnumerator<ValidationError> GetEnumerator()
-        {
-            return _errors.SelectMany(c => c.Value).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-        #endregion
+		#region IEnumerable Methods
+		IEnumerator IEnumerable.GetEnumerator ()
+		{
+			return GetEnumerator();
+		}
+		#endregion
     }
 }

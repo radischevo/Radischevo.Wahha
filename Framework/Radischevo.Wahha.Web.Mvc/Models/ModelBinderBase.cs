@@ -119,7 +119,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			{
 				if (context.ModelType.GetConstructor(Type.EmptyTypes) == null)
 				{
-					context.Errors.Add(context.ModelName,
+					context.ModelState.Add(context.ModelName,
 						Error.MissingParameterlessConstructor(context.ModelType));
 					return null;
 				}
@@ -134,14 +134,14 @@ namespace Radischevo.Wahha.Web.Mvc
 		protected virtual bool VerifyValueUsability(BindingContext context, string elementKey, 
 			Type elementType, object value)
 		{
-			if (value == null && !elementType.IsNullable() && context.Errors.IsValid(elementKey))
+			if (value == null && !elementType.IsNullable() && context.ModelState.IsValid(elementKey))
 			{
 				string message = GetValueRequiredResource(context);
-				context.Errors.Add(elementKey, new ValidationError(elementKey, value, message, null));
+				context.ModelState.Add(elementKey, new ValidationError(elementKey, value, message, null));
 
 				return false;
 			}
-			return context.Errors.IsValid(elementKey);
+			return context.ModelState.IsValid(elementKey);
 		}
 
 		protected virtual bool TryBindExactValue(BindingContext context, out object value)

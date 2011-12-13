@@ -14,8 +14,8 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Fields
         private TempDataDictionary _tempData;
         private ViewDataDictionary _viewData;
-        private IView _view;
-        private ValidationErrorCollection _errors;
+        private ModelStateCollection _modelState;
+		private IView _view;
         #endregion
 
         #region Constructors
@@ -94,18 +94,18 @@ namespace Radischevo.Wahha.Web.Mvc
         /// Returns a <see cref="Radischevo.Wahha.Web.Mvc.ValidationErrorCollection"/> 
         /// containing any validation errors that occurred while processing the request.
         /// </summary>
-        public ValidationErrorCollection Errors
+        public ModelStateCollection ModelState
         {
             get
             {
-                if (_errors == null)
-                    _errors = new ValidationErrorCollection();
+                if (_modelState == null)
+                    _modelState = new ModelStateCollection();
 
-                return _errors;
+                return _modelState;
             }
             set
             {
-                _errors = value;
+                _modelState = value;
             }
         }
         #endregion

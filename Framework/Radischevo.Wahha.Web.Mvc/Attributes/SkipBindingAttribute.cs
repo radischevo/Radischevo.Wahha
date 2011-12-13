@@ -24,7 +24,7 @@ namespace Radischevo.Wahha.Web.Mvc
 				// Rewrite the provided context to ensure all the parameters 
 				// provided by user is set correctly.
 				BindingContext inner = new BindingContext(context, 
-					context.ModelType, context.ModelName, provider, context.Errors);
+					context.ModelType, context.ModelName, provider, context.ModelState);
 
 				ValueProviderResult value;
 				if (inner.TryGetValue(out value))

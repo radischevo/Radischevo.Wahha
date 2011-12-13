@@ -17,7 +17,7 @@ namespace Radischevo.Wahha.Web.Mvc
         private ControllerContext _context;
         private ViewDataDictionary _viewData;
         private TempDataDictionary _tempData;
-        private ValidationErrorCollection _errors;
+        private ModelStateCollection _modelState;
         private CacheProvider _cache;
         private bool _validateRequest;
         #endregion
@@ -162,14 +162,14 @@ namespace Radischevo.Wahha.Web.Mvc
             }
         }
 
-        public ValidationErrorCollection Errors
+        public ModelStateCollection ModelState
         {
             get
             {
-				if (_errors == null)
-					_errors = new ValidationErrorCollection();
+				if (_modelState == null)
+					_modelState = new ModelStateCollection();
 
-                return _errors;
+                return _modelState;
             }
         }
 

@@ -133,7 +133,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			}
 			catch (Exception ex)
 			{
-				context.Errors.Add(context.ModelName, new ValidationError(context.ModelName, value, ex));
+				context.ModelState.Add(context.ModelName, new ValidationError(context.ModelName, value, ex));
 				return null;
 			}
 		}
@@ -159,7 +159,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			}
 			catch (Exception ex)
 			{
-				context.Errors.Add(context.ModelName, new ValidationError(ex.Message, stringValue, ex));
+				context.ModelState.Add(context.ModelName, new ValidationError(ex.Message, stringValue, ex));
 				return null;
 			}
 		}

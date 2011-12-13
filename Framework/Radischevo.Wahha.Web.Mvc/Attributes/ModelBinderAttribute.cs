@@ -11,7 +11,7 @@ namespace Radischevo.Wahha.Web.Mvc
     public class ModelBinderAttribute : Attribute
     {
         #region Instance Fields
-        private Type _binderType;
+        private Type _type;
         #endregion
         
         #region Constructors
@@ -19,19 +19,19 @@ namespace Radischevo.Wahha.Web.Mvc
 		{
 		}
 
-        public ModelBinderAttribute(Type binderType)
+        public ModelBinderAttribute(Type type)
         {
-            Precondition.Require(binderType, () => Error.ArgumentNull("binderType"));
-            _binderType = binderType;
+            Precondition.Require(type, () => Error.ArgumentNull("type"));
+            _type = type;
         }
         #endregion
         
         #region Instance Properties
-        public Type BinderType
+        public Type Type
         {
             get
             {
-                return _binderType;
+                return _type;
             }
         }
         #endregion
@@ -39,13 +39,13 @@ namespace Radischevo.Wahha.Web.Mvc
         #region Instance Methods
         public virtual IModelBinder GetBinder()
         {
-			if (_binderType == null)
+			if (_type == null)
 				throw Error.MustOverrideGetBinderToUseEmptyType();
 
-            if (!typeof(IModelBinder).IsAssignableFrom(_binderType))
-                throw Error.IncompatibleModelBinderType(_binderType);
+            if (!typeof(IModelBinder).IsAssignableFrom(_type))
+                throw Error.IncompatibleModelBinderType(_type);
 
-			return (IModelBinder)ServiceLocator.Instance.GetService(_binderType);
+			return (IModelBinder)ServiceLocator.Instance.GetService(_type);
         }
         #endregion
     }

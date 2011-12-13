@@ -120,7 +120,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
             builder.Attributes.Merge("method", GetFormMethod(method), true);
 
             response.Write(builder.ToString(HtmlElementRenderMode.StartTag));
-            return new MvcForm(response, method);
+            return new MvcForm(response);
         }
 
         private static string GetFormMethod(FormMethod method)

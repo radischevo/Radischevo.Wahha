@@ -303,7 +303,6 @@
     <Compile Include="Data\ViewDataDictionary.cs" />
     <Compile Include="Data\ViewDataDictionary`1.cs" />
     <Compile Include="Data\ViewDataInfo.cs" />
-    <Compile Include="Engine\ValidationErrorCollection.cs" />
     <Compile Include="Models\Providers\JsonValueProviderFactory.cs" />
     <Compile Include="Models\Providers\XmlValueProviderFactory.cs" />
     <Compile Include="Models\Providers\InputStreamValueProviderFactory.cs" />
@@ -322,6 +321,8 @@
     <Compile Include="Models\Validation\ModelValidatorProviderCollection.cs" />
     <Compile Include="Models\Validation\DataErrorInfoModelValidatorProvider.cs" />
     <Compile Include="Models\Validation\DataErrorInfoModelValidator.cs" />
+    <Compile Include="Models\Validation\ModelErrorCollection.cs" />
+    <Compile Include="Models\Validation\ModelStateCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">
@@ -376,5 +377,6 @@
   -->
   <ItemGroup>
     <Folder Include="Models\Validation\" />
+    <Folder Include="Engine\" />
   </ItemGroup>
 </Project>
