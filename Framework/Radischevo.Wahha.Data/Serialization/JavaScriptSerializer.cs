@@ -11,8 +11,22 @@ namespace Radischevo.Wahha.Data.Serialization
 {
     public enum SerializationFormat : int
     {
+		/// <summary>
+		/// Serializes <see cref="System.DateTime"/> values 
+		/// to specifically formatted strings.
+		/// </summary> 
         Json = 0,
-        JavaScript
+		/// <summary>
+		/// Serializes <see cref="System.DateTime"/> values to 
+		/// function calls that construct JavaScript Date objects.
+		/// </summary>
+        JavaScript = 1,
+		/// <summary>
+		/// Serializes <see cref="System.DateTime"/> values to 
+		/// integer timestamps. Such timestamps cannot be 
+		/// automatically deserialized.
+		/// </summary>
+		Plain = 2
     }
 
     public class JavaScriptSerializer
@@ -154,18 +168,21 @@ namespace Radischevo.Wahha.Data.Serialization
         private static void SerializeDateTime(DateTime datetime,
             StringBuilder sb, SerializationFormat serializationFormat)
         {
-            if (serializationFormat == SerializationFormat.Json)
-            {
-                sb.Append(JavaScriptSerializer.JsonDateTimePrefix)
-                    .Append((long)(datetime.ToUniversalTime().Ticks - DateTimeMinTimeTicks) / 10000L)
-                    .Append(")\\/\"");
-            }
-            else
-            {
-                sb.Append(JavaScriptSerializer.JsDateTimePrefix)
-                    .Append((long)((datetime.ToUniversalTime().Ticks - DateTimeMinTimeTicks) / 10000L))
-                    .Append(")");
-            }
+			long ticks = (long)(datetime.ToUniversalTime().Ticks - DateTimeMinTimeTicks) / 10000L;
+			switch (serializationFormat)
+			{
+				case SerializationFormat.Json:
+					sb.Append(JavaScriptSerializer.JsonDateTimePrefix).Append(ticks).Append(")\\/\"");
+					break;
+					
+				case SerializationFormat.JavaScript:
+					sb.Append(JavaScriptSerializer.JsDateTimePrefix).Append(ticks).Append(")");
+					break;
+				
+				case SerializationFormat.Plain:
+					sb.Append(ticks);
+					break;
+			}
         }
 
         private static void SerializeString(string input, StringBuilder sb)

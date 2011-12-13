@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Globalization;
+using System.Text;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Data.Serialization;
@@ -10,73 +10,45 @@ using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
-	public sealed class JsonValueProviderFactory : IValueProviderFactory
+	public sealed class JsonValueProviderFactory : InputStreamValueProviderFactory
 	{
 		#region Constructors
 		public JsonValueProviderFactory ()
+			: base()
 		{
 		}
 		#endregion
 		
 		#region Static Methods
-		private static bool ValidateRequest(HttpRequestBase request)
+		private static void AppendBindingData (IDictionary<string, object> store, string prefix, object value)
 		{
-			return request.ContentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase);
-		}
-		
-		private static string MakeArrayKey(string prefix, int index)
-		{
-			return prefix + "-" + index.ToString(CultureInfo.InvariantCulture);
-		}
-
-		private static string MakePropertyKey(string prefix, string propertyName)
-		{
-			return (String.IsNullOrEmpty(prefix)) ? propertyName : prefix + "-" + propertyName;
-		}
-		
-		private static string ReadInputStream(HttpContextBase context)
-		{
-			using (StreamReader reader = new StreamReader(
-				context.Request.InputStream, 
-				context.Request.ContentEncoding))
-			{
-				return reader.ReadToEnd();
-			}
-		}
-		
-		private static void AppendBindingData(IDictionary<string, object> store, string prefix, object value)
-		{
-			IDictionary<string, object> dict = (value as IDictionary<string, object>);
+			IDictionary<string, object > dict = (value as IDictionary<string, object>);
 			IList list = (value as IList);
 			
 			if (dict != null)
 			{
 				foreach (KeyValuePair<string, object> entry in dict)
-					AppendBindingData(store, MakePropertyKey(prefix, entry.Key), entry.Value);
+					AppendBindingData (store, MakePropertyKey (prefix, entry.Key), entry.Value);
 			}
-			else if (list != null)
+			else
+			if (list != null)
 			{
 				for (int i = 0; i < list.Count; i++)
-					AppendBindingData(store, MakeArrayKey(prefix, i), list[i]);
+					AppendBindingData (store, MakeArrayKey (prefix, i), list [i]);
 			}
-			store[prefix] = value;
+			store [prefix] = value;
 		}
 
-		private static ValueDictionary CreateBindingData(HttpContextBase context)
+		private static ValueDictionary Deserialize (string input)
 		{
-			string serializedValue = ReadInputStream(context);
-			
-			if (String.IsNullOrEmpty(serializedValue))
-				return null;
-
 			try
 			{
-				ValueDictionary data = new ValueDictionary();
+				ValueDictionary data = new ValueDictionary ();
 				
-				JavaScriptSerializer serializer = new JavaScriptSerializer();
-				object value = serializer.DeserializeObject(serializedValue);
+				JavaScriptSerializer serializer = new JavaScriptSerializer ();
+				object value = serializer.DeserializeObject (input);
 
-				AppendBindingData(data, String.Empty, value);
+				AppendBindingData (data, String.Empty, value);
 				return data;
 			}
 			catch
@@ -87,14 +59,23 @@ namespace Radischevo.Wahha.Web.Mvc
 		#endregion
 		
 		#region Instance Methods
-		public IValueProvider Create (ControllerContext context)
+		protected override bool ValidateRequest (HttpRequestBase request)
 		{
-			if (ValidateRequest(context.Context.Request)) 
+			return request.ContentType.StartsWith ("application/json", 
+				StringComparison.OrdinalIgnoreCase);		
+		}
+		
+		protected override IValueSet CreateBindingStore (Stream input, Encoding encoding)
+		{
+			using (StreamReader reader = new StreamReader(input, encoding))
 			{
-				ValueDictionary data = CreateBindingData(context.Context) ?? new ValueDictionary();
-				return new DictionaryValueProvider(data);
+				string serializedValue = reader.ReadToEnd ();
+				
+				if (String.IsNullOrEmpty (serializedValue))
+					return null;
+
+				return Deserialize (serializedValue);
 			}
-			return null;
 		}
 		#endregion
 	}

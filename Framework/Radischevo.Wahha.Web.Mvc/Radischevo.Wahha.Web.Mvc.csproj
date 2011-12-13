@@ -299,13 +299,29 @@
     </Compile>
     <Compile Include="RedirectData.cs" />
     <Compile Include="Engine\TempDataDictionary.cs" />
-    <Compile Include="Data\TemplateDescriptor.cs" />
     <Compile Include="Engine\ViewContext.cs" />
     <Compile Include="Data\ViewDataDictionary.cs" />
     <Compile Include="Data\ViewDataDictionary`1.cs" />
     <Compile Include="Data\ViewDataInfo.cs" />
     <Compile Include="Engine\ValidationErrorCollection.cs" />
     <Compile Include="Models\Providers\JsonValueProviderFactory.cs" />
+    <Compile Include="Models\Providers\XmlValueProviderFactory.cs" />
+    <Compile Include="Models\Providers\InputStreamValueProviderFactory.cs" />
+    <Compile Include="Interfaces\IModelValidatorProvider.cs" />
+    <Compile Include="Models\Validation\ModelValidator.cs" />
+    <Compile Include="Models\Validation\ModelValidationContext.cs" />
+    <Compile Include="Models\Validation\DataAnnotationsModelValidator.cs" />
+    <Compile Include="Models\Validation\DataAnnotationsModelValidationFactory.cs" />
+    <Compile Include="Models\Validation\DataAnnotationsModelValidator`1.cs" />
+    <Compile Include="Models\Validation\CompositeModelValidatorProvider.cs" />
+    <Compile Include="Models\Validation\AssociatedModelValidatorProvider.cs" />
+    <Compile Include="Models\Validation\DataAnnotationsModelValidatorProvider.cs" />
+    <Compile Include="Models\Validation\EmptyModelValidatorProvider.cs" />
+    <Compile Include="Configurations\ModelValidatorProviderConfigurationElement.cs" />
+    <Compile Include="Configurations\ModelValidatorProviderConfigurationElementCollection.cs" />
+    <Compile Include="Models\Validation\ModelValidatorProviderCollection.cs" />
+    <Compile Include="Models\Validation\DataErrorInfoModelValidatorProvider.cs" />
+    <Compile Include="Models\Validation\DataErrorInfoModelValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">
@@ -358,4 +374,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Models\Validation\" />
+  </ItemGroup>
 </Project>

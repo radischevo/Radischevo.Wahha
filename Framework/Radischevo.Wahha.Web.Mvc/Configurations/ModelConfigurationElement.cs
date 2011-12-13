@@ -5,6 +5,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 {
 	internal sealed class ModelConfigurationElement : ConfigurationElement
 	{
+		#region Instance Properties
 		[ConfigurationProperty("binders", IsRequired = false)]
 		public ModelBinderConfigurationElementCollection Binders
 		{
@@ -22,5 +23,15 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 				return (ValueProviderConfigurationElementCollection)base["valueProviders"];
 			}
 		}
+		
+		[ConfigurationProperty("validatorProviders", IsRequired = false)]
+		public ModelValidatorProviderConfigurationElementCollection ValidatorProviders
+		{
+			get
+			{
+				return (ModelValidatorProviderConfigurationElementCollection)base["validatorProviders"];
+			}
+		}
+		#endregion
 	}
 }

@@ -231,14 +231,11 @@
   <data name="Error_UnreadableProperty" xml:space="preserve">
     <value>{0} has a DisplayColumn attribute for {1}, but property {1} does not have a public getter.</value>
   </data>
-  <data name="Error_IncompatibleModelMetadataProviderType" xml:space="preserve">
-    <value>The model metadata provider type '{0}' must inherit from the ModelMetadataProvider class.</value>
-  </data>
   <data name="Error_IncompatibleModelValidatorProviderType" xml:space="preserve">
-    <value>The model validator provider type '{0}' must inherit from the ModelValidatorProvider class.</value>
+    <value>The model validator provider type '{0}' must implement the IModelValidatorProvider interface.</value>
   </data>
   <data name="Error_InvalidDataAnnotationsValidationRuleConstructor" xml:space="preserve">
-    <value>The type '{0}' must have a public constructor which accepts the parameters of types '{1}' and '{2}'.</value>
+    <value>The type '{0}' must have a public constructor which accepts single parameter of type '{1}'.</value>
   </data>
   <data name="Error_TypeMustDeriveFromType" xml:space="preserve">
     <value>The type '{0}' must derive from '{1}'.</value>

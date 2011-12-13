@@ -5,7 +5,8 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 {
     internal sealed class ModelBinderConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("type", IsKey = true, IsRequired = true)]
+		#region Instance Properties
+		[ConfigurationProperty("type", IsKey = true, IsRequired = true)]
         public string ModelType
         {
             get
@@ -22,6 +23,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
                 return base["binder"].ToString();
             }
         }
+		#endregion
     }
 }
 

@@ -124,7 +124,7 @@ namespace Radischevo.Wahha.Data.Serialization
                     value = _serializedValue.MoveNext(jsPrefixLength);
                     if (value != null)
                     {
-                        _serializedValue.MovePrev(9);
+                        _serializedValue.MovePrev(jsPrefixLength);
                         return String.Equals(value, JavaScriptSerializer.JsDateTimePrefix,
                            StringComparison.Ordinal);
                     }

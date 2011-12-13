@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -52,10 +53,8 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual IEnumerable<PropertyDescriptor> GetModelProperties(BindingContext context)
         {
-			return GetTypeDescriptor(context)
-				.GetProperties().Cast<PropertyDescriptor>()
-				.Where(p => AllowPropertyUpdate(p))
-				.OrderBy(p => {
+			return GetTypeDescriptor(context).GetProperties().Cast<PropertyDescriptor>()
+				.Where(p => AllowPropertyUpdate(p)).OrderBy(p => {
 					PropertyBindingOrderAttribute attribute = p.Attributes
 						.OfType<PropertyBindingOrderAttribute>()
 						.FirstOrDefault();
@@ -66,7 +65,6 @@ namespace Radischevo.Wahha.Web.Mvc
 
 		private BindingContext CreateComplexModelBindingContext(BindingContext context, object result)
 		{
-			BindAttribute bind = (BindAttribute)TypeDescriptor.GetAttributes(context.ModelType)[typeof(BindAttribute)];
 			BindingContext inner = new BindingContext(context, context.ModelType,
 				context.ModelName, context.ValueProvider, context.Errors) {
 					Model = result
@@ -81,6 +79,14 @@ namespace Radischevo.Wahha.Web.Mvc
 
         protected virtual void OnModelUpdated(BindingContext context)
         {
+			IEnumerable<ModelValidator> validators = ValidatorProvider.GetValidators(context.ModelType);
+			ModelValidationContext inner = new ModelValidationContext(context.ModelName, context.Model);
+				
+			foreach (ModelValidator validator in validators)
+			{
+				foreach (ValidationError error in validator.Validate(inner))
+					context.Errors.Add(error.Key, error);
+			}
         }
 
         protected void BindProperties(BindingContext context)

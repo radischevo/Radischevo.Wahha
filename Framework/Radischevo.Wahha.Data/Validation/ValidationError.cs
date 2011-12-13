@@ -10,6 +10,7 @@ namespace Radischevo.Wahha.Data
 		private readonly string _key;
 		private readonly string _message;
 		private readonly Exception _exception;
+		private readonly object _attemptedValue;
 		#endregion
 
 		#region Constructors
@@ -24,22 +25,33 @@ namespace Radischevo.Wahha.Data
 		}
 
 		public ValidationError(string key, string message)
+			: this (key, null, message)
 		{
-			Precondition.Defined(message, () =>
-				Error.ArgumentNull("message"));
-
-			_key = key;
-			_message = message;
+		}
+		
+		public ValidationError(string key, Exception exception)
+			: this(key, null, exception)
+		{
 		}
 
-		public ValidationError(string key, Exception exception)
+		public ValidationError(string key, object attemptedValue, string message)
+			: this (key, attemptedValue, message, null)
 		{
-			Precondition.Require(exception, () => 
-				Error.ArgumentNull("exception"));
-
+		}
+		
+		public ValidationError(string key, object attemptedValue, Exception exception)
+			: this (key, attemptedValue, null, exception)
+		{
+		}
+		
+		public ValidationError(string key, object attemptedValue, 
+			string message, Exception exception)
+		{
 			_key = key;
+			_attemptedValue = attemptedValue;
+			_message = message ?? ((exception == null) 
+				? message : exception.Message);
 			_exception = exception;
-			_message = exception.Message;
 		}
 		#endregion
 
@@ -65,6 +77,14 @@ namespace Radischevo.Wahha.Data
 			get
 			{
 				return _exception;
+			}
+		}
+		
+		public object AttemptedValue
+		{
+			get
+			{
+				return _attemptedValue;
 			}
 		}
 		#endregion

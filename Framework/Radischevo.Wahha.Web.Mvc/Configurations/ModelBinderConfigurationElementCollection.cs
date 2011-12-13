@@ -6,7 +6,8 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
     [ConfigurationCollection(typeof(ModelBinderConfigurationElement))]
     internal sealed class ModelBinderConfigurationElementCollection : ConfigurationElementCollection
     {
-        [ConfigurationProperty("default", IsRequired = false)]
+		#region Instance Properties
+		[ConfigurationProperty("default", IsRequired = false)]
         public string DefaultType
         {
             get
@@ -14,8 +15,18 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
                 return base["default"].ToString();
             }
         }
-
-        protected override ConfigurationElement CreateNewElement()
+		
+		public ModelBinderConfigurationElement this[int index]
+        {
+            get
+            {
+                return (ModelBinderConfigurationElement)BaseGet(index);
+            }
+        }
+		#endregion
+        
+		#region Instance Methods
+		protected override ConfigurationElement CreateNewElement()
         {
             return new ModelBinderConfigurationElement();
         }
@@ -24,13 +35,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         {
             return ((ModelBinderConfigurationElement)element).ModelType;
         }
-
-        public ModelBinderConfigurationElement this[int index]
-        {
-            get
-            {
-                return (ModelBinderConfigurationElement)BaseGet(index);
-            }
-        }
+		#endregion
     }
 }

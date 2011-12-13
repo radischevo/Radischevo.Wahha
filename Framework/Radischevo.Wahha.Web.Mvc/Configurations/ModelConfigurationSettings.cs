@@ -12,6 +12,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         #region Instance Fields
         private ModelBinderCollection _binders;
 		private ValueProviderFactoryCollection _valueProviders;
+		private ModelValidatorProviderCollection _validatorProviders;
         #endregion
 
         #region Constructors
@@ -19,10 +20,12 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         {
             _binders = new ModelBinderCollection();
 			_valueProviders = new ValueProviderFactoryCollection();
+			_validatorProviders = new ModelValidatorProviderCollection();
 
 			InitDefaultBinders();
 			InitDefaultBinderProviders();
 			InitDefaultValueProviders();
+			InitDefaultValidatorProviders();
         }
         #endregion
 
@@ -40,6 +43,14 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 			get
 			{
 				return _valueProviders;
+			}
+		}
+		
+		public ModelValidatorProviderCollection ValidatorProviders
+		{
+			get
+			{
+				return _validatorProviders;
 			}
 		}
         #endregion
@@ -62,7 +73,16 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 
 			return (IValueProviderFactory)ServiceLocator.Instance.GetService(type);
 		}
-        #endregion
+
+		private static IModelValidatorProvider CreateValidatorProvider(Type type)
+		{
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			if (!typeof(IModelValidatorProvider).IsAssignableFrom(type))
+				throw Error.IncompatibleModelValidatorProviderType(type);
+
+			return (IModelValidatorProvider)ServiceLocator.Instance.GetService(type);
+		}
+		#endregion
 
         #region Instance Methods
 		private void InitDefaultBinders()
@@ -109,7 +129,12 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 			_valueProviders.Add("Url", new RouteDataValueProviderFactory());
 			_valueProviders.Add("Parameters", new ParameterValueProviderFactory());
 		}
-
+		
+		private void InitDefaultValidatorProviders() 
+		{
+			_validatorProviders.Add(new EmptyModelValidatorProvider());
+		}
+		
 		private void InitBinders(ModelBinderConfigurationElementCollection element)
 		{
 			if (element == null)
@@ -140,6 +165,18 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 					Type.GetType(elem.FactoryType, true, true)));
 			}
 		}
+		
+		private void InitValidatorProviders(ModelValidatorProviderConfigurationElementCollection element)
+		{
+			if (element == null)
+				return;
+
+			foreach (ModelValidatorProviderConfigurationElement elem in element)
+			{
+				_validatorProviders.Add(CreateValidatorProvider(
+					Type.GetType(elem.Type, true, true)));
+			}
+		}
 
         internal void Init(ModelConfigurationElement element)
         {
@@ -147,6 +184,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 
 			InitBinders(element.Binders);
 			InitValueProviders(element.ValueProviders);
+			InitValidatorProviders(element.ValidatorProviders);
         }
         #endregion
     }

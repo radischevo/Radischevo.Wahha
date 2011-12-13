@@ -5,6 +5,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 {
 	internal sealed class ValueProviderConfigurationElement : ConfigurationElement
 	{
+		#region Instance Properties
 		[ConfigurationProperty("name", IsKey = true, IsRequired = true)]
 		public string Name
 		{
@@ -22,5 +23,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 				return base["factory"].ToString();
 			}
 		}
+		#endregion
 	}
 }

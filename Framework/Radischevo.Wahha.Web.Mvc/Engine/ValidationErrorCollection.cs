@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -73,17 +74,17 @@ namespace Radischevo.Wahha.Web.Mvc
         /// </summary>
         public void Add(string key, string message)
         {
-            Add(key, new ValidationError(message, null));
+            Add(key, new ValidationError(key, message));
         }
 
         public void Add(string key, Exception exception)
         {
-            Add(key, new ValidationError(exception));
+            Add(key, new ValidationError(key, exception));
         }
 
         public void Add(string key, string message, Exception exception)
         {
-            Add(key, new ValidationError(message, exception));
+            Add(key, new ValidationError(key, null, message, exception));
         }
 
         /// <summary>
@@ -96,8 +97,6 @@ namespace Radischevo.Wahha.Web.Mvc
             Precondition.Require(error, () => Error.ArgumentNull("error"));
 
 			ICollection<ValidationError> list = GetOrCreateItem(key);
-			error.Member = key;
-
 			list.Add(error);
         }
 
@@ -147,86 +146,6 @@ namespace Radischevo.Wahha.Web.Mvc
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-        #endregion
-    }
-
-    public class ValidationError
-    {
-        #region Instance Fields
-		private string _member;
-        private object _attemptedValue;
-        private string _message;
-        private Exception _error;
-        #endregion
-
-        #region Constructors
-        public ValidationError(Exception error) 
-            : this(error.Message, null, error)
-        {
-        }
-
-        public ValidationError(string message, Exception error)
-            : this(message, null, error)
-        {
-        }
-
-        public ValidationError(string message, 
-            object attemptedValue, Exception error)
-        {
-            _message = message;
-            _error = error;
-            _attemptedValue = attemptedValue;
-        }
-        #endregion
-
-        #region Instance Properties
-		public string Member
-		{
-			get
-			{
-				return _member ?? String.Empty;
-			}
-			set
-			{
-				_member = value;
-			}
-		}
-
-        public string Message
-        {
-            get
-            {
-                return _message;
-            }
-            set
-            {
-                _message = value;
-            }
-        }
-
-        public Exception Error
-        {
-            get
-            {
-                return _error;
-            }
-            set
-            {
-                _error = value;
-            }
-        }
-
-        public object AttemptedValue
-        {
-            get
-            {
-                return _attemptedValue;
-            }
-            set 
-            {
-                _attemptedValue = value;
-            }
         }
         #endregion
     }

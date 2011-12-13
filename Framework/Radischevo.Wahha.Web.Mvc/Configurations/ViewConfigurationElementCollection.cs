@@ -6,7 +6,18 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
     [ConfigurationCollection(typeof(ViewConfigurationElement))]
     internal sealed class ViewConfigurationElementCollection : ConfigurationElementCollection
     {
-        protected override ConfigurationElement CreateNewElement()
+		#region Instance Properties
+		public ViewConfigurationElement this[int index]
+        {
+            get
+            {
+                return (ViewConfigurationElement)BaseGet(index);
+            }
+        }
+		#endregion
+		
+		#region Instance Methods
+		protected override ConfigurationElement CreateNewElement()
         {
             return new ViewConfigurationElement();
         }
@@ -15,13 +26,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         {
             return new object();
         }
-
-        public ViewConfigurationElement this[int index]
-        {
-            get
-            {
-                return (ViewConfigurationElement)BaseGet(index);
-            }
-        }
+		#endregion
     }
 }

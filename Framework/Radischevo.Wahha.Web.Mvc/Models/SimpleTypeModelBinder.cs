@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data;
 
 namespace Radischevo.Wahha.Web.Mvc
 {
@@ -132,7 +133,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			}
 			catch (Exception ex)
 			{
-				context.Errors.Add(context.ModelName, new ValidationError(ex.Message, value, ex));
+				context.Errors.Add(context.ModelName, new ValidationError(context.ModelName, value, ex));
 				return null;
 			}
 		}

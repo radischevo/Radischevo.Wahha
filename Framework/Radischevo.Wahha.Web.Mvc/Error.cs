@@ -272,18 +272,12 @@ namespace Radischevo.Wahha.Web.Mvc
                 Res.Error_IncompatibleModelValidatorProviderType, type.Name));
         }
 
-        internal static Exception IncompatibleModelMetadataProviderType(Type type)
-        {
-            return new ArgumentException(String.Format(
-                Res.Error_IncompatibleModelMetadataProviderType, type.Name));
-        }
-
-        internal static Exception InvalidDataAnnotationsValidationRuleConstructor(Type adapterType, 
-            Type validatorType, Type attributeType)
+        internal static Exception InvalidDataAnnotationsValidationRuleConstructor(
+			Type adapterType, Type attributeType)
         {
             return new InvalidOperationException(String.Format(
                 Res.Error_InvalidDataAnnotationsValidationRuleConstructor,
-                adapterType.FullName, validatorType.FullName, attributeType.FullName));
+                adapterType.FullName, attributeType.FullName));
         }
 
 		internal static Exception ChildRequestExecutionError(HttpException ex)

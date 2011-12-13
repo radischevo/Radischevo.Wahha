@@ -143,7 +143,21 @@ namespace Radischevo.Wahha.Data.Serialization
                 convertedObject = obj;
                 return true;
             }
-
+			
+			// We special case conversion from timestamp to DateTime
+			if (type == typeof(DateTime))
+			{
+				object ticks;
+				if (TryConvertObjectToType(obj, typeof(long), serializer, 
+					throwOnError, out ticks))
+				{
+					convertedObject = new DateTime(((long)ticks * 10000L) + 
+                    	JavaScriptSerializer.DateTimeMinTimeTicks, DateTimeKind.Utc);
+					
+					return true;
+				}
+			}
+			
             IDictionary<string, object> dictionary = (obj as IDictionary<string, object>);
             if (dictionary != null)
                 return ConvertDictionary(dictionary, type, serializer, 

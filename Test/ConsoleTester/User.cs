@@ -4,6 +4,38 @@ using Radischevo.Wahha.Data;
 
 namespace ConsoleTester
 {
+	public class Container
+	{
+		#region Instance Fields
+		private DateTime _date;
+		#endregion
+		
+		#region Constructors
+		public Container()
+		{
+		}
+		
+		public Container(DateTime date)
+		{
+			_date = date;
+		}
+		#endregion
+		
+		#region Instance Properties
+		public DateTime Date
+		{
+			get 
+			{
+				return _date;
+			}
+			set
+			{
+				_date = value;
+			}
+		}
+		#endregion
+	}
+	
 	public class User
 	{
 		#region Instance Fields

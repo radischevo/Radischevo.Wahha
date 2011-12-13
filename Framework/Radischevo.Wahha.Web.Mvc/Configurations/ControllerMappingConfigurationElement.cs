@@ -5,7 +5,8 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 {
     internal sealed class ControllerMappingConfigurationElement : ConfigurationElement
     {
-        /// <summary>
+		#region Instance Properties
+		/// <summary>
         /// Gets the name assigned to the specified controller
         /// </summary>
         [ConfigurationProperty("name", IsRequired = true, DefaultValue = "")]
@@ -29,5 +30,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
                 return base["type"].ToString();
             }
         }
+		#endregion
     }
 }

@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 
 using Radischevo.Wahha.Core;
+using Radischevo.Wahha.Data;
 using Radischevo.Wahha.Web.Mvc.Configurations;
 
 namespace Radischevo.Wahha.Web.Mvc
@@ -16,6 +17,7 @@ namespace Radischevo.Wahha.Web.Mvc
 		#region Instance Fields
 		private string _resourceClassKey;
 		private ModelBinderCollection _binders;
+		private IModelValidatorProvider _validatorProvider;
 		#endregion
 
 		#region Constructors
@@ -45,6 +47,17 @@ namespace Radischevo.Wahha.Web.Mvc
 					_binders = Configuration.Instance.Models.Binders;
 
 				return _binders;
+			}
+		}
+		
+		protected virtual IModelValidatorProvider ValidatorProvider
+		{
+			get
+			{
+				if (_validatorProvider == null)
+					_validatorProvider = Configuration.Instance.Models.ValidatorProviders;
+				
+				return _validatorProvider;
 			}
 		}
 		#endregion
@@ -124,7 +137,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			if (value == null && !elementType.IsNullable() && context.Errors.IsValid(elementKey))
 			{
 				string message = GetValueRequiredResource(context);
-				context.Errors.Add(elementKey, new ValidationError(message, value, null));
+				context.Errors.Add(elementKey, new ValidationError(elementKey, value, message, null));
 
 				return false;
 			}

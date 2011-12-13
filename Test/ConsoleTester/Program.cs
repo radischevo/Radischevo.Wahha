@@ -35,10 +35,32 @@ namespace ConsoleTester
 			//p.TransactionTest();
 			//var threads = p.TransactionTestThread();
 
-			p.MaterializerTest2();
+			p.XmlTest();
 
 			Console.ReadKey();
 			//threads.ForEach(thread => thread.Abort());
+		}
+		
+		public void XmlTest()
+		{
+			/*string xml = @"<model>
+				<id>10</id>
+				<title>Sample</title>
+				<files>
+					<file title=""sample.png"" url=""/storage/17120ac_12167612"" />
+					<file title=""sample-1.png"" url=""/storage/41661fc_17272662"" />
+				</files>
+				<beverages>
+					<vodka>
+						<volume>0.500</volume>
+						<degrees>40.0</degrees>
+					</vodka>
+					<beer>
+						<volume>0.500</volume>
+						<degrees>5.2</degrees>
+					</beer>
+				</beverages>
+			</model>";*/
 		}
 		
 		public void SgmlTest()

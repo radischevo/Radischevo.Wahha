@@ -107,7 +107,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html
         /// <param name="obj">The object to encode.</param>
         public string Encode(object obj)
         {
-            return Encode(Convert.ToString(obj, CultureInfo.InvariantCulture));
+            return Encode(Convert.ToString(obj, CultureInfo.CurrentCulture));
         }
 
         /// <summary>
