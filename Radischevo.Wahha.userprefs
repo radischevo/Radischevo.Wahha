@@ -3,15 +3,24 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Test/Website/controllers/DefaultController.cs">
     <Files>
-      <File FileName="Framework/Radischevo.Wahha.Web/Abstractions/Implementation/HttpResponseWrapper.cs" Line="38" Column="4" />
-      <File FileName="Test/Website/controllers/DefaultController.cs" Line="5" Column="1" />
+      <File FileName="Test/Website/controllers/DefaultController.cs" Line="12" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True">
-          <Node name="ConsoleTester" expanded="True" />
+        <State expanded="True">
+          <Node name="Radischevo.Wahha.Core" expanded="True">
+            <Node name="Extensions" expanded="True" />
+            <Node name="Reflection" expanded="True" />
+          </Node>
+          <Node name="Radischevo.Wahha.Web" expanded="True">
+            <Node name="Abstractions" expanded="True">
+              <Node name="Implementation" expanded="True" />
+            </Node>
+          </Node>
           <Node name="Website" expanded="True">
-            <Node name="controllers" expanded="True" />
+            <Node name="controllers" expanded="True">
+              <Node name="DefaultController.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>

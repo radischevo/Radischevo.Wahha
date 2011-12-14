@@ -151,7 +151,7 @@ Global
 		{D8460105-5C51-4710-BBFC-2646A405EFDD}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Framework\Radischevo.Wahha.Data\Radischevo.Wahha.Data.csproj
+		StartupItem = Test\ConsoleTester\ConsoleTester.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = None
