@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.IO;
+using System.Reflection;
 using System.Security.Permissions;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
 
 using Radischevo.Wahha.Core;
-using System.Reflection;
 
 namespace Radischevo.Wahha.Web.Abstractions
 {
@@ -21,8 +21,7 @@ namespace Radischevo.Wahha.Web.Abstractions
     public class HttpResponseWrapper : HttpResponseBase
 	{
 		#region Static Fields
-		private static IMethodInvoker _switchWriterMethod = typeof(HttpResponse).GetMethod("SwitchWriter", 
-			BindingFlags.Instance | BindingFlags.NonPublic).CreateInvoker();
+		private static IMethodInvoker _switchWriterMethod;
 		#endregion
 
 		#region Instance Fields
@@ -30,6 +29,14 @@ namespace Radischevo.Wahha.Web.Abstractions
         #endregion
 
         #region Constructors
+		static HttpResponseWrapper()
+		{
+			string methodName = (Type.GetType("Mono.Runtime") == null) ? "SwitchWriter" : "SetTextWriter";
+			MethodInfo method = typeof(HttpResponse).GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic);
+			
+			_switchWriterMethod = (method == null) ? null : method.CreateInvoker();
+		}
+		
         public HttpResponseWrapper(HttpResponse response)
         {
             Precondition.Require(response, () => Error.ArgumentNull("response"));

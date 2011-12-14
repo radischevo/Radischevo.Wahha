@@ -65,8 +65,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.RegularExpressions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System.Web.RegularExpressions">
       <HintPath>..\..\References\System.Web.RegularExpressions.dll</HintPath>
     </Reference>
   </ItemGroup>
