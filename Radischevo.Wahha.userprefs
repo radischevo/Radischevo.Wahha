@@ -1,16 +1,18 @@
 ﻿<Properties>
   <AuthorInfo Name="Sergey Rodyushkin" Email="" Copyright="(C) 2008-2011 Radischevo Solutions" Company="Radischevo Solutions" Trademark="Radischevo Solutions" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Test/Website/web.config">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Test/Website/controllers/DefaultController.cs">
     <Files>
       <File FileName="Framework/Radischevo.Wahha.Web/Abstractions/Implementation/HttpResponseWrapper.cs" Line="38" Column="4" />
-      <File FileName="Test/Website/web.config" Line="61" Column="116" />
-      <File FileName="Test/Website/controllers/DefaultController.cs" Line="10" Column="23" />
+      <File FileName="Test/Website/controllers/DefaultController.cs" Line="5" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Website" selected="True" />
+        <State expanded="True" selected="True">
+          <Node name="ConsoleTester" expanded="True" />
+          <Node name="Website" expanded="True">
+            <Node name="controllers" expanded="True" />
+          </Node>
         </State>
       </Pad>
     </Pads>

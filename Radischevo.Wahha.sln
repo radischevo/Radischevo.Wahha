@@ -106,11 +106,13 @@ Global
 		{AEBFF602-D976-4E26-BEBF-89FED2E5C7AC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AEBFF602-D976-4E26-BEBF-89FED2E5C7AC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Debug|.NET.Build.0 = Debug|Any CPU
 		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Release|.NET.ActiveCfg = Release|Any CPU
+		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Release|.NET.Build.0 = Release|Any CPU
 		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3D7BACA-48A8-4551-BF4F-7DAAE9093468}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -149,7 +151,7 @@ Global
 		{D8460105-5C51-4710-BBFC-2646A405EFDD}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Test\ConsoleTester\ConsoleTester.csproj
+		StartupItem = Framework\Radischevo.Wahha.Data\Radischevo.Wahha.Data.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = None
