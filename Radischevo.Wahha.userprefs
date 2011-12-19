@@ -1,24 +1,24 @@
 ﻿<Properties>
   <AuthorInfo Name="Sergey Rodyushkin" Email="" Copyright="(C) 2008-2011 Radischevo Solutions" Company="Radischevo Solutions" Trademark="Radischevo Solutions" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Test/Website/controllers/DefaultController.cs">
+    <Files>
+      <File FileName="Test/Website/views/default/register.aspx" Line="17" Column="39" />
+      <File FileName="Test/Website/controllers/DefaultController.cs" Line="19" Column="22" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Website" expanded="True" selected="True">
-            <Node name="controllers" expanded="True" />
-            <Node name="models" expanded="True" />
-            <Node name="views" expanded="True">
-              <Node name="default" expanded="True" />
-            </Node>
-            <Node name="global.asax" expanded="True" />
-          </Node>
+          <Node name="Website" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/sergey/Projects/Radischevo.Wahha/Framework/Radischevo.Wahha.Data/Serialization/JavaScriptSerializer.cs" line="529" />
+      <Breakpoint file="/home/sergey/Projects/Radischevo.Wahha/Framework/Radischevo.Wahha.Data/Serialization/JavaScriptSerializer.cs" line="537" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

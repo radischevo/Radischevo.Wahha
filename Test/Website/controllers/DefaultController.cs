@@ -29,10 +29,10 @@ namespace Radischevo.Wahha.Test.Website
 		}
 		
 		[HttpPost]
-		public ActionResult Register (RegistrationForm form)
+		public ActionResult Register ([Bind(Source = "Json")] RegistrationForm form)
 		{
 			if (ModelState.IsValid())
-				return Content ("Registered successfully");
+				return Json (form);
 			
 			return View ("default/register", form);
 		}

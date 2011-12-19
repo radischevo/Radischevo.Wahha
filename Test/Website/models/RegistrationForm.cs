@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Radischevo.Wahha.Test.Website
@@ -14,6 +15,11 @@ namespace Radischevo.Wahha.Test.Website
 		
 		[Required(ErrorMessage = "Please choose a password.")]
 		public string Password {
+			get;
+			set;
+		}
+		
+		public Dictionary<string, object> Data {
 			get;
 			set;
 		}

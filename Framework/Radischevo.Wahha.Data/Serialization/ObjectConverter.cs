@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 
+using Radischevo.Wahha.Core;
+
 namespace Radischevo.Wahha.Data.Serialization
 {
     internal static class ObjectConverter
@@ -366,7 +368,7 @@ namespace Radischevo.Wahha.Data.Serialization
             if (IsGenericDictionary(type))
             {
                 Type keyType = type.GetGenericArguments()[0];
-                if (!keyType.IsPrimitive)
+                if (!JavaScriptSerializer.IsSupportedKeyType(keyType))
                 {
                     if (throwOnError)
                         throw Error.SuppliedDictionaryTypeIsNotSupported();
@@ -389,8 +391,8 @@ namespace Radischevo.Wahha.Data.Serialization
                 {
                     foreach (string key in list)
                     {
-						object convertedKey = Convert.ChangeType(
-							key, keyType, CultureInfo.InvariantCulture);
+						object convertedKey = Converter.ChangeType(keyType, 
+							(object)key, CultureInfo.InvariantCulture);
                         object value;
 						
                         if (!TryConvertObjectToType(dictionary[key], 

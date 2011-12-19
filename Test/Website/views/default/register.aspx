@@ -14,6 +14,26 @@
 		<% Validation.Messages ("password", (e) => { %><span><%= e.Message %></span><% }); %>
 		
 		<p><input type="submit" value="Register"/></p>
+		<b><%= typeof(string).IsPrimitive %></b>
 	</form>
 </body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("form").submit(function() {
+		$.ajax({
+			url: $(this).attr("action"),
+			type: $(this).attr("method"),
+			dataType: "json",
+			contentType: "application/json",
+			data: '{"login":"mike","password":"123456","data":{"test":1,"scope":"global","array":[1,2,3,4],"obj":{"start":true,"end":100}}}',
+			success: function(data) {
+				alert(data);
+			}
+		});
+		return false;
+	});		
+});		
+</script>		
+</html>	
 

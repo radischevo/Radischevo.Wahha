@@ -146,6 +146,35 @@ namespace Radischevo.Wahha.Data.Serialization
         #endregion
 
         #region Static Methods
+		internal static bool IsSupportedKeyType(Type type)
+		{
+			if (type.IsEnum)
+                return true;
+
+            if (type == typeof(Guid))
+                return true;
+
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Boolean:
+                case TypeCode.Char:
+                case TypeCode.SByte:
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.UInt16:
+                case TypeCode.Int32:
+                case TypeCode.UInt32:
+                case TypeCode.Int64:
+                case TypeCode.UInt64:
+                case TypeCode.Single:
+                case TypeCode.Double:
+                case TypeCode.Decimal:
+                case TypeCode.String:
+                    return true;
+            }
+            return false;
+		}
+		
         private static object Deserialize(JavaScriptSerializer serializer, 
             string input, Type type, int depthLimit)
         {
@@ -159,7 +188,7 @@ namespace Radischevo.Wahha.Data.Serialization
         }
         #endregion
 
-        #region Private Serialization Methods
+        #region Private Serialization Methods		
         private static void SerializeBoolean(bool b, StringBuilder sb)
         {
             sb.Append((b) ? "true" : "false");
@@ -239,7 +268,7 @@ namespace Radischevo.Wahha.Data.Serialization
             foreach (DictionaryEntry entry in obj)
             {
 				Type keyType = (entry.Key == null) ? typeof(object) : entry.Key.GetType();
-				if (!keyType.IsPrimitive) 
+				if (!IsSupportedKeyType(keyType)) 
 					throw Error.SuppliedDictionaryTypeIsNotSupported();
 				
                 string key = Convert.ToString(entry.Key, CultureInfo.InvariantCulture);

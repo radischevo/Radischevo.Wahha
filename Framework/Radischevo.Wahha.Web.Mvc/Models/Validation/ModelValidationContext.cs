@@ -26,7 +26,6 @@ namespace Radischevo.Wahha.Web.Mvc
 		public ModelValidationContext(string member, object container, object model)
 		{
 			Precondition.Require(container, () => Error.ArgumentNull("container"));
-			Precondition.Require(model, () => Error.ArgumentNull("model"));
 			
 			_container = container;
 			_member = member;

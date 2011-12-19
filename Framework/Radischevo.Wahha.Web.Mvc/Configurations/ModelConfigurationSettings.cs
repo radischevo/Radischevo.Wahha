@@ -118,7 +118,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 
 		private void InitDefaultValueProviders()
 		{
-			_valueProviders.Add("Json", new JsonValueProviderFactory());
 			_valueProviders.Add("Header", new HeaderValueProviderFactory());
 			_valueProviders.Add("Cookie", new CookieValueProviderFactory());
 			_valueProviders.Add("Session", new SessionStateValueProviderFactory());
@@ -127,6 +126,7 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 			_valueProviders.Add("File", new HttpFileCollectionValueProviderFactory());
 			_valueProviders.Add("Form", new FormValueProviderFactory());
 			_valueProviders.Add("Url", new RouteDataValueProviderFactory());
+			_valueProviders.Add("Json", new JsonValueProviderFactory());
 			_valueProviders.Add("Parameters", new ParameterValueProviderFactory());
 		}
 		

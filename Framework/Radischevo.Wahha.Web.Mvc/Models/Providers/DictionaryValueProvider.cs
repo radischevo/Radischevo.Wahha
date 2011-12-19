@@ -24,7 +24,7 @@ namespace Radischevo.Wahha.Web.Mvc
 			: base(culture)
 		{
 			_values = new ValueDictionary(values);
-			_prefixes = new HashSet<string>();
+			_prefixes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
 			foreach (string key in _values.Keys)
 				_prefixes.UnionWith(GetPrefixes(key));
