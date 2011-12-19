@@ -53,12 +53,10 @@ namespace Radischevo.Wahha.Data
 		/// <typeparam name="TOutput">The type to convert the elements of source to.</typeparam>
 		/// <param name="collection">The <see cref="T:Radischevo.Wahha.Data.ISubset"/>
 		/// that contains the elements to be converted.</param>
-		public static IEnumerable<TOutput> CastSubset<TInput, TOutput>(
-			this IEnumerable<TInput> collection)
+		public static IEnumerable<TOutput> Cast<TInput, TOutput>(
+			this ISubset<TInput> collection)
 		{
-			ISubset<TInput> input = (collection as ISubset<TInput>);
-			return new Subset<TOutput>(collection.Cast<TOutput>(),
-				input.Evaluate(s => s.Total, -1));
+			return new Subset<TOutput>(collection.Cast<TOutput>(), collection.Total);
 		}
 
 		/// <summary>
@@ -69,10 +67,10 @@ namespace Radischevo.Wahha.Data
 		/// <typeparam name="TOutput">The type to convert the elements of source to.</typeparam>
 		/// <param name="collection">The <see cref="T:Radischevo.Wahha.Data.ISubset"/>
 		/// that contains the elements to be converted.</param>
-		public static IEnumerable<TOutput> ConvertSubset<TInput, TOutput>(
-			this IEnumerable<TInput> collection)
+		public static IEnumerable<TOutput> Convert<TInput, TOutput>(
+			this ISubset<TInput> collection)
 		{
-			return ConvertSubset<TInput, TOutput>(collection, CultureInfo.CurrentCulture);
+			return Convert<TInput, TOutput>(collection, CultureInfo.CurrentCulture);
 		}
 
 		/// <summary>
@@ -85,12 +83,10 @@ namespace Radischevo.Wahha.Data
 		/// that contains the elements to be converted.</param>
 		/// <param name="provider">An <see cref="T:System.IFormatProvider"/> interface implementation 
 		/// that supplies culture-specific formatting information.</param>
-		public static IEnumerable<TOutput> ConvertSubset<TInput, TOutput>(
-			this IEnumerable<TInput> collection, IFormatProvider provider)
+		public static IEnumerable<TOutput> Convert<TInput, TOutput>(
+			this ISubset<TInput> collection, IFormatProvider provider)
 		{
-			ISubset<TInput> input = (collection as ISubset<TInput>);
-			return new Subset<TOutput>(collection.Convert<TOutput>(provider),
-				input.Evaluate(s => s.Total, -1));
+			return new Subset<TOutput>(collection.Convert<TOutput>(provider), collection.Total);
 		}
 		#endregion
 	}

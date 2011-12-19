@@ -1,15 +1,21 @@
 ﻿<Properties>
   <AuthorInfo Name="Sergey Rodyushkin" Email="" Copyright="(C) 2008-2011 Radischevo Solutions" Company="Radischevo Solutions" Trademark="Radischevo Solutions" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Test/Website/controllers/DefaultController.cs">
-    <Files>
-      <File FileName="Test/Website/views/default/register.aspx" Line="17" Column="39" />
-      <File FileName="Test/Website/controllers/DefaultController.cs" Line="19" Column="22" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Website" selected="True" />
+          <Node name="Radischevo.Wahha.Data" expanded="True">
+            <Node name="Extensions" expanded="True" />
+          </Node>
+          <Node name="Website" expanded="True">
+            <Node name="controllers" expanded="True" />
+            <Node name="views" expanded="True">
+              <Node name="default" expanded="True">
+                <Node name="register.aspx" selected="True" />
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
