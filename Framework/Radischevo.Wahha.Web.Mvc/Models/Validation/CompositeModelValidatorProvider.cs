@@ -30,9 +30,11 @@ namespace Radischevo.Wahha.Web.Mvc
 			#region Instance Methods
 			public override IEnumerable<ValidationError> Validate (ModelValidationContext context)
 			{
+				string memberKey = (String.IsNullOrEmpty(context.Member)) 
+					? _property.Name : String.Format("{0}-{1}", context.Member, _property.Name);
+				
 				ModelValidationContext inner = new ModelValidationContext(
-					String.Format("{0}-{1}", context.Member, _property.Name), 
-					context.Model, _property.GetValue(context.Model));
+					memberKey, context.Model, _property.GetValue(context.Model));
 
 				return _validators.SelectMany(a => a.Validate(inner));
 			}

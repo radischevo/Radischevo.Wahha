@@ -323,6 +323,7 @@
     <Compile Include="Models\Validation\DataErrorInfoModelValidator.cs" />
     <Compile Include="Models\Validation\ModelErrorCollection.cs" />
     <Compile Include="Models\Validation\ModelStateCollection.cs" />
+    <Compile Include="Html\Helpers\ValidationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">

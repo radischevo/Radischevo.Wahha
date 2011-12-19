@@ -1,26 +1,17 @@
 ﻿<Properties>
   <AuthorInfo Name="Sergey Rodyushkin" Email="" Copyright="(C) 2008-2011 Radischevo Solutions" Company="Radischevo Solutions" Trademark="Radischevo Solutions" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Test/Website/controllers/DefaultController.cs">
-    <Files>
-      <File FileName="Test/Website/controllers/DefaultController.cs" Line="12" Column="3" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Radischevo.Wahha.Core" expanded="True">
-            <Node name="Extensions" expanded="True" />
-            <Node name="Reflection" expanded="True" />
-          </Node>
-          <Node name="Radischevo.Wahha.Web" expanded="True">
-            <Node name="Abstractions" expanded="True">
-              <Node name="Implementation" expanded="True" />
+          <Node name="Website" expanded="True" selected="True">
+            <Node name="controllers" expanded="True" />
+            <Node name="models" expanded="True" />
+            <Node name="views" expanded="True">
+              <Node name="default" expanded="True" />
             </Node>
-          </Node>
-          <Node name="Website" expanded="True">
-            <Node name="controllers" expanded="True">
-              <Node name="DefaultController.cs" selected="True" />
-            </Node>
+            <Node name="global.asax" expanded="True" />
           </Node>
         </State>
       </Pad>

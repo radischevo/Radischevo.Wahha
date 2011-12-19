@@ -36,7 +36,6 @@ namespace Radischevo.Wahha.Web.Mvc
 		public override IEnumerable<ValidationError> Validate (ModelValidationContext context)
 		{
 			Precondition.Require(context, () => Error.ArgumentNull("context"));
-			
 			if (!_attribute.IsValid(context.Model)) 
 				yield return new ValidationError(context.Member, _attribute.ErrorMessage);
 		}

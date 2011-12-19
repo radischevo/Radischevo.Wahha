@@ -22,6 +22,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
         private HtmlHelper _html;
         private UrlHelper _url;
         private AjaxHelper _ajax;
+		private ValidationHelper _validation;
         private HttpParameters _httpParameters;
 		private TextWriter _output;
         #endregion
@@ -91,7 +92,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
         }
 
         /// <summary>
-        /// Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UI.HtmlHelper"/> containing 
+        /// Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.Html.HtmlHelper"/> containing 
         /// methods useful for rendering HTML elements.
         /// </summary>
         public HtmlHelper Html
@@ -123,7 +124,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
 		}
 
         /// <summary>
-        /// Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UrlHelper"/> containing 
+        /// Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.Html.UrlHelper"/> containing 
         /// methods useful for resolving URLs and routes.
         /// </summary>
         public UrlHelper Url
@@ -139,7 +140,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
         }
 
         /// <summary>
-        /// Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.UI.AjaxHelper"/> 
+        /// Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.Html.AjaxHelper"/> 
         /// containing methods useful for AJAX scenarios.
         /// </summary>
         public AjaxHelper Ajax
@@ -153,6 +154,22 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
                 _ajax = value;
             }
         }
+		
+		/// <summary>
+        /// Returns an <see cref="T:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper"/> 
+        /// containing methods for model state validation.
+        /// </summary>
+		public ValidationHelper Validation
+		{
+			get
+			{
+				return _validation;
+			}
+			set
+			{
+				_validation = value;
+			}
+		}
 
         public new CacheProvider Cache
         {
@@ -214,6 +231,7 @@ namespace Radischevo.Wahha.Web.Mvc.Html.Forms
             _html = new HtmlHelper(context);
             _url = new UrlHelper(context);
             _ajax = new AjaxHelper(context);
+			_validation = new ValidationHelper(context);
         }
 
         /// <summary>

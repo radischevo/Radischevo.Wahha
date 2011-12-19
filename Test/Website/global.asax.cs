@@ -20,7 +20,7 @@ namespace Radischevo.Wahha.Test.Website
 
 		protected void Application_Start ()
 		{
-			RegisterRoutes (RouteTable.Routes);
+			RegisterRoutes (RouteTable.Routes);		
 		}
 	}
 }

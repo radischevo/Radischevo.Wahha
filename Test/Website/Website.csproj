@@ -36,6 +36,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />
@@ -46,12 +47,14 @@
       <DependentUpon>global.asax</DependentUpon>
     </Compile>
     <Compile Include="controllers\DefaultController.cs" />
+    <Compile Include="models\RegistrationForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="views\web.config" />
     <Content Include="web.config" />
     <Content Include="global.asax" />
     <Content Include="views\default\index.aspx" />
+    <Content Include="views\default\register.aspx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

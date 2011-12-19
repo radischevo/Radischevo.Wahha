@@ -24,7 +24,20 @@ namespace Radischevo.Wahha.Web.Mvc
             _errors = new ModelErrorCollection();
         }
         #endregion
-
+		
+		#region Instance Properties
+		/// <summary>
+		/// Gets the collection of found model errors.
+		/// </summary>
+		public ModelErrorCollection Errors
+		{
+			get
+			{
+				return _errors;
+			}
+		}
+		#endregion
+		
         #region Instance Methods
         /// <summary>
         /// Adds a validation error message to the 

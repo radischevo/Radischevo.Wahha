@@ -21,6 +21,21 @@ namespace Radischevo.Wahha.Test.Website
 			ViewData ["Message"] = "Sample item list here.";
 			return View ("default/index");
 		}
+		
+		[HttpGet]
+		public ActionResult Register ()
+		{
+			return View ("default/register", new RegistrationForm());
+		}
+		
+		[HttpPost]
+		public ActionResult Register (RegistrationForm form)
+		{
+			if (ModelState.IsValid())
+				return Content ("Registered successfully");
+			
+			return View ("default/register", form);
+		}
 	}
 }
 
