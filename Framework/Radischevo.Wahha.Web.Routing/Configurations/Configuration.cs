@@ -9,13 +9,8 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
     /// <summary>
     /// Stores the routing configuration
     /// </summary>
-    public sealed class Configuration
+    public sealed class Configuration : Singleton<Configuration>
     {
-        #region Static Fields
-        private static Configuration _instance;
-        private static object _lock = new object();
-        #endregion
-
         #region Instance Fields
         private IRouteTableProvider _provider;
         private List<RouteConfigurationElement> _routes;
@@ -46,27 +41,6 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
 			{
 				throw Error.UnableToLoadConfiguration(ex);
 			}
-        }
-        #endregion
-
-        #region Static Properties
-        /// <summary>
-        /// Gets the current routing configuration
-        /// </summary>
-        public static Configuration Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (_lock)
-                    {
-                        if(_instance == null)
-                            _instance = new Configuration();
-                    }
-                }
-                return _instance;
-            }
         }
         #endregion
 

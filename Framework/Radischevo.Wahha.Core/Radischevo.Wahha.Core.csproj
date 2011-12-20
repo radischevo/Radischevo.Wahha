@@ -159,6 +159,7 @@
     <Compile Include="Extensions\ServiceLocatorExtensions.cs" />
     <Compile Include="Tuple.cs" />
     <Compile Include="ValueDictionary.cs" />
+    <Compile Include="Singleton`1.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx">

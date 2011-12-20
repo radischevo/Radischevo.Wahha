@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Configuration;
 
+using Radischevo.Wahha.Core;
+
 namespace Radischevo.Wahha.Data.Configurations
 {
     /// <summary>
     /// Represents the module configuration settings.
     /// </summary>
-    public sealed class Configuration
+    public sealed class Configuration : Singleton<Configuration>
     {
-        #region Static Fields
-        private static Configuration _instance;
-        private static object _lock = new object();
-        #endregion
-
         #region Instance Fields
         private CacheSettings _caching;
         private DatabaseConfigurationSettings _database;
@@ -43,27 +40,6 @@ namespace Radischevo.Wahha.Data.Configurations
             catch (ConfigurationErrorsException ex)
             {
                 throw Error.UnableToLoadConfiguration(ex);
-            }
-        }
-        #endregion
-
-        #region Static Properties
-        /// <summary>
-        /// Gets the current module configuration
-        /// </summary>
-        public static Configuration Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (_lock)
-                    {
-                        if (_instance == null)
-                            _instance = new Configuration();
-                    }
-                }
-                return _instance;
             }
         }
         #endregion

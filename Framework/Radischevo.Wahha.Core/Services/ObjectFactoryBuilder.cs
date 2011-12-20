@@ -13,7 +13,7 @@ namespace Radischevo.Wahha.Core
 			where TObject : class
 		{
 			ConstructorInfo constructor = typeof(TObject).GetConstructor(
-				BindingFlags.Public | BindingFlags.NonPublic, null, parameterTypes, null);
+				BindingFlags.Instance | BindingFlags.Public, null, parameterTypes, null);
 
 			return constructor;
 		}
@@ -34,7 +34,8 @@ namespace Radischevo.Wahha.Core
 		public static Func<TObject> CreateFactory<TObject>()
 			where TObject : class
 		{
-			return () => Activator.CreateInstance<TObject>();
+			NewExpression invoker = CreateExpression<TObject>();
+			return Expression.Lambda<Func<TObject>>(invoker).Compile();
 		}
 
 		public static Func<TParameter, TObject> CreateFactory<TParameter, TObject>()

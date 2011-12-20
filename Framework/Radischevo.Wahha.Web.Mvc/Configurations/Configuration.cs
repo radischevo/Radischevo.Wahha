@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Configuration;
 
+using Radischevo.Wahha.Core;
+
 namespace Radischevo.Wahha.Web.Mvc.Configurations
 {
-    public sealed class Configuration
+    public sealed class Configuration : Singleton<Configuration>
     {
-        #region Static Fields
-        private static Configuration _instance;
-        private static object _lock = new object();
-        #endregion
-
         #region Instance Fields
         private ControllerConfigurationSettings _controllers;
         private ViewConfigurationSettings _views;
@@ -22,31 +19,13 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
         /// Initializes a new instance of the 
         /// <see cref="Configuration"/> class
         /// </summary>
-        public Configuration()
+        private Configuration()
         {
             _controllers = new ControllerConfigurationSettings();
             _views = new ViewConfigurationSettings();
             _models = new ModelConfigurationSettings();
 
             Init();
-        }
-        #endregion
-
-        #region Static Properties
-        public static Configuration Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (_lock)
-                    {
-                        if(_instance == null)
-                            _instance = new Configuration();
-                    }
-                }
-                return _instance;
-            }
         }
         #endregion
 

@@ -13,17 +13,17 @@
 		<p><label>Password: <input name="password" value="<%= Model.Password %>" /></label></p>
 		<% Validation.Messages ("password", (e) => { %><span><%= e.Message %></span><% }); %>
 		
-		<p><input type="submit" value="Register"/></p>
-		<b><%= typeof(string).IsPrimitive %></b>
+		<p><input type="submit" value="Register"/> <a href="#" class="submit">Ajax Register</a> </p>
 	</form>
 </body>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
-	$("form").submit(function() {
+	$("a.submit").click(function() {
+		var form = $(this).closest("form");
 		$.ajax({
-			url: $(this).attr("action"),
-			type: $(this).attr("method"),
+			url: form.attr("action"),
+			type: form.attr("method"),
 			dataType: "json",
 			contentType: "application/json",
 			data: '{"login":"mike","password":"123456","data":{"test":1,"scope":"global","array":[1,2,3,4],"obj":{"start":true,"end":100}}}',
