@@ -133,6 +133,8 @@
     <Compile Include="SecureConnectionOption.cs" />
     <Compile Include="VirtualPathData.cs" />
     <Compile Include="Extensions\WebFormRoute.cs" />
+    <Compile Include="Configurations\RouteConfigurationElementCollection.cs" />
+    <Compile Include="Configurations\RouteConstraintConfigurationElementCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">

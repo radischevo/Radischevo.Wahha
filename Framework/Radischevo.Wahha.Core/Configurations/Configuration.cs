@@ -20,23 +20,7 @@ namespace Radischevo.Wahha.Core.Configurations
         private Configuration()
         {
 			_serviceLocation = new ServiceLocationSettings();
-			Initialize();
-        }
-        #endregion
-
-		#region Instance Properties
-		public ServiceLocationSettings ServiceLocation
-		{
-			get
-			{
-				return _serviceLocation;
-			}
-		}
-		#endregion
-
-		#region Instance Methods
-		private void Initialize()
-		{
+			
 			try
 			{
 				SettingsSection section = ConfigurationManager.GetSection("radischevo.wahha/core") as SettingsSection;
@@ -48,6 +32,16 @@ namespace Radischevo.Wahha.Core.Configurations
 			catch (ConfigurationErrorsException ex)
 			{
 				throw Error.UnableToLoadConfiguration(ex);
+			}
+        }
+        #endregion
+
+		#region Instance Properties
+		public ServiceLocationSettings ServiceLocation
+		{
+			get
+			{
+				return _serviceLocation;
 			}
 		}
 		#endregion

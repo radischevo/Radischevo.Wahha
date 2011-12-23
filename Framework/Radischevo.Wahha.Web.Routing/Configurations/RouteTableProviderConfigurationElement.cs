@@ -9,7 +9,8 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
     /// </summary>
     internal sealed class RouteTableProviderConfigurationElement : ConfigurationElement
     {
-        /// <summary>
+		#region Instance Properties
+		/// <summary>
         /// Gets the string representation 
         /// of the type of route persistence provider.
         /// </summary>
@@ -31,5 +32,6 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
                 return (NameValueConfigurationCollection)base["settings"];
             }
         }
+		#endregion
     }
 }

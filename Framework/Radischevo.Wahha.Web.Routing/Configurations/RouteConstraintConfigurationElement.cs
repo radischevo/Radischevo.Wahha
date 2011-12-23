@@ -5,7 +5,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Routing.Configurations
 {
-    public class RouteConstraintConfigurationElement : ConfigurationElement
+    public sealed class RouteConstraintConfigurationElement : ConfigurationElement
     {
         #region Instance Fields
         private ValueDictionary _attributes;
@@ -46,28 +46,5 @@ namespace Radischevo.Wahha.Web.Routing.Configurations
             return true;
         }
         #endregion
-    }
-
-    [ConfigurationCollection(typeof(RouteConstraintConfigurationElement), 
-        CollectionType = ConfigurationElementCollectionType.BasicMap)]
-    public sealed class RouteConstraintConfigurationElementCollection : ConfigurationElementCollection
-    {
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new RouteConstraintConfigurationElement();
-        }
-
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return new object();
-        }
-
-        public RouteConstraintConfigurationElement this[int index]
-        {
-            get
-            {
-                return (RouteConstraintConfigurationElement)BaseGet(index);
-            }
-        }
     }
 }

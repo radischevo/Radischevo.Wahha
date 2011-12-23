@@ -82,10 +82,10 @@ namespace Radischevo.Wahha.Web.Routing.Providers
             foreach (RouteConfigurationElement element in
                 Configurations.Configuration.Instance.Routes)
                 result.Routes.Add(element.Name, ProcessRoute(element));
-
-			foreach (NameValueConfigurationElement variable in
-				Configurations.Configuration.Instance.Variables)
-				result.Variables.Add(variable.Name, variable.Value);
+			
+			NameValueCollection<string> variables = Configurations.Configuration.Instance.Variables;
+			foreach (string name in variables.Keys)
+				result.Variables.Add(name, variables[name]);
 
             return result;
         }
