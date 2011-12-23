@@ -115,7 +115,6 @@
     <Compile Include="Configurations\CacheConfigurationElement.cs" />
     <Compile Include="Configurations\CacheProviderConfigurationElement.cs" />
     <Compile Include="Configurations\CacheSettings.cs" />
-    <Compile Include="Configurations\DbDataProviderFactoryConfigurationElement.cs" />
     <Compile Include="Configurations\DatabaseConfigurationSettings.cs" />
     <Compile Include="Configurations\SettingsSection.cs" />
     <Compile Include="Configurations\Configuration.cs" />
@@ -199,6 +198,10 @@
     <Compile Include="Validation\ValidationErrorCollection.cs" />
     <Compile Include="Validation\ValidationException.cs" />
     <Compile Include="Validation\ValidationContext.cs" />
+    <Compile Include="Configurations\DbDataProviderFactoryCollection.cs" />
+    <Compile Include="Provider\DbDataProviderFactorySettings.cs" />
+    <Compile Include="Configurations\DbDataProviderFactoryConfigurationElementCollection.cs" />
+    <Compile Include="Configurations\DbDataProviderFactoryConfigurationElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">

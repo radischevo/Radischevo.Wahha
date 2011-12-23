@@ -1,32 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using Radischevo.Wahha.Core;
-using Radischevo.Wahha.Data.Configurations;
 
 namespace Radischevo.Wahha.Data.Provider
 {
     public abstract class CommonDbDataProviderFactory : IDbDataProviderFactory
     {
+		#region Instance Fields
+		private string _connectionString;
+		#endregion
+		
         #region Constructors
         protected CommonDbDataProviderFactory()
         {
 		}
         #endregion
-
+		
         #region Instance Methods
+		public void Init (DbDataProviderFactorySettings settings)
+		{
+			if (settings.ConnectionStrings.Count < 1)
+				throw Error.ConnectionStringNotConfigured();
+			
+			_connectionString = settings.ConnectionStrings.First();
+		}
+		
 		/// <summary>
 		/// Creates a new instance of the <see cref="Radischevo.Wahha.Data.IDbDataProvider"/> 
 		/// class, using the default connection string defined in the configuration file.
 		/// </summary>
 		public virtual IDbDataProvider CreateProvider()
 		{
-			string connectionString = Configuration.Instance
-				.Database.ConnectionStrings["default"];
-
-			Precondition.Defined(connectionString, () => 
-				Error.ConnectionStringNotConfigured());
-
-			return CreateProvider(connectionString);
+			return CreateProvider(_connectionString);
 		}
 
 		/// <summary>

@@ -35,7 +35,8 @@ namespace ConsoleTester
 			//p.TransactionTest();
 			//var threads = p.TransactionTestThread();
 
-			p.XmlTest();
+			//p.XmlTest();
+			p.MaterializerTest2();
 
 			Console.ReadKey();
 			//threads.ForEach(thread => thread.Abort());

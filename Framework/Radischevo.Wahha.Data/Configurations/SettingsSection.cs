@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Configuration;
 
+using Radischevo.Wahha.Core;
+
 namespace Radischevo.Wahha.Data.Configurations
 {
-    internal sealed class SettingsSection : ConfigurationSection
+    internal sealed class SettingsSection : ConfigurationSection, IConfigurator<Configuration>
     {
-        [ConfigurationProperty("database", IsRequired = true)]
+		#region Instance Properties
+		[ConfigurationProperty("database", IsRequired = true)]
         public DatabaseConfigurationElement Database
         {
             get
@@ -22,5 +25,17 @@ namespace Radischevo.Wahha.Data.Configurations
                 return (CacheConfigurationElement)base["cache"];
             }
         }
+		#endregion
+
+		#region Instance Methods
+		public void Configure (Configuration module)
+		{
+			if (Database != null) 
+				Database.Configure(module.Database);
+			
+			if (Cache != null)
+				Cache.Configure(module.Caching);
+		}
+		#endregion
     }
 }

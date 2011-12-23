@@ -30,15 +30,5 @@ namespace Radischevo.Wahha.Core.Configurations
 			}
 		}
 		#endregion
-
-		#region Instance Methods
-		internal void Init(ServiceLocationConfigurationElement element)
-		{
-			if (element == null)
-				return;
-
-			_providerType = Type.GetType(element.ProviderType, false, true);
-		}
-		#endregion
 	}
 }

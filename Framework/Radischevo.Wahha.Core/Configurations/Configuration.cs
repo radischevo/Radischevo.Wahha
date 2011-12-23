@@ -4,16 +4,10 @@ using System.Configuration;
 namespace Radischevo.Wahha.Core.Configurations
 {
     /// <summary>
-    /// Represents module configuration 
-    /// settings.
+    /// Represents module configuration settings.
     /// </summary>
-    public sealed class Configuration
+    public sealed class Configuration : Singleton<Configuration>
     {
-        #region Static Fields
-        private static Configuration _instance;
-        private static object _lock = new object();
-        #endregion
-
         #region Instance Fields
 		private ServiceLocationSettings _serviceLocation;
         #endregion
@@ -21,33 +15,12 @@ namespace Radischevo.Wahha.Core.Configurations
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the 
-        /// <see cref="Configuration"/> class.
+        /// <see cref="Radischevo.Wahha.Core.Configurations.Configuration"/> class.
         /// </summary>
         private Configuration()
         {
 			_serviceLocation = new ServiceLocationSettings();
-			Init();
-        }
-        #endregion
-
-        #region Static Properties
-        /// <summary>
-        /// Gets the current module configuration.
-        /// </summary>
-        public static Configuration Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (_lock)
-                    {
-                        if(_instance == null)
-                            _instance = new Configuration();
-                    }
-                }
-                return _instance;
-            }
+			Initialize();
         }
         #endregion
 
@@ -62,17 +35,15 @@ namespace Radischevo.Wahha.Core.Configurations
 		#endregion
 
 		#region Instance Methods
-		private void Init()
+		private void Initialize()
 		{
 			try
 			{
-				SettingsSection section = ConfigurationManager.GetSection("radischevo.wahha/core")
-					as SettingsSection;
-
+				SettingsSection section = ConfigurationManager.GetSection("radischevo.wahha/core") as SettingsSection;
 				if (section == null)
 					return;
 
-				_serviceLocation.Init(section.ServiceLocation);
+				section.Configure(this);
 			}
 			catch (ConfigurationErrorsException ex)
 			{

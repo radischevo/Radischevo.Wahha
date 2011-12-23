@@ -27,15 +27,11 @@ namespace Radischevo.Wahha.Data.Configurations
 
             try
             {
-                SettingsSection section =
-                    ConfigurationManager.GetSection("radischevo.wahha/data") 
-                    as SettingsSection;
-
+                SettingsSection section = ConfigurationManager.GetSection("radischevo.wahha/data") as SettingsSection;
                 if (section == null)
                     return;
 
-                _caching.Init(section.Cache);
-                _database.Init(section.Database);
+                section.Configure(this);
             }
             catch (ConfigurationErrorsException ex)
             {

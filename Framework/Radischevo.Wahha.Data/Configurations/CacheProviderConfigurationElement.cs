@@ -5,7 +5,8 @@ namespace Radischevo.Wahha.Data.Configurations
 {
     internal sealed class CacheProviderConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("type", IsRequired = false,
+		#region Instance Properties
+		[ConfigurationProperty("type", IsRequired = false,
             DefaultValue = "")]
         public string Type
         {
@@ -14,5 +15,6 @@ namespace Radischevo.Wahha.Data.Configurations
                 return base["type"].ToString();
             }
         }
+		#endregion
     }
 }

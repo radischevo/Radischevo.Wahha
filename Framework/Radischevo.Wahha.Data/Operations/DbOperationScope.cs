@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Data.Caching;
@@ -246,7 +247,10 @@ namespace Radischevo.Wahha.Data
 		#region Static Methods
 		private static IDbDataProvider CreateDefaultProvider()
 		{
-			return CreateProvider(Configuration.Instance.Database.Factory);
+			IDbDataProviderFactory factory = Configuration.Instance.Database.Providers.Default;
+			Precondition.Require(factory, () => Error.DefaultProviderFactoryIsNotConfigured());
+			
+			return CreateProvider(factory);
 		}
 
 		private static IDbDataProvider CreateProvider(IDbDataProviderFactory factory)

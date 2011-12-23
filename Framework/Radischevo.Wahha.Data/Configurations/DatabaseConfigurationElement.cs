@@ -1,36 +1,52 @@
 ﻿using System;
 using System.Configuration;
 
+using Radischevo.Wahha.Core;
+
 namespace Radischevo.Wahha.Data.Configurations
 {
-	internal sealed class DatabaseConfigurationElement : ConfigurationElement
+	internal sealed class DatabaseConfigurationElement : ConfigurationElement, IConfigurator<DatabaseConfigurationSettings>
 	{
 		#region Instance Properties
-		[ConfigurationProperty("provider", IsRequired = true)]
-		public DbDataProviderFactoryConfigurationElement Provider
+		[ConfigurationProperty("providers", IsRequired = true)]
+		public DbDataProviderFactoryConfigurationElementCollection Providers
 		{
 			get
 			{
-				return (DbDataProviderFactoryConfigurationElement)base["provider"];
+				return (DbDataProviderFactoryConfigurationElementCollection)base["providers"];
 			}
 		}
-
-		[ConfigurationProperty("commandTimeout", IsRequired = false)]
-		public int CommandTimeout
+		#endregion
+		
+		#region Static Methods
+		private static IDbDataProviderFactory CreateFactory(Type type)
 		{
-			get
-			{
-				return (int)base["commandTimeout"];
-			}
+			if (!typeof(IDbDataProviderFactory).IsAssignableFrom(type))
+				throw Error.IncompatibleDataProviderFactoryType(type);
+
+			return (IDbDataProviderFactory)ServiceLocator.Instance.GetService(type);
 		}
-
-		[ConfigurationProperty("connectionStrings")]
-		public ConnectionStringSettingsCollection ConnectionStrings
+		#endregion
+		
+		#region Instance Methods
+		public void Configure (DatabaseConfigurationSettings module)
 		{
-			get
-			{
-				return (ConnectionStringSettingsCollection)base["connectionStrings"];
-			}
+			foreach (DbDataProviderFactoryConfigurationElement element in Providers)
+				module.Providers.Add(element.Name, ConfigureFactory(element));
+		}
+		
+		private IDbDataProviderFactory ConfigureFactory(DbDataProviderFactoryConfigurationElement element)
+		{
+			IDbDataProviderFactory factory = CreateFactory(Type.GetType(element.FactoryType, false, true));
+			DbDataProviderFactorySettings settings = new DbDataProviderFactorySettings();
+			
+			foreach (ConnectionStringSettings item in element.ConnectionStrings)
+				settings.ConnectionStrings.Add(item.Name, item.ConnectionString);
+			
+			settings.Parameters = element.Parameters;
+			factory.Init(settings);
+			
+			return factory;
 		}
 		#endregion
 	}

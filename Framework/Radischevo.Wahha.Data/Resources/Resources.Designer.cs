@@ -545,5 +545,14 @@ namespace Radischevo.Wahha.Data.Resources {
                 return ResourceManager.GetString("Error_UnterminatedStringConstant", resourceCulture);
             }
         }
-    }
+
+		/// <summary>
+        ///   Looks up a localized string similar to Could not find any database provider...
+        /// </summary>
+        internal static string Error_DefaultProviderFactoryIsNotConfigured {
+            get {
+                return ResourceManager.GetString("Error_DefaultProviderFactoryIsNotConfigured", resourceCulture);
+            }
+        }
+	}
 }

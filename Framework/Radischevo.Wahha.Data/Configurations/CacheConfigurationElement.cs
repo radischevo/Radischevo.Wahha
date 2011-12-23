@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Configuration;
 
+using Radischevo.Wahha.Core;
+
 namespace Radischevo.Wahha.Data.Configurations
 {
-    internal sealed class CacheConfigurationElement : ConfigurationElement
+    internal sealed class CacheConfigurationElement : ConfigurationElement, IConfigurator<CacheSettings>
     {
         #region Instance Properties
         [ConfigurationProperty("provider", IsRequired = true)]
@@ -24,5 +26,18 @@ namespace Radischevo.Wahha.Data.Configurations
             }
         }
         #endregion
+
+		#region Instance Methods
+		public void Configure (CacheSettings module)
+		{
+			module.ProviderType = Type.GetType(Provider.Type, false, true);
+			
+			if (Settings != null) 
+			{
+				foreach (NameValueConfigurationElement item in Settings) 
+					module.Settings[item.Name] = item.Value;
+			}
+		}
+		#endregion
     }
 }

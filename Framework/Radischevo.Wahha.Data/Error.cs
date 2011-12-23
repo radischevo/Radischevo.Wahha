@@ -305,5 +305,10 @@ namespace Radischevo.Wahha.Data
 		{
 			return new InvalidOperationException(Res.Error_IsolationLevelCannotBeModified);
 		}
+
+		internal static Exception DefaultProviderFactoryIsNotConfigured ()
+		{
+			return new InvalidOperationException(Res.Error_DefaultProviderFactoryIsNotConfigured);
+		}
 	}
 }

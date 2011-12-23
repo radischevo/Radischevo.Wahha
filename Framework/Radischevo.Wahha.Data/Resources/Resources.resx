@@ -279,4 +279,7 @@
   <data name="Error_IsolationLevelCannotBeModified" xml:space="preserve">
     <value>Isolation level of the operation scope can not be modified since the transaction has already been started.</value>
   </data>
+  <data name="Error_DefaultProviderFactoryIsNotConfigured" xml:space="preserve">
+	<value>Could not find any database provider factory configured.</value>
+  </data>
 </root>
