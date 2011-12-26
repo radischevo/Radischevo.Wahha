@@ -328,14 +328,7 @@
             <param name="contentType">The content MIME-type</param>
             <param name="contentEncoding">The content encoding</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object)">
-            <summary>
-            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult" /> which serializes the
-            specified object to JSON and writes the JSON to the response.
-            </summary>
-            <param name="data">The object to serialize</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Data.Serialization.JavaScriptConverter})">
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,Radischevo.Wahha.Data.Serialization.JavaScriptConverter[])">
             <summary>
             Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult" /> which serializes the
             specified object to JSON and writes the JSON to the response.
@@ -343,40 +336,24 @@
             <param name="data">The object to serialize</param>
             <param name="converters">A collection of custom object-to-JSON converters.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String)">
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,Radischevo.Wahha.Data.Serialization.SerializationFormat,Radischevo.Wahha.Data.Serialization.JavaScriptConverter[])">
             <summary>
             Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult" /> which serializes the
             specified object to JSON and writes the JSON to the response.
             </summary>
             <param name="data">The object to serialize</param>
-            <param name="contentType">The content type</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Data.Serialization.JavaScriptConverter})">
-            <summary>
-            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult" /> which serializes the
-            specified object to JSON and writes the JSON to the response.
-            </summary>
-            <param name="data">The object to serialize</param>
-            <param name="contentType">The content type</param>
+            <param name="format">Specifies the serialization format.</param>
             <param name="converters">A collection of custom object-to-JSON converters.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Text.Encoding)">
+        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Text.Encoding,Radischevo.Wahha.Data.Serialization.SerializationFormat,Radischevo.Wahha.Data.Serialization.JavaScriptConverter[])">
             <summary>
             Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult" /> which serializes the
             specified object to JSON and writes the JSON to the response.
             </summary>
-            <param name="data">The object to serialize</param>
-            <param name="contentType">The content type</param>
-            <param name="contentEncoding">The content encoding</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Json(System.Object,System.String,System.Text.Encoding,System.Collections.Generic.IEnumerable{Radischevo.Wahha.Data.Serialization.JavaScriptConverter})">
-            <summary>
-            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.JsonResult" /> which serializes the
-            specified object to JSON and writes the JSON to the response.
-            </summary>
-            <param name="data">The object to serialize</param>
-            <param name="contentType">The content type</param>
-            <param name="contentEncoding">The content encoding</param>
+            <param name="data">The object to serialize.</param>
+            <param name="contentType">The content type.</param>
+            <param name="contentEncoding">The content encoding.</param>
+            <param name="format">Specifies the serialization format.</param>
             <param name="converters">A collection of custom object-to-JSON converters.</param>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.Controller.Redirect(System.String)">
@@ -1543,26 +1520,83 @@
             to render.
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Mvc.ViewContext.Errors">
+        <member name="P:Radischevo.Wahha.Web.Mvc.ViewContext.ModelState">
             <summary>
-            Returns a <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection" />
+            Returns a <see cref="!:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection" />
             containing any validation errors that occurred while processing the request.
             </summary>
         </member>
-        <member name="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection">
+        <member name="T:Radischevo.Wahha.Web.Mvc.ModelErrorCollection">
             <summary>
-            A collection of <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationError" /> instances.
+            A collection of <see cref="!:Radischevo.Wahha.Web.Mvc.ValidationError" /> instances
+            related to the current model binding state.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection.Add(System.String,System.String)">
-            <summary>
-            Adds a validation error message to the
-            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection" /></summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection.Add(System.String,Radischevo.Wahha.Web.Mvc.ValidationError)">
+        <member name="M:Radischevo.Wahha.Web.Mvc.ModelErrorCollection.Add(System.String,Radischevo.Wahha.Data.ValidationError)">
             <summary>
             Adds a validation error to the
-            <see cref="T:Radischevo.Wahha.Web.Mvc.ValidationErrorCollection" /></summary>
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ModelErrorCollection" /></summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ModelErrorCollection.Contains(System.String)">
+            <summary>
+            Gets a value indicating whether the current
+            collection contains a record with the specified key.
+            </summary>
+            <param name="key">The key to find.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ModelErrorCollection.Clear">
+            <summary>
+            Clears this instance.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ModelErrorCollection.Clear(System.String)">
+            <summary>
+            Removes all errors with the specified key.
+            </summary>
+            <param name="key">The key to remove.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ModelErrorCollection.Merge(Radischevo.Wahha.Web.Mvc.ModelErrorCollection)">
+            <summary>
+            Adds all errors from the provided collection to the
+            current instance.
+            </summary>
+            <param name="errors">The collection containing errors to add.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Web.Mvc.ModelStateCollection">
+            <summary>
+            A collection of <see cref="!:Radischevo.Wahha.Web.Mvc.ValidationError" /> instances.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ModelStateCollection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Radischevo.Wahha.Web.Mvc.ModelStateCollection" /> class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.ModelStateCollection.Errors">
+            <summary>
+            Gets the collection of found model errors.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ModelStateCollection.Add(System.String,System.String)">
+            <summary>
+            Adds a validation error message to the
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ModelStateCollection" /></summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Web.Mvc.ModelStateCollection.Add(System.String,Radischevo.Wahha.Data.ValidationError)">
+            <summary>
+            Adds a validation error to the
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ModelStateCollection" /></summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.Context">
+            <summary>
+            Gets the current
+            <see cref="T:Radischevo.Wahha.Web.Mvc.ViewContext" />.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Mvc.Html.ValidationHelper.ModelState">
+            <summary>
+            Gets the state of the model.
+            </summary>
         </member>
     </members>
 </doc>

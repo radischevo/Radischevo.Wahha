@@ -17,19 +17,13 @@
         </member>
         <member name="T:Radischevo.Wahha.Core.Configurations.Configuration">
             <summary>
-            Represents module configuration
-            settings.
+            Represents module configuration settings.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Core.Configurations.Configuration.#ctor">
             <summary>
             Initializes a new instance of the
             <see cref="T:Radischevo.Wahha.Core.Configurations.Configuration" /> class.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Core.Configurations.Configuration.Instance">
-            <summary>
-            Gets the current module configuration.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Core.Cryptography.Crc32">

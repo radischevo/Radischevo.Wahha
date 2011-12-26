@@ -9,11 +9,6 @@
             Stores the routing configuration
             </summary>
         </member>
-        <member name="P:Radischevo.Wahha.Web.Routing.Configurations.Configuration.Instance">
-            <summary>
-            Gets the current routing configuration
-            </summary>
-        </member>
         <member name="P:Radischevo.Wahha.Web.Routing.Configurations.Configuration.Provider">
             <summary>
             Gets the configured route
@@ -30,11 +25,6 @@
             <summary>
             Gets the string representation
             of the type of route persistence provider.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Web.Routing.Configurations.RouteConfigurationElementCollection.DefaultHandlerType">
-            <summary>
-            Gets the type name for the default route handler.
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Web.Routing.Configurations.SettingsSection">
@@ -679,6 +669,11 @@
             <summary>
             Returns the string representation of
             the current <see cref="T:Radischevo.Wahha.Web.Routing.VirtualPathData" />.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Web.Routing.Configurations.RouteConfigurationElementCollection.DefaultHandlerType">
+            <summary>
+            Gets the type name for the default route handler.
             </summary>
         </member>
     </members>

@@ -37,9 +37,9 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             }
         }
         #endregion
-
+		
         #region Instance Methods
-        protected sealed override bool OnDeserializeUnrecognizedAttribute(string name, string value)
+        protected sealed override bool OnDeserializeUnrecognizedAttribute (string name, string value)
         {
             _parameters[name] = value;
             return true;

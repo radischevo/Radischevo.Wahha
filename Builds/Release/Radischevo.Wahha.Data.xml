@@ -777,24 +777,6 @@
             <typeparam name="T">The type of the object to return.</typeparam>
             <param name="key">The key the object is stored with.</param>
         </member>
-        <member name="P:Radischevo.Wahha.Data.Configurations.DatabaseConfigurationSettings.CommandTimeout">
-            <summary>
-            Gets or sets the default database command
-            execution timeout.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Configurations.DatabaseConfigurationSettings.Factory">
-            <summary>
-            Gets or sets the IDbdataProvider factory
-            to be used for communicating with the database.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Configurations.DatabaseConfigurationSettings.ConnectionStrings">
-            <summary>
-            Gets the collection of connection strings,
-            declared within the configuration file
-            </summary>
-        </member>
         <member name="T:Radischevo.Wahha.Data.Configurations.Configuration">
             <summary>
             Represents the module configuration settings.
@@ -804,11 +786,6 @@
             <summary>
             Initializes a new instance of the
             <see cref="T:Radischevo.Wahha.Data.Configurations.Configuration" /> class
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.Configurations.Configuration.Instance">
-            <summary>
-            Gets the current module configuration
             </summary>
         </member>
         <member name="T:Radischevo.Wahha.Data.DbCommandResult">
@@ -1185,7 +1162,7 @@
             retrieved from the sequence.
             </summary>
         </member>
-        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.CastSubset``2(System.Collections.Generic.IEnumerable{``0})">
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.Cast``2(Radischevo.Wahha.Data.ISubset{``0})">
             <summary>
             Converts the elements of an <see cref="T:Radischevo.Wahha.Data.ISubset" />
             to the specified type.
@@ -1195,7 +1172,7 @@
             <param name="collection">The <see cref="T:Radischevo.Wahha.Data.ISubset" />
             that contains the elements to be converted.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.ConvertSubset``2(System.Collections.Generic.IEnumerable{``0})">
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.Convert``2(Radischevo.Wahha.Data.ISubset{``0})">
             <summary>
             Converts the elements of an <see cref="T:Radischevo.Wahha.Data.ISubset" />
             to the specified type.
@@ -1205,7 +1182,7 @@
             <param name="collection">The <see cref="T:Radischevo.Wahha.Data.ISubset" />
             that contains the elements to be converted.</param>
         </member>
-        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.ConvertSubset``2(System.Collections.Generic.IEnumerable{``0},System.IFormatProvider)">
+        <member name="M:Radischevo.Wahha.Data.SubsetExtensions.Convert``2(Radischevo.Wahha.Data.ISubset{``0},System.IFormatProvider)">
             <summary>
             Converts the elements of an <see cref="T:Radischevo.Wahha.Data.ISubset" />
             to the specified type.
@@ -2307,6 +2284,30 @@
         <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_UnterminatedStringConstant">
             <summary>
             Looks up a localized string similar to Unterminated string constant..
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.Resources.Resources.Error_DefaultProviderFactoryIsNotConfigured">
+            <summary>
+            Looks up a localized string similar to Could not find any database provider...
+            </summary>
+        </member>
+        <member name="F:Radischevo.Wahha.Data.Serialization.SerializationFormat.Json">
+            <summary>
+            Serializes <see cref="T:System.DateTime" /> values
+            to specifically formatted strings.
+            </summary>
+        </member>
+        <member name="F:Radischevo.Wahha.Data.Serialization.SerializationFormat.JavaScript">
+            <summary>
+            Serializes <see cref="T:System.DateTime" /> values to
+            function calls that construct JavaScript Date objects.
+            </summary>
+        </member>
+        <member name="F:Radischevo.Wahha.Data.Serialization.SerializationFormat.Plain">
+            <summary>
+            Serializes <see cref="T:System.DateTime" /> values to
+            integer timestamps. Such timestamps cannot be
+            automatically deserialized.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Data.Provider.CommonDbDataProviderFactory.CreateProvider">

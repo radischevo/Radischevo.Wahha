@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-using Radischevo.Wahha.Core;
 using Radischevo.Wahha.Web.Abstractions;
 
 namespace Radischevo.Wahha.Web.Mvc.Configurations
@@ -55,35 +54,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 		}
         #endregion
 
-        #region Static Methods
-        private static IModelBinder CreateModelBinder(Type type)
-        {
-            Precondition.Require(type, () => Error.ArgumentNull("type"));
-            if (!typeof(IModelBinder).IsAssignableFrom(type))
-                throw Error.IncompatibleModelBinderType(type);
-
-			return (IModelBinder)ServiceLocator.Instance.GetService(type);
-        }
-
-		private static IValueProviderFactory CreateValueProviderFactory(Type type)
-		{
-			Precondition.Require(type, () => Error.ArgumentNull("type"));
-			if (!typeof(IValueProviderFactory).IsAssignableFrom(type))
-				throw Error.IncompatibleValueProviderFactoryType(type);
-
-			return (IValueProviderFactory)ServiceLocator.Instance.GetService(type);
-		}
-
-		private static IModelValidatorProvider CreateValidatorProvider(Type type)
-		{
-			Precondition.Require(type, () => Error.ArgumentNull("type"));
-			if (!typeof(IModelValidatorProvider).IsAssignableFrom(type))
-				throw Error.IncompatibleModelValidatorProviderType(type);
-
-			return (IModelValidatorProvider)ServiceLocator.Instance.GetService(type);
-		}
-		#endregion
-
         #region Instance Methods
 		private void InitDefaultBinders()
 		{
@@ -134,58 +104,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
 		{
 			_validatorProviders.Add(new EmptyModelValidatorProvider());
 		}
-		
-		private void InitBinders(ModelBinderConfigurationElementCollection element)
-		{
-			if (element == null)
-				return;
-
-			if (!String.IsNullOrEmpty(element.DefaultType))
-				_binders.DefaultBinder = CreateModelBinder(
-					Type.GetType(element.DefaultType, true, true));
-
-			foreach (ModelBinderConfigurationElement elem in element)
-			{
-				Type modelType = Type.GetType(elem.ModelType, true, true);
-
-				if (!String.IsNullOrEmpty(elem.BinderType))
-					_binders.Add(modelType,
-						CreateModelBinder(Type.GetType(elem.BinderType, true, true)));
-			}
-		}
-
-		private void InitValueProviders(ValueProviderConfigurationElementCollection element)
-		{
-			if (element == null)
-				return;
-
-			foreach (ValueProviderConfigurationElement elem in element)
-			{
-				_valueProviders.Add(elem.Name, CreateValueProviderFactory(
-					Type.GetType(elem.FactoryType, true, true)));
-			}
-		}
-		
-		private void InitValidatorProviders(ModelValidatorProviderConfigurationElementCollection element)
-		{
-			if (element == null)
-				return;
-
-			foreach (ModelValidatorProviderConfigurationElement elem in element)
-			{
-				_validatorProviders.Add(CreateValidatorProvider(
-					Type.GetType(elem.Type, true, true)));
-			}
-		}
-
-        internal void Init(ModelConfigurationElement element)
-        {
-            Precondition.Require(element, () => Error.ArgumentNull("element"));
-
-			InitBinders(element.Binders);
-			InitValueProviders(element.ValueProviders);
-			InitValidatorProviders(element.ValidatorProviders);
-        }
         #endregion
     }
 }

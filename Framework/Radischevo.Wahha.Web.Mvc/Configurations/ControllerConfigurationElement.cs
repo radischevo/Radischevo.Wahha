@@ -5,7 +5,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Web.Mvc.Configurations
 {
-    internal sealed class ControllerConfigurationElement : ConfigurationElement
+    internal sealed class ControllerConfigurationElement : ConfigurationElement, IConfigurator<ControllerConfigurationSettings>
     {
         #region Constructors
         public ControllerConfigurationElement()
@@ -51,5 +51,60 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             }
         }
         #endregion
+		
+		#region Static Methods
+		private static IFilterProvider CreateFilterProvider(Type type)
+		{
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			if (!typeof(IFilterProvider).IsAssignableFrom(type))
+				throw Error.IncompatibleFilterProviderType(type);
+
+			return (IFilterProvider)ServiceLocator.Instance.GetService(type);
+		}
+
+		private static IControllerFactory CreateControllerFactory(Type type)
+		{
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			if (!typeof(IControllerFactory).IsAssignableFrom(type))
+				throw Error.IncompatibleControllerFactoryType(type);
+
+			return (IControllerFactory)ServiceLocator.Instance.GetService(type);
+		}
+		#endregion
+		
+		#region Instance Methods
+		public void Configure (ControllerConfigurationSettings module)
+		{
+			if (Factory != null) 
+			{
+				Type type = String.IsNullOrEmpty(Factory.FactoryType) ? 
+					typeof(DefaultControllerFactory) : 
+					Type.GetType(Factory.FactoryType, true, true);
+				
+				IControllerFactory factory = CreateControllerFactory(type);
+				factory.Init(Factory.Parameters);
+				
+				module.Factory = factory;
+			}
+			
+			if (Mappings != null) 
+			{
+				foreach (ControllerMappingConfigurationElement map in Mappings)
+					module.Mappings.Add(map.Name, Type.GetType(map.ControllerType, true, true));
+			}
+			
+			if (FilterProviders != null)
+			{
+				foreach (FilterProviderConfigurationElement elem in FilterProviders)
+				{
+					IFilterProvider provider = CreateFilterProvider(
+						Type.GetType(elem.ProviderType, true, true));
+	
+					provider.Init(elem.Parameters);
+					module.FilterProviders.Add(provider);
+				}
+			}
+		}
+		#endregion
     }
 }

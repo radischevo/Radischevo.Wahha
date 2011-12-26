@@ -25,7 +25,18 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             _views = new ViewConfigurationSettings();
             _models = new ModelConfigurationSettings();
 
-            Init();
+            try
+            {
+                SettingsSection section = ConfigurationManager.GetSection("radischevo.wahha/web/mvc") as SettingsSection;
+                if (section == null)
+                    return;
+				
+				section.Configure(this);
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                throw Error.UnableToLoadConfiguration(ex);
+            }
         }
         #endregion
 
@@ -52,33 +63,6 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
             {
                 return _models;
             }
-        }
-        #endregion
-
-        #region Instance Methods
-        private void Init()
-        {            
-            try
-            {
-                SettingsSection section = ConfigurationManager.GetSection("radischevo.wahha/web/mvc")
-                   as SettingsSection;
-
-                if (section == null)
-                    return;
-
-                if(section.Controllers != null)
-                    _controllers.Init(section.Controllers);
-
-                if (section.Views != null)
-                    _views.Init(section.Views);
-
-                if (section.Models != null)
-                    _models.Init(section.Models);
-            }
-            catch (ConfigurationErrorsException ex)
-            {
-                throw Error.UnableToLoadConfiguration(ex);
-            }           
         }
         #endregion
     }

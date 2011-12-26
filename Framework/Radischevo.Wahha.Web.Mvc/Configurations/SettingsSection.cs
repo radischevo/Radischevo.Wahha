@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Configuration;
 
+using Radischevo.Wahha.Core;
+
 namespace Radischevo.Wahha.Web.Mvc.Configurations
 {
-    internal sealed class SettingsSection : ConfigurationSection
+    internal sealed class SettingsSection : ConfigurationSection, IConfigurator<Configuration>
     {
-        /// <summary>
+		#region Instance Properties
+		/// <summary>
         /// Gets the configuration element, 
         /// which provides the information required for  
         /// controller instantiation
@@ -46,5 +49,20 @@ namespace Radischevo.Wahha.Web.Mvc.Configurations
                 return (ModelConfigurationElement)base["models"];
             }
         }
+		#endregion
+		
+        #region Instance Methods
+		public void Configure (Configuration module)
+		{
+			if(Controllers != null)
+				Controllers.Configure(module.Controllers);
+			
+			if (Models != null)
+                Models.Configure(module.Models);
+			
+            if (Views != null)
+                Views.Configure(module.Views);
+		}
+		#endregion
     }
 }
