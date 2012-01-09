@@ -1412,44 +1412,6 @@
             <param name="provider">An instance of data provider being extended.</param>
             <param name="command">The object, describing the command to execute.</param>
         </member>
-        <member name="T:Radischevo.Wahha.Data.CachedDbCommandOperation`1">
-            <summary>
-            Defines the base class for the operation, that queries the database
-            converts the result to the specified type and caches it in the cache storage.
-            </summary>
-            <typeparam name="TResult">The type of the result.</typeparam>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.CachedDbCommandOperation`1.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="!:Radischevo.Wahha.Data.CachedDbCommandOperation{TResult}" /> class.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.CachedDbCommandOperation`1.Tags">
-            <summary>
-            Gets the collection of tags which
-            is used to mark cache storage entries.
-            </summary>
-        </member>
-        <member name="P:Radischevo.Wahha.Data.CachedDbCommandOperation`1.ExpirationTimeout">
-            <summary>
-            Gets or sets the amount of time after
-            which the entry will be removed from cache.
-            </summary>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.CachedDbCommandOperation`1.ExecuteInternal(Radischevo.Wahha.Data.DbOperationContext)">
-            <summary>
-            Executes the operation against the provided data source
-            and returns the result.
-            </summary>
-            <param name="context">Provides the current operation context.</param>
-        </member>
-        <member name="M:Radischevo.Wahha.Data.CachedDbCommandOperation`1.CreateCacheKey(Radischevo.Wahha.Data.DbCommandDescriptor)">
-            <summary>
-            Creates the unique cache key based on the text representation
-            of the provided command and its parameters values.
-            </summary>
-            <param name="command">The command to create fingerprint from.</param>
-        </member>
         <member name="T:Radischevo.Wahha.Data.DbCombinedSingleOperation`1">
             <summary>
             Represents an operation, that first updates and then queries the database using
@@ -2848,6 +2810,44 @@
             the serialized object data about the exception being thrown.</param>
             <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" />
             that contains contextual information about the source or destination.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Data.CacheableDbCommandOperation`1">
+            <summary>
+            Defines the base class for the operation, that queries the database
+            converts the result to the specified type and caches it in the cache storage.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.CacheableDbCommandOperation`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:Radischevo.Wahha.Data.CacheableDbCommandOperation{TResult}" /> class.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.CacheableDbCommandOperation`1.Tags">
+            <summary>
+            Gets the collection of tags which
+            is used to mark cache storage entries.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Data.CacheableDbCommandOperation`1.ExpirationTimeout">
+            <summary>
+            Gets or sets the amount of time after
+            which the entry will be removed from cache.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.CacheableDbCommandOperation`1.ExecuteInternal(Radischevo.Wahha.Data.DbOperationContext)">
+            <summary>
+            Executes the operation against the provided data source
+            and returns the result.
+            </summary>
+            <param name="context">Provides the current operation context.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Data.CacheableDbCommandOperation`1.CreateCacheKey(Radischevo.Wahha.Data.DbCommandDescriptor)">
+            <summary>
+            Creates the unique cache key based on the text representation
+            of the provided command and its parameters values.
+            </summary>
+            <param name="command">The command to create fingerprint from.</param>
         </member>
     </members>
 </doc>

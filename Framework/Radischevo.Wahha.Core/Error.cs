@@ -172,10 +172,15 @@ namespace Radischevo.Wahha.Core
 				Res.Error_InvalidFormatExpression, expression));
 		}
 
-		internal static Exception CouldNotFindAppropriateConstructor(Type type)
+		internal static Exception CouldNotFindAppropriateConstructor (Type type)
 		{
 			return new MissingMethodException(String.Format(
 				Res.Error_CouldNotConstructObject, type.FullName));
+		}
+		
+		internal static Exception DictionaryIsReadOnly () 
+		{
+			return new NotSupportedException(Res.Error_DictionaryIsReadOnly);
 		}
 	}
 }

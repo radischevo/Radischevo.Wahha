@@ -5,7 +5,7 @@ using Radischevo.Wahha.Data;
 
 namespace ConsoleTester
 {
-	public class TextQueryOperation : CachedDbCommandOperation<DbQueryResult>
+	public class TextQueryOperation : CacheableDbCommandOperation<DbQueryResult>
 	{
 		private string _text;
 		private object _parameters;

@@ -147,7 +147,6 @@
     <Compile Include="Materialization\SingleLinkAssociator`1.cs" />
     <Compile Include="Materialization\SubsetSchemeValidator.cs" />
     <Compile Include="Materialization\SubsetMapper.cs" />
-    <Compile Include="Operations\CachedDbCommandOperation`1.cs" />
     <Compile Include="Operations\DbCombinedSingleOperation`1.cs" />
     <Compile Include="Operations\DbCombinedSelectOperation`1.cs" />
     <Compile Include="Operations\DbOperationContext.cs" />
@@ -202,6 +201,7 @@
     <Compile Include="Provider\DbDataProviderFactorySettings.cs" />
     <Compile Include="Configurations\DbDataProviderFactoryConfigurationElementCollection.cs" />
     <Compile Include="Configurations\DbDataProviderFactoryConfigurationElement.cs" />
+    <Compile Include="Operations\CacheableDbCommandOperation`1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">

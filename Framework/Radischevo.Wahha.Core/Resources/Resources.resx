@@ -192,4 +192,7 @@
   <data name="Error_UnableToLoadConfiguration" xml:space="preserve">
     <value>Could not parse the configuration file. See the inner exception for details.</value>
   </data>
+  <data name="Error_DictionaryIsReadOnly" xml:space="preserve">
+    <value>This is a read-only dictionary.</value>
+  </data>
 </root>

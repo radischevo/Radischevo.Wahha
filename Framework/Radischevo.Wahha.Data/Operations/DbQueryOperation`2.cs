@@ -9,7 +9,7 @@ namespace Radischevo.Wahha.Data
 	/// </summary>
 	/// <typeparam name="TEntity">The type of the entity for materialization.</typeparam>
 	/// <typeparam name="TResult">The type of the result.</typeparam>
-	public abstract class DbQueryOperation<TEntity, TResult> : CachedDbCommandOperation<TResult>
+	public abstract class DbQueryOperation<TEntity, TResult> : CacheableDbCommandOperation<TResult>
 	{
 		#region Instance Fields
 		private IDbMaterializer<TEntity> _materializer;

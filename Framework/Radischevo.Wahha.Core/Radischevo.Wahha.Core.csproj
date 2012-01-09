@@ -163,6 +163,7 @@
     <Compile Include="Services\Singleton`1.cs" />
     <Compile Include="Services\EmptyConfigurator`1.cs" />
     <Compile Include="Extensions\NameValueCollection`1.cs" />
+    <Compile Include="ReadOnlyDictionary`2.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx">

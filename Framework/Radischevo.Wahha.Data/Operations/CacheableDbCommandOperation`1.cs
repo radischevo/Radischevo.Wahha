@@ -14,7 +14,7 @@ namespace Radischevo.Wahha.Data
 	/// converts the result to the specified type and caches it in the cache storage.
 	/// </summary>
 	/// <typeparam name="TResult">The type of the result.</typeparam>
-	public abstract class CachedDbCommandOperation<TResult> : DbCommandOperation<TResult>
+	public abstract class CacheableDbCommandOperation<TResult> : DbCommandOperation<TResult>
 	{
 		#region Instance Fields
 		private TimeSpan _expirationTimeout;
@@ -23,9 +23,9 @@ namespace Radischevo.Wahha.Data
 
 		#region Constructors
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.CachedDbCommandOperation{TResult}"/> class.
+		/// Initializes a new instance of the <see cref="Radischevo.Wahha.Data.CacheableDbCommandOperation{TResult}"/> class.
 		/// </summary>
-		protected CachedDbCommandOperation()
+		protected CacheableDbCommandOperation()
 			: base()
 		{
 			_tags = new List<string>();

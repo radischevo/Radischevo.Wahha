@@ -17,6 +17,12 @@ namespace Radischevo.Wahha.Core
         #endregion
 
         #region Static Methods
+		public static IDictionary<TKey, TValue> AsReadOnly<TKey, TValue> (this IDictionary<TKey, TValue> dictionary)
+		{
+			Precondition.Require(dictionary, () => Error.ArgumentNull("dictionary"));
+			return new ReadOnlyDictionary<TKey, TValue> (dictionary);
+		}
+		
         public static bool TryGetValue(this IDictionary dictionary, string key, out object value)
         {
 			Precondition.Require(dictionary, () => Error.ArgumentNull("dictionary"));

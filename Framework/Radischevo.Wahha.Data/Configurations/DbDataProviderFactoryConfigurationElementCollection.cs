@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Radischevo.Wahha.Data.Configurations
 {
-	[ConfigurationCollection(typeof(DbDataProviderFactoryConfigurationElement))]
+	[ConfigurationCollection(typeof(DbDataProviderFactoryConfigurationElement), AddItemName="provider")]
     internal sealed class DbDataProviderFactoryConfigurationElementCollection : ConfigurationElementCollection
     {
 		#region Instance Properties

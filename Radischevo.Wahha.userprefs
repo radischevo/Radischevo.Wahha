@@ -1,14 +1,24 @@
 ﻿<Properties>
   <AuthorInfo Name="Sergey Rodyushkin" Email="" Copyright="(C) 2008-2011 Radischevo Solutions" Company="Radischevo Solutions" Trademark="Radischevo Solutions" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Test/ConsoleTester/TextQueryOperation.cs">
+    <Files>
+      <File FileName="Framework/Radischevo.Wahha.Data/Operations/CacheableDbCommandOperation`1.cs" Line="19" Column="3" />
+      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbCombinedSelectOperation`1.cs" Line="1" Column="1" />
+      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbQueryOperation`2.cs" Line="12" Column="70" />
+      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbScalarOperation`1.cs" Line="12" Column="62" />
+      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbSingleOperation`1.cs" Line="1" Column="1" />
+      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbSubsetOperation`1.cs" Line="1" Column="1" />
+      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbCommandOperation`1.cs" Line="1" Column="1" />
+      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbCombinedSingleOperation`1.cs" Line="1" Column="1" />
+      <File FileName="Framework/Radischevo.Wahha.Data/Operations/InvalidatingDbCommandOperation`1.cs" Line="1" Column="1" />
+      <File FileName="Test/ConsoleTester/TextQueryOperation.cs" Line="23" Column="4" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Radischevo.Wahha.Web.Mvc" expanded="True">
-            <Node name="Configurations" expanded="True">
-              <Node name="ControllerFactoryConfigurationElement.cs" selected="True" />
-            </Node>
+          <Node name="ConsoleTester" expanded="True">
+            <Node name="TextQueryOperation.cs" selected="True" />
           </Node>
         </State>
       </Pad>

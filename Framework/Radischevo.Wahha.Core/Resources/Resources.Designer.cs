@@ -284,5 +284,14 @@ namespace Radischevo.Wahha.Core.Resources {
                 return ResourceManager.GetString("Error_UnableToLoadConfiguration", resourceCulture);
             }
         }
-    }
+		
+		/// <summary>
+        ///   Looks up a localized string similar to This is a read-only dictionary..
+        /// </summary>
+        internal static string Error_DictionaryIsReadOnly {
+            get {
+                return ResourceManager.GetString("Error_DictionaryIsReadOnly", resourceCulture);
+            }
+        }
+	}
 }

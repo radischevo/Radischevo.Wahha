@@ -1074,6 +1074,11 @@
             Looks up a localized string similar to Could not parse the configuration file. See the inner exception for details..
             </summary>
         </member>
+        <member name="P:Radischevo.Wahha.Core.Resources.Resources.Error_DictionaryIsReadOnly">
+            <summary>
+            Looks up a localized string similar to This is a read-only dictionary..
+            </summary>
+        </member>
         <member name="T:Radischevo.Wahha.Core.DynamicAccessor">
             <summary>
             Provides methods to get or set
@@ -1320,6 +1325,81 @@
             <param name="values">The collection, which keys and values
             should be merged with the dictionary</param>
             <param name="replace">True to replace existing values.</param>
+        </member>
+        <member name="T:Radischevo.Wahha.Core.ReadOnlyDictionary`2">
+            <summary>
+            Represents a read-only collection of keys and values.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ReadOnlyDictionary`2.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:Radischevo.Wahha.Core.ReadOnlyDictionary{TKey,TValue}" /> class.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ReadOnlyDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>
+            Initializes a new instance of the <see cref="!:Radischevo.Wahha.Core.ReadOnlyDictionary{TKey,TValue}" /> class
+            that wraps the specified <see cref="!:System.Collections.Generic.IDictionary{TKey,TValue}" />.
+            </summary>
+            <param name="dictionary">
+            The <see cref="!:System.Collections.Generic.IDictionary{TKey,TValue}" /> to wrap.
+            </param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ReadOnlyDictionary`2.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="!:Radischevo.Wahha.Core.ReadOnlyDictionary{TKey,TValue}" /> class with serialized data
+            </summary>
+            <param name="info">An object containing the information required to
+            serialize the dictionary</param>
+            <param name="context">A structure containing the source and destination
+            of the serialized stream associated with the dictionary</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.ReadOnlyDictionary`2.Item(`0)">
+            <summary>
+            Gets the element with the specified key.
+            </summary>
+            <param name="key">The key of the element to get.</param>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.ReadOnlyDictionary`2.Count">
+            <summary>
+            Gets the number of elements contained in the collection.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.ReadOnlyDictionary`2.Keys">
+            <summary>
+            Gets an <see cref="!:System.Collections.Generic.ICollection{TKey}" /> containing the keys of
+            the <see cref="!:System.Collections.Generic.IDictionary{TKey,TValue}" />.
+            </summary>
+        </member>
+        <member name="P:Radischevo.Wahha.Core.ReadOnlyDictionary`2.Values">
+            <summary>
+            Gets an <see cref="!:System.Collections.Generic.ICollection{TValue}" /> containing the values of
+            the <see cref="!:System.Collections.Generic.IDictionary{TKey,TValue}" />.
+            </summary>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ReadOnlyDictionary`2.ContainsKey(`0)">
+            <summary>
+            Determines whether the <see cref="!:Radischevo.Wahha.Core.ReadOnlyDictionary{TKey,TValue}" />
+            contains the specified key.
+            </summary>
+            <param name="key">
+            The key to locate in the <see cref="!:Radischevo.Wahha.Core.ReadOnlyDictionary{TKey,TValue}" />.
+            </param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ReadOnlyDictionary`2.TryGetValue(`0,`1@)">
+            <summary>
+            Gets the value associated with the specified key.
+            </summary>
+            <param name="key">The key of the value to get.</param>
+            <param name="value">When this method returns, contains the value associated with the specified
+            key, if the key is found; otherwise, the default value for the type of the
+            value parameter. This parameter is passed uninitialized.</param>
+        </member>
+        <member name="M:Radischevo.Wahha.Core.ReadOnlyDictionary`2.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the <see cref="!:Radischevo.Wahha.Core.ReadOnlyDictionary{TKey,TValue}" />.
+            </summary>
         </member>
     </members>
 </doc>
