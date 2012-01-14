@@ -8,7 +8,6 @@ namespace Radischevo.Wahha.Data
 {
 	public interface ISingleAssociationBuilder<TAssociation>
 		: IHideObjectMembers
-		where TAssociation : class
 	{
 		ISingleAssociationBuilder<TAssociation> Subset(IDbValueSetTransformer transformer);
 
@@ -24,7 +23,6 @@ namespace Radischevo.Wahha.Data
 
 	public interface ISingleAssociationSelectorBuilder<TAssociation>
 		: ISingleAssociationBuilder<TAssociation>
-		where TAssociation : class
 	{
 		ISingleAssociationBuilder<TAssociation> With<TRepository>(
 			Expression<Func<TRepository, TAssociation>> selector)
@@ -40,7 +38,6 @@ namespace Radischevo.Wahha.Data
 
 	public interface ICollectionAssociationSelectorBuilder<TAssociation>
 		: IHideObjectMembers
-		where TAssociation : class
 	{
 		ICollectionAssociationBuilder<TAssociation> With<TRepository>(
 			Expression<Func<TRepository, IEnumerable<TAssociation>>> selector)
@@ -56,14 +53,12 @@ namespace Radischevo.Wahha.Data
 
 	public interface ICollectionAssociationBuilder<TAssociation>
 		: IHideObjectMembers
-		where TAssociation : class
 	{
 		EnumerableLink<TAssociation> Apply();
 	}
 
 	public interface IEntityAssociationBuilder<TAssociation>
 		: IHideObjectMembers
-		where TAssociation : class
 	{
 		IEntityAssociationBuilder<TAssociation> Subset(IDbValueSetTransformer transformer);
 
@@ -78,7 +73,6 @@ namespace Radischevo.Wahha.Data
 	internal sealed class SingleAssociationBuilder<TAssociation> :
 		ISingleAssociationBuilder<TAssociation>,
 		ISingleAssociationSelectorBuilder<TAssociation>
-		where TAssociation : class
 	{
 		#region Instance Fields
 		private Link<TAssociation> _association;
@@ -186,7 +180,6 @@ namespace Radischevo.Wahha.Data
 	internal sealed class CollectionAssociationBuilder<TAssociation> :
 		ICollectionAssociationSelectorBuilder<TAssociation>,
 		ICollectionAssociationBuilder<TAssociation>
-		where TAssociation : class
 	{
 		#region Instance Fields
 		private EnumerableLink<TAssociation> _association;
@@ -247,7 +240,6 @@ namespace Radischevo.Wahha.Data
 
 	internal sealed class EntityAssociationBuilder<TAssociation> :
 		IEntityAssociationBuilder<TAssociation>
-		where TAssociation : class
 	{
 		#region Instance Fields
 		private TAssociation _association;

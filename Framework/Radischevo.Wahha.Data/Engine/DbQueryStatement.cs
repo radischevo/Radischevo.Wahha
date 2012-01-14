@@ -2,7 +2,7 @@
 
 namespace Radischevo.Wahha.Data
 {
-	public enum DbQueryType : int
+	public enum DbQueryStatement : int
 	{
 		Select = 0,
 		Insert,

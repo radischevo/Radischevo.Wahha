@@ -7,7 +7,7 @@ using Radischevo.Wahha.Data;
 namespace Radischevo.Wahha.Web.Mvc
 {
     /// <summary>
-    /// A collection of <see cref="Radischevo.Wahha.Web.Mvc.ValidationError"/> instances.
+    /// Represents the state of the model.
     /// </summary>
     public sealed class ModelStateCollection
     {

@@ -6,7 +6,6 @@ namespace Radischevo.Wahha.Data
 {
 	internal sealed class OperationBasedSingleSelectorAction<TAssociation, TOperation>
 		: ConstructorBasedSelectorAction<TAssociation>
-		where TAssociation : class
 		where TOperation : IDbOperation<TAssociation>
 	{
 		#region Constructors
@@ -27,7 +26,6 @@ namespace Radischevo.Wahha.Data
 
 	internal sealed class OperationBasedCollectionSelectorAction<TAssociation, TOperation>
 		: ConstructorBasedSelectorAction<IEnumerable<TAssociation>>
-		where TAssociation : class
 		where TOperation : IDbOperation<IEnumerable<TAssociation>>
 	{
 		#region Constructors

@@ -22,6 +22,8 @@ using System.Threading;
 using Radischevo.Wahha.Data.Caching;
 using System.Transactions;
 
+using Radischevo.Wahha.Data.Mapping;
+
 namespace ConsoleTester
 {
 	class Program
@@ -34,9 +36,10 @@ namespace ConsoleTester
 			//p.SgmlTest();
 			//p.TransactionTest();
 			//var threads = p.TransactionTestThread();
-
+			
+			p.MappingTest();
 			//p.XmlTest();
-			p.MaterializerTest2();
+			//p.MaterializerTest2();
 
 			Console.ReadKey();
 			//threads.ForEach(thread => thread.Abort());
@@ -62,6 +65,39 @@ namespace ConsoleTester
 					</beer>
 				</beverages>
 			</model>";*/
+		}
+		
+		public void MappingTest()
+		{
+			var provider = new AttributedMetaMappingFactory();
+			var map1 = provider.CreateMapping(typeof(Topic));
+			var map2 = provider.CreateMapping(typeof(Comment));
+			
+			var topic = new Topic();
+			topic.Title = "Yourbunnywrote";
+			
+			var field = map1.Members["title"];
+			Console.WriteLine(field.Accessor.GetValue(topic));
+			field.Accessor.SetValue(topic, "My New Title");
+			
+			Console.WriteLine(map1.Table);
+			Console.WriteLine(map2.Table);
+			
+			var serializer = map1.Serializer;
+			
+			var item = (Topic)serializer.Deserialize(new ValueDictionary(new {
+				id = 10050,
+				dateCreated = 129708701869781110,
+				title = "Why Linq-to-SQL is so fucking slow?",
+				content = "Just because"
+			}).ToDbValueSet());
+			
+			using (Stream stream = new FileStream("/home/sergey/Projects/output.txt", FileMode.Create, FileAccess.Write))
+			{
+				BinaryFormatter formatter = new BinaryFormatter();
+				formatter.Serialize(stream, item);
+			}
+			Console.WriteLine(item.Id);
 		}
 		
 		public void SgmlTest()

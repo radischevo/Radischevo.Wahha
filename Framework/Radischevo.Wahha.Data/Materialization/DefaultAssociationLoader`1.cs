@@ -4,7 +4,6 @@ namespace Radischevo.Wahha.Data
 {
 	[Serializable]
 	public class DefaultAssociationLoader<TAssociation> : IAssociationLoader<TAssociation>
-		where TAssociation : class
 	{
 		#region Constructors
 		public DefaultAssociationLoader()

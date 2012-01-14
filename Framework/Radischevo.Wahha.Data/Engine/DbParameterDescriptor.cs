@@ -5,6 +5,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
+	[Serializable]
     public class DbParameterDescriptor
     {
         #region Instance Fields

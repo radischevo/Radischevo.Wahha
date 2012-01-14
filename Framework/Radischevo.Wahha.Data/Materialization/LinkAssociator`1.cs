@@ -5,7 +5,6 @@ namespace Radischevo.Wahha.Data
 {
 	public abstract class LinkAssociator<TAssociation>
 		: Associator<ILink<TAssociation>>
-		where TAssociation : class
 	{
 		#region Constructors
 		protected LinkAssociator()

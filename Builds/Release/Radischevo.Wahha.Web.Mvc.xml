@@ -1564,7 +1564,7 @@
         </member>
         <member name="T:Radischevo.Wahha.Web.Mvc.ModelStateCollection">
             <summary>
-            A collection of <see cref="!:Radischevo.Wahha.Web.Mvc.ValidationError" /> instances.
+            Represents the state of the model.
             </summary>
         </member>
         <member name="M:Radischevo.Wahha.Web.Mvc.ModelStateCollection.#ctor">

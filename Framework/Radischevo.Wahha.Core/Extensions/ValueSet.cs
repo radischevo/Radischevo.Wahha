@@ -103,6 +103,19 @@ namespace Radischevo.Wahha.Core
         {
 			return new SubsetWrapper(values, keySelector);
         }
+		
+		public static IValueSet Subset(this IValueSet values, string prefix)
+		{
+			return Subset (values, prefix, true);
+		}
+		
+		public static IValueSet Subset(this IValueSet values, string prefix, bool ignoreCase)
+		{
+			if (String.IsNullOrEmpty(prefix))
+				return values;
+			
+			return new PrefixWrapper(values, prefix, ignoreCase);
+		}
 
         public static IValueSet Transform(this IValueSet values, Func<string, string> keyTransformer)
         {
@@ -125,13 +138,25 @@ namespace Radischevo.Wahha.Core
 
 			return true;
 		}
-
+		
 		public static bool ContainsAny(this IValueSet values)
 		{
 			Precondition.Require(values, () => Error.ArgumentNull("values"));
 			return values.Keys.Any();
 		}
-
+		
+		public static bool ContainsAny(this IValueSet values, string key)
+		{
+			return ContainsAny(values, StringComparer.OrdinalIgnoreCase, key);
+		}
+		
+		public static bool ContainsAny(this IValueSet values, 
+			IEqualityComparer<string> comparer, string key)
+		{
+			Precondition.Require(values, () => Error.ArgumentNull("values"));
+			return values.Keys.Contains(key, comparer);
+		}
+		
 		public static bool ContainsAny(this IValueSet values, params string[] keys)
 		{
 			return ContainsAny(values, StringComparer.OrdinalIgnoreCase, keys);

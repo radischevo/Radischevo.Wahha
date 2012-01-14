@@ -3,7 +3,6 @@
 namespace Radischevo.Wahha.Data
 {
 	public abstract class AssociatorAction<T>
-		where T : class
 	{
 		#region Instance Fields
 		private int _order;

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E8EF9AB4-DADE-4667-9E49-C82C665A5A59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Radischevo.Wahha.Data.Mapping</RootNamespace>
+    <AssemblyName>Radischevo.Wahha.Data.Mapping</AssemblyName>
+    <ReleaseVersion>3.1</ReleaseVersion>
+    <CodePage>65001</CodePage>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Radischevo.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Builds\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Builds\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <GenerateDocumentation>true</GenerateDocumentation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interfaces\IMetaMappingFactory.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Configurations\Configuration.cs" />
+    <Compile Include="Abstractions\MetaAccessor.cs" />
+    <Compile Include="Abstractions\MetaAssociation.cs" />
+    <Compile Include="Abstractions\MetaColumn.cs" />
+    <Compile Include="Abstractions\MetaMember.cs" />
+    <Compile Include="Abstractions\MetaType.cs" />
+    <Compile Include="Attributes\TableAttribute.cs" />
+    <Compile Include="Attributes\ColumnAttribute.cs" />
+    <Compile Include="Attributes\AssociationAttribute.cs" />
+    <Compile Include="Attributes\AttributedMetaType.cs" />
+    <Compile Include="Attributes\AttributedMetaColumn.cs" />
+    <Compile Include="Attributes\AttributedMetaAssociation.cs" />
+    <Compile Include="Attributes\AttributedMetaMappingFactory.cs" />
+    <Compile Include="Interfaces\IDbColumnBinder.cs" />
+    <Compile Include="Engine\MappedDbSerializer`1.cs" />
+    <Compile Include="Abstractions\MetaMemberCollection.cs" />
+    <Compile Include="Engine\MappedDbSerializerBuilder.cs" />
+    <Compile Include="Engine\MappedDbQueryOperation`2.cs" />
+    <Compile Include="Engine\MappedDbSingleOperation.cs" />
+    <Compile Include="Engine\MappedDbSelectOperation`1.cs" />
+    <Compile Include="Engine\MappedDbSubsetOperation`1.cs" />
+    <Compile Include="Engine\MappedAssociationLoader.cs" />
+    <Compile Include="Engine\ScalarMappedAssociationLoader`1.cs" />
+    <Compile Include="Engine\SingleMappedAssociationLoader`1.cs" />
+    <Compile Include="Engine\MultipleMappedAssociationLoader`1.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Configurations\" />
+    <Folder Include="Abstractions\" />
+    <Folder Include="Engine\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">
+      <Project>{C4A83864-BF32-49D8-BC23-C69F025628EC}</Project>
+      <Name>Radischevo.Wahha.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Radischevo.Wahha.Data\Radischevo.Wahha.Data.csproj">
+      <Project>{C7346189-E495-4A61-9398-F90B69AB619A}</Project>
+      <Name>Radischevo.Wahha.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

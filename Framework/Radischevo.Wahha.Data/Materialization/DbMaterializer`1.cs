@@ -3,10 +3,10 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
-	public abstract class ObjectMaterializer<TEntity> : IDbMaterializer<TEntity>
+	public abstract class DbMaterializer<TEntity> : IDbMaterializer<TEntity>
 	{
 		#region Constructors
-		protected ObjectMaterializer()
+		protected DbMaterializer()
 		{
 		}
 		#endregion

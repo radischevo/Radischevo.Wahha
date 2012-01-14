@@ -160,7 +160,7 @@ namespace ConsoleTester
 		#endregion
 	}
 
-	public class UserMaterializer : ObjectMaterializer<User>
+	public class UserMaterializer : DbMaterializer<User>
 	{
 		protected override User CreateInstance(IDbValueSet source)
 		{
@@ -184,7 +184,7 @@ namespace ConsoleTester
 		}
 	}
 
-	public class SpecialityMaterializer : ObjectMaterializer<Speciality>
+	public class SpecialityMaterializer : DbMaterializer<Speciality>
 	{
 		protected override Speciality CreateInstance(IDbValueSet source)
 		{
@@ -200,7 +200,7 @@ namespace ConsoleTester
 		}
 	}
 
-	public class ProfileMaterializer : ObjectMaterializer<Profile>
+	public class ProfileMaterializer : DbMaterializer<Profile>
 	{
 		protected override Profile CreateInstance(IDbValueSet source)
 		{

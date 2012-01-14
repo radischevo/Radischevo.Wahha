@@ -8,7 +8,6 @@ using Radischevo.Wahha.Core.Expressions;
 namespace Radischevo.Wahha.Data
 {
 	public class EntityLoaderBuilder<TEntity>
-		where TEntity : class
 	{
 		#region Constructors
 		public EntityLoaderBuilder()

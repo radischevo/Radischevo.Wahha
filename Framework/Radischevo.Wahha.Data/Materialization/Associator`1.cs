@@ -5,7 +5,6 @@ using System.Linq;
 namespace Radischevo.Wahha.Data
 {
 	public abstract class Associator<T>
-		where T : class
 	{
 		#region Instance Fields
 		private List<AssociatorAction<T>> _actions;

@@ -11,7 +11,6 @@ namespace Radischevo.Wahha.Data
 	[Serializable]
 	internal abstract class MethodBasedAssociationLoader<TAssociation>
 		: IAssociationLoader<TAssociation>, ISerializable
-		where TAssociation : class
 	{
 		#region Static Fields
 		private static readonly MethodInfo _serviceResolveMethod = typeof(IServiceProvider).GetMethod("GetService",

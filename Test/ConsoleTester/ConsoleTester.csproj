@@ -61,6 +61,11 @@
     <Compile Include="TextQueryOperation.cs" />
     <Compile Include="UnityServiceLocator.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="Mapping\Topic.cs" />
+    <Compile Include="Mapping\Comment.cs" />
+    <Compile Include="Mapping\Materializer.cs" />
+    <Compile Include="Mapping\ReverseStringColumnBinder.cs" />
+    <Compile Include="Mapping\TimestampDbColumnBinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -88,6 +93,10 @@
       <Project>{2DEB7611-864B-48C4-9CE7-5100F314371D}</Project>
       <Name>Radischevo.Wahha.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Radischevo.Wahha.Data.Mapping\Radischevo.Wahha.Data.Mapping.csproj">
+      <Project>{E8EF9AB4-DADE-4667-9E49-C82C665A5A59}</Project>
+      <Name>Radischevo.Wahha.Data.Mapping</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="sgml-test.htm">
@@ -102,4 +111,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Mapping\" />
+  </ItemGroup>
 </Project>

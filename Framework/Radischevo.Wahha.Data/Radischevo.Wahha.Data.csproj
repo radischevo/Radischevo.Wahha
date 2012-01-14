@@ -126,12 +126,9 @@
     <Compile Include="Engine\DbFieldLookup.cs" />
     <Compile Include="Engine\DbParameterCollection.cs" />
     <Compile Include="Engine\DbParameterDescriptor.cs" />
-    <Compile Include="Engine\DbQueryType.cs" />
     <Compile Include="Extensions\SubsetExtensions.cs" />
-    <Compile Include="Interfaces\IDbColumnMapper.cs" />
     <Compile Include="Interfaces\IDbDataReader.cs" />
     <Compile Include="Interfaces\IDbDataRecord.cs" />
-    <Compile Include="Interfaces\IDbMaterializer.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISubset.cs" />
     <Compile Include="Extensions\DbDataProviderExtensions.cs" />
@@ -140,7 +137,6 @@
     <Compile Include="Materialization\LinkValueInitializer`1.cs" />
     <Compile Include="Materialization\NullValueSetTransformer.cs" />
     <Compile Include="Materialization\NullValueSetValidator.cs" />
-    <Compile Include="Materialization\ObjectMaterializer`1.cs" />
     <Compile Include="Materialization\LinkSelectorAction.cs" />
     <Compile Include="Materialization\RepositoryBasedSelectorActions.cs" />
     <Compile Include="Materialization\ScopedDbOperationExecutor.cs" />
@@ -202,6 +198,11 @@
     <Compile Include="Configurations\DbDataProviderFactoryConfigurationElementCollection.cs" />
     <Compile Include="Configurations\DbDataProviderFactoryConfigurationElement.cs" />
     <Compile Include="Operations\CacheableDbCommandOperation`1.cs" />
+    <Compile Include="Engine\DbQueryStatement.cs" />
+    <Compile Include="Interfaces\IDbMaterializer`1.cs" />
+    <Compile Include="Interfaces\IDbSerializer.cs" />
+    <Compile Include="Materialization\DbSerializer`1.cs" />
+    <Compile Include="Materialization\DbMaterializer`1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Radischevo.Wahha.Core\Radischevo.Wahha.Core.csproj">

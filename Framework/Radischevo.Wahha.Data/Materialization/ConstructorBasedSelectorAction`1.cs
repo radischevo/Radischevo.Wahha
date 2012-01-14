@@ -6,7 +6,6 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Data
 {
 	internal abstract class ConstructorBasedSelectorAction<TAssociation> : LinkSelectorAction<TAssociation>
-		where TAssociation : class
 	{
 		#region Instance Fields
 		private NewExpression _factory;

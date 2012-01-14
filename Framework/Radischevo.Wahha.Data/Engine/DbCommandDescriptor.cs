@@ -7,6 +7,7 @@ using Radischevo.Wahha.Core;
 
 namespace Radischevo.Wahha.Data
 {
+	[Serializable]
     public class DbCommandDescriptor
 	{
 		#region Constants

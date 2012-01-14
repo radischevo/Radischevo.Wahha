@@ -8,7 +8,6 @@ namespace Radischevo.Wahha.Data
 	[Serializable]
 	internal class OperationFactoryBasedAssociationLoader<TAssociation> 
 		: MethodBasedAssociationLoader<TAssociation>
-		where TAssociation : class
 	{
 		#region Static Fields
 		private static readonly MethodInfo _executeOperationMethod =

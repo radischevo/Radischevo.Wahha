@@ -5,7 +5,6 @@ namespace Radischevo.Wahha.Data
 {
 	public class EntityAssociator<TAssociation>
 		: Associator<TAssociation>
-		where TAssociation : class
 	{
 		#region Constructors
 		public EntityAssociator()

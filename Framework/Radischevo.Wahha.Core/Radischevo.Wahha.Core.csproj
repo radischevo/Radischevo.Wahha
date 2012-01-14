@@ -164,6 +164,8 @@
     <Compile Include="Services\EmptyConfigurator`1.cs" />
     <Compile Include="Extensions\NameValueCollection`1.cs" />
     <Compile Include="ReadOnlyDictionary`2.cs" />
+    <Compile Include="Extensions\PrefixWrapper.cs" />
+    <Compile Include="Interfaces\IKeyedEnumerable`1.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx">

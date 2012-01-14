@@ -4,7 +4,6 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Data
 {
 	public abstract class InitializerBase<TEntity>
-		where TEntity : class
 	{
 		#region Instance Fields
 		private Type _materializerType;

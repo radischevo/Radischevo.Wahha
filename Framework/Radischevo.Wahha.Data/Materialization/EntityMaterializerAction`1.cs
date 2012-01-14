@@ -7,7 +7,6 @@ namespace Radischevo.Wahha.Data
 {
 	public class EntityMaterializerAction<TAssociation>
 		: EntityAssociatorAction<TAssociation>
-		where TAssociation : class
 	{
 		#region Instance Fields
 		private IDbValueSet _source;
@@ -88,7 +87,6 @@ namespace Radischevo.Wahha.Data
 
 	public class EntityMaterializerAction<TAssociation, TMaterializer>
 		: EntityMaterializerAction<TAssociation>
-		where TAssociation : class
 		where TMaterializer : IDbMaterializer<TAssociation>
 	{
 		#region Constructors

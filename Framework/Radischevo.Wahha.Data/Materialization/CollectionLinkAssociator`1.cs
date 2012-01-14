@@ -7,7 +7,6 @@ namespace Radischevo.Wahha.Data
 {
 	public class CollectionLinkAssociator<TAssociation> 
 		: LinkAssociator<IEnumerable<TAssociation>>
-		where TAssociation : class
 	{
 		#region Constructors
 		public CollectionLinkAssociator()

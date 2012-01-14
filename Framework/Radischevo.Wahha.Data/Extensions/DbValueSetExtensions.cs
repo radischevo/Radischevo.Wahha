@@ -81,7 +81,17 @@ namespace Radischevo.Wahha.Data
 		{
 			return ToDbValueSet(ValueSet.Subset(values, keySelector));
 		}
+		
+		public static IDbValueSet Subset(this IDbValueSet values, string prefix)
+		{
+			return Subset (values, prefix, true);
+		}
 
+		public static IDbValueSet Subset(this IDbValueSet values, string prefix, bool ignoreCase)
+		{
+			return ToDbValueSet(ValueSet.Subset(values, prefix, ignoreCase));
+		}
+		
 		public static IDbValueSet Transform(this IDbValueSet values, Func<string, string> keyTransformer)
 		{
 			return ToDbValueSet(ValueSet.Transform(values, keyTransformer));

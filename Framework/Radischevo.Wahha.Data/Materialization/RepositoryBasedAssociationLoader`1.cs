@@ -7,7 +7,6 @@ namespace Radischevo.Wahha.Data
 	[Serializable]
 	internal class RepositoryBasedAssociationLoader<TAssociation> 
 		: MethodBasedAssociationLoader<TAssociation>
-		where TAssociation : class
 	{
 		#region Constructors
 		public RepositoryBasedAssociationLoader(Type declaringType, MethodInfo method, object[] arguments)

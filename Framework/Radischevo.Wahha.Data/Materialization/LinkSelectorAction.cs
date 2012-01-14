@@ -6,7 +6,6 @@ namespace Radischevo.Wahha.Data
 {
 	public abstract class LinkSelectorAction<TAssociation> 
 		: LinkAssociatorAction<TAssociation>
-		where TAssociation : class
 	{
 		#region Static Fields
 		private static readonly IAssociationLoader<TAssociation> _defaultLoader 

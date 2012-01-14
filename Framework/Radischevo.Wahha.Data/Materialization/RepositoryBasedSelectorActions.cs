@@ -6,7 +6,6 @@ namespace Radischevo.Wahha.Data
 {
 	internal sealed class RepositoryBasedSingleSelectorAction<TAssociation, TRepository>
 		: MethodBasedSelectorAction<TAssociation>
-		where TAssociation : class
 		where TRepository : IRepository<TAssociation>
 	{
 		#region Constructors
@@ -27,7 +26,6 @@ namespace Radischevo.Wahha.Data
 
 	internal sealed class RepositoryBasedCollectionSelectorAction<TAssociation, TRepository>
 		: MethodBasedSelectorAction<IEnumerable<TAssociation>>
-		where TAssociation : class
 		where TRepository : IRepository<TAssociation>
 	{
 		#region Constructors

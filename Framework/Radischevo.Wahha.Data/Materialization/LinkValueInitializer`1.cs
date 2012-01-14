@@ -4,7 +4,6 @@ using Radischevo.Wahha.Core;
 namespace Radischevo.Wahha.Data
 {
 	public sealed class LinkValueInitializer<TEntity> : InitializerBase<TEntity>
-		where TEntity : class
 	{
 		#region Constructors
 		public LinkValueInitializer(Type materializerType)

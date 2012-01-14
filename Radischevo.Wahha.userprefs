@@ -1,31 +1,23 @@
 ﻿<Properties>
   <AuthorInfo Name="Sergey Rodyushkin" Email="" Copyright="(C) 2008-2011 Radischevo Solutions" Company="Radischevo Solutions" Trademark="Radischevo Solutions" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Test/ConsoleTester/TextQueryOperation.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Test/ConsoleTester/Program.cs">
     <Files>
-      <File FileName="Framework/Radischevo.Wahha.Data/Operations/CacheableDbCommandOperation`1.cs" Line="19" Column="3" />
-      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbCombinedSelectOperation`1.cs" Line="1" Column="1" />
-      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbQueryOperation`2.cs" Line="12" Column="70" />
-      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbScalarOperation`1.cs" Line="12" Column="62" />
-      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbSingleOperation`1.cs" Line="1" Column="1" />
-      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbSubsetOperation`1.cs" Line="1" Column="1" />
-      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbCommandOperation`1.cs" Line="1" Column="1" />
-      <File FileName="Framework/Radischevo.Wahha.Data/Operations/DbCombinedSingleOperation`1.cs" Line="1" Column="1" />
-      <File FileName="Framework/Radischevo.Wahha.Data/Operations/InvalidatingDbCommandOperation`1.cs" Line="1" Column="1" />
-      <File FileName="Test/ConsoleTester/TextQueryOperation.cs" Line="23" Column="4" />
+      <File FileName="Test/ConsoleTester/Mapping/Materializer.cs" Line="38" Column="41" />
+      <File FileName="Framework/Radischevo.Wahha.Data.Mapping/Engine/MappedDbSerializerBuilder.cs" Line="331" Column="2" />
+      <File FileName="Test/ConsoleTester/Program.cs" Line="95" Column="1" />
+      <File FileName="Framework/Radischevo.Wahha.Data.Mapping/Engine/MappedDbSerializer`1.cs" Line="55" Column="9" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="ConsoleTester" expanded="True">
-            <Node name="TextQueryOperation.cs" selected="True" />
-          </Node>
-        </State>
+        <State expanded="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/sergey/Projects/Radischevo.Wahha/Test/ConsoleTester/Program.cs" line="86" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

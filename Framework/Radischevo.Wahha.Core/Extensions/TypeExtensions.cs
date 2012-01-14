@@ -96,7 +96,7 @@ namespace Radischevo.Wahha.Core
 
         public static bool IsSequence(this Type type)
         {
-            if (type == typeof(string))
+			if (type == typeof(string))
                 return false;
 
             if (type == typeof(byte[]))
@@ -125,12 +125,15 @@ namespace Radischevo.Wahha.Core
 
         public static Type GetGenericInterface(this Type type, Type interfaceType)
         {
-            Func<Type, bool> matchesInterface = t => t.IsGenericType && t.GetGenericTypeDefinition() == interfaceType;
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
+			
+			Func<Type, bool> matchesInterface = t => t.IsGenericType && t.GetGenericTypeDefinition() == interfaceType;
             return (matchesInterface(type)) ? type : type.GetInterfaces().FirstOrDefault(matchesInterface);
         }
 
         public static bool IsSimple(this Type type)
         {
+			Precondition.Require(type, () => Error.ArgumentNull("type"));
             type = TypeExtensions.MakeNonNullableType(type);
 
             if (type.IsEnum)
