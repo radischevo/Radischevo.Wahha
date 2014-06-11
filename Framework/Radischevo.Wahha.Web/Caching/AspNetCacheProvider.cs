@@ -121,10 +121,23 @@ namespace Radischevo.Wahha.Web.Caching
             return Get<T>(key, selector, expiration, null);
         }
 
+		public T Get<T>(string key, CacheItemSelector<T> selector,
+			Func<T, DateTime> expiration) 
+		{
+			return Get<T>(key, selector, expiration, null);
+		}
+
+		public T Get<T>(string key, CacheItemSelector<T> selector,
+			DateTime expiration, IEnumerable<string> tags) 
+		{
+			return Get<T>(key, selector, _ => expiration, _ => tags);
+		}
+
         public T Get<T>(string key, CacheItemSelector<T> selector,
-			DateTime expiration, IEnumerable<string> tags)
+			Func<T, DateTime> expiration, Func<T, IEnumerable<string>> tags)
         {
             Precondition.Require(key, () => Error.ArgumentNull("key"));
+			Precondition.Require(expiration, () => Error.ArgumentNull("expiration"));
             Precondition.Require(selector, () => Error.ArgumentNull("selector"));
 
             object value;
@@ -136,12 +149,14 @@ namespace Radischevo.Wahha.Web.Caching
 					{
 						if ((value = Cache.Get(key)) == null)
 						{
-							value = selector();
+							T result = selector();
 
-							if (value != null)
+							if (!ReferenceEquals(null, result))
 							{
-								Cache.Insert(key, value, CreateTagDependency(Cache, tags),
-									expiration, Cache.NoSlidingExpiration,
+								value = result;
+								Cache.Insert(key, value, 
+									CreateTagDependency(Cache, (tags == null) ? null : tags(result)),
+									expiration(result), Cache.NoSlidingExpiration,
 									CacheItemPriority.Normal, null);
 							}
 						}

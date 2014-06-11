@@ -28,7 +28,19 @@ namespace Radischevo.Wahha.Data.Caching
 		}
 
 		public T Get<T>(string key, CacheItemSelector<T> selector,
+			Func<T, DateTime> expiration) 
+		{
+			return selector();
+		}
+
+		public T Get<T>(string key, CacheItemSelector<T> selector,
 			DateTime expiration, IEnumerable<string> tags)
+		{
+			return selector();
+		}
+
+		public T Get<T>(string key, CacheItemSelector<T> selector,
+			Func<T, DateTime> expiration, Func<T, IEnumerable<string>> tags) 
 		{
 			return selector();
 		}

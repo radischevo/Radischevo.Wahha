@@ -1,0 +1,4 @@
+*.pdb
+obj
+Test/ConsoleTester/bin
+*.suo

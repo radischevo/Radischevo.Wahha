@@ -57,6 +57,12 @@ namespace Radischevo.Wahha.Data.Caching
             return _provider.Get<T>(key, selector, expiration);
         }
 
+		public T Get<T>(string key, CacheItemSelector<T> selector,
+			Func<T, DateTime> expiration) 
+		{
+			return _provider.Get<T>(key, selector, expiration);
+		}
+
         public T Get<T>(string key, CacheItemSelector<T> selector,
 			DateTime expiration, IEnumerable<string> tags)
         {
@@ -65,6 +71,15 @@ namespace Radischevo.Wahha.Data.Caching
 
             return TaggedProvider.Get<T>(key, selector, expiration, tags);
         }
+
+		public T Get<T>(string key, CacheItemSelector<T> selector,
+			Func<T, DateTime> expiration, Func<T, IEnumerable<string>> tags) 
+		{
+			if (tags == null)
+				return _provider.Get<T>(key, selector, expiration);
+
+			return TaggedProvider.Get<T>(key, selector, expiration, tags);
+		}
 
         public bool Add<T>(string key, T value, DateTime expiration)
         {

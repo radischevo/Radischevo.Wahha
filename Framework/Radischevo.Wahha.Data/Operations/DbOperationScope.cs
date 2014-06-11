@@ -22,7 +22,6 @@ namespace Radischevo.Wahha.Data
 			#region Instance Fields
 			private bool _allowDirtyReads;
 			private readonly ITaggedCacheProvider _provider;
-			private readonly HashSet<string> _invalidations;
 			private readonly List<Action<ITaggedCacheProvider>> _deferredActions;
 			#endregion
 
@@ -32,7 +31,6 @@ namespace Radischevo.Wahha.Data
 				Precondition.Require(provider, () => Error.ArgumentNull("provider"));
 
 				_provider = provider;
-				_invalidations = new HashSet<string>();
 				_deferredActions = new List<Action<ITaggedCacheProvider>>();
 			}
 			#endregion
@@ -72,7 +70,6 @@ namespace Radischevo.Wahha.Data
 			public void Rollback()
 			{
 				_deferredActions.Clear();
-				_invalidations.Clear();
 			}
 
 			public void Invalidate(IEnumerable<string> tags)
@@ -80,7 +77,6 @@ namespace Radischevo.Wahha.Data
 				Precondition.Require(tags, () => Error.ArgumentNull("tags"));
 
 				_deferredActions.Add(a => a.Invalidate(tags));
-				_invalidations.UnionWith(tags);
 			}
 
 			public T Get<T>(string key)
@@ -93,17 +89,26 @@ namespace Radischevo.Wahha.Data
 				return _provider.Get<T>(key, selector, expiration);
 			}
 
+			public T Get<T>(string key, CacheItemSelector<T> selector, Func<T, DateTime> expiration) 
+			{
+				return _provider.Get<T>(key, selector, expiration);
+			}
+
 			public T Get<T>(string key, CacheItemSelector<T> selector,
-				DateTime expiration, IEnumerable<string> tags)
+				DateTime expiration, IEnumerable<string> tags) 
+			{
+				return Get<T>(key, selector, _ => expiration, _ => tags);
+			}
+
+			public T Get<T>(string key, CacheItemSelector<T> selector,
+				Func<T, DateTime> expiration, Func<T, IEnumerable<string>> tags)
 			{
 				Precondition.Require(selector, () => Error.ArgumentNull("selector"));
-				if (_allowDirtyReads || (tags != null && _invalidations.Overlaps(tags)))
-				{
-					T value = selector();
-					if (!_allowDirtyReads)
-						_deferredActions.Add(a => a.Insert(key, value, expiration, tags));
+				Precondition.Require(expiration, () => Error.ArgumentNull("expiration"));
 
-					return value;
+				if (_allowDirtyReads)
+				{
+					return selector();
 				}
 				return _provider.Get(key, selector, expiration, tags);
 			}

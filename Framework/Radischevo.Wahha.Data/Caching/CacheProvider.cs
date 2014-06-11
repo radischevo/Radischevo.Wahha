@@ -9,10 +9,6 @@ namespace Radischevo.Wahha.Data.Caching
 {
     public sealed class CacheProvider : ITaggedCacheProvider
     {
-        #region Constants
-        private const int _timeout = 60;
-        #endregion
-
         #region Static Fields
         private static CacheProvider _instance;
         private static object _lock = new object();
@@ -20,14 +16,12 @@ namespace Radischevo.Wahha.Data.Caching
 
         #region Instance Fields
         private ITaggedCacheProvider _provider;
-        private TimeSpan _defaultTimeout;
         #endregion
 
         #region Constructors
-        private CacheProvider(ICacheProvider provider, int timeout)
+        private CacheProvider(ICacheProvider provider)
         {
             _provider = new TaggedCacheWrapper(provider);
-            _defaultTimeout = TimeSpan.FromMinutes(timeout);
         }
         #endregion
 
@@ -74,8 +68,7 @@ namespace Radischevo.Wahha.Data.Caching
 			ICacheProvider provider = (ICacheProvider)ServiceLocator.Instance.GetService(providerType);
             provider.Init(settings);
 
-            return new CacheProvider(provider, settings.GetValue<int>("timeout", 
-				_timeout, CultureInfo.InvariantCulture));
+            return new CacheProvider(provider);
         }
 
         public static CacheProvider Create<TProvider>(IValueSet settings)
@@ -84,85 +77,48 @@ namespace Radischevo.Wahha.Data.Caching
 			ICacheProvider provider = ServiceLocator.Instance.GetService<TProvider>();
             provider.Init(settings);
 
-			return new CacheProvider(provider, settings.GetValue<int>("timeout", 
-				_timeout, CultureInfo.InvariantCulture));
+			return new CacheProvider(provider);
         }
         #endregion
 
         #region Instance Methods
         #region Gets
-        /// <summary>
-        /// Gets the typed value from the web application cache.
-        /// </summary>
-        /// <typeparam name="T">The type of the object to return.</typeparam>
-        /// <param name="key">The key the object is stored with.</param>
+        
         public T Get<T>(string key)
         {
             Precondition.Require(key, () => Error.ArgumentNull("key"));
             return _provider.Get<T>(key);
         }
 
-		public T Get<T>(string key, CacheItemSelector<T> selector)
-		{
-			return Get<T>(key, selector, _defaultTimeout, null);
-		}
-
-        public T Get<T>(string key, CacheItemSelector<T> selector,
-            TimeSpan timeout)
-        {
-            return Get<T>(key, selector, timeout);
-        }
-
-        public T Get<T>(string key, CacheItemSelector<T> selector,
+		public T Get<T>(string key, CacheItemSelector<T> selector,
             DateTime expiration)
         {
             return Get<T>(key, selector, expiration, null);
         }
 
-        public T Get<T>(string key, CacheItemSelector<T> selector,
-			IEnumerable<string> tags)
-        {
-            return Get<T>(key, selector, _defaultTimeout, tags);
-        }
-
-        public T Get<T>(string key, CacheItemSelector<T> selector,
-			TimeSpan timeout, IEnumerable<string> tags)
-        {
-            return Get<T>(key, selector, timeout, tags);
-        }
+		public T Get<T>(string key, CacheItemSelector<T> selector,
+			Func<T, DateTime> expiration) 
+		{
+			return Get<T>(key, selector, expiration, null);
+		}
 
         public T Get<T>(string key, CacheItemSelector<T> selector,
 			DateTime expiration, IEnumerable<string> tags)
         {
 			return _provider.Get<T>(key, selector, expiration, tags);
         }
+
+		public T Get<T>(string key, CacheItemSelector<T> selector,
+			Func<T, DateTime> expiration, Func<T, IEnumerable<string>> tags) 
+		{
+			return _provider.Get<T>(key, selector, expiration, tags);
+		}
         #endregion
 
         #region Adds
-        public bool Add<T>(string key, T value)
-        {
-            return Add<T>(key, value, _defaultTimeout);
-        }
-
-        public bool Add<T>(string key, T value, TimeSpan timeout)
-        {
-            return Add<T>(key, value, DateTime.UtcNow.Add(timeout));
-        }
-
         public bool Add<T>(string key, T value, DateTime expiration)
         {
             return Add<T>(key, value, expiration, null);
-        }
-
-		public bool Add<T>(string key, T value, IEnumerable<string> tags)
-        {
-            return Add<T>(key, value, _defaultTimeout, tags);
-        }
-
-        public bool Add<T>(string key, T value, TimeSpan timeout,
-		    IEnumerable<string> tags)
-        {
-            return Add<T>(key, value, DateTime.UtcNow.Add(timeout), tags);
         }
 
         public bool Add<T>(string key, T value, DateTime expiration,
@@ -174,30 +130,9 @@ namespace Radischevo.Wahha.Data.Caching
         #endregion
 
         #region Inserts
-        public void Insert<T>(string key, T value)
-        {
-            Insert<T>(key, value, _defaultTimeout);
-        }
-
-        public void Insert<T>(string key, T value, TimeSpan timeout)
-        {
-            Insert<T>(key, value, DateTime.UtcNow.Add(timeout));
-        }
-
         public void Insert<T>(string key, T value, DateTime expiration)
         {
             Insert<T>(key, value, expiration, null);
-        }
-
-		public void Insert<T>(string key, T value, IEnumerable<string> tags)
-        {
-            Insert<T>(key, value, _defaultTimeout, tags);
-        }
-
-        public void Insert<T>(string key, T value, TimeSpan timeout,
-			IEnumerable<string> tags)
-        {
-            Insert<T>(key, value, DateTime.UtcNow.Add(timeout), tags);
         }
 
 		public void Insert<T>(string key, T value, DateTime expiration,

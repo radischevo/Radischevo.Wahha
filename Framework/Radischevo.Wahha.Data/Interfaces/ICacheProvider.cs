@@ -11,6 +11,8 @@ namespace Radischevo.Wahha.Data.Caching
 
         T Get<T>(string key, CacheItemSelector<T> selector, DateTime expiration);
 
+		T Get<T>(string key, CacheItemSelector<T> selector, Func<T, DateTime> expiration);
+
         bool Add<T>(string key, T value, DateTime expiration);
 
         void Insert<T>(string key, T value, DateTime expiration);

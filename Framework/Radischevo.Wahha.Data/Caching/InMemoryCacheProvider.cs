@@ -317,11 +317,23 @@ namespace Radischevo.Wahha.Data.Caching
 			return Get(key, selector, expiration, null);
 		}
 
+		public T Get<T>(string key, CacheItemSelector<T> selector, Func<T, DateTime> expiration) 
+		{
+			return Get(key, selector, expiration, null);
+		}
+
+		public virtual T Get<T>(string key, CacheItemSelector<T> selector,
+			DateTime expiration, IEnumerable<string> tags) 
+		{
+			return Get<T>(key, selector, v => expiration, v => tags);
+		}
+
 		public virtual T Get<T>(string key, CacheItemSelector<T> selector, 
-			DateTime expiration, IEnumerable<string> tags)
+			Func<T, DateTime> expiration, Func<T, IEnumerable<string>> tags)
 		{
 			Precondition.Defined(key, () => Error.ArgumentNull("key"));
 			Precondition.Require(selector, () => Error.ArgumentNull("selector"));
+			Precondition.Require(expiration, () => Error.ArgumentNull("expiration"));
 			Precondition.Require(!_disposed, () => Error.ObjectDisposed("entries"));
 
 			_entriesLock.EnterUpgradeableReadLock();
@@ -333,9 +345,13 @@ namespace Radischevo.Wahha.Data.Caching
 					_entriesLock.EnterWriteLock();
 					try
 					{
-						if (!TryGetEntryAndValidate(key, out entry))
-							_entries[key] = entry = new CacheEntry(key, selector(),
-								expiration, CreateEntryTags(tags));
+						if (!TryGetEntryAndValidate(key, out entry)) 
+						{
+							T value = selector();
+							IEnumerable<CacheTag> entryTags = CreateEntryTags((tags == null) ? null : tags(value));
+
+							_entries[key] = entry = new CacheEntry(key, value, expiration(value), entryTags);
+						}
 					}
 					finally
 					{
